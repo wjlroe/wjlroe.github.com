@@ -1,18 +1,172 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>{{ page.title }}</title>
     <link rel="openid.server" href="http://www.myopenid.com/server" />
     <link rel="openid.delegate" href="http://wjlroe.myopenid.com/" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css" />
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
   </head>
 
   <body>
-    <h1>{{ page.title }}</h1>
 
-    {{ content }}
+    <!-- wrap starts here -->
+    <div id="wrap">
+
+      <!--header -->
+      <div id="header">
+
+	<h1 id="logo-text"><a href="index.html" title="">wjlroe.github.com</a></h1>
+	<p id="slogan">Geeklog of <a href="http://github.com/wjlroe" title="wjlroe">wjlroe</a></p>
+
+	<div  id="nav">
+	  <ul>
+	    <li class="first" id="current"><a href="index.html">Home</a></li>
+	    <li><a href="style.html">Style Demo</a></li>
+	    <li><a href="blog.html">Blog</a></li>
+	    <li><a href="archives.html">Archives</a></li>
+	    <li><a href="index.html">Support</a></li>
+	    <li><a href="index.html">About</a></li>
+	  </ul>
+	</div>
+
+	<div id="header-image"></div>
+
+	<!--header ends-->
+      </div>
+
+      <!-- content -->
+      <div id="content-outer" class="clear"><div id="content-wrap">
+
+	  <div id="content">
+
+	    <div id="left">
+
+	      <div class="post no-bg">
+
+		<h2><a href="index.html">{{ title }}</a></h2>
+
+		<p class="post-info">Posted by <a href="index.html">erwin</a> | Filed under <a href="index.html">templates</a>, <a href="index.html">internet</a>  </p>
+
+		<div class="image-section">
+              	  <img src="images/img-post.jpg" alt="image post"/>
+         	</div>
+
+		{{ content }}
+
+		<div id="disqus_thread"></div>
+
+	      </div>
+
+	    </div>
+
+	    <div id="right">
+
+	      <div class="sidemenu">
+		<h3>Sidebar Menu</h3>
+		<ul>
+		  <li><a href="index.html">Home</a></li>
+		  <li><a href="index.html#TemplateInfo">TemplateInfo</a></li>
+		  <li><a href="style.html">Style Demo</a></li>
+		  <li><a href="blog.html">Blog</a></li>
+		  <li><a href="archives.html">Archives</a></li>
+		  <li><a href="http://www.dreamtemplate.com" title="Web Templates">Web Templates</a></li>
+		</ul>
+	      </div>
+
+	    </div>
+
+	  </div>
+
+	  <!-- content end -->
+	</div></div>
+
+      <!-- footer starts here -->
+      <div id="footer-outer" class="clear">
+	<div id="footer-wrap">
+
+	  <div class="col-a">
+	    <h3>Lorem ipsum dolor</h3>
+
+	    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
+	      Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
+	      posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum
+	      odio, ac blandit ante orci ut diam. Cras fringilla magna.
+	    </p>
+
+	  </div>
+
+	  <div class="col-a">
+
+	    <h3>Lorem Ipsum</h3>
+
+	    <p>
+	      <strong>Lorem ipsum dolor</strong> <br />
+	      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
+	      Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
+	      posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum
+	      odio, ac blandit ante orci ut diam.</p>
+
+	    <div class="footer-list">
+	      <ul>
+		<li><a href="index.html">consequat molestie</a></li>
+		<li><a href="index.html">sem justo</a></li>
+		<li><a href="index.html">semper</a></li>
+		<li><a href="index.html">magna sed purus</a></li>
+		<li><a href="index.html">tincidunt</a></li>
+		<li><a href="index.html">consequat molestie</a></li>
+		<li><a href="index.html">magna sed purus</a></li>
+	      </ul>
+	    </div>
+
+	  </div>
+
+	  <div class="col-b">
+
+	    <h3>About</h3>
+
+	    <p>
+	      <a href="index.html"><img src="images/gravatar.jpg" width="40" height="40" alt="firefox" class="float-left" /></a>
+	      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
+	      Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
+	      posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum
+	      odio, ac blandit ante orci ut diam.</p>
+
+	    <p>
+	      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
+	      Cras id urna. <a href="index.html">Learn more...</a></p>
+
+	  </div>
+
+	  <!-- footer ends -->
+	</div></div>
+
+      <!-- footer-bottom starts -->
+      <div id="footer-bottom">
+	<div class="bottom-left">
+	  <p>
+	    &copy; 2010 <strong>Your Copyright Info Here</strong>&nbsp; &nbsp; &nbsp;
+	    <a href="http://www.bluewebtemplates.com/" title="Website Templates">website templates</a> by <a href="http://www.styleshout.com/">styleshout</a>
+	  </p>
+	</div>
+
+	<div class="bottom-right">
+	  <p>
+	    <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> |
+	    <a href="http://validator.w3.org/check/referer">XHTML</a>	|
+	    <a href="index.html">Home</a> |
+	    <a href="index.html">Sitemap</a> |
+	    <a href="index.html">RSS Feed</a>
+	  </p>
+	</div>
+	<!-- footer-bottom ends -->
+      </div>
+
+      <!-- wrap ends here -->
+    </div>
   </body>
 
-  <div id="disqus_thread"></div>
+
   <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'wjlroe-blog'; // required: replace example with your forum shortname

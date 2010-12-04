@@ -1,3 +1,8 @@
+---
+layout: default
+title: Emacs for Android development
+---
+
 Today I started using Emacs rather than Eclipse to work on an Android project. There are a couple of things you need to get started though.
 
 Firstly you will need the Android SDK (which you will have already if you've started with Eclipse Android development) and you need to know where it is located on your hard drive.
