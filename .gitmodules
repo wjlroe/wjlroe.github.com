@@ -1,0 +1,3 @@
+[submodule "external/html5-boilerplate"]
+	path = external/html5-boilerplate
+	url = https://github.com/paulirish/html5-boilerplate.git
