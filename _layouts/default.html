@@ -10,6 +10,12 @@
 
   <body>
 
+    <div id="ribbon">
+      <p>
+	<a href="http://github.com/wjlroe" title="Form me on github">Fork me on github</a>
+      </p>
+    </div>
+
     <!-- wrap starts here -->
     <div id="wrap">
 
@@ -31,12 +37,14 @@
 	</div>
 
 	<div id="header-image"></div>
+	<!--<img src="/images/200px-Android_logo.svg.png" title="Android" alt="Android" />//-->
 
 	<!--header ends-->
       </div>
 
       <!-- content -->
-      <div id="content-outer" class="clear"><div id="content-wrap">
+      <div id="content-outer" class="clear">
+	<div id="content-wrap">
 
 	  <div id="content">
 
@@ -47,6 +55,23 @@
 		{{ content }}
 
 		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+		  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+		  var disqus_shortname = 'wjlroe-blog'; // required: replace example with your forum shortname
+
+		  // The following are highly recommended additional parameters. Remove the slashes in front to use.
+		  // var disqus_identifier = 'unique_dynamic_id_1234';
+		  var disqus_url = 'http://wjlroe.github.com/{{ page.url }}';
+
+		  /* * * DON'T EDIT BELOW THIS LINE * * */
+		  (function() {
+		  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+		  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		  })();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
 
 	      </div>
 
@@ -118,20 +143,16 @@
 	    <h3>About</h3>
 
 	    <p>
-	      <a href="index.html"><img src="images/gravatar.jpg" width="40" height="40" alt="firefox" class="float-left" /></a>
-	      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
-	      Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
-	      posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum
-	      odio, ac blandit ante orci ut diam.</p>
-
-	    <p>
-	      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
-	      Cras id urna. <a href="index.html">Learn more...</a></p>
-
+	      <a href="index.html"><img src="http://www.gravatar.com/avatar/42870fa0bf57f03f0b06be41817a1d99?s=80&r=g" width="80" height="80" alt="Me" class="float-left" /></a>
+	      I'm a programmer of various languages living in London
+	    </p>
 	  </div>
 
+
+
 	  <!-- footer ends -->
-	</div></div>
+	</div>
+      </div>
 
       <!-- footer-bottom starts -->
       <div id="footer-bottom">
@@ -159,21 +180,5 @@
   </body>
 
 
-  <script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'wjlroe-blog'; // required: replace example with your forum shortname
 
-    // The following are highly recommended additional parameters. Remove the slashes in front to use.
-    // var disqus_identifier = 'unique_dynamic_id_1234';
-    var disqus_url = 'http://wjlroe.github.com/{{ page.url }}';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
 </html>

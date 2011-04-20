@@ -3,11 +3,7 @@ layout: default
 title: Emacs for Android development
 ---
 
-<h2> {{ page.title }} </h2>
-
-<div class="image-section">
-   <img src="/images/img-post.jpg" alt="image post"/>
-</div>
+<h2><a href="{{ page.url }}">{{ page.title }}</a></h2>
 
 Today I started using Emacs rather than Eclipse to work on an Android project. There are a couple of things you need to get started though.
 
@@ -19,13 +15,17 @@ Because Java for Android uses Java 1.5 or above, it will be full of annotations 
 
 Now the emacs config for all the above is as follows:
 
-    (setq android-mode-sdk-dir "~/android-sdk-mac_86/")
-    (require 'android-mode)
-    (require 'java-mode-indent-annotations)
+{% highlight cl linenos %}
 
-    (setq java-mode-hook
-        (function (lambda()
-           (java-mode-indent-annotations-setup))))
+(setq android-mode-sdk-dir "~/android-sdk-mac_86/")
+(require 'android-mode)
+(require 'java-mode-indent-annotations)
+
+(setq java-mode-hook
+    (function (lambda()
+       (java-mode-indent-annotations-setup))))
+
+{% endhighlight %}
 
 Remember to change the android-mode-sdk-dir to match where you keep your Android SDK. This variable needs to be set before the android-mode is loaded. Also, if you have any other java-mode-hooks defined, you won't want to setq that variable, but use add-hook 'java-mode instead - otherwise this will overwrite your existing java-mode hooks.
 
@@ -79,4 +79,4 @@ Name and target are optional, as you have most likely already defined those from
 
 That's pretty much it. Remember that you can't run the install task each time because it'll fail if the project is already installed - just run the reinstall task each time you want to test your changes.
 
-Thanks to [http://blog.fmaj7.me/?p=18](http://blog.fmaj7.me/?p=18) where I found most of the information I used to get up and running.
+Thanks to [fmaj7's blog](http://blog.fmaj7.me/?p=18) where I found most of the information I used to get up and running.
