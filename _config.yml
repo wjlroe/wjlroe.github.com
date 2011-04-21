@@ -1,0 +1,17 @@
+url: http://wjlroe.github.com
+name: William Roe
+about: "I'm a programmer of various languages living in London"
+avatar_link: http://github.com/wjlroe
+repos:
+  - 
+    name: parse_perseus
+    url: https://github.com/wjlroe/parse_perseus
+  -
+    name: dotfiles
+    url: https://github.com/wjlroe/dotfiles
+  -
+    name: clj-gae-example
+    url: https://github.com/wjlroe/clj-dae-example
+  -
+    name: smaug
+    url: https://github.com/wjlroe/smaug

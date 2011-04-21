@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: Emacs for Android development
 ---
-
-<h2><a href="{{ page.url }}">{{ page.title }}</a></h2>
 
 Today I started using Emacs rather than Eclipse to work on an Android project. There are a couple of things you need to get started though.
 
@@ -71,7 +69,8 @@ If you try to use any of the provided keybindings, listed below:
 </table>
 They will probably fail because by default, when you start an Android project in Eclipse, it will not create a build.xml file and ant requires this for any of the above to work (you can probably start the emulator though as that doesn't rely on a per-project build file). So in order to have an ant build file in your project directory you need to run the following command:
 
-    android update project --name <project_name> --target <target_ID> --path path/to/your/project/
+    android update project --name <project_name> --target <target_ID> \\
+      --path path/to/your/project/
 
 Name and target are optional, as you have most likely already defined those from Eclipse. But in order to list the targets available, run:
 
@@ -80,3 +79,4 @@ Name and target are optional, as you have most likely already defined those from
 That's pretty much it. Remember that you can't run the install task each time because it'll fail if the project is already installed - just run the reinstall task each time you want to test your changes.
 
 Thanks to [fmaj7's blog](http://blog.fmaj7.me/?p=18) where I found most of the information I used to get up and running.
+
