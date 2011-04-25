@@ -2,27 +2,27 @@
  * HTML5 And CSS3 Theme version 1.2
  * By Jayj.dk 2009-2010
  * Download for free at http://jayj.dk/a-free-html5-and-css3-theme/
- 
+
 	Released under New BSD License
 	http://www.opensource.org/licenses/bsd-license.php
-	 
+
 	Copyright (c) 2009-2010, Jayj.dk
 	All rights reserved.
-	
+
 	Redistribution and use in source and binary forms, with or without modification,
 	are permitted provided that the following conditions are met:
-	
+
 		* Redistributions of source code must retain the above copyright notice,
 		  this list of conditions and the following disclaimer.
-	
+
 		* Redistributions in binary form must reproduce the above copyright notice,
 		  this list of conditions and the following disclaimer in the documentation
 		  and/or other materials provided with the distribution.
-	
+
 		* Neither the name of Jayj.dk nor the names of its
 		  contributors may be used to endorse or promote products derived from this
 		  software without specific prior written permission.
-	
+
 	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -48,7 +48,7 @@ a, abbr, acronym, address, big, cite, code,
 del, dfn, em, font, img, q, small, strong, sub, sup, tt, var,
 ol, ul, li, fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, figcaption, figure, 
+article, aside, canvas, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -68,7 +68,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 h1, h2, h3, h4, h5, h6 { font-weight: normal; }
 /* End reset */
 
-body { 
+body {
 	background: #eee url(/images/bg.png) repeat;
 	color: #333333;
 	font: 14px/24px Georgia, 'Times New Roman', Times, serif;
@@ -76,7 +76,7 @@ body {
 
 /* HTML5 */
 article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section { 
+footer, header, hgroup, menu, nav, section {
     display: block;
 }
 
@@ -126,8 +126,8 @@ ul { list-style: disc; }
 li { margin-left: 30px; }
 
 pre {
-	background: #cecdcd;
-	border: 2px solid #F83D87;
+	/*background: #cecdcd;*/
+	Border solid #F83D87;
 	font-size: 12px;
 	padding: 10px;
 	opacity: .75;
@@ -140,7 +140,7 @@ pre {
 }
 
 pre:hover {
-	opacity: 1;	
+	opacity: 1;
 }
 
 pre code { background: none; }
@@ -184,14 +184,14 @@ blockquote p { margin: 0; }
 
 #header h1 a:hover {
 	background: none;
-	text-decoration: none; 
+	text-decoration: none;
 	-webkit-transform: scale(1.1);
 	-moz-transform: scale(1.1);
 	transform: scale(1.1);
 }
 
 /* Content */
-#content { 
+#content {
 	background: url(/images/content_bg.png) repeat; /* Fallback for browser that doesn't support rgba */
 	background: rgba(204, 204, 204, .4);
 	border: 1px solid #ccc;
@@ -234,25 +234,25 @@ blockquote p { margin: 0; }
 		left: 0; top: 100%;
 		z-index: 100;
 		text-shadow: 1px 1px 0 #eae7e7;
-		
+
 		-webkit-box-shadow: 2px 3px 3px #4d4b4b;
 		-moz-box-shadow: 2px 3px 3px #4d4b4b;
 		box-shadow: 2px 3px 3px #4d4b4b;
-		
+
 		-webkit-border-bottom-right-radius: 5px;
 		-moz-border-radius-bottomright: 5px;
 		border-bottom-right-radius: 5px;
 	}
-	
+
 	#menu li:hover > ul { display: block;  }
-	
+
 	#menu ul li {
 		float: none;
 		min-width: 150px;
 	}
-	
+
 /* Post */
-.post { 
+.post {
 	min-height: 300px;
 	margin-bottom: 60px;
 	position: relative;
@@ -275,9 +275,9 @@ blockquote p { margin: 0; }
 	transition: opacity 0.15s ease-in-out;
 }
 
-.post h2 a:hover { 
-	background: none; 
-	opacity: 0.7; 
+.post h2 a:hover {
+	background: none;
+	opacity: 0.7;
 	text-decoration: none;
 	text-shadow: none;
 }
@@ -286,11 +286,11 @@ blockquote p { margin: 0; }
 
 	/* Post meta */
 	.postmeta {
-		margin: 30px 35px 0 0;
+		margin: 30px 35px 30px 0;
 		overflow: hidden;
 		text-shadow: 1px 1px 1px #F71570;
 	}
-	
+
 	.postmeta a { color: #fff; }
 
 
@@ -303,9 +303,9 @@ blockquote p { margin: 0; }
 
 .widget li { line-height: 30px; }
 
-.widget li a { 
+.widget li a {
 	color: #333;
-	padding: 4px 5px; 
+	padding: 4px 5px;
 	-webkit-transition: margin-left 0.3s linear;
 	-moz-transition: margin-left 0.3s linear;
 	transition: margin-left 0.3s linear;
@@ -320,7 +320,7 @@ blockquote p { margin: 0; }
 }
 
 /* Footer */
-#footer { 
+#footer {
 	margin: 20px 0 30px 20px;
 	text-shadow: 1px 0 1px #fff;
 }
@@ -354,7 +354,7 @@ textarea {
 	background: rgba(206, 205, 205, 0.6);
 	border: 2px solid #F83D87;
 	padding: 6px 5px;
-	
+
 	-webkit-box-shadow: inset -1px 1px 1px rgba(255, 255, 255, 0.65);
 	-moz-box-shadow: inset -1px 1px 1px rgba(255, 255, 255, 0.65);
 	box-shadow: inset -1px 1px 1px rgba(255, 255, 255, 0.65);
@@ -382,7 +382,7 @@ form input[type=submit] {
 }
 
 /* When a form input is invalid - Used on the email type field */
-input:invalid { 
+input:invalid {
 	border: 2px solid red;
 	-webkit-transform: rotate(1deg);
 	-moz-transform: rotate(1deg);
@@ -394,11 +394,11 @@ input:invalid {
 		margin-top: 30px;
 		overflow: hidden;
 	}
-	
+
 	#contactform p {
 		overflow: hidden;
 	}
-	
+
 	#contactform label {
 		float: left;
 		padding-top: 10px;
@@ -434,7 +434,7 @@ input[type=submit]  {
 	padding: 5px 16px;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px; 
+	-moz-border-radius: 10px;
 }
 
 .btn:hover,
@@ -443,8 +443,8 @@ input[type=submit]:hover {
 	background: #F71570;
 }
 
-img.alignleft, 
-img.alignright { 
+img.alignleft,
+img.alignright {
 	background: #f2f2f2;
 	border: 2px solid #cecdcd;
 	padding: 5px;
@@ -465,9 +465,9 @@ img.alignright { margin-left: 15px; }
 
 /*
 .thumbnail {
-	-webkit-transform: rotate(1deg); 
-	-moz-transform: rotate(1deg); 
-	transform: rotate(1deg); 
+	-webkit-transform: rotate(1deg);
+	-moz-transform: rotate(1deg);
+	transform: rotate(1deg);
 }
 .post:nth-child(odd) .thumbnail {
 	-webkit-transform: rotate(-1deg);
@@ -475,3 +475,25 @@ img.alignright { margin-left: 15px; }
 	transform: rotate(-1deg);
  }
 */
+
+aside.post {
+    padding: 5px;
+    float:right;
+    width: 40%;
+    border: 1px solid #cccccc;
+    background: none repeat scroll 0 0 rgba(204, 204, 204, 0.8);
+    margin: 5px;
+    min-height: 1px;
+}
+
+#ribbon p a {
+    background: transparent url('/images/forkme_right_red_aa0000.png') no-repeat right top;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    text-indent: -999em;
+    width: 11.625em;
+    height: 11.625em;
+    display: blocked;
+}
