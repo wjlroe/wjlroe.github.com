@@ -69,12 +69,20 @@ If you try to use any of the provided keybindings, listed below:
 </table>
 They will probably fail because by default, when you start an Android project in Eclipse, it will not create a build.xml file and ant requires this for any of the above to work (you can probably start the emulator though as that doesn't rely on a per-project build file). So in order to have an ant build file in your project directory you need to run the following command:
 
+{% highlight bash %}
+
     android update project --name <project_name> --target <target_ID> \\
       --path path/to/your/project/
 
+{% endhighlight %}
+
 Name and target are optional, as you have most likely already defined those from Eclipse. But in order to list the targets available, run:
 
+{% highlight bash %}
+
     android list targets
+
+{% endhighlight %}
 
 That's pretty much it. Remember that you can't run the install task each time because it'll fail if the project is already installed - just run the reinstall task each time you want to test your changes.
 
