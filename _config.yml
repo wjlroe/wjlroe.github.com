@@ -3,7 +3,10 @@ name: William Roe
 about: "I'm a programmer of various languages living in London"
 avatar_link: http://github.com/wjlroe
 repos:
-  - 
+  -
+    name: lanniser
+    url: https://github.com/wjlroe/lannister
+  -
     name: parse_perseus
     url: https://github.com/wjlroe/parse_perseus
   -
