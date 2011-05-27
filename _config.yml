@@ -5,6 +5,9 @@ about: "I'm a programmer of various languages living in London"
 avatar_link: http://github.com/wjlroe
 repos:
   -
+    name: arya
+    url: https://github.com/wjlroe/arya
+  -
     name: lanniser
     url: https://github.com/wjlroe/lannister
   -
