@@ -3,16 +3,16 @@ layout: default
 title: William Roe
 ---
 
-{% for post in site.posts limit:5 %}
+{% for post in site.posts limit:3 %}
 <article class="post">
 <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
 
-{{ post.content | truncatewords:100 }}
+{{ post.content }}
 </article>
 <footer class="postmeta">
   <span class="btn alignleft">
     Posted on <time datetime="{{ post.date | date: "%Y-%m-%d" }}" pubdate>{{ post.date | date_to_long_string }}</time>
   </span>
   <a href="{{ post.url }}" class="more-link alignright">Read more</a>
-</footer> 
+</footer>
 {% endfor %}
