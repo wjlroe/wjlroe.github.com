@@ -333,7 +333,8 @@ input[type=submit]:focus{
 }
 #coreContent p,
 #coreContent li,
-#coreContent dd{
+#coreContent dd,
+#coreContent aside{
   margin-bottom: 1.7em;
   font-size: 1.4em;
   line-height: 1.5em;
@@ -1079,4 +1080,14 @@ a.comment-edit-link:visited{
   height: 0;
   clear: both;
   visibility: hidden;
+}
+
+aside.post {
+    padding: 5px;
+    float:right;
+    width: 40%;
+    border: 1px solid #cccccc;
+    background: none repeat scroll 0 0 rgba(204, 204, 204, 0.8);
+    margin: 15px;
+    min-height: 1px;
 }
