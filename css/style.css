@@ -197,7 +197,7 @@ input[type=submit]:focus{
 #siteWrapper{
   margin: 0 auto;
   padding-top: 15px;
-  width: 500px;
+  width: 600px;
   text-align: center;
   position: relative;
 
@@ -308,7 +308,7 @@ input[type=submit]:focus{
 
 #coreContent{
   float: left;
-  width: 500px;
+  width: 600px;
   margin-top: 8px;
 }
 
