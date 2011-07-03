@@ -1,0 +1,11 @@
+#ribbon p a {
+    background: transparent url('/images/forkme_right_red_aa0000.png') no-repeat right top;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    text-indent: -999em;
+    width: 11.625em;
+    height: 11.625em;
+    display: blocked;
+}

@@ -1,5 +1,6 @@
 url: http://wjlroe.github.com
 name: William Roe
+author: Will
 email: willroe@gmail.com
 about: "I'm a programmer of various languages living in London"
 avatar_link: http://github.com/wjlroe
@@ -22,3 +23,19 @@ repos:
   -
     name: smaug
     url: https://github.com/wjlroe/smaug
+elsewhere:
+  -
+    text: Facebook
+    href: http://www.facebook.com/wjlroe
+  -
+    text: Twitter
+    href: http://twitter.com/wjlroe
+  -
+    text: Github
+    href: https://github.com/wjlroe
+  -
+    text: Flickr
+    href: http://flickr.com/wjlroe
+  -
+    text: LinkedIn
+    href: http://uk.linkedin.com/in/wjlroe

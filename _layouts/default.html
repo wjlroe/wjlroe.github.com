@@ -13,10 +13,7 @@
     <link rel="openid.server" href="http://www.myopenid.com/server" />
     <link rel="openid.delegate" href="http://wjlroe.myopenid.com/" />
 
-
-    <link href="/css/960.css" rel="stylesheet" type="text/css" />
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="/css/fruity.css" rel="stylesheet" type="text/css" />
     <link href="http://feeds.feedburner.com/wjlroe" rel="alternate" title="{{ site.name }}" type="application/atom+xml" />
 
     <script type="text/javascript">
@@ -44,27 +41,23 @@
 
 </head>
 
-<body>
+<body class="home blog">
 
-  <div id="ribbon">
-    <p>
-      <a href="http://github.com/wjlroe" title="Form me on github">Fork me on github</a>
-    </p>
-  </div>
+  <a href="http://github.com/wjlroe"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
 
-<div id="wrapper" class="container_12">
+<div id="siteWrapper" class="container_12">
 
     <header id="header" class="grid_12">
 
-    <h1><a href="/index.html">{{ site.name }}</a></h1>
+    <h1 class="vcard author"><a href="/index.html" class="fn">{{ site.name }}</a></h1>
 
     </header> <!-- end header -->
 
     <div id="content">
 
-        <nav>
+        <nav id="mainNav">
             <ul id="menu" class="clearfix">
-                <li class="current"><a href="/index.html">Home</a></li>
+                <li class="page_item current"><a href="/index.html">Home</a></li>
                 <!--<li>
                 	<a href="about.html">About</a>
                     <ul>
@@ -77,37 +70,37 @@
             </ul>
             <br class="clear" />
         </nav>
-       <div id="main" class="grid_8 alpha">
+
+	<div id="siteDescription">
+	  {{ site.about }}
+	</div>
+
+       <div id="coreContent" class="hfeed">
          {{ content }}
-          </div> <!-- end main -->
 
-    <div id="sidebar" class="grid_4 omega">
-
-        <aside class="widget">
-            <h3>About</h3>
-            <p><a href="{{ site.avatar_link }}"><img src="http://www.gravatar.com/avatar/42870fa0bf57f03f0b06be41817a1d99?s=80&r=g" width="80" height="80" alt="Me" class="thumbnail alignright" /></a>{{ site.about }}</p>
-            </aside> <!-- end widget -->
-        <aside class="widget">
-            <h3>github repos</h3>
-            <ul>
-              {% for repo in site.repos %}
-              <li><a href="{{ repo.url }}">{{ repo.name }}</a></li>
-              {% endfor %}
-            </ul>
-            </aside> <!-- end widget -->
-
-    </div> <!-- end sidebar -->
-
-    </div> <!-- end content -->
-
-    <footer id="footer" class="grid_12">
-        <!-- You're free to remove the credit link in the footer, but please, please leave it there. -->
-        <p>Copyright &copy; {{ site.time | date: "%Y" }} <a href="http://wjlroe.github.com">wjlroe.github.com</a> - Design by <a href="http://jayj.dk" title="Design by Jayj.dk">Jayj.dk</a></p>
-    </footer> <!-- end footer -->
+	 <div class="pageNav">
+	   <div class="prev"></div>
+	   <div class="next"></div>
+	 </div>
+       </div> <!-- end main -->
 
     <div class="clear"></div>
 
 </div> <!-- end wrapper -->
+</div>
+
+
+<footer id="footer" class="grid_12">
+  <h5>Elsewhere</h5>
+  <ul class="elsewhere">
+    {% for link in site.elsewhere %}
+    <li><a href="{{ link.href }}">{{ link.text }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <!-- You're free to remove the credit link in the footer, but please, please leave it there. -->
+  <p>Copyright &copy; {{ site.time | date: "%Y" }} <a href="http://wjlroe.github.com">wjlroe.github.com</a> - Design by <a href="http://jimbarraud.com/manifest/" title="Design by Jim Barraud">Manifest</a></p>
+</footer> <!-- end footer -->
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 
