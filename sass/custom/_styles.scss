@@ -7,9 +7,12 @@
 
 aside.post {
 	@extend blockquote;
-	float: right;
-  	width: 45%;
-  	margin: .5em 0 1em 1.5em;
+
+	@media only screen and (min-width: 750px) {
+		float: right;
+  		width: 45%;
+  		margin: .5em 0 1em 1.5em;
+  	}
 }
 
 table th {
