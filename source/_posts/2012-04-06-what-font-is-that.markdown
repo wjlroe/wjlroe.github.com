@@ -18,6 +18,6 @@ For your copy/paste convenience, I have provided the code for the WhatFont bookm
 javascript:(function(){var%20d=document,s=d.createElement('scr'+'ipt'),b=d.body,l=d.location;s.setAttribute('src','http://chengyinliu.com/wf.js?o='+encodeURIComponent(l.href)+'&t='+(new%20Date().getTime()));b.appendChild(s)})();
 {% endcodeblock %}
 
-Turned out that that post was using [Cimson Text](http://aldusleaf.org/crimson/) from Google Webfonts. Nice.
+Turned out that that post was using [Crimson Text](http://aldusleaf.org/crimson/) from Google Webfonts. Nice.
 
 It looks like Crimson Text is a promising free font that might have Polytonic Greek characters at some point so that's useful to know for me.
