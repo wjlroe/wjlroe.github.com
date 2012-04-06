@@ -1,2 +1,18 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+
+.greek {
+	font-family: $greek-font-family;
+}
+
+aside.post {
+	@extend blockquote;
+	float: right;
+  	width: 45%;
+  	margin: .5em 0 1em 1.5em;
+}
+
+table th {
+	padding: 0.25em;
+	font-weight: bold;
+}
