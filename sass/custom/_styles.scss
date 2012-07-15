@@ -19,3 +19,74 @@ table th {
 	padding: 0.25em;
 	font-weight: bold;
 }
+
+html {
+  background: $page-bg;
+}
+
+p { text-align: justify; }
+
+@mixin post-header {
+  font-size: 1.2em;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+@media only screen {
+  body { font-size: 1.5em; }
+  h1 { font-size: 1.2em; font-variant: small-caps; }
+  #content .blog-index article h1 {
+    @include post-header;
+  }
+  #content article header h1 {
+    @include post-header;
+  }
+}
+
+@media only screen and (min-width: 750px) {
+  body { font-size: 2em; }
+  h1 { font-size: 1.3em; font-variant: small-caps; }
+}
+
+body {
+  @media only screen and (min-width: 750px) {
+    aside.sidebar{ @include collapse-sidebar; }
+    #content aside.sidebar.thirds section {
+      float: left;
+      margin-left: 1%;
+
+      &.first {
+        margin-left: 1%;
+        clear: none;
+      }
+    }
+  }
+  #content { margin-right: 0px; }
+}
+
+#content div.pagination {
+  a {
+    &[href*=archive] {
+      &:before, &:after { content: '\00a7'; padding: 0 .3em; }
+    }
+  }
+}
+
+#content .sidebar h1 {
+  a {
+    text-decoration: none;
+    white-space: normal !important;
+
+    img {
+      float: left;
+      margin-right: 0.5em;
+      border: 0 none;
+    }
+  }
+}
+
+#content aside.sidebar h1 {
+  font-weight: normal;
+}
+
+.toggle-sidebar { display: none; }
