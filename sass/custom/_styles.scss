@@ -113,3 +113,7 @@ h3,h4,h5 { font-weight: normal; }
   border-left: 5px solid lighten($title-color, 40);
   padding-left: 10px;
 }
+
+pre, .highlight, .gist-highlight {
+  &::-webkit-scrollbar {  height: .3em; background: $solar-scroll-bg; }
+}
