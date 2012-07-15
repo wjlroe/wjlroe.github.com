@@ -24,12 +24,18 @@ html {
   background: $page-bg;
 }
 
-
+@mixin article-header {
+  border-left: 5px solid lighten($title-color, 40);
+  margin-left: -15px;
+  padding-left: 10px;
+  background-color: lighten($title-color, 100);
+}
 
 @mixin post-header {
   font-size: 1.2em;
   text-transform: uppercase;
   font-weight: normal;
+  padding-bottom: 0;
 }
 
 @media only screen {
@@ -43,12 +49,12 @@ html {
   }
 
   #content .blog-index article header {
-    border-left: 5px solid lighten($title-color, 40);
-    margin-left: -10px;
-    background-color: lighten($title-color, 90);
-    h1,p {
-      padding-left: 5px;
-    }
+    @include article-header;
+  }
+
+  #content article header {
+    @include article-header;
+    padding-bottom: 0;
   }
 }
 
@@ -66,7 +72,7 @@ body {
       margin-left: 1%;
 
       &.first {
-        margin-left: 1%;
+         margin-left: 1%;
         clear: none;
       }
     }
@@ -101,3 +107,9 @@ body {
 
 h3,h4,h5 { font-weight: normal; }
 .toggle-sidebar { display: none; }
+
+.entry-content h3,h4,h5 {
+  margin-left: -15px;
+  border-left: 5px solid lighten($title-color, 40);
+  padding-left: 10px;
+}
