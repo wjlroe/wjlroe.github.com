@@ -24,7 +24,7 @@ html {
   background: $page-bg;
 }
 
-p { text-align: justify; }
+
 
 @mixin post-header {
   font-size: 1.2em;
@@ -46,6 +46,7 @@ p { text-align: justify; }
 @media only screen and (min-width: 750px) {
   body { font-size: 2em; }
   h1 { font-size: 1.3em; font-variant: small-caps; }
+  p { text-align: justify; }
 }
 
 body {
