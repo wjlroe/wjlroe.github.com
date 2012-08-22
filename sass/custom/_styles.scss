@@ -80,6 +80,18 @@ body {
   #content { margin-right: 0px; }
 }
 
+body > nav {
+  display: none;
+}
+
+footer div.meta.pagination {
+  margin: 0;
+
+  a {
+    margin: 0;
+  }
+}
+
 #content div.pagination {
   a {
     &[href*=archive] {
