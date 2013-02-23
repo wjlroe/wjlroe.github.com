@@ -8,7 +8,7 @@ comments: true
 
 I have just finished a 6 hour hacking session on [parse_perseus](http://github.com/wjlroe/parse_perseus). The aims were to fix most of the encoding problems, split the content up into books and create a table of contents. Other than a few problems with encoding, I managed to complete all that.
 
-#### Tables of contents
+## Tables of contents
 
 The table of contents was a bit strange. The Kindle's mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains `<navPoint>` elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here's an abridged version of the NCX file I had generated:
 
@@ -108,7 +108,7 @@ The important bit there is the `<reference>` element inside `<guide>` that is of
 
 That's just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.
 
-#### Encoding
+## Encoding
 
 I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don't expect anyone to know what that is, I didn't and it's still just a character to me. But it looks like this:
 
@@ -160,7 +160,7 @@ This isn't ideal because it can't match either the last `s` of the last word in 
 
 - - -
 
-### References
+## References
 
 * [fnparse](http://github.com/joshua-choi/fnparse/) which is awesome for taming parse-m monads in Clojure.
 * Thanks to [Greek Diacritics](http://www.tlg.uci.edu/~opoudjis/unicode/gkdiacritics.html) for information about combining diacritics.
