@@ -32,15 +32,11 @@ html {
 }
 
 @mixin post-header {
-  font-size: 1.2em;
-  text-transform: uppercase;
   font-weight: normal;
   padding-bottom: 0;
 }
 
 @media only screen {
-  body { font-size: 1.5em; }
-  h1 { font-size: 1.2em; }
   #content .blog-index article h1 {
     @include post-header;
   }
@@ -59,8 +55,6 @@ html {
 }
 
 @media only screen and (min-width: 750px) {
-  body { font-size: 1.5em; }
-  h1 { font-size: 1.3em; }
   p { text-align: justify; }
 }
 
