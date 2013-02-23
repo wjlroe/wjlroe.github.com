@@ -65,6 +65,7 @@ html {
 }
 
 body {
+  @extend .sans;
   @media only screen and (min-width: 750px) {
     aside.sidebar{ @include collapse-sidebar; }
     #content aside.sidebar.thirds section {
