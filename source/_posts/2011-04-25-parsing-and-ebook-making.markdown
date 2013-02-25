@@ -158,6 +158,21 @@ The problem with matching something at the end of a word is that fnparse's match
 
 This isn't ideal because it can't match either the last `s` of the last word in a string (or line), or `s` followed only by a non-character (such as `:`). This is something I have to work on, but fnparse isn't making it easy for me here.
 
+So as a result of all that, here's the first verse of the Odyssey by Homer:
+
+<blockquote class="greek" style="font-style: normal">
+ἄνδρα μοι ἔννεπε, μοῦσα, πολύτροπον, ὃς μάλα πολλὰ<br/>
+πλάγχθη, ἐπεὶ Τροίης ἱερὸν πτολίεθρον ἔπερσεν:<br/>
+πολλῶν δ᾽ ἀνθρώπων ἴδεν ἄστεα καὶ νόον ἔγνω,<br/>
+πολλὰ δ᾽ ὅ γ᾽ ἐν πόντῳ πάθεν ἄλγεα ὃν κατὰ θυμόν,<br/>
+ἀρνύμενος ἥν τε ψυχὴν καὶ νόστον ἑταίρων.<br/>
+ἀλλ᾽ οὐδ᾽ ὣς ἑτάρους ἐρρύσατο, ἱέμενός περ:<br/>
+αὐτῶν γὰρ σφετέρῃσιν ἀτασθαλίῃσιν ὄλοντο,<br/>
+νήπιοι, οἳ κατὰ βοῦς Ὑπερίονος Ἠελίοιο<br/>
+ἤσθιον: αὐτὰρ ὁ τοῖσιν ἀφείλετο νόστιμον ἦμαρ.<br/>
+τῶν ἁμόθεν γε,  θεά, θύγατερ Διός, εἰπὲ καὶ ἡμῖν.
+</blockquote>
+
 - - -
 
 ## References
