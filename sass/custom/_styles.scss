@@ -31,6 +31,11 @@ html {
   background-color: lighten($title-color, 100);
 }
 
+@mixin big-article-header {
+  margin-left: -25px;
+  padding-left: 20px;
+}
+
 @mixin post-header {
   font-weight: normal;
   padding-bottom: 0;
@@ -56,6 +61,14 @@ html {
 
 @media only screen and (min-width: 750px) {
   p { text-align: justify; }
+
+  #content .blog-index article header {
+    @include big-article-header;
+  }
+
+  #content article header {
+    @include big-article-header;
+  }
 }
 
 body {
@@ -121,6 +134,13 @@ h2, h3,h4,h5 { font-weight: normal; }
   padding-left: 10px;
   padding-top: 0;
   background: white;
+}
+
+@media only screen and (min-width: 750px) {
+  .entry-content h2,h3,h4,h5 {
+    margin-left: -25px;
+    padding-left: 20px;
+  }
 }
 
 pre, .highlight, .gist-highlight {
