@@ -129,6 +129,22 @@ footer div.meta.pagination {
   font-weight: normal;
 }
 
+#content > div {
+  padding: { top: 0; bottom: 0; }
+
+  > article {
+    padding-top: 2em;
+
+    header {
+      background: none;
+
+      h1 {
+        font-size: 2.2em;
+      }
+    }
+  }
+}
+
 h2, h3,h4,h5 { font-weight: normal; }
 .toggle-sidebar { display: none; }
 
