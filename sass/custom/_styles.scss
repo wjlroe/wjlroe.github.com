@@ -90,6 +90,11 @@ body {
     }
   }
   #content { margin-right: 0px; }
+
+  > header h1 {
+    font-size: 1.7em;
+    margin-left: -0.1em;
+  }
 }
 
 body > nav {
