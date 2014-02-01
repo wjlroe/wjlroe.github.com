@@ -10,7 +10,7 @@ On OS X, if I use [tmux](http://tmux.sourceforge.net/) (or more usually,
 [wemux](https://github.com/zolrath/wemux) for pairing) then I end up with oddly
 named windows like this:
 
-![](https://www.evernote.com/shard/s17/sh/76f2de7b-b8be-4e36-a9f9-99fd7c04ce20/13b04fea46e14efe1593fb503da7ea24/deep/0/01-02-2014-15-45.png)
+![](http://d14vbe8lasdppi.cloudfront.net/01_02_2014_15_45.jpg)
 
 This is because I've followed the awesome instructions from
 [Dr Bunsen's Text Triumvirate](http://www.drbunsen.org/the-text-triumvirate/)
