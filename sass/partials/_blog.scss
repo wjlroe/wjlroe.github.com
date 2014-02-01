@@ -87,7 +87,7 @@ article + article {
     background: $img-border top left repeat-x;
   }
 }
-#content .blog-index {
+#content .blog-index, #content .blog-post {
   padding: { top: 0; bottom: 0; }
   article { padding-top: 2em; }
   article header { background: none; padding-bottom: 0; }
