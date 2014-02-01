@@ -9,7 +9,7 @@ layout: nil
   <link href="{{ site.url }}/"/>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
   <id>{{ site.url }}/</id>
-  <icon>{{ root_url }}/favicon.png"</icon>
+  <icon>{{ site.url }}/favicon.png</icon>
   <author>
     <name><![CDATA[{{ site.author | strip_html }}]]></name>
     {% if site.email %}<email><![CDATA[{{ site.email }}]]></email>{% endif %}
