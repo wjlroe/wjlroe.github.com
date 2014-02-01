@@ -15,6 +15,10 @@ aside.post {
   	}
 }
 
+aside.update {
+  @include shadow-box($border: #fff .5em solid, $shadow: rgba(#000, .8) 0 1px 4px, $border-radius: .3em);
+}
+
 table th {
 	padding: 0.25em;
 	font-weight: bold;

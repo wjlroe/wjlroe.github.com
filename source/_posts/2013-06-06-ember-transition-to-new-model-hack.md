@@ -5,6 +5,11 @@ date: 2013-06-06 19:53
 categories: [ember, javascript]
 ---
 
+<aside class="update">
+**Update**: None of this is required with current versions of Ember and
+Ember-data.
+</aside>
+
 A common pattern with webapps in these exciting times is the
 transition-to-new-thing-you-just-created pattern. The way it works is this: you
 fill in a form to create a new thing (like, a widget or something) and then when
