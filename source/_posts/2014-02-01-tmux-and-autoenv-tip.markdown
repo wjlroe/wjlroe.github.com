@@ -22,9 +22,7 @@ One quick way to get around this and save time renaming my tmux windows, was to
 use [autoenv](https://github.com/kennethreitz/autoenv) and add a file named
 `.env` to projects with content similar to:
 
-```bash
-tmux rename-window "project-name"
-```
+    tmux rename-window "project-name"
 
 This is piling hacks on top of hacks, but at least it saves a bit of time for
 frequently visited directories.
