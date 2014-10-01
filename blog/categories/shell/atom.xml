@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: shell | William Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/shell/atom.xml" rel="self"/>
+  <link href="http://blog.wjlr.org.uk/"/>
+  <updated>2014-10-01T14:36:28+01:00</updated>
+  <id>http://blog.wjlr.org.uk/</id>
+  <author>
+    <name><![CDATA[Will Roe]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A Silver Searcher Gotcha]]></title>
+    <link href="http://blog.wjlr.org.uk/2014/02/01/silver-searcher-gotcha.html"/>
+    <updated>2014-02-01T15:34:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2014/02/01/silver-searcher-gotcha</id>
+    <content type="html"><![CDATA[<p>There is a gotcha with <a href="https://github.com/ggreer/the_silver_searcher">the silver searcher</a> and how it treats
+<code>.gitignore</code> files. The following pattern will work as expected with <code>git</code>:</p>
+
+<pre><code>/log
+</code></pre>
+
+<p>I.e. <code>git</code> will ignore everything in that directory, however The Silver Searcher
+doesn't understand that and it'll still show matching lines from files in
+<code>log/</code>. For <code>git</code> and <code>ag</code> (The Silver Searcher) to both ignore that directory
+and its contents, change <code>/log</code> to <code>log</code>.</p>
+]]></content>
+  </entry>
+  
+</feed>

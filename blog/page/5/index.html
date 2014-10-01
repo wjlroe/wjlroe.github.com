@@ -1,0 +1,618 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>William Roe&#146;s blog</title>
+  <meta name="author" content="Will Roe">
+
+  
+  <meta name="description" content="This is a howto guide for installing Ubuntu Natty on the troublesome Sony Vaio VPC-Y21-S1E. I say troublesome because no distribution of Linux &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.wjlr.org.uk/blog/page/5/index.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="William Roe&#146;s blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Caudex:400,700,400italic,700italic&subset=latin,greek-ext,greek,latin-ext'
+      rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="//use.typekit.net/ntz0pdz.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+<!-- For iPhone 6 Plus with @3× display: -->
+<link rel="apple-touch-icon-precomposed" sizes="180x180" href="/images/apple-touch-icon-180x180-precomposed.png">
+<!-- For iPad with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/apple-touch-icon-152x152-precomposed.png">
+<!-- For iPad with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+<!-- For iPhone with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/apple-touch-icon-120x120-precomposed.png">
+<!-- For iPhone with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/apple-touch-icon-76x76-precomposed.png">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-57x57-precomposed.png"><!-- 57×57px -->
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-7810285-4']);
+    _gaq.push(['_setSiteSpeedSampleRate', 100]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">William Roe&#146;s blog</a></h1>
+  
+    <h2>A variety of geekery</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/02/install-natty-sony-vaio-vpc-y21.html">How to Install Ubuntu Natty on the Sony Vaio VPC Y21 S1E</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-02T00:00:00+01:00" pubdate data-updated="true">May 2<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is a howto guide for installing Ubuntu Natty on the troublesome Sony Vaio VPC-Y21-S1E. I say troublesome because no distribution of Linux installs a fully working system on this laptop to the best of my knowledge, even though the hardware is all very common and not very new. Owning this laptop and running Linux is like going back in time to the early 2000s when installing Linux was a week&#8217;s work on any machine. It&#8217;s horrendous that even distros that favour ease of use by default have yet to achieve good hardware support.</p>
+
+<h2>Step 1 - install Ubuntu</h2>
+
+<p>I used the alternative amd64 ISO image for this (and a USB CDROM drive). The text mode installer worked fine as usual and installed in an hour or so. Not exactly quick, but probably that&#8217;s due to very slow IO on this machine.</p>
+
+<p>Once Ubuntu Natty is installed and reboots into your new system, you will notice a couple of things. Firstly the graphics will be running in some kind of generic mode with the wrong resolution. The native resolution of this panel is the now relatively standard 1366x768 of this class of laptop. Out of the box though, Ubuntu will boot in 1024x768 and it looks horrendous. According to Xorg.0.log it will select the VESA driver instead of the intel one it should be using. This is why it will start in unaccelerated, not much works mode. Needless to say, Unity will not be making an appearance yet. I think this is because there is a regression in the 2.6.36 kernel - according to another user of this laptop, the previous kernel version (2.6.37rc8) should work fine.</p>
+
+<h2>Step 2 - get a working kernel</h2>
+
+<p>You&#8217;re going to need to get the network setup before you can do anything useful. Out of the box, I&#8217;m not sure if the wireless is working or not because no mouse will work. The touchpad does nothing and any mouse I plugged in didn&#8217;t work either. This is extremely poor if even a simple USB mouse won&#8217;t work.</p>
+
+<p>The first thing to try is to get a working kernel installed. I headed here <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v2.6.37-rc8-natty/">Index of /~kernel-ppa/mainline/v2.6.37-rc8-natty</a> to get the headers and image packages for the amd64. It&#8217;s pretty difficult to get anything onto the laptop since USB isn&#8217;t working at all under Natty. I tried using a USB flash drive to copy the kernel files over - no luck. So what I did was shorten the kernel-ppa link <a href="http://bit.ly/ieDkmQ">http://bit.ly/ieDkmQ</a>, connected the laptop to my ADSL router with an ethernet cable and downloaded those files. I had to keep telling myself it was in fact still 2011.</p>
+
+<p>Once I&#8217;d installed the older kernel and rebooted, things started to work. The bootup screen was garbled however and I got what looked like a kernel panic, with a stackframe all over the place - but it wasn&#8217;t because I could switch to a random VC and back to the 7th VC and see GDM there. It&#8217;s just a complete mess. I think I&#8217;m gonna have to disable the bootspash stuff because it&#8217;s so incredibly messed up (for every other install of Linux on this laptop I&#8217;ve had to do that).</p>
+
+<h2>Step 3 - Change the default kernel</h2>
+
+<p>We need to change the default kernel that boots to avoid booting a broken kernel every time we turn the laptop on.</p>
+
+<ul>
+<li>Set <code>GRUB_DEFAULT=saved</code> in the file <code>/etc/default/grub</code>, so we can set the default kernel.</li>
+<li>I wanted to find out what the menuentry is for the kernel I&#8217;ve just installed, so I ran:</li>
+</ul>
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>grep menuentry /boot/grub/grub.cfg
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will print out every entry in GRUB. This is all from the <a href="https://help.ubuntu.com/community/Grub2">Grub2</a> page.</p>
+
+<ul>
+<li>Now use the appropriate menuentry to set as the default. If you installed the same one I did, then that will be &#8220;Ubuntu, with Linux 2.6.37-020637rc8-generic&#8221;:</li>
+</ul>
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo grub-set-default <span class="s1">&#39;Ubuntu, with Linux 2.6.37-020637rc8-generic&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Save all that to grub:</li>
+</ul>
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-grub
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it, should be set now. This didn&#8217;t work for me though. With ever release of grub and ubuntu tools, it gets more and more difficult to do simple things. It&#8217;s cool that update-grub can detect all the OSes on your hard drive and boot them (it ignored the other Ubuntu install ironically so it&#8217;s not included in the boot menu, pretty silly bug). But please! the ability to set a default kernel or menuentry should be easy and <em>should work</em>. In the end, I set <code>GRUB_SAVEDEFAULT=true</code> in <code>/etc/default/grub</code> and chose the kernel I wanted so that in future it&#8217;ll boot that one every time. What a joke.</p>
+
+<p>For my sanity, I turned off the bootscreen which, on this laptop is severly broken. Even though I&#8217;ve turned the boot splash off, I still have to switch to another VC and back to 7 to see the GDM login screen. Broken.</p>
+
+<h2>Step 4 - Getting wireless working</h2>
+
+<p>Now we have the mouse working, and USB mice work and graphics are as good as you&#8217;ll probably ever get on Linux (i.e. not great).</p>
+
+<p>Wireless is disabled though and you can&#8217;t enable it from the networking icon (Network Manager). This is an issue I&#8217;ve had with Ubuntu on this machine before and I had to dig around to find out how to force it to be enabled.</p>
+
+<p>Enabling the wirelss is not a simple task. It involves messing around with <code>rfkill</code> and it&#8217;s not a simple matter of running <code>rfkill unblock all</code> either - which is maddening. The wireless card is still soft-blocked after that. (Hard blocked means the hardware switch is off and soft blocked means it&#8217;s turned off in software somewhere).</p>
+
+<p>I couldn&#8217;t find the solution by googling and browsing a million Ubuntu forum threads, but checking my <code>/etc/modprobe.d/</code> directory in the other Ubuntu install pointed the way. You need a file with the following contents:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>blacklist acer-wmi
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I called that file <code>blacklist-acer-wmi.conf</code> and this time I remembered to copy it into my Dropbox folder so that I won&#8217;t forget about it again.</p>
+
+<h2>Suspend</h2>
+
+<p>Suspend and resume works with Natty! Yay! It didn&#8217;t work on this laptop with Maverick. So we have <em>some</em> progress.</p>
+
+<h2>Multiple monitors</h2>
+
+<p>I tried plugging a VGA monitor in and it was detected and the correct resolution was selected. Wonderful. However, when I tried to change the layout of the monitors, it messed up completely and I ended up with random desktops being drawn all over the monitors. Unplugging and plugging the monitor in fixed that, with only some minor rendering issues (there was a black border around much of the second desktop that went away when I moved a window around). This sort of thing should have been sorted a long time ago, it&#8217;s tiresome to be messing around with such a mess.</p>
+
+<h2>Other problems</h2>
+
+<ol>
+<li>When you launch the Update Manager, it still reports everything is up do date without checking first. This is really stupid, having to click on &#8220;Check&#8221; to download the latest package definitions before it realises there are updates to install. It should take the fact that you&#8217;ve deliberately openned Update Manager for the sole purpose of checking whether your software is up-to-date and not tell you out-of-date information.</li>
+<li>Keyboard navigation is still horrible in Gnome (that&#8217;s the Classic desktop thing that Ubuntu puts you in if there are problems with your drivers - very likely).</li>
+</ol>
+
+
+<h2>Summary</h2>
+
+<p>Linux and Ubuntu have a very long way to go before they can start to compete with the commercial alternatives. Although Unity is a refreshing innovation on desktop interfaces, it really needs to be backed up with great hardware support and general ease of use that goes a little more than skin deep.</p>
+
+<p>I think I will be posting a review of Natty later - that will focus on Natty as a working system, rather than specific to this laptop. So far though, having used it for a couple of hours setting up my environment, it&#8217;s a great system. It needs a lot more QA to sort out the hardware and system problems though.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/04/25/parsing-and-ebook-making.html">Parsing and Ebook Making</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-25T00:00:00+01:00" pubdate data-updated="true">Apr 25<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have just finished a 6 hour hacking session on <a href="http://github.com/wjlroe/parse_perseus">parse_perseus</a>. The aims were to fix most of the encoding problems, split the content up into books and create a table of contents. Other than a few problems with encoding, I managed to complete all that.</p>
+
+<h2>Tables of contents</h2>
+
+<p>The table of contents was a bit strange. The Kindle&#8217;s mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains <code>&lt;navPoint&gt;</code> elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here&#8217;s an abridged version of the NCX file I had generated:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span class='line'><span class="cp">&lt;!DOCTYPE ncx PUBLIC &quot;-//NISO//DTD ncx 2005-1//EN&quot;</span>
+</span><span class='line'><span class="cp">   &quot;http://www.daisy.org/z3986/2005/ncx-2005-1.dtd&quot;&gt;</span>
+</span><span class='line'><span class="nt">&lt;ncx</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.daisy.org/z3986/2005/ncx/&quot;</span> <span class="na">version=</span><span class="s">&quot;2005-1&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:uid&quot;</span> <span class="na">content=</span><span class="s">&quot;http://en.wikipedia.org/wiki/The_Odyssey&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:depth&quot;</span> <span class="na">content=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:totalPageCount&quot;</span> <span class="na">content=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:maxPageNumber&quot;</span> <span class="na">content=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;docTitle&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;text&gt;</span>Ὀδύσσεια<span class="nt">&lt;/text&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/docTitle&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;navMap&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;navPoint</span> <span class="na">id=</span><span class="s">&quot;toc&quot;</span> <span class="na">playOrder=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;navLabel&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;text&gt;</span>Table of Contents<span class="nt">&lt;/text&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/navLabel&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;content</span> <span class="na">src=</span><span class="s">&quot;toc.html&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/navPoint&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;navPoint</span> <span class="na">class=</span><span class="s">&quot;chapter&quot;</span> <span class="na">id=</span><span class="s">&quot;book-1&quot;</span> <span class="na">playOrder=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;navLabel&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;text&gt;</span>Book 1<span class="nt">&lt;/text&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/navLabel&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;content</span> <span class="na">src=</span><span class="s">&quot;book-1.xhtml&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/navPoint&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/navMap&gt;</span>
+</span><span class='line'><span class="nt">&lt;/ncx&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There were obviously more chapters/books than that. The Kindle/mobi format doesn&#8217;t use this for the table of contents, so when you open a converted epub on a Kindle (or using the Kindle desktop software), the menu item to go to the table of contents is greyed out. After digging around on the web I discovered that the mobi format uses a toc file, which is basically an html file full of links. In order for that to work, you need to reference the toc file in the OPF file. Here&#8217;s an abbreviated version of the one I generated:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span class='line'><span class="nt">&lt;package</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span> <span class="na">version=</span><span class="s">&quot;2.0&quot;</span>
+</span><span class='line'>   <span class="na">unique-identifier=</span><span class="s">&quot;odyssey_gk&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;metadata</span> <span class="na">xmlns:dc=</span><span class="s">&quot;http://purl.org/dc/elements/1.1/&quot;</span>
+</span><span class='line'>          <span class="na">xmlns:dcterms=</span><span class="s">&quot;http://purl.org/dc/terms/&quot;</span>
+</span><span class='line'>      <span class="na">xmlns:opf=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span>
+</span><span class='line'>      <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;dc:title&gt;</span>Ὀδύσσεια<span class="nt">&lt;/dc:title&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;dc:language</span> <span class="na">xsi:type=</span><span class="s">&quot;dcterms:RFC3066&quot;</span><span class="nt">&gt;</span>en-us<span class="nt">&lt;/dc:language&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;dc:identifier</span> <span class="na">id=</span><span class="s">&quot;odyssey_gk&quot;</span> <span class="na">opf:scheme=</span><span class="s">&quot;URL&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>             http://en.wikipedia.org/wiki/The_Odyssey
+</span><span class='line'>    <span class="nt">&lt;/dc:identifier&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;dc:creator</span> <span class="na">opf:file-as=</span><span class="s">&quot;Homer&quot;</span> <span class="na">opf:role=</span><span class="s">&quot;aut&quot;</span><span class="nt">&gt;</span>Homer<span class="nt">&lt;/dc:creator&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;cover&quot;</span> <span class="na">content=</span><span class="s">&quot;cover-image&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/metadata&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;manifest&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;book-1&quot;</span> <span class="na">href=</span><span class="s">&quot;book-1.xhtml&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/xhtml+xml&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;style.css&quot;</span> <span class="na">media-type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;ncx&quot;</span> <span class="na">href=</span><span class="s">&quot;book.ncx&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/x-dtbncx+xml&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;cover&quot;</span> <span class="na">href=</span><span class="s">&quot;cover.html&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/xhtml+xml&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;toc&quot;</span> <span class="na">href=</span><span class="s">&quot;toc.html&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/xhtml+xml&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;cover-image&quot;</span> <span class="na">href=</span><span class="s">&quot;cover.jpg&quot;</span> <span class="na">media-type=</span><span class="s">&quot;image/jpeg&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/manifest&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;spine</span> <span class="na">toc=</span><span class="s">&quot;ncx&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;itemref</span> <span class="na">idref=</span><span class="s">&quot;cover&quot;</span> <span class="na">linear=</span><span class="s">&quot;no&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;itemref</span> <span class="na">idref=</span><span class="s">&quot;toc&quot;</span> <span class="na">linear=</span><span class="s">&quot;no&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;itemref</span> <span class="na">idref=</span><span class="s">&quot;book-1&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/spine&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;guide&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;reference</span> <span class="na">href=</span><span class="s">&quot;cover.html&quot;</span> <span class="na">type=</span><span class="s">&quot;cover&quot;</span> <span class="na">title=</span><span class="s">&quot;Cover&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;reference</span> <span class="na">href=</span><span class="s">&quot;toc.html&quot;</span> <span class="na">type=</span><span class="s">&quot;toc&quot;</span> <span class="na">title=</span><span class="s">&quot;Table of Contents&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;reference</span> <span class="na">href=</span><span class="s">&quot;book-1.xhtml&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">title=</span><span class="s">&quot;Text&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/guide&gt;</span>
+</span><span class='line'><span class="nt">&lt;/package&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The important bit there is the <code>&lt;reference&gt;</code> element inside <code>&lt;guide&gt;</code> that is of type &#8220;toc&#8221;. After that, the actual table of contents file is pretty straightforward:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+</span><span class='line'><span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;</span>
+</span><span class='line'><span class="cp">   &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</span>
+</span><span class='line'><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;title&gt;</span>Table of Contents<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;style</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>img { max-width: 100%; height: 100% }<span class="nt">&lt;/style&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;body&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;contents&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;h2&gt;</span>Contents<span class="nt">&lt;/h2&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;book-1.xhtml&quot;</span><span class="nt">&gt;</span>Book 1<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.</p>
+
+<h2>Encoding</h2>
+
+<p>I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don&#8217;t expect anyone to know what that is, I didn&#8217;t and it&#8217;s still just a character to me. But it looks like this:</p>
+
+<h1 class="greek">ΐ</h1>
+
+
+<p><aside class="post">
+<strong>Betacode</strong> is the ASCII language used by Perseus Digital library to represent Greek characters easily. It&#8217;s used in their opensource XML files (that I&#8217;ve used) and as a way to search Greek books (due to the unavailability of Ancient Greek keyboards). So <code>a)/ndra</code> becomes <code class="greek">ἄνδρα</code>.
+</aside></p>
+
+<p>In betacode, this is written as <code>i/+</code>. Normally, the parser encodes the character <code>i</code>, then each diacritic in turn: <code>/</code>, then <code>+</code> into combining diacritics. This resulted in characters <code>0x03b9 0x0301 0x0308</code>, which would be normalized using Java&#8217;s Normalizer/normalize function as:</p>
+
+<h1 class="greek">ί̈</h1>
+
+
+<p>The frustrating thing is that it&#8217;s quite difficult to tell the difference on the terminal, when running tests - even when I&#8217;d bumped the font size up to crazy levels.</p>
+
+<p>In order to match that symbol, I created the following rule:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">iota-dialytika-tonos</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">constant-semantics</span> <span class="p">(</span><span class="nf">lit-conc-seq</span> <span class="s">&quot;i/+&quot;</span> <span class="nv">lit</span><span class="p">)</span>
+</span><span class='line'>                         <span class="p">(</span><span class="nb">char </span><span class="mi">0</span><span class="nv">x0390</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I&#8217;d redefined <code>character</code> to be:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">character</span> <span class="p">(</span><span class="nf">alt</span> <span class="nv">iota-dialytika-tonos</span> <span class="nv">final-sigma</span> <span class="nv">upper-char</span> <span class="nv">lower-char</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which means that the rule <code>iota-dialytika-tonos</code> takes precedence over any other character (to prevent the dumb combining diacritic rules from matching it).</p>
+
+<p>And that brings me on to final sigma. Final sigma has given me quite a lot of pain, ever since I started building this parser. For those of you who don&#8217;t know Greek, like me, they have two sigma characters - one is used in the middle of a word:</p>
+
+<h1 class="greek">σ</h1>
+
+
+<p>But if sigma is at the end of a word, it must use the final sigma character, thus:</p>
+
+<h1 class="greek">ς</h1>
+
+
+<p>The problem with matching something at the end of a word is that fnparse&#8217;s matchers are mostly greedy. There&#8217;s no equivalent rule, as far as I can tell, to the regular expression <code>(.+)s</code>. The <code>rep+</code> rules always greedily gobble all the tokens, including the last <code>s</code>. At the moment, all I have is the following rule for final sigma:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">final-sigma</span> <span class="p">(</span><span class="nf">constant-semantics</span> <span class="p">(</span><span class="nf">lit-conc-seq</span> <span class="s">&quot;s &quot;</span> <span class="nv">lit</span><span class="p">)</span>
+</span><span class='line'>                                     <span class="p">(</span><span class="nb">str </span><span class="p">(</span><span class="nb">char </span><span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">beta-char-to-greek-char</span> <span class="sc">\s</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'>                                          <span class="sc">\s</span><span class="nv">pace</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This isn&#8217;t ideal because it can&#8217;t match either the last <code>s</code> of the last word in a string (or line), or <code>s</code> followed only by a non-character (such as <code>:</code>). This is something I have to work on, but fnparse isn&#8217;t making it easy for me here.</p>
+
+<p>So as a result of all that, here&#8217;s the first verse of the Odyssey by Homer:</p>
+
+<blockquote class="greek" style="font-style: normal">
+ἄνδρα μοι ἔννεπε, μοῦσα, πολύτροπον, ὃς μάλα πολλὰ<br/>
+πλάγχθη, ἐπεὶ Τροίης ἱερὸν πτολίεθρον ἔπερσεν:<br/>
+πολλῶν δ᾽ ἀνθρώπων ἴδεν ἄστεα καὶ νόον ἔγνω,<br/>
+πολλὰ δ᾽ ὅ γ᾽ ἐν πόντῳ πάθεν ἄλγεα ὃν κατὰ θυμόν,<br/>
+ἀρνύμενος ἥν τε ψυχὴν καὶ νόστον ἑταίρων.<br/>
+ἀλλ᾽ οὐδ᾽ ὣς ἑτάρους ἐρρύσατο, ἱέμενός περ:<br/>
+αὐτῶν γὰρ σφετέρῃσιν ἀτασθαλίῃσιν ὄλοντο,<br/>
+νήπιοι, οἳ κατὰ βοῦς Ὑπερίονος Ἠελίοιο<br/>
+ἤσθιον: αὐτὰρ ὁ τοῖσιν ἀφείλετο νόστιμον ἦμαρ.<br/>
+τῶν ἁμόθεν γε,  θεά, θύγατερ Διός, εἰπὲ καὶ ἡμῖν.
+</blockquote>
+
+
+<hr />
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://github.com/joshua-choi/fnparse/">fnparse</a> which is awesome for taming parse-m monads in Clojure.</li>
+<li>Thanks to <a href="http://www.tlg.uci.edu/~opoudjis/unicode/gkdiacritics.html">Greek Diacritics</a> for information about combining diacritics.</li>
+<li><a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> Wikipedia&#8217;s writup on the EPUB standard is almost all you need.</li>
+<li><a href="http://idpf.org/epub/20/spec/OPF_2.0.1_draft.htm">OPF</a> The OPF/NCX standard.</li>
+<li><a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0135">The Odyssey</a> From the Perseus Digital Library, the source for the XML files I have been consuming in this project.</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/11/05/nanowrimo-begins.html">NaNoWriMo Begins</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-05T00:00:00+00:00" pubdate data-updated="true">Nov 5<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve started to write my book for <a href="http://www.nanowrimo.org/eng/user/541245" title="My NaNoWriMo profile">NaNoWriMo</a>. For those who don&#8217;t know, the goal is to write a novel (or, more accurately, a first draft of a novel) in a month - November. A novel, in this competition is defined as a work of fiction totaling 50,000 words. It sounds like a lot for a month initially. Then you break that down to 1,667 words per day - which sounds manageable - I tried writing a chapter last month and got 2,033 words done in about an hour and a half.</p>
+
+<p>Day 1 of November proceeded in the same way every day had for the last couple of weeks. Suffice to say I have been rather overloaded at work and have had to put in a lot of hours - usually till about half past midnight to get things done. This is not a good recipe for becoming a best selling author. Day 1, therefore, ended with a word count of zero. Having committed myself to this challenge, I felt the failure keenly.</p>
+
+<p>Day 2 of November showed no signs of being any different. This time, however, I was determined to get writing, whatever happened. I left work as soon as I could, squeezed myself onto the overcrowded train to Clapham Junction and popped into Debenhams to pick up my repaired watches. Even though I was eager to get home and get typing, I was in Debenhams so I decided to have a wander around the mens department. Masterful procrastination I know! I must have been there for around half an hour - bought two jumpers, a white shirt and two ties. Debenhams is a dangerous place. Then I finally made my merry way homewards. The rest of the evening involved trying to write while fielding various questions and requests from colleagues on Skype. I don&#8217;t recommend this as a strategy for writing or even as a strategy for working. It&#8217;s definitely not a good combination for one&#8217;s sanity. However, I managed a measly 500 words. I was too embarrassed to update my word count on my profile though and went to sleep feeling defeated.</p>
+
+<p>Day 3 might as well be forgotten entirely. Quite apart from the work I continued to do during the evening, I made no attempt to write anything - content to investigate various programming ideas and generally waste my time watching programmes on the iPlayer&#8230;until quite late actually - for no good reason. Novel? What novel?</p>
+
+<p>Today was different. Well, not so much actually. By the time work was over, I was pretty much exhausted. I elbowed, pushed and shoved my way onto the inhumane device some people laughably refer to as public transport and made my way home like a zombie with a mission. Slow but determined. I only hope I have more literally skill than your average zombie. Or failing that, raw typing speed.</p>
+
+<p>So aside from the work I inevitably had to do this evening, I&#8217;ve completed 1,788 words, bringing my total so far to 2,288. I am obviously well short of where I should be but I&#8217;m hoping I can put some serious typing hours in on the weekend. It&#8217;s not like I&#8217;ll have anything else to do. Except procrastinate of course.</p>
+
+<p>If anybody else out there in the ether is having problems writing their novel, or writing anything for that matter, rest assured your problems are not unusual. I&#8217;m still wavering between determination to complete the challenge to get my first novel written; and defeat, apathy that no matter how hard I try, life will always get in my way. When I was at school, if a teacher had set me homework to write a 2,000 word essay or story, I would have left it to the last minute, written less than half of what was required and handed it in late. If I don&#8217;t rise above this pattern of under-achievement now, I fear I never will. So, in summary, I will finish this novel on time. I might not enjoy it, but I will complete it.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/6/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/4/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 William Roe&#146;s blog &sect;
+  <span class="credit"> My life made easier by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-via="wjlroe" data-dnt="true">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+
+
+
+</body>
+</html>

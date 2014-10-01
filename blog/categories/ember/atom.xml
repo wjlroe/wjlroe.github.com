@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ember | William Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/ember/atom.xml" rel="self"/>
+  <link href="http://blog.wjlr.org.uk/"/>
+  <updated>2014-10-01T14:36:28+01:00</updated>
+  <id>http://blog.wjlr.org.uk/</id>
+  <author>
+    <name><![CDATA[Will Roe]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ember transitionToRoute with new model hack]]></title>
+    <link href="http://blog.wjlr.org.uk/2013/06/06/ember-transition-to-new-model-hack.html"/>
+    <updated>2013-06-06T19:53:00+01:00</updated>
+    <id>http://blog.wjlr.org.uk/2013/06/06/ember-transition-to-new-model-hack</id>
+    <content type="html"><![CDATA[<p><aside class="update">
+<strong>Update</strong>: None of this is required with current versions of Ember and
+Ember-data.
+</aside></p>
+
+<p>A common pattern with webapps in these exciting times is the
+transition-to-new-thing-you-just-created pattern. The way it works is this: you
+fill in a form to create a new thing (like, a widget or something) and then when
+you hit 'save', you are transitioned to the page for that widget. This is so you
+can confirm that it worked and so you could make further changes on that widget.
+The assumption being, when you create a widget, it is the focus of your task.</p>
+
+<p>Whatever, anyway, I had to make something along those lines in an EmberJS app at
+work and hit an ember-data bug. Surprise!</p>
+
+<p>The bug is that when you try to do this (code speaks louder than widget
+metaphors):</p>
+
+<p><code>javascript
+var model = App.Widget.createRecord({name: "special_widget"});
+model.one('didCreate', function() {
+  this.transitionToRoute('widgets.show', model);
+});
+model.get('store').commit();
+</code></p>
+
+<p>This doesn't work with ember-data currently - what happens is the <code>model</code> object
+that gets sent to the <code>didCreate</code> callback there won't have an <code>id</code> from the
+server (it hasn't been filled in for some reason).</p>
+
+<p>To work around this issue, you need to do something akin to this:</p>
+
+<p><code>javascript
+saveTheWidget: function() {
+  var model = App.Widget.createRecord({name: "very_special_widget"});
+  model.addObserver('id', this, this.showWidget);
+  model.get('store').commit();
+},
+showWidget: function(model) {
+  model.removeObserver('id', this, this.showWidget);
+  this.transitionToRoute('widgets.show', model);
+}
+</code></p>
+
+<p>In that example we trigger the page transition off the change of value of <code>id</code>.
+This works because for a short while, the <code>id</code> will be <code>null</code> until Ember-data
+fills in the new <code>id</code> from the server. Then your callback is called and the page
+transition happens. The difference in timing is not noticeable to the user - it's
+just a race condition within Ember-data itself. Other than that - in this
+example, the observer is removed, which is good practice for observers and you
+should always remove observers you've added (as I understand it).</p>
+
+<p>Other alternative workarounds include wrapping the <code>transitionToRoute</code> call in a
+<code>setTimeout()</code> block - to make it pause just long enough for the model's <code>id</code> to
+be filled in.</p>
+
+<p>Most of the above came from
+<a href="http://stackoverflow.com/questions/14981500/transition-after-saving-model-of-ember-data">Stackoverflow</a>
+and the <a href="https://github.com/emberjs/data/issues/405#issuecomment-18891172">bug report and workaround</a> on
+ember-data.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ember-rails and handlebars_assets FIGHT!]]></title>
+    <link href="http://blog.wjlr.org.uk/2013/02/18/ember-rails-handlebars-assets.html"/>
+    <updated>2013-02-18T23:10:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2013/02/18/ember-rails-handlebars-assets</id>
+    <content type="html"><![CDATA[<p>Just a quick note for Google and future-me. If you want to mix both <a href="https://github.com/emberjs/ember-rails">ember-rails</a> and <a href="https://github.com/leshill/handlebars_assets">handlebars_assets</a> in the same Rails project, you will encounter maddening issues with your Ember/Handlebars templates. Specifically, they will compile fine (probably) but Ember will not be able to see them.</p>
+
+<h2>How to check whether Ember can ‘see’ your templates</h2>
+
+<p>In your browsers console, type:</p>
+
+<pre><code>Ember.TEMPLATES
+</code></pre>
+
+<p>You should see something like:</p>
+
+<pre><code>Object {application: function, domains: function}
+</code></pre>
+
+<p>In the above example I have two templates defined: 'application' and 'domains'. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
+
+<h2>Why is this happening?</h2>
+
+<p>This happened to me because both handlebars_assets and ember-rails were registering with the asset pipeline to process <code>.handlebars</code> files (and <code>.hbs</code> files). They fight and, at least in my case, handlebars_assets won.</p>
+
+<h2>The fix</h2>
+
+<p>The only way to get this to work reliably right now is to use a file extension for your Ember handlebars templates that isn’t recognised by handlebars_assets. I used <code>.hjs</code>. It’s not exactly a fix, but things are all working right now so that’s groovy.</p>
+
+<h2>Why are you using both?</h2>
+
+<p>There’s probably a way round this, but I’m using handlebars_assets to compile handlebars templates for some javascript (that ends up not being at all related to EmberJS - it’s embedded in other pages). I need those templates to be available in the <code>HandlebarsTemplates</code> object so I can run them in the javascript. I include <code>handlebars.runtime</code> in the javascript to run them. ember-rails includes that (I just looked) so I can probably ditch handlebars_assets. That’ll be the next thing to try.</p>
+
+<p>This might not make a lot of sense, but if you’ve hit this problem (i.e. nothing renders in your EmberJS app but your templates are all compiled and you get no errors in the browser console) then this is one possible gotcha.</p>
+]]></content>
+  </entry>
+  
+</feed>

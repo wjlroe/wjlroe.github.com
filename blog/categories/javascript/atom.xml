@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: javascript | William Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://blog.wjlr.org.uk/"/>
+  <updated>2014-10-01T14:36:28+01:00</updated>
+  <id>http://blog.wjlr.org.uk/</id>
+  <author>
+    <name><![CDATA[Will Roe]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ember transitionToRoute with new model hack]]></title>
+    <link href="http://blog.wjlr.org.uk/2013/06/06/ember-transition-to-new-model-hack.html"/>
+    <updated>2013-06-06T19:53:00+01:00</updated>
+    <id>http://blog.wjlr.org.uk/2013/06/06/ember-transition-to-new-model-hack</id>
+    <content type="html"><![CDATA[<p><aside class="update">
+<strong>Update</strong>: None of this is required with current versions of Ember and
+Ember-data.
+</aside></p>
+
+<p>A common pattern with webapps in these exciting times is the
+transition-to-new-thing-you-just-created pattern. The way it works is this: you
+fill in a form to create a new thing (like, a widget or something) and then when
+you hit 'save', you are transitioned to the page for that widget. This is so you
+can confirm that it worked and so you could make further changes on that widget.
+The assumption being, when you create a widget, it is the focus of your task.</p>
+
+<p>Whatever, anyway, I had to make something along those lines in an EmberJS app at
+work and hit an ember-data bug. Surprise!</p>
+
+<p>The bug is that when you try to do this (code speaks louder than widget
+metaphors):</p>
+
+<p><code>javascript
+var model = App.Widget.createRecord({name: "special_widget"});
+model.one('didCreate', function() {
+  this.transitionToRoute('widgets.show', model);
+});
+model.get('store').commit();
+</code></p>
+
+<p>This doesn't work with ember-data currently - what happens is the <code>model</code> object
+that gets sent to the <code>didCreate</code> callback there won't have an <code>id</code> from the
+server (it hasn't been filled in for some reason).</p>
+
+<p>To work around this issue, you need to do something akin to this:</p>
+
+<p><code>javascript
+saveTheWidget: function() {
+  var model = App.Widget.createRecord({name: "very_special_widget"});
+  model.addObserver('id', this, this.showWidget);
+  model.get('store').commit();
+},
+showWidget: function(model) {
+  model.removeObserver('id', this, this.showWidget);
+  this.transitionToRoute('widgets.show', model);
+}
+</code></p>
+
+<p>In that example we trigger the page transition off the change of value of <code>id</code>.
+This works because for a short while, the <code>id</code> will be <code>null</code> until Ember-data
+fills in the new <code>id</code> from the server. Then your callback is called and the page
+transition happens. The difference in timing is not noticeable to the user - it's
+just a race condition within Ember-data itself. Other than that - in this
+example, the observer is removed, which is good practice for observers and you
+should always remove observers you've added (as I understand it).</p>
+
+<p>Other alternative workarounds include wrapping the <code>transitionToRoute</code> call in a
+<code>setTimeout()</code> block - to make it pause just long enough for the model's <code>id</code> to
+be filled in.</p>
+
+<p>Most of the above came from
+<a href="http://stackoverflow.com/questions/14981500/transition-after-saving-model-of-ember-data">Stackoverflow</a>
+and the <a href="https://github.com/emberjs/data/issues/405#issuecomment-18891172">bug report and workaround</a> on
+ember-data.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ember-rails and handlebars_assets FIGHT!]]></title>
+    <link href="http://blog.wjlr.org.uk/2013/02/18/ember-rails-handlebars-assets.html"/>
+    <updated>2013-02-18T23:10:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2013/02/18/ember-rails-handlebars-assets</id>
+    <content type="html"><![CDATA[<p>Just a quick note for Google and future-me. If you want to mix both <a href="https://github.com/emberjs/ember-rails">ember-rails</a> and <a href="https://github.com/leshill/handlebars_assets">handlebars_assets</a> in the same Rails project, you will encounter maddening issues with your Ember/Handlebars templates. Specifically, they will compile fine (probably) but Ember will not be able to see them.</p>
+
+<h2>How to check whether Ember can ‘see’ your templates</h2>
+
+<p>In your browsers console, type:</p>
+
+<pre><code>Ember.TEMPLATES
+</code></pre>
+
+<p>You should see something like:</p>
+
+<pre><code>Object {application: function, domains: function}
+</code></pre>
+
+<p>In the above example I have two templates defined: 'application' and 'domains'. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
+
+<h2>Why is this happening?</h2>
+
+<p>This happened to me because both handlebars_assets and ember-rails were registering with the asset pipeline to process <code>.handlebars</code> files (and <code>.hbs</code> files). They fight and, at least in my case, handlebars_assets won.</p>
+
+<h2>The fix</h2>
+
+<p>The only way to get this to work reliably right now is to use a file extension for your Ember handlebars templates that isn’t recognised by handlebars_assets. I used <code>.hjs</code>. It’s not exactly a fix, but things are all working right now so that’s groovy.</p>
+
+<h2>Why are you using both?</h2>
+
+<p>There’s probably a way round this, but I’m using handlebars_assets to compile handlebars templates for some javascript (that ends up not being at all related to EmberJS - it’s embedded in other pages). I need those templates to be available in the <code>HandlebarsTemplates</code> object so I can run them in the javascript. I include <code>handlebars.runtime</code> in the javascript to run them. ember-rails includes that (I just looked) so I can probably ditch handlebars_assets. That’ll be the next thing to try.</p>
+
+<p>This might not make a lot of sense, but if you’ve hit this problem (i.e. nothing renders in your EmberJS app but your templates are all compiled and you get no errors in the browser console) then this is one possible gotcha.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What makes a developer happy?]]></title>
+    <link href="http://blog.wjlr.org.uk/2012/07/26/what-makes-a-developer-happy.html"/>
+    <updated>2012-07-26T00:00:00+01:00</updated>
+    <id>http://blog.wjlr.org.uk/2012/07/26/what-makes-a-developer-happy</id>
+    <content type="html"><![CDATA[<p>Today was a pretty good day for me - programming-wise. Even though I wasn't too well (having trouble hearing in my left ear which is disorientating and makes conversation difficult), I feel the contentment of a day well spent.</p>
+
+<p>So what made it a good day? Building stuff is the bottom line for me but that is a very broad term. Today, building stuff meant working with the <a href="http://raphaeljs.com">Raphael</a> library to make a graphic for a web app (a dynamic graphic, it's not just a logo); refactoring the backend of said web app and reading various tech news.</p>
+
+<p>News first. I was mainly reading about the architecture of <a href="http://www.datomic.com/overview.html">Datomic</a>, which is a really interesting take on databases. I would say it looks like the most developer friendly database implementation (in terms of the aims of the project) combined with some pretty powerful and flexible storage. I'm not sure how deploying it would work out, given it uses SQL or some other key-value-capable backend so it really adds another layer to your app's architecture. The <a href="http://www.datomic.com/rationale.html">rationale page</a> was music to my ears though so I will be trying out the <a href="http://blog.datomic.com/2012/07/datomic-free-edition.html">free edition</a> for sure.</p>
+
+<p>The refactoring I worked on today was a bit of "technical debt" that had been hanging around for a while. It was as a consequence of not understanding how to split up and compose together templates (and partial templates, snippets) with <a href="https://github.com/cgrand/enlive/">enlive</a>. I had another go at reading <a href="https://github.com/cgrand/enlive/wiki/Table-and-Layout-Tutorial,-Part-1:-The-Goal">the tutorials</a> and this time it just felt easy. They could definitely do with simplifying though. The reason this was so enjoyable was that writing and refactoring <a href="http://clojure.org">Clojure</a> code is generally a very fun endeavour. I generally have a <a href="http://common-lisp.net/project/slime/">SLIME</a> session open with <a href="http://www.gnu.org/software/emacs/">emacs</a> and I just recompile the code or compile the function I'm changing, then check those functions in the REPL in emacs. In other words, development can be very fast. Also, enlive is hands-down the best templating system I've ever used. It's great that it can be used both for templating and for web scraping (or in my case, integration tests checking the contents of DOM nodes).</p>
+
+<p>Working with Raphael for creating scalable graphics is also really fun. Previously I had tried out <a href="http://paperjs.org/about/">Paper.js</a> (which is an abstraction over HTML Canvas). There were a couple of problems with Paper.js. Firstly it is bizarre - the documentation is somewhat held back by only showing examples of so called PaperScript, which I couldn't see how I could use. It's essentially Javascript with a bunch of functions added to various prototypes by the looks of things. The issue was I am rendering one graphic per item in a (more-or-less) 100 length list and I couldn't see a simple way to define one PaperScript thing and feed it parameters to draw all the slightly different versions of the graphic. I decided to try out Raphael and immediately found it vastly simpler for defining the sort of simple shapes I needed to draw. Raphael is a small javascript library for generating <a href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a> (or <a href="http://en.wikipedia.org/wiki/VML">VML</a> where that is supported). The biggest downside of using Raphael instead of Paper.js is that, according to <a href="http://caniuse.com">What can I use…</a> the Android browser only started supporting SVG in version… 3.0!!! That truly does deserve multiple exclamation marks of sheer disbelief. Google, the open web? Really? That means, according to the <a href="http://developer.android.com/about/dashboards/index.html">Platform versions</a> page on the Android developer site, as I write this, over 85% of Android users are on 2.x or lower and SVG won't work in their default browsers. SVG is pretty damn old - initial release in 2001. This does not a happy developer make. Still, might have to come up with a fallback option for people using primitive devices, we will see.</p>
+
+<p>Working with 2D graphics, such as with Raphael, usually involves some trigonometry and today was no exception. I really suck at trig so this was the main stumbling block. It really was very simple stuff - <a href="http://en.wikipedia.org/wiki/Unit_circle">finding the coordinates of a point on a circle</a> - but I've forgotten it all from school. I pushed through all that, scribbled furiously on paper until I convinced myself I knew what I was doing and by the end of the day I had shapes arranging themselves at my command - and even <a href="http://raphaeljs.com/reference.html#Element.transform">rotating</a> them all slightly for every item in the list. Essentially I love it when things work, maybe not the first time, but before I get a headache - that's the happiness benchmark for me.</p>
+
+<p>The secret underlying all this, and all that I haven't said, is there is no secret to developer happiness. If I'm anything to go by, we thrive on autonomy, creativity and problem solving. It is very strange that so many employers are averse to providing any form of autonomy to their developers because that has to put a damper on anyone's aspirations. At <a href="http://www.digital-science.com">Digital Science</a> we are generally encouraged to come up with ideas all the time and execute them. But one of the best aspects for me is how we're all able to hack on the infrastructure. See something that could be better? Fix it. If I couldn't mix working on UI stuff, web backends, databases, deployment (Chef) and <a href="http://foldme.herokuapp.com">frivolous fun</a> then this wouldn't be nearly as worthwhile.</p>
+
+<p>Happy hacking.</p>
+]]></content>
+  </entry>
+  
+</feed>

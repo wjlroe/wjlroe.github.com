@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>William Roe&#146;s blog</title>
+  <title>JSON for humans - William Roe&#146;s blog</title>
   <meta name="author" content="Will Roe">
 
   
@@ -19,7 +19,7 @@ unreadable dump of the stuff and it&#8217;d be useful to quickly reformat &helli
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.wjlr.org.uk/index.html">
+  <link rel="canonical" href="http://blog.wjlr.org.uk/2014/03/27/json-for-humans.html">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -89,14 +89,11 @@ unreadable dump of the stuff and it&#8217;d be useful to quickly reformat &helli
   <div id="main">
     <div id="content">
       <div class="blog-index">
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/2014/03/27/json-for-humans.html">JSON for Humans</a></h1>
+      <h1 class="entry-title">JSON for Humans</h1>
     
     
       <p class="meta">
@@ -119,7 +116,7 @@ unreadable dump of the stuff and it&#8217;d be useful to quickly reformat &helli
   </header>
 
 
-  <div class="entry-content"><p>JSON is a fairly easy to read format but sometimes you need to deal with an
+<div class="entry-content"><p>JSON is a fairly easy to read format but sometimes you need to deal with an
 unreadable dump of the stuff and it&#8217;d be useful to quickly reformat or prettify
 it. There are a number of ways to do this.</p>
 
@@ -272,78 +269,16 @@ that command resulting in this:</p>
 <a href="http://stackoverflow.com/a/6047998">StackOverflow question</a> about
 pretty-printing JSON, there are so many more.</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2014/02/01/tmux-and-autoenv-tip.html">Tmux &amp; Autoenv Tip</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Will Roe</span></span>
 
-<time datetime="2014-02-01T15:41:00+00:00" pubdate data-updated="true">Feb 1<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>On OS X, if I use <a href="http://tmux.sourceforge.net/">tmux</a> (or more usually,
-<a href="https://github.com/zolrath/wemux">wemux</a> for pairing) then I end up with oddly
-named windows like this:</p>
-
-<p><img src="http://d14vbe8lasdppi.cloudfront.net/01_02_2014_15_45.jpg" alt="" /></p>
-
-<p>This is because I&#8217;ve followed the awesome instructions from
-<a href="http://www.drbunsen.org/the-text-triumvirate/">Dr Bunsen&#8217;s Text Triumvirate</a>
-and in order to have the tmux and system (OS X) clipboards interacting, it
-requires a hack called <code>reattach-to-user-namespace</code> which proxies the running of
-zsh in tmux.</p>
-
-<p>One quick way to get around this and save time renaming my tmux windows, was to
-use <a href="https://github.com/kennethreitz/autoenv">autoenv</a> and add a file named
-<code>.env</code> to projects with content similar to:</p>
-
-<pre><code>tmux rename-window "project-name"
-</code></pre>
-
-<p>This is piling hacks on top of hacks, but at least it saves a bit of time for
-frequently visited directories.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2014/02/01/silver-searcher-gotcha.html">A Silver Searcher Gotcha</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -355,43 +290,45 @@ frequently visited directories.</p>
   
 
 
-<time datetime="2014-02-01T15:34:00+00:00" pubdate data-updated="true">Feb 1<span>st</span>, 2014</time>
-        
-      </p>
+<time datetime="2014-03-27T12:58:00+00:00" pubdate data-updated="true">Mar 27<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/json/'>json</a>, <a class='category' href='/blog/categories/vim/'>vim</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>There is a gotcha with <a href="https://github.com/ggreer/the_silver_searcher">the silver searcher</a> and how it treats
-<code>.gitignore</code> files. The following pattern will work as expected with <code>git</code>:</p>
-
-<pre><code>/log
-</code></pre>
-
-<p>I.e. <code>git</code> will ignore everything in that directory, however The Silver Searcher
-doesn&#8217;t understand that and it&#8217;ll still show matching lines from files in
-<code>log/</code>. For <code>git</code> and <code>ag</code> (The Silver Searcher) to both ignore that directory
-and its contents, change <code>/log</code> to <code>log</code>.</p>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.wjlr.org.uk/2014/03/27/json-for-humans.html" data-via="wjlroe" data-counturl="http://blog.wjlr.org.uk/2014/03/27/json-for-humans.html" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
+    
+    <div class="meta pagination">
+      
+        <a class="basic-alignment left" href="/2014/02/01/tmux-and-autoenv-tip.html" title="Previous Post: tmux &amp; autoenv tip">&laquo; tmux &amp; autoenv tip</a>
+      
+      <a class="archives" href="/blog/archives">Blog Archives</a>
+      
+    </div>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
 <aside class="sidebar">
   
     
   
 </aside>
+
 
     </div>
   </div>

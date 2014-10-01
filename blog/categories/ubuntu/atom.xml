@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ubuntu | William Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/ubuntu/atom.xml" rel="self"/>
+  <link href="http://blog.wjlr.org.uk/"/>
+  <updated>2014-10-01T14:36:28+01:00</updated>
+  <id>http://blog.wjlr.org.uk/</id>
+  <author>
+    <name><![CDATA[Will Roe]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Imagemagick SVG insanity]]></title>
+    <link href="http://blog.wjlr.org.uk/2013/04/10/imagemagick-insanity.html"/>
+    <updated>2013-04-10T00:00:00+01:00</updated>
+    <id>http://blog.wjlr.org.uk/2013/04/10/imagemagick-insanity</id>
+    <content type="html"><![CDATA[<p>If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this:</p>
+
+<pre><code>cat test.svg | convert svg: png:- &gt; test.png
+</code></pre>
+
+<p>And you get this error:</p>
+
+<p><code>
+Error reading SVG:
+convert: delegate failed `"rsvg-convert" -o "%o" "%i"' @ error/delegate.c/InvokeDelegate/1058.
+convert: unable to open image `/tmp/magick-Oj094Z9n':  @ error/blob.c/OpenBlob/2587.
+convert: unable to open file `/tmp/magick-Oj094Z9n':  @ error/constitute.c/ReadImage/571.
+convert: missing an image filename `png:-' @ error/convert.c/ConvertImageCommand/3011.
+</code></p>
+
+<p>Then you need to install (on Ubuntu anyway):</p>
+
+<pre><code>apt-get install libmagickcore4-extra
+</code></pre>
+
+<p>I had to strace the <code>convert</code> command to find out that it was looking for a missing file. This is from the strace output:</p>
+
+<p><code>
+stat("/usr/lib/ImageMagick-6.6.9/modules-Q16/coders/svg.la", 0x7fffe6cace90) = -1 ENOENT (No such file or directory)
+</code></p>
+
+<p>Words cannot describe how I feel about Imagemagick right now.</p>
+
+<p>Note to self: install this required package (stupidly called "-extra").</p>
+
+<p>Also note to self: avoid Imagemagick like the plague.</p>
+]]></content>
+  </entry>
+  
+</feed>
