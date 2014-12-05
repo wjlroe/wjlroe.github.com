@@ -2,173 +2,173 @@
 // Add styles here to make changes without digging in too much
 
 .greek {
-	font-family: $greek-font-family;
+    font-family: $greek-font-family;
 }
 
 aside.post {
-	@extend blockquote;
+    @extend blockquote;
 
-	@media only screen and (min-width: 750px) {
-		float: right;
-  		width: 45%;
-  		margin: .5em 0 1em 1.5em;
-  	}
+    @media only screen and (min-width: 750px) {
+        float: right;
+        width: 45%;
+        margin: .5em 0 1em 1.5em;
+    }
 }
 
 aside.update {
-  @include shadow-box($border: #fff .5em solid, $shadow: rgba(#000, .8) 0 1px 4px, $border-radius: .3em);
+    @include shadow-box($border: #fff .5em solid, $shadow: rgba(#000, .8) 0 1px 4px, $border-radius: .3em);
 }
 
 table th {
-	padding: 0.25em;
-	font-weight: bold;
+    padding: 0.25em;
+    font-weight: bold;
 }
 
 html {
-  background: $page-bg;
+    background: $page-bg;
 }
 
 @mixin article-header {
-  border-left: 5px solid lighten($title-color, 40);
-  margin-left: -15px;
-  padding-left: 10px;
-  background-color: lighten($title-color, 100);
+    border-left: 5px solid lighten($title-color, 40);
+    margin-left: -15px;
+    padding-left: 10px;
+    background-color: lighten($title-color, 100);
 }
 
 @mixin big-article-header {
-  margin-left: -25px;
-  padding-left: 20px;
+    margin-left: -25px;
+    padding-left: 20px;
 }
 
 @mixin post-header {
-  font-weight: normal;
-  padding-bottom: 0;
+    font-weight: normal;
+    padding-bottom: 0;
 }
 
 @media only screen {
-  #content .blog-index article h1 {
-    @include post-header;
-  }
-  #content article header h1 {
-    @include post-header;
-  }
+    #content .blog-index article h1 {
+        @include post-header;
+    }
+    #content article header h1 {
+        @include post-header;
+    }
 
-  #content .blog-index article header {
-    @include article-header;
-  }
+    #content .blog-index article header {
+        @include article-header;
+    }
 
-  #content article header {
-    @include article-header;
-    padding-bottom: 0;
-  }
+    #content article header {
+        @include article-header;
+        padding-bottom: 0;
+    }
 }
 
 @media only screen and (min-width: 750px) {
-  p { text-align: justify; }
+    p { text-align: justify; }
 
-  #content .blog-index article header {
-    @include big-article-header;
-  }
+    #content .blog-index article header {
+        @include big-article-header;
+    }
 
-  #content article header {
-    @include big-article-header;
-  }
+    #content article header {
+        @include big-article-header;
+    }
 }
 
 body {
-  @extend .sans;
-  font-family: $sans;
-  @media only screen and (min-width: 750px) {
-    aside.sidebar{ @include collapse-sidebar; }
-    #content aside.sidebar.thirds section {
-      float: left;
-      margin-left: 1%;
+    @extend .sans;
+    font-family: $sans;
+    @media only screen and (min-width: 750px) {
+        aside.sidebar{ @include collapse-sidebar; }
+        #content aside.sidebar.thirds section {
+            float: left;
+            margin-left: 1%;
 
-      &.first {
-         margin-left: 1%;
-        clear: none;
-      }
+            &.first {
+                margin-left: 1%;
+                clear: none;
+            }
+        }
     }
-  }
-  #content { margin-right: 0px; }
+    #content { margin-right: 0px; }
 
-  > header h1 {
-    font-size: 1.7em;
-    margin-left: -0.1em;
-  }
+    > header h1 {
+        font-size: 1.7em;
+        margin-left: -0.1em;
+    }
 }
 
 body > nav {
-  display: none;
+    display: none;
 }
 
 footer div.meta.pagination {
-  margin: 0;
-
-  a {
     margin: 0;
-  }
+
+    a {
+        margin: 0;
+    }
 }
 
 #content div.pagination {
-  a {
-    &[href*=archive] {
-      &:before, &:after { content: '\00a7'; padding: 0 .3em; }
+    a {
+        &[href*=archive] {
+            &:before, &:after { content: '\00a7'; padding: 0 .3em; }
+        }
     }
-  }
 }
 
 #content .sidebar h1 {
-  a {
-    text-decoration: none;
-    white-space: normal !important;
+    a {
+        text-decoration: none;
+        white-space: normal !important;
 
-    img {
-      float: left;
-      margin-right: 0.5em;
-      border: 0 none;
+        img {
+            float: left;
+            margin-right: 0.5em;
+            border: 0 none;
+        }
     }
-  }
 }
 
 #content aside.sidebar h1 {
-  font-weight: normal;
+    font-weight: normal;
 }
 
 #content > div {
-  padding: { top: 0; bottom: 0; }
+    padding: { top: 0; bottom: 0; }
 
-  > article {
-    padding-top: 2em;
+    > article {
+        padding-top: 2em;
 
-    header {
-      background: none;
+        header {
+            background: none;
 
-      h1 {
-        font-size: 2.2em;
-      }
+            h1 {
+                font-size: 2.2em;
+            }
+        }
     }
-  }
 }
 
 h2, h3,h4,h5 { font-weight: normal; }
 .toggle-sidebar { display: none; }
 
 .entry-content h2,h3,h4,h5 {
-  margin-left: -15px;
-  border-left: 5px solid lighten($title-color, 40);
-  padding-left: 10px;
-  padding-top: 0;
-  background: white;
+    margin-left: -15px;
+    border-left: 5px solid lighten($title-color, 40);
+    padding-left: 10px;
+    padding-top: 0;
+    background: white;
 }
 
 @media only screen and (min-width: 750px) {
-  .entry-content h2,h3,h4,h5 {
-    margin-left: -25px;
-    padding-left: 20px;
-  }
+    .entry-content h2,h3,h4,h5 {
+        margin-left: -25px;
+        padding-left: 20px;
+    }
 }
 
 pre, .highlight, .gist-highlight {
-  &::-webkit-scrollbar {  height: .3em; background: $solar-scroll-bg; }
+    &::-webkit-scrollbar {  height: .3em; background: $solar-scroll-bg; }
 }
