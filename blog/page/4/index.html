@@ -9,9 +9,7 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="Today I decided to embark on an exploration of Haskell web
-development. I have previously bootstrapped a basic
-Snap setup but never got into actual &hellip;">
+  <meta name="description" content="I often come across web pages that use fonts that I like and wonder what they are (I&#8217;m not that good at guessing fonts). On the whole this &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +89,58 @@ Snap setup but never got into actual &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/04/06/what-font-is-that.html">What Font Is That?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-06T21:06:00+01:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I often come across web pages that use fonts that I like and wonder what they are (I&#8217;m not that good at guessing fonts). On the whole this situation happens while reading on my iPhone because that&#8217;s the only high-resolution screen I use - good fonts look amazing on the iPhone 4S.</p>
+
+<p>This just happened to me while reading a post linked from daring fireball - <a href="http://om.co/2012/04/05/the-of-course-principle-of-design/">the &#8220;of course&#8221; principle of design</a>. I really liked the look of that font on the iPhone. (I also noted that I should reduce the margins on my blog for small screens because you have to zoom to read really). So how, on an iPhone, you do find out what font that is?</p>
+
+<p>What I wanted was a bookmarklet, so I searched for &#8220;what font bookmarklet&#8221; and found <a href="http://chengyinliu.com/whatfont.html">WhatFont Tool</a> which provides a powerful bookmarklet for finding out what font a page is using (and whether it is from Google webfonts or Typekit). Problem is, bookmarking JavaScript is not easy on the iPhone - you have to copy/paste the JavaScript somehow. Because WhatFont only provides a button (to drag to your bookmarks bar), I had to find another way. I decided to try the Mercury web browser, guessing it might have a way to copy the JavaScript for a link/button. Thankfully I was right and it allowed me to copy the JavaScript, then switch to Safari and create then edit a bookmark for it. It works wonderfully. Just touch the bookmark to active it, then touch any piece of text on a website to see info on what fonts it&#8217;s using. Simple.</p>
+
+<p>For your copy/paste convenience, I have provided the code for the WhatFont bookmarklet:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">d</span><span class="o">=</span><span class="nb">document</span><span class="p">,</span><span class="nx">s</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;scr&#39;</span><span class="o">+</span><span class="s1">&#39;ipt&#39;</span><span class="p">),</span><span class="nx">b</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span><span class="nx">l</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span><span class="nx">s</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://chengyinliu.com/wf.js?o=&#39;</span><span class="o">+</span><span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">href</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&amp;t=&#39;</span><span class="o">+</span><span class="p">(</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">()));</span><span class="nx">b</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">)})();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Turned out that that post was using <a href="http://aldusleaf.org/0-crimson.html">Crimson Text</a>
+from Google Webfonts. Nice.</p>
+
+<p>It looks like Crimson Text is a promising free font that might have Polytonic Greek characters at some point so that&#8217;s useful to know for me.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -250,71 +300,6 @@ felt I had to see what all the fuss was about.</p>
 <p>The reason so many of us have such a frustrating initial experience with Haskell is that most of the books on the subject are appallingly badly written. Programming books are in general a complete shambles and very few are useful to anyone who isn&#8217;t already pretty hot at the whole thing anyway. If you were lucky enough to find a well-written helpful introduction to Haskell (there are some), then you might not be feeling this way. Also if you were born a Haskell wizard, this will sound like complete gobbledegook to you. But then you&#8217;re not really human now are you? Admit it.</p>
 
 <p>Anyway, I will be attending the <a href="http://www.meetup.com/hoodlums/">Haskell hoodlums meetup</a> this Thursday so hopefully I&#8217;ll start understanding this thing. Don&#8217;t give up people! Good luck.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/05/05/david-cameron-on-av.html">David Cameron on AV</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-05T00:00:00+01:00" pubdate data-updated="true">May 5<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>David Cameron:</strong></p>
-
-<blockquote><p>“I just feel it, in my gut, that AV is wrong. Politics shouldn’t be some mind-bending exercise.</p></blockquote>
-
-<p>British people are pretty thick. I mean, have you seen them? I seriously doubt they understand the whole &#8220;tick the party you want in government&#8221; thing - how are they going to understand they can actually vote for their views with this system. Given that we&#8217;ve slashed education funding, it&#8217;s unlikely we&#8217;re gonna end up with a whole lot of people who can understand anything about politics, which is how we like it. Nice and stupid. Means we don&#8217;t have to say anything meaningful to get them to vote for us.</p>
-
-<blockquote><p>“It’s about what you feel in your gut – about the values you hold dear and the beliefs you instinctively have. And I just feel it, in my gut, that AV is wrong.</p></blockquote>
-
-<p>Gut feeling as a way to decide who should be in power. So a knee-jerk reaction is what we&#8217;re looking for, we don&#8217;t want Brits having to look at the policies of the parties - we want them to vote tribally.</p>
-
-<blockquote><p>“There are three big problems with AV that strike at the heart of how I believe our democracy should work.
-First, I believe power should lie with the people – and AV would take some of that power away.</p></blockquote>
-
-<p>I&#8217;m not going to explain why it takes power away because obviously it doesn&#8217;t. All you need to do is vote once to get the exact same vote as you would under FPTP, so the system doesn&#8217;t take any power away from the individual. But this is some scary sounding rhetoric. Hopefully people will be scared enough not to question the assertion.</p>
-
-<blockquote><p>“Second, I believe there should be real accountability between the pledges politicians put in their manifestos and the action they take in government.</p></blockquote>
-
-<p>Because this is obviously the case now. Also it&#8217;s easy for me, we didn&#8217;t put any actual pledges in the Conservative manifesto, so it looks like we&#8217;ve stuck to it pretty closely.</p>
-
-<blockquote><p>“AV would damage that chain of accountability. And third, I believe in the principle of one person, one vote.</p></blockquote>
-
-<p>I have no actual reason for saying no to AV except it would make us work harder to retain those safe seats.</p>
-
-<blockquote><p>“If you want a system that makes your politicians accountable.
-“If you want a system that enshrines the principle of one person, one vote.
-“You must vote on May 5th, and you must vote No to AV.
-“The biggest danger right now is that Britain sleepwalks into this second-rate system, waking up on May 6th with a voting system that damages our democracy.
-“We must not let that happen. So we’ve got to get out there and fight, and get out there and win.”</p></blockquote>
-
-<p>Voting for something is like sleep-walking because all the people voting YES are all asleep. Let&#8217;s keep Britain&#8217;s electoral system thoroughly in the dark ages!</p>
 </div>
   
   

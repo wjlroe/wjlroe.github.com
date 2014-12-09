@@ -9,7 +9,7 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="I shall be making an attempt to build a game in 48 hours for Ludum Dare 24, for the first time. My tools will be: Language: Clojure + ClojureScript ( &hellip;">
+  <meta name="description" content="Just a quick note for Google and future-me. If you want to mix both ember-rails and handlebars_assets in the same Rails project, you will encounter &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -89,6 +89,70 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/02/18/ember-rails-handlebars-assets.html">Ember-rails and Handlebars_assets FIGHT!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-18T23:10:00+00:00" pubdate data-updated="true">Feb 18<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just a quick note for Google and future-me. If you want to mix both <a href="https://github.com/emberjs/ember-rails">ember-rails</a> and <a href="https://github.com/leshill/handlebars_assets">handlebars_assets</a> in the same Rails project, you will encounter maddening issues with your Ember/Handlebars templates. Specifically, they will compile fine (probably) but Ember will not be able to see them.</p>
+
+<h2>How to check whether Ember can ‘see’ your templates</h2>
+
+<p>In your browsers console, type:</p>
+
+<pre><code>Ember.TEMPLATES
+</code></pre>
+
+<p>You should see something like:</p>
+
+<pre><code>Object {application: function, domains: function}
+</code></pre>
+
+<p>In the above example I have two templates defined: &#8216;application&#8217; and &#8216;domains&#8217;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
+
+<h2>Why is this happening?</h2>
+
+<p>This happened to me because both handlebars_assets and ember-rails were registering with the asset pipeline to process <code>.handlebars</code> files (and <code>.hbs</code> files). They fight and, at least in my case, handlebars_assets won.</p>
+
+<h2>The fix</h2>
+
+<p>The only way to get this to work reliably right now is to use a file extension for your Ember handlebars templates that isn’t recognised by handlebars_assets. I used <code>.hjs</code>. It’s not exactly a fix, but things are all working right now so that’s groovy.</p>
+
+<h2>Why are you using both?</h2>
+
+<p>There’s probably a way round this, but I’m using handlebars_assets to compile handlebars templates for some javascript (that ends up not being at all related to EmberJS - it’s embedded in other pages). I need those templates to be available in the <code>HandlebarsTemplates</code> object so I can run them in the javascript. I include <code>handlebars.runtime</code> in the javascript to run them. ember-rails includes that (I just looked) so I can probably ditch handlebars_assets. That’ll be the next thing to try.</p>
+
+<p>This might not make a lot of sense, but if you’ve hit this problem (i.e. nothing renders in your EmberJS app but your templates are all compiled and you get no errors in the browser console) then this is one possible gotcha.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -184,58 +248,6 @@
 <p>The secret underlying all this, and all that I haven&#8217;t said, is there is no secret to developer happiness. If I&#8217;m anything to go by, we thrive on autonomy, creativity and problem solving. It is very strange that so many employers are averse to providing any form of autonomy to their developers because that has to put a damper on anyone&#8217;s aspirations. At <a href="http://www.digital-science.com">Digital Science</a> we are generally encouraged to come up with ideas all the time and execute them. But one of the best aspects for me is how we&#8217;re all able to hack on the infrastructure. See something that could be better? Fix it. If I couldn&#8217;t mix working on UI stuff, web backends, databases, deployment (Chef) and <a href="http://foldme.herokuapp.com">frivolous fun</a> then this wouldn&#8217;t be nearly as worthwhile.</p>
 
 <p>Happy hacking.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/04/06/what-font-is-that.html">What Font Is That?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-06T21:06:00+01:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I often come across web pages that use fonts that I like and wonder what they are (I&#8217;m not that good at guessing fonts). On the whole this situation happens while reading on my iPhone because that&#8217;s the only high-resolution screen I use - good fonts look amazing on the iPhone 4S.</p>
-
-<p>This just happened to me while reading a post linked from daring fireball - <a href="http://om.co/2012/04/05/the-of-course-principle-of-design/">the &#8220;of course&#8221; principle of design</a>. I really liked the look of that font on the iPhone. (I also noted that I should reduce the margins on my blog for small screens because you have to zoom to read really). So how, on an iPhone, you do find out what font that is?</p>
-
-<p>What I wanted was a bookmarklet, so I searched for &#8220;what font bookmarklet&#8221; and found <a href="http://chengyinliu.com/whatfont.html">WhatFont Tool</a> which provides a powerful bookmarklet for finding out what font a page is using (and whether it is from Google webfonts or Typekit). Problem is, bookmarking JavaScript is not easy on the iPhone - you have to copy/paste the JavaScript somehow. Because WhatFont only provides a button (to drag to your bookmarks bar), I had to find another way. I decided to try the Mercury web browser, guessing it might have a way to copy the JavaScript for a link/button. Thankfully I was right and it allowed me to copy the JavaScript, then switch to Safari and create then edit a bookmark for it. It works wonderfully. Just touch the bookmark to active it, then touch any piece of text on a website to see info on what fonts it&#8217;s using. Simple.</p>
-
-<p>For your copy/paste convenience, I have provided the code for the WhatFont bookmarklet:</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">d</span><span class="o">=</span><span class="nb">document</span><span class="p">,</span><span class="nx">s</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;scr&#39;</span><span class="o">+</span><span class="s1">&#39;ipt&#39;</span><span class="p">),</span><span class="nx">b</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span><span class="nx">l</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span><span class="nx">s</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://chengyinliu.com/wf.js?o=&#39;</span><span class="o">+</span><span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">href</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&amp;t=&#39;</span><span class="o">+</span><span class="p">(</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">()));</span><span class="nx">b</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">)})();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Turned out that that post was using <a href="http://aldusleaf.org/0-crimson.html">Crimson Text</a>
-from Google Webfonts. Nice.</p>
-
-<p>It looks like Crimson Text is a promising free font that might have Polytonic Greek characters at some point so that&#8217;s useful to know for me.</p>
 </div>
   
   

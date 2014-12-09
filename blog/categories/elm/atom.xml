@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: ludum-dare | William Roe&#146;s blog]]></title>
-  <link href="http://blog.wjlr.org.uk/blog/categories/ludum-dare/atom.xml" rel="self"/>
+  <title><![CDATA[Category: elm | William Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/elm/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
   <updated>2014-12-09T00:29:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
@@ -49,30 +49,6 @@
 <p><img src="http://blog.wjlr.org.uk/images/hunger-box.png" width="100%"></p>
 
 <p>So Ludum Dare is over. I'm done with this blog post. I have plenty to practice and improve before next Ludum Dare and with any luck I'll ship a game next time.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ludum Dare 24 - I'm taking part]]></title>
-    <link href="http://blog.wjlr.org.uk/2012/08/22/ludum-dare-24-i-slash-m-taking-part.html"/>
-    <updated>2012-08-22T02:15:00+01:00</updated>
-    <id>http://blog.wjlr.org.uk/2012/08/22/ludum-dare-24-i-slash-m-taking-part</id>
-    <content type="html"><![CDATA[<p>I shall be making an attempt to build a game in 48 hours for <a href="http://www.ludumdare.com/compo/">Ludum Dare 24</a>, for the first time.</p>
-
-<p>My tools will be:</p>
-
-<ul>
-<li><strong>Language</strong>: Clojure + ClojureScript (targeting Javascript)</li>
-<li><strong>Engine</strong>: My brain and HTML Canvas...mainly canvas</li>
-<li><strong>Libraries</strong>: probably at least <a href="https://github.com/ibdknox/monet">Monet</a></li>
-<li><strong>Music</strong>: I have no idea, whatever I can work out how to use</li>
-<li><strong>Graphics</strong>: Pixen, Pixelmator, that sort of thing probably</li>
-</ul>
-
-
-<p>I'm gonna have fun but since I'm breaking rule 1 - know the tools (I don't know any possible tools) this is going to be intense.</p>
-
-<p>Have fun everyone!</p>
 ]]></content>
   </entry>
   
