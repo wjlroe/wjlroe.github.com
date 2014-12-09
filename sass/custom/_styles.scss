@@ -140,6 +140,7 @@ footer div.meta.pagination {
 
     > article {
         padding-top: 2em;
+        position: relative;
 
         header {
             background: none;
@@ -147,6 +148,10 @@ footer div.meta.pagination {
             h1 {
                 font-size: 2.2em;
             }
+        }
+
+        img, video {
+            border: 0;
         }
     }
 }
@@ -171,4 +176,12 @@ h2, h3,h4,h5 { font-weight: normal; }
 
 pre, .highlight, .gist-highlight {
     &::-webkit-scrollbar {  height: .3em; background: $solar-scroll-bg; }
+}
+
+img.pixel-art {
+    image-rendering: -moz-crisp-edges;         /* Firefox */
+    image-rendering:   -o-crisp-edges;         /* Opera */
+    image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }
