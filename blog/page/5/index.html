@@ -9,7 +9,7 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="David Cameron: “I just feel it, in my gut, that AV is wrong. Politics shouldn’t be some mind-bending exercise. British people are pretty thick. I &hellip;">
+  <meta name="description" content="So I have started to learn Haskell (again - I learned the basics at university for the Functional Programming class and loved it, I have since &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -89,6 +89,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/07/12/learning-haskell.html">Learning Haskell</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-12T00:00:00+01:00" pubdate data-updated="true">Jul 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>So I have started to learn Haskell (again - I learned the basics at university for the Functional Programming class and loved it, I have since forgotten most of that).</p>
+
+<h2>Haskell is weird</h2>
+
+<p>When you first start out learning this language - or even just read some articles about it - the first thing that will strike you is that it seems completely obscure. The syntax is obscure, the concepts are obscure, but most of all - the language used to describe what things are is incredibly obscure. Every programming language community has evolved its own lingo of course and Haskell&#8217;s is awash with mathematics. If you subscribe to the planet Haskell RSS feed you will get the impression that Haskell is pretty much just an extension of Mathematics and is only used for &#8220;pure&#8221; problems and therefore completely irrelevant to real world problems. Then you will notice there&#8217;s a book called &#8220;Real World Haskell&#8221; and you&#8217;ll think it an anomaly, just some noise in the data.</p>
+
+<h2>Why learn this?</h2>
+
+<p>Apart from wanting to become a better programmer in general (which would explain why I&#8217;d want to learn functional programming in general and in more detail than I already do from Erlang and Clojure), I want to learn how Haskell can be a practical language - how it can help me create great products. I suspect that behind the terseness and high degree of greek characters is a toolkit that will be at least as empowering as Erlang/OTP has been. I want that toolkit.</p>
+
+<h2>The elephant in the room</h2>
+
+<p>Sooner or later you will arrive at the Haskell trial stage. In order to print anything out from your programme, or accept any input or read a file etc. you will have to use monads. At first the syntax will seem very strange, just a load of terse boilerplate for doing what more pragmatic languages make super easy, but you&#8217;ll think &#8220;whatever, let&#8217;s just get on with learning this thing&#8221;. At some point the tutorial or book you&#8217;re reading will have to explain monads to you. More than likely this is the point where you stared at the screen/page in disbelief and your heart sank as you realised you would have to understand level 3000 mathematics to print something on screen. For most people, this is the last they ever deal with Haskell.</p>
+
+<p>Later on, a Haskell wizard will act all puzzled and amused that you found monads hard to understand. This will lower your self-esteem so low you consider giving up entirely and becoming a farmer instead. They will go on to tell you that you&#8217;ve been using monads the whole time in whatever programming language you like. They will explain how this is so and you will not be enlightened. It&#8217;ll sound all too convenient, just a bunch of semantic drivel.</p>
+
+<p>The reason so many of us have such a frustrating initial experience with Haskell is that most of the books on the subject are appallingly badly written. Programming books are in general a complete shambles and very few are useful to anyone who isn&#8217;t already pretty hot at the whole thing anyway. If you were lucky enough to find a well-written helpful introduction to Haskell (there are some), then you might not be feeling this way. Also if you were born a Haskell wizard, this will sound like complete gobbledegook to you. But then you&#8217;re not really human now are you? Admit it.</p>
+
+<p>Anyway, I will be attending the <a href="http://www.meetup.com/hoodlums/">Haskell hoodlums meetup</a> this Thursday so hopefully I&#8217;ll start understanding this thing. Don&#8217;t give up people! Good luck.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -278,313 +332,6 @@ First, I believe power should lie with the people – and AV would take some of 
 <p>Linux and Ubuntu have a very long way to go before they can start to compete with the commercial alternatives. Although Unity is a refreshing innovation on desktop interfaces, it really needs to be backed up with great hardware support and general ease of use that goes a little more than skin deep.</p>
 
 <p>I think I will be posting a review of Natty later - that will focus on Natty as a working system, rather than specific to this laptop. So far though, having used it for a couple of hours setting up my environment, it&#8217;s a great system. It needs a lot more QA to sort out the hardware and system problems though.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/04/25/parsing-and-ebook-making.html">Parsing and Ebook Making</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-25T00:00:00+01:00" pubdate data-updated="true">Apr 25<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have just finished a 6 hour hacking session on <a href="http://github.com/wjlroe/parse_perseus">parse_perseus</a>. The aims were to fix most of the encoding problems, split the content up into books and create a table of contents. Other than a few problems with encoding, I managed to complete all that.</p>
-
-<h2>Tables of contents</h2>
-
-<p>The table of contents was a bit strange. The Kindle&#8217;s mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains <code>&lt;navPoint&gt;</code> elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here&#8217;s an abridged version of the NCX file I had generated:</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-</span><span class='line'><span class="cp">&lt;!DOCTYPE ncx PUBLIC &quot;-//NISO//DTD ncx 2005-1//EN&quot;</span>
-</span><span class='line'><span class="cp">   &quot;http://www.daisy.org/z3986/2005/ncx-2005-1.dtd&quot;&gt;</span>
-</span><span class='line'><span class="nt">&lt;ncx</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.daisy.org/z3986/2005/ncx/&quot;</span> <span class="na">version=</span><span class="s">&quot;2005-1&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:uid&quot;</span> <span class="na">content=</span><span class="s">&quot;http://en.wikipedia.org/wiki/The_Odyssey&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:depth&quot;</span> <span class="na">content=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:totalPageCount&quot;</span> <span class="na">content=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:maxPageNumber&quot;</span> <span class="na">content=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;docTitle&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;text&gt;</span>Ὀδύσσεια<span class="nt">&lt;/text&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/docTitle&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;navMap&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;navPoint</span> <span class="na">id=</span><span class="s">&quot;toc&quot;</span> <span class="na">playOrder=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;navLabel&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;text&gt;</span>Table of Contents<span class="nt">&lt;/text&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;/navLabel&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;content</span> <span class="na">src=</span><span class="s">&quot;toc.html&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/navPoint&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;navPoint</span> <span class="na">class=</span><span class="s">&quot;chapter&quot;</span> <span class="na">id=</span><span class="s">&quot;book-1&quot;</span> <span class="na">playOrder=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;navLabel&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;text&gt;</span>Book 1<span class="nt">&lt;/text&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;/navLabel&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;content</span> <span class="na">src=</span><span class="s">&quot;book-1.xhtml&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/navPoint&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/navMap&gt;</span>
-</span><span class='line'><span class="nt">&lt;/ncx&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>There were obviously more chapters/books than that. The Kindle/mobi format doesn&#8217;t use this for the table of contents, so when you open a converted epub on a Kindle (or using the Kindle desktop software), the menu item to go to the table of contents is greyed out. After digging around on the web I discovered that the mobi format uses a toc file, which is basically an html file full of links. In order for that to work, you need to reference the toc file in the OPF file. Here&#8217;s an abbreviated version of the one I generated:</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-</span><span class='line'><span class="nt">&lt;package</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span> <span class="na">version=</span><span class="s">&quot;2.0&quot;</span>
-</span><span class='line'>   <span class="na">unique-identifier=</span><span class="s">&quot;odyssey_gk&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;metadata</span> <span class="na">xmlns:dc=</span><span class="s">&quot;http://purl.org/dc/elements/1.1/&quot;</span>
-</span><span class='line'>          <span class="na">xmlns:dcterms=</span><span class="s">&quot;http://purl.org/dc/terms/&quot;</span>
-</span><span class='line'>      <span class="na">xmlns:opf=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span>
-</span><span class='line'>      <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;dc:title&gt;</span>Ὀδύσσεια<span class="nt">&lt;/dc:title&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;dc:language</span> <span class="na">xsi:type=</span><span class="s">&quot;dcterms:RFC3066&quot;</span><span class="nt">&gt;</span>en-us<span class="nt">&lt;/dc:language&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;dc:identifier</span> <span class="na">id=</span><span class="s">&quot;odyssey_gk&quot;</span> <span class="na">opf:scheme=</span><span class="s">&quot;URL&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>             http://en.wikipedia.org/wiki/The_Odyssey
-</span><span class='line'>    <span class="nt">&lt;/dc:identifier&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;dc:creator</span> <span class="na">opf:file-as=</span><span class="s">&quot;Homer&quot;</span> <span class="na">opf:role=</span><span class="s">&quot;aut&quot;</span><span class="nt">&gt;</span>Homer<span class="nt">&lt;/dc:creator&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;cover&quot;</span> <span class="na">content=</span><span class="s">&quot;cover-image&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/metadata&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;manifest&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;book-1&quot;</span> <span class="na">href=</span><span class="s">&quot;book-1.xhtml&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/xhtml+xml&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;style.css&quot;</span> <span class="na">media-type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;ncx&quot;</span> <span class="na">href=</span><span class="s">&quot;book.ncx&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/x-dtbncx+xml&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;cover&quot;</span> <span class="na">href=</span><span class="s">&quot;cover.html&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/xhtml+xml&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;toc&quot;</span> <span class="na">href=</span><span class="s">&quot;toc.html&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/xhtml+xml&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;cover-image&quot;</span> <span class="na">href=</span><span class="s">&quot;cover.jpg&quot;</span> <span class="na">media-type=</span><span class="s">&quot;image/jpeg&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/manifest&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;spine</span> <span class="na">toc=</span><span class="s">&quot;ncx&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;itemref</span> <span class="na">idref=</span><span class="s">&quot;cover&quot;</span> <span class="na">linear=</span><span class="s">&quot;no&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;itemref</span> <span class="na">idref=</span><span class="s">&quot;toc&quot;</span> <span class="na">linear=</span><span class="s">&quot;no&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;itemref</span> <span class="na">idref=</span><span class="s">&quot;book-1&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/spine&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;guide&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;reference</span> <span class="na">href=</span><span class="s">&quot;cover.html&quot;</span> <span class="na">type=</span><span class="s">&quot;cover&quot;</span> <span class="na">title=</span><span class="s">&quot;Cover&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;reference</span> <span class="na">href=</span><span class="s">&quot;toc.html&quot;</span> <span class="na">type=</span><span class="s">&quot;toc&quot;</span> <span class="na">title=</span><span class="s">&quot;Table of Contents&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;reference</span> <span class="na">href=</span><span class="s">&quot;book-1.xhtml&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">title=</span><span class="s">&quot;Text&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/guide&gt;</span>
-</span><span class='line'><span class="nt">&lt;/package&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The important bit there is the <code>&lt;reference&gt;</code> element inside <code>&lt;guide&gt;</code> that is of type &#8220;toc&#8221;. After that, the actual table of contents file is pretty straightforward:</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
-</span><span class='line'><span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;</span>
-</span><span class='line'><span class="cp">   &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</span>
-</span><span class='line'><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;title&gt;</span>Table of Contents<span class="nt">&lt;/title&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;style</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>img { max-width: 100%; height: 100% }<span class="nt">&lt;/style&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;body&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;contents&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;h2&gt;</span>Contents<span class="nt">&lt;/h2&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;li&gt;</span>
-</span><span class='line'>          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;book-1.xhtml&quot;</span><span class="nt">&gt;</span>Book 1<span class="nt">&lt;/a&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/body&gt;</span>
-</span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That&#8217;s just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.</p>
-
-<h2>Encoding</h2>
-
-<p>I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don&#8217;t expect anyone to know what that is, I didn&#8217;t and it&#8217;s still just a character to me. But it looks like this:</p>
-
-<h1 class="greek">ΐ</h1>
-
-
-<p><aside class="post">
-<strong>Betacode</strong> is the ASCII language used by Perseus Digital library to represent Greek characters easily. It&#8217;s used in their opensource XML files (that I&#8217;ve used) and as a way to search Greek books (due to the unavailability of Ancient Greek keyboards). So <code>a)/ndra</code> becomes <code class="greek">ἄνδρα</code>.
-</aside></p>
-
-<p>In betacode, this is written as <code>i/+</code>. Normally, the parser encodes the character <code>i</code>, then each diacritic in turn: <code>/</code>, then <code>+</code> into combining diacritics. This resulted in characters <code>0x03b9 0x0301 0x0308</code>, which would be normalized using Java&#8217;s Normalizer/normalize function as:</p>
-
-<h1 class="greek">ί̈</h1>
-
-
-<p>The frustrating thing is that it&#8217;s quite difficult to tell the difference on the terminal, when running tests - even when I&#8217;d bumped the font size up to crazy levels.</p>
-
-<p>In order to match that symbol, I created the following rule:</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">iota-dialytika-tonos</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">constant-semantics</span> <span class="p">(</span><span class="nf">lit-conc-seq</span> <span class="s">&quot;i/+&quot;</span> <span class="nv">lit</span><span class="p">)</span>
-</span><span class='line'>                         <span class="p">(</span><span class="nb">char </span><span class="mi">0</span><span class="nv">x0390</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then I&#8217;d redefined <code>character</code> to be:</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">character</span> <span class="p">(</span><span class="nf">alt</span> <span class="nv">iota-dialytika-tonos</span> <span class="nv">final-sigma</span> <span class="nv">upper-char</span> <span class="nv">lower-char</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Which means that the rule <code>iota-dialytika-tonos</code> takes precedence over any other character (to prevent the dumb combining diacritic rules from matching it).</p>
-
-<p>And that brings me on to final sigma. Final sigma has given me quite a lot of pain, ever since I started building this parser. For those of you who don&#8217;t know Greek, like me, they have two sigma characters - one is used in the middle of a word:</p>
-
-<h1 class="greek">σ</h1>
-
-
-<p>But if sigma is at the end of a word, it must use the final sigma character, thus:</p>
-
-<h1 class="greek">ς</h1>
-
-
-<p>The problem with matching something at the end of a word is that fnparse&#8217;s matchers are mostly greedy. There&#8217;s no equivalent rule, as far as I can tell, to the regular expression <code>(.+)s</code>. The <code>rep+</code> rules always greedily gobble all the tokens, including the last <code>s</code>. At the moment, all I have is the following rule for final sigma:</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">final-sigma</span> <span class="p">(</span><span class="nf">constant-semantics</span> <span class="p">(</span><span class="nf">lit-conc-seq</span> <span class="s">&quot;s &quot;</span> <span class="nv">lit</span><span class="p">)</span>
-</span><span class='line'>                                     <span class="p">(</span><span class="nb">str </span><span class="p">(</span><span class="nb">char </span><span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">beta-char-to-greek-char</span> <span class="sc">\s</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
-</span><span class='line'>                                          <span class="sc">\s</span><span class="nv">pace</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This isn&#8217;t ideal because it can&#8217;t match either the last <code>s</code> of the last word in a string (or line), or <code>s</code> followed only by a non-character (such as <code>:</code>). This is something I have to work on, but fnparse isn&#8217;t making it easy for me here.</p>
-
-<p>So as a result of all that, here&#8217;s the first verse of the Odyssey by Homer:</p>
-
-<blockquote class="greek" style="font-style: normal">
-ἄνδρα μοι ἔννεπε, μοῦσα, πολύτροπον, ὃς μάλα πολλὰ<br/>
-πλάγχθη, ἐπεὶ Τροίης ἱερὸν πτολίεθρον ἔπερσεν:<br/>
-πολλῶν δ᾽ ἀνθρώπων ἴδεν ἄστεα καὶ νόον ἔγνω,<br/>
-πολλὰ δ᾽ ὅ γ᾽ ἐν πόντῳ πάθεν ἄλγεα ὃν κατὰ θυμόν,<br/>
-ἀρνύμενος ἥν τε ψυχὴν καὶ νόστον ἑταίρων.<br/>
-ἀλλ᾽ οὐδ᾽ ὣς ἑτάρους ἐρρύσατο, ἱέμενός περ:<br/>
-αὐτῶν γὰρ σφετέρῃσιν ἀτασθαλίῃσιν ὄλοντο,<br/>
-νήπιοι, οἳ κατὰ βοῦς Ὑπερίονος Ἠελίοιο<br/>
-ἤσθιον: αὐτὰρ ὁ τοῖσιν ἀφείλετο νόστιμον ἦμαρ.<br/>
-τῶν ἁμόθεν γε,  θεά, θύγατερ Διός, εἰπὲ καὶ ἡμῖν.
-</blockquote>
-
-
-<hr />
-
-<h2>References</h2>
-
-<ul>
-<li><a href="http://github.com/joshua-choi/fnparse/">fnparse</a> which is awesome for taming parse-m monads in Clojure.</li>
-<li>Thanks to <a href="http://www.tlg.uci.edu/~opoudjis/unicode/gkdiacritics.html">Greek Diacritics</a> for information about combining diacritics.</li>
-<li><a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> Wikipedia&#8217;s writup on the EPUB standard is almost all you need.</li>
-<li><a href="http://idpf.org/epub/20/spec/OPF_2.0.1_draft.htm">OPF</a> The OPF/NCX standard.</li>
-<li><a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0135">The Odyssey</a> From the Perseus Digital Library, the source for the XML files I have been consuming in this project.</li>
-</ul>
-
 </div>
   
   
