@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title>William Roe&#8217;s blog</title>
+  <title><![CDATA[William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2014-12-28T19:05:00+00:00</updated>
+  <updated>2014-12-29T15:43:23+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
-  <icon>http://blog.wjlr.org.uk/favicon.png</icon>
   <author>
     <name><![CDATA[Will Roe]]></name>
     
@@ -22,20 +21,20 @@
     <content type="html"><![CDATA[<p>Logic programming is an odd beast. As I lounged around over the
 holidays I tried to work out how to write a Secret Santa algorithm
 using core.logic. It seemed like the obvious choice but I quickly
-realised I&#8217;d bitten off more than I could chew.</p>
+realised I&rsquo;d bitten off more than I could chew.</p>
 
 <h2>Simple Secret Santa</h2>
 
 <p>Your common or garden Secret Santa consists of putting names in a hat
-and picking them out again, ensuring you don&#8217;t pick yourself. Suitable
+and picking them out again, ensuring you don&rsquo;t pick yourself. Suitable
 for offices and other groups of awkward strangers and acquaintances.</p>
 
-<p>We need <code>core.logic</code> imported, so here&#8217;s the namespace declaration
+<p>We need <code>core.logic</code> imported, so here&rsquo;s the namespace declaration
 (note that both <code>clojure.core</code> and <code>clojure.core.logic</code> define <code>==</code>
 for totally different purposes. I have never used <code>clojure.core/==</code> so
-I&#8217;m a bit hazy as to what it&#8217;s for - we exclude it so they don&#8217;t clash):</p>
+I&rsquo;m a bit hazy as to what it&rsquo;s for - we exclude it so they don&rsquo;t clash):</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -46,14 +45,14 @@ I&#8217;m a bit hazy as to what it&#8217;s for - we exclude it so they don&#8217
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>We&#8217;ll start by defining a relation:</p>
+<p>We&rsquo;ll start by defining a relation:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">db-rel</span> <span class="nv">santa</span> <span class="nv">p</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This is so that we can constrain values to only those names we&#8217;ve
+<p>This is so that we can constrain values to only those names we&rsquo;ve
 defined are santas (otherwise you get weird logic variables and nobody
 wants to deal with that noise).</p>
 
@@ -62,7 +61,7 @@ wants to deal with that noise).</p>
 after exchanging presents) and returns a list of lists. Each inner
 list is a pair of giver and receiver of presents.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -101,14 +100,14 @@ list is a pair of giver and receiver of presents.</p>
 
 <p>If we call it thus:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">simple-secret-santa</span> <span class="p">[</span><span class="s">&quot;Tommen&quot;</span> <span class="s">&quot;Gregor&quot;</span> <span class="s">&quot;Daenerys&quot;</span> <span class="s">&quot;Arya&quot;</span><span class="p">])</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Then we should get the following as a result:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -125,7 +124,7 @@ in this kind of tomfoolery.</p>
 
 <p>We need a helper function for pairing people up now:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -144,26 +143,26 @@ in this kind of tomfoolery.</p>
 
 <p>The mind-bending nature of that function can be rather confusing. In
 core.logic (as with <a href="http://minikanren.org">miniKanren</a> and others),
-it&#8217;s common for an &#8220;output
-value&#8221; to be one of the parameters, in this case the 3rd parameter
+it&rsquo;s common for an &ldquo;output
+value&rdquo; to be one of the parameters, in this case the 3rd parameter
 (<code>pairs</code>). This function defines a relationship between the parameters
-provided so you can call it with <code>givers</code> and <code>pairs</code> and it&#8217;ll fill
+provided so you can call it with <code>givers</code> and <code>pairs</code> and it&rsquo;ll fill
 in the blanks for the <code>receivers</code> value (effectively unzipping the
 <code>pairs</code> value), which is pretty neat.</p>
 
 <h3>Unify what?</h3>
 
-<p>It&#8217;s crucial to understand the <code>clojure.core.logic/==</code> unification
+<p>It&rsquo;s crucial to understand the <code>clojure.core.logic/==</code> unification
 function to understand how any of this works. It looks like an
 equality test from one of those other programming languages we shall
-not mention here, but it isn&#8217;t like that. Sometimes I thought of it as
-a kind of wishful-thinking-equality - a sort of &#8220;wouldn&#8217;t it be just
-lovely if these things were the same&#8221;.</p>
+not mention here, but it isn&rsquo;t like that. Sometimes I thought of it as
+a kind of wishful-thinking-equality - a sort of &ldquo;wouldn&rsquo;t it be just
+lovely if these things were the same&rdquo;.</p>
 
 <p>Taking an example from
 <a href="https://github.com/clojure/core.logic/wiki/A-Core.logic-Primer">the core.logic wiki</a>:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -180,8 +179,8 @@ lovely if these things were the same&#8221;.</p>
 (the output variable). We start using a new logic variable <code>a</code> which
 we unify with <code>q</code> using the <code>==</code> unification function. That is to say,
 all solutions must satisfy the equation <code>a = q</code>, they must have the
-same value. Core.logic tends to add &#8216;o&#8217; to the end of common function
-names so <code>(membero a [1 2 3])</code> isn&#8217;t a boolean predicate function for
+same value. Core.logic tends to add &lsquo;o&rsquo; to the end of common function
+names so <code>(membero a [1 2 3])</code> isn&rsquo;t a boolean predicate function for
 testing for list membership, it attempts to make that statement true.
 With simply that statement - <code>a</code> can be 1 or 2 or 3. The next line
 asserts that <code>q</code> is a member of the list <code>[3 4 5]</code> so its value can be
@@ -192,10 +191,10 @@ a list of all possible solutions so in fact we will get a single
 element list: <code>(3)</code> as the result from that code.</p>
 
 <p>The input of our Secret Santa function will be a list of names
-(strings), so it&#8217;d be useful to turn that list of names into a
+(strings), so it&rsquo;d be useful to turn that list of names into a
 database that we can constrain our logic functions on:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">coll-&gt;db</span>
@@ -212,9 +211,9 @@ arg1 arg2 arg3)</code></p>
 
 <h3>How does it work again?</h3>
 
-<p>Let&#8217;s concentrate on the core part of the function:</p>
+<p>Let&rsquo;s concentrate on the core part of the function:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -235,11 +234,11 @@ arg1 arg2 arg3)</code></p>
 collection is a santa and every item in the <code>receivers</code> collection is
 a santa (lines 3 and 4). This ensures that those collections contain
 only valid santa names and not logic variables or numbers or anything
-else. There&#8217;s something subtle about this - it&#8217;s not simply an
+else. There&rsquo;s something subtle about this - it&rsquo;s not simply an
 assertion. core.logic will make those statements true in every way
 they can. One possible version of that (assuming there were 4 names
 input to the function) is that <code>givers =
-["Arya" "Arya" "Arya" "Arya"]</code>. That&#8217;s nonsensical for our purposes
+["Arya" "Arya" "Arya" "Arya"]</code>. That&rsquo;s nonsensical for our purposes
 (remember we mean to zip up these collections so the first giver is
 giving to the first receiver, the 2nd giver to the 2nd receiver and so
 on). So then we ensure that the collection of givers has distinct
@@ -247,7 +246,7 @@ elements in it (line 5), saying the same about receivers on line 6. If
 you imagine core.logic has assembled all the combinations of values
 that are santas first - imagine now it throws away any where values
 repeat. One of the remaining values for <code>givers</code> will be
-[&#8220;Arya&#8221; &#8220;Gregor&#8221; &#8220;Tommen&#8221; &#8220;Daenerys&#8221;]. There will be more. How many?</p>
+[&ldquo;Arya&rdquo; &ldquo;Gregor&rdquo; &ldquo;Tommen&rdquo; &ldquo;Daenerys&rdquo;]. There will be more. How many?</p>
 
 <h3>Derangements, subfactorials, oh my!</h3>
 
@@ -261,7 +260,7 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 
 <p>Here is some clojure that calculates that:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -285,7 +284,7 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 <p>This algorithm is primarily useful for checking your results in unit
 tests for example. Another way to use it is as the parameter to
 <code>run</code> - you can ask for all the possible derangements of friends. I
-didn&#8217;t have much luck with that because I misunderstood the values
+didn&rsquo;t have much luck with that because I misunderstood the values
 that my logic code was producing, also there is no need to know
 beforehand how many combinations are possible since you only want one.</p>
 
@@ -295,19 +294,19 @@ beforehand how many combinations are possible since you only want one.</p>
 relationship between the gift giver and receiver as a binary - allowed
 or not. It would be useful to be able to first attempt to solve the
 problem under ideal conditions before falling back to less and less
-ideal solutions. For example, it&#8217;s not ideal to have people paired up
-symmetrically - it&#8217;s just a bit boring that way. It&#8217;s more optimal to
+ideal solutions. For example, it&rsquo;s not ideal to have people paired up
+symmetrically - it&rsquo;s just a bit boring that way. It&rsquo;s more optimal to
 assign Santas in a circle, which makes it slightly more difficult to
-identify who&#8217;s assigned who.</p>
+identify who&rsquo;s assigned who.</p>
 
 <p>Finding all possible solutions is extremely slow in core.logic (at
-least, the way I&#8217;ve written it) so this could do with a fair amount of
+least, the way I&rsquo;ve written it) so this could do with a fair amount of
 optimisation.</p>
 
 <p>I punted the problem of picking a solution out of possible solutions
 to the combination of <code>(map sort)</code>, <code>distinct</code> and <code>rand-nth</code>. This
-isn&#8217;t really necessary, I could have told core.logic what constitutes
-a distinct solution (it doesn&#8217;t realise that order of pairings doesn&#8217;t
+isn&rsquo;t really necessary, I could have told core.logic what constitutes
+a distinct solution (it doesn&rsquo;t realise that order of pairings doesn&rsquo;t
 matter) and then simply picked one. My brain hurt so much by that
 point that I decided to call it a day and move on to more interesting
 problems, like</p>
@@ -316,16 +315,16 @@ problems, like</p>
 
 <p>I had a great deal of difficulty writing the <code>pairupo</code> function,
 largely because all the various <code>defne</code>/<code>defnu</code>/<code>defna</code> confused me -
-I still couldn&#8217;t tell you what they do. This was partly due to me
+I still couldn&rsquo;t tell you what they do. This was partly due to me
 moving from a real problem (Secret Santa) to the implementation in
 core.logic on the basis of sketchy logic programming knowledge, so I
 missed a lot of subtlety related to <code>conde</code> which is crucial for
 understanding this stuff. The official documentaion for core.logic is
 extremely sparse also, you are very much on your own if the problem
-you want to solve isn&#8217;t Sudoku or the Typed Lambda Calculus (it
+you want to solve isn&rsquo;t Sudoku or the Typed Lambda Calculus (it
 boggles my mind that that is on the
 <a href="https://github.com/clojure/core.logic/wiki/Examples">Examples</a>
-wiki page, I&#8217;m not sure if the intention is to educate or
+wiki page, I&rsquo;m not sure if the intention is to educate or
 obfuscate there).</p>
 
 <p>I hope that a bit more blogging from mere mortals like myself might
@@ -338,47 +337,47 @@ help others grok this mind-mending area of programming.</p>
     <link href="http://blog.wjlr.org.uk/2014/12/08/ludum-dare-31-postmortem.html"/>
     <updated>2014-12-08T20:01:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2014/12/08/ludum-dare-31-postmortem</id>
-    <content type="html"><![CDATA[<p>On the weekend of 6th December 2014, I participated in <a href="http://ludumdare.com/compo/">Ludum Dare</a> 31. The theme was &#8220;Entire Game on One Screen&#8221;. I didn&#8217;t finish my game and didn&#8217;t hand anything in. This is the 3rd(?) time I&#8217;ve started but not finished a Ludum Dare game in recent years. The first time I participated in Ludum Dare, I completed a game and handed it in for the competition (48 hours), so I&#8217;m curious as to what has been holding me back since then.</p>
+    <content type="html"><![CDATA[<p>On the weekend of 6th December 2014, I participated in <a href="http://ludumdare.com/compo/">Ludum Dare</a> 31. The theme was &ldquo;Entire Game on One Screen&rdquo;. I didn&rsquo;t finish my game and didn&rsquo;t hand anything in. This is the 3rd(?) time I&rsquo;ve started but not finished a Ludum Dare game in recent years. The first time I participated in Ludum Dare, I completed a game and handed it in for the competition (48 hours), so I&rsquo;m curious as to what has been holding me back since then.</p>
 
 <p><img src="http://blog.wjlr.org.uk/images/robot-scene.png" width="100%" class="pixel-art"></p>
 
 <h2>Lack of planning</h2>
 
-<p>It was only after Ludum Dare was completed and I filled in a <a href="http://trello.com">Trello</a> board with the tasks necessary to complete my game that I realised the immensity of the project. I was reading <a href="https://twitter.com/amyhoy">Amy Hoy&#8217;s</a> new book <a href="https://unicornfree.com/just-fucking-ship">Just Fucking Ship</a> and it emphasises working backwards from a goal to a set of tasks that need to be done. Hoy also advocates <a href="http://en.wikipedia.org/wiki/Mise_en_place">Mise en place</a> style of working, which I&#8217;ve never identified as a <em>thing</em> before but it&#8217;s obvious in hindsight. Ludum Dare advice usually contains something about starting on paper, getting all the high-level details worked out before diving into code and that&#8217;s absolutely right. The other massive advantage of having a todo list (e.g. in Trello) is that it&#8217;s super easy to order the list of things in terms of what needs to be done and what is optional. Does it matter that the resolution is fixed at 800x600? Nope. But I&#8217;ve totally sunk hours/days into coding around the idea I need to have a scalable interface on the web for my games (and it&#8217;s always really painful).</p>
+<p>It was only after Ludum Dare was completed and I filled in a <a href="http://trello.com">Trello</a> board with the tasks necessary to complete my game that I realised the immensity of the project. I was reading <a href="https://twitter.com/amyhoy">Amy Hoy&rsquo;s</a> new book <a href="https://unicornfree.com/just-fucking-ship">Just Fucking Ship</a> and it emphasises working backwards from a goal to a set of tasks that need to be done. Hoy also advocates <a href="http://en.wikipedia.org/wiki/Mise_en_place">Mise en place</a> style of working, which I&rsquo;ve never identified as a <em>thing</em> before but it&rsquo;s obvious in hindsight. Ludum Dare advice usually contains something about starting on paper, getting all the high-level details worked out before diving into code and that&rsquo;s absolutely right. The other massive advantage of having a todo list (e.g. in Trello) is that it&rsquo;s super easy to order the list of things in terms of what needs to be done and what is optional. Does it matter that the resolution is fixed at 800x600? Nope. But I&rsquo;ve totally sunk hours/days into coding around the idea I need to have a scalable interface on the web for my games (and it&rsquo;s always really painful).</p>
 
 <p><img src="http://blog.wjlr.org.uk/images/Elm_Editor_Mario.png" width="100%"></p>
 
-<p>Case in point - this Ludum Dare, I decided to use <a href="http://elm-lang.org">Elm</a>, which was entirely new to me. The conventional wisdom has it that one should never learn tools while participating in Ludum Dare, just use whatever you have at hand (i.e. programming languages/IDEs/libraries etc. that you have used extensively before). I only make games during Ludum Dare though and I&#8217;ve never reached a level of proficiency with gamedev that I feel leaves me with a default technology choice, so I used a new thing. However, this time round, using Elm, the web game ends up getting drawn using the 2D canvas and image elements positioned on top of it basically. You can&#8217;t control a lot of how Elm does any of this and there was a minor wrinkle - there&#8217;s no way to use CSS&#8217;s <a href="https://developer.mozilla.org/en/docs/Web/CSS/image-rendering">image-rendering</a> option to optimise for pixel art (crisp-edges is what you want - which is essentially nearest-neighbour scaling up/down). The result is you get blurry pixel art in your games and this sucks. It&#8217;s not at all a blocking problem for Ludum Dare games though and I feel silly for spending any more than 5 minutes on it.</p>
+<p>Case in point - this Ludum Dare, I decided to use <a href="http://elm-lang.org">Elm</a>, which was entirely new to me. The conventional wisdom has it that one should never learn tools while participating in Ludum Dare, just use whatever you have at hand (i.e. programming languages/IDEs/libraries etc. that you have used extensively before). I only make games during Ludum Dare though and I&rsquo;ve never reached a level of proficiency with gamedev that I feel leaves me with a default technology choice, so I used a new thing. However, this time round, using Elm, the web game ends up getting drawn using the 2D canvas and image elements positioned on top of it basically. You can&rsquo;t control a lot of how Elm does any of this and there was a minor wrinkle - there&rsquo;s no way to use CSS&rsquo;s <a href="https://developer.mozilla.org/en/docs/Web/CSS/image-rendering">image-rendering</a> option to optimise for pixel art (crisp-edges is what you want - which is essentially nearest-neighbour scaling up/down). The result is you get blurry pixel art in your games and this sucks. It&rsquo;s not at all a blocking problem for Ludum Dare games though and I feel silly for spending any more than 5 minutes on it.</p>
 
 <h2>Overly ambitious game design</h2>
 
-<p>I&#8217;m not a regular gamedev, this is something I do very occasionally. I&#8217;m a software engineer and therefore I completely and wildly underestimate the complexity and difficulty of programming tasks. Not to mention my total lack of ability to gauge time requirements. In the world of work, many of us software engineers avoid the near-impossible task of time estimation by using Agile-based practice and estimating complexity instead. It&#8217;s entirely based on teamwork and iteration of process and makes no sense for an individual working towards a goal on a deadline.</p>
+<p>I&rsquo;m not a regular gamedev, this is something I do very occasionally. I&rsquo;m a software engineer and therefore I completely and wildly underestimate the complexity and difficulty of programming tasks. Not to mention my total lack of ability to gauge time requirements. In the world of work, many of us software engineers avoid the near-impossible task of time estimation by using Agile-based practice and estimating complexity instead. It&rsquo;s entirely based on teamwork and iteration of process and makes no sense for an individual working towards a goal on a deadline.</p>
 
-<p>Aside: within the confines of Agile processes and teams, individuals can and do use more &#8220;traditional&#8221; time estimation and tracking tools to live up to their own expectations of themselves, so we do think &#8220;this will probably take half a day&#8221; but the discipline of working in an Agile team is never externalising that because it becomes an expectation and a commitment.</p>
+<p>Aside: within the confines of Agile processes and teams, individuals can and do use more &ldquo;traditional&rdquo; time estimation and tracking tools to live up to their own expectations of themselves, so we do think &ldquo;this will probably take half a day&rdquo; but the discipline of working in an Agile team is never externalising that because it becomes an expectation and a commitment.</p>
 
-<p>All my weaknesses as a software engineer aside, I made the fundamental error of dreaming up a cool game that was not within my reach of a 48 hour deadline. This is a completely avoidable self-imposed problem. The solution seems to be, sketch out the game in its entirety - all the objects in the game, all the components and all the behaviour. Make sure you have all the artwork at least approximated (I did this in Paper on the iPad because I could doddle on that while watching TV and it didn&#8217;t even feel like work). At this point you can identify elements that can be left out - think &#8220;what could I postpone if I was forced to launch this in an hour?&#8221; - or some other mind trick to force yourself to be ruthless with the scope of your game. One advantage of sketching everything on paper or in Paper on an iPad is that if time gets really tight and you don&#8217;t have super great pixel artwork ready - just chop up/scan in/photograph the sketches and use them as your assets. There will be people playing your game who think the hand-drawn nature of the artwork was a stylistic choice you made from the beginning and you know you ran out of time.</p>
+<p>All my weaknesses as a software engineer aside, I made the fundamental error of dreaming up a cool game that was not within my reach of a 48 hour deadline. This is a completely avoidable self-imposed problem. The solution seems to be, sketch out the game in its entirety - all the objects in the game, all the components and all the behaviour. Make sure you have all the artwork at least approximated (I did this in Paper on the iPad because I could doddle on that while watching TV and it didn&rsquo;t even feel like work). At this point you can identify elements that can be left out - think &ldquo;what could I postpone if I was forced to launch this in an hour?&rdquo; - or some other mind trick to force yourself to be ruthless with the scope of your game. One advantage of sketching everything on paper or in Paper on an iPad is that if time gets really tight and you don&rsquo;t have super great pixel artwork ready - just chop up/scan in/photograph the sketches and use them as your assets. There will be people playing your game who think the hand-drawn nature of the artwork was a stylistic choice you made from the beginning and you know you ran out of time.</p>
 
 <p><img src="http://blog.wjlr.org.uk/images/sketching-onescreen.png" width="100%"></p>
 
 <h2>Onwards</h2>
 
-<p>So now I have a Trello board that makes it embarrassingly clear how unrealistic my game was for a 48 hour competition - where do I go from here? I think the best answer to that is to carry on with it, attack each task in the list and then realise the game is done (that sounds obvious but it&#8217;s impossible to realise when you&#8217;re ready to ship something unless you define up-front what you actually want to ship).</p>
+<p>So now I have a Trello board that makes it embarrassingly clear how unrealistic my game was for a 48 hour competition - where do I go from here? I think the best answer to that is to carry on with it, attack each task in the list and then realise the game is done (that sounds obvious but it&rsquo;s impossible to realise when you&rsquo;re ready to ship something unless you define up-front what you actually want to ship).</p>
 
-<p>In Agile circles, we talk a bit about what it means to be Done. The &#8220;definition of done&#8221;, which can sound rather alien to somebody who&#8217;s not familiar with specifying that concretely. It&#8217;s essential to working progress otherwise you end up with tasks that linger on for days and weeks because they are quite simply never finished. Those aren&#8217;t tasks, they&#8217;re a waking nightmare. Sometimes there is no definition of done. This blog post doesn&#8217;t have a definition of done because I made an agreement with myself that I would write until I felt hungry then I would order some food. In Agile that&#8217;s usually called time-boxing and it usually isn&#8217;t hunger-based but might as well be. &#8220;Let&#8217;s time-box this for an hour&#8221; is a common phrase in Agile teams. It&#8217;s how you manage investigation tasks (otherwise they go on forever). We all need more, clearer definitions of done.</p>
+<p>In Agile circles, we talk a bit about what it means to be Done. The &ldquo;definition of done&rdquo;, which can sound rather alien to somebody who&rsquo;s not familiar with specifying that concretely. It&rsquo;s essential to working progress otherwise you end up with tasks that linger on for days and weeks because they are quite simply never finished. Those aren&rsquo;t tasks, they&rsquo;re a waking nightmare. Sometimes there is no definition of done. This blog post doesn&rsquo;t have a definition of done because I made an agreement with myself that I would write until I felt hungry then I would order some food. In Agile that&rsquo;s usually called time-boxing and it usually isn&rsquo;t hunger-based but might as well be. &ldquo;Let&rsquo;s time-box this for an hour&rdquo; is a common phrase in Agile teams. It&rsquo;s how you manage investigation tasks (otherwise they go on forever). We all need more, clearer definitions of done.</p>
 
 <p><img src="http://blog.wjlr.org.uk/images/hunger-box.png" width="100%"></p>
 
-<p>So Ludum Dare is over. I&#8217;m done with this blog post. I have plenty to practice and improve before next Ludum Dare and with any luck I&#8217;ll ship a game next time.</p>
+<p>So Ludum Dare is over. I&rsquo;m done with this blog post. I have plenty to practice and improve before next Ludum Dare and with any luck I&rsquo;ll ship a game next time.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[JSON for humans]]></title>
+    <title type="html"><![CDATA[JSON for Humans]]></title>
     <link href="http://blog.wjlr.org.uk/2014/03/27/json-for-humans.html"/>
     <updated>2014-03-27T12:58:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2014/03/27/json-for-humans</id>
     <content type="html"><![CDATA[<p>JSON is a fairly easy to read format but sometimes you need to deal with an
-unreadable dump of the stuff and it&#8217;d be useful to quickly reformat or prettify
+unreadable dump of the stuff and it&rsquo;d be useful to quickly reformat or prettify
 it. There are a number of ways to do this.</p>
 
 <h2>Javascript (Chrome, Firefox etc.)</h2>
@@ -388,7 +387,7 @@ it. There are a number of ways to do this.</p>
 function, which can pretty-print JSON according to the number of spaces you
 pass as the 3rd parameter. For example:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">example</span> <span class="o">=</span> <span class="p">{</span><span class="nx">user</span><span class="o">:</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Ada Lovelace&quot;</span><span class="p">,</span> <span class="nx">email</span><span class="o">:</span> <span class="s2">&quot;ada@example.com&quot;</span><span class="p">},</span> <span class="nx">group</span><span class="o">:</span> <span class="s2">&quot;programmers&quot;</span><span class="p">}</span>
 </span><span class='line'><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">example</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
@@ -416,7 +415,7 @@ should see this:</p>
 
 <h2>json_reformat</h2>
 
-<p>That&#8217;s all well and good, but relying on a javascript console is not the most
+<p>That&rsquo;s all well and good, but relying on a javascript console is not the most
 efficient way to do things, so an easier and more scritable tool is the
 json_reformat command (part of the <a href="http://lloyd.github.io/yajl/">Yajl</a>).
 To get this tool installed, do the following:</p>
@@ -431,29 +430,29 @@ To get this tool installed, do the following:</p>
 it to standard output. This makes it very useful for use in other tools, such as
 vim. Here is some vim config for using <code>json_reformat</code>:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">au</span> <span class="nb">BufRead</span><span class="p">,</span><span class="nb">BufNewFile</span> *.json <span class="k">set</span> <span class="k">filetype</span><span class="p">=</span>json
 </span><span class='line'><span class="k">au</span> <span class="nb">FileType</span> json <span class="k">setlocal</span> <span class="nb">equalprg</span><span class="p">=</span>json_reformat
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now let&#8217;s edit a file that was generated by <a href="http://berkshelf.com">Berkshelf</a>
+<p>Now let&rsquo;s edit a file that was generated by <a href="http://berkshelf.com">Berkshelf</a>
 and has been spat out on the filesystem in <code>~/.berkshelf/config.json</code>. Initially
 it looks like this:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span><span class="nt">&quot;chef&quot;</span><span class="p">:{</span><span class="nt">&quot;chef_server_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://api.opscode.com/organizations/acmecorp&quot;</span><span class="p">,</span><span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span><span class="s2">&quot;acmecorp-validator&quot;</span><span class="p">,</span><span class="nt">&quot;validation_key_path&quot;</span><span class="p">:</span><span class="s2">&quot;/Users/ada/Work/.chef/acmecorp-validator.pem&quot;</span><span class="p">,</span><span class="nt">&quot;client_key&quot;</span><span class="p">:</span><span class="s2">&quot;/Users/ada/Work/.chef/ada.pem&quot;</span><span class="p">,</span><span class="nt">&quot;node_name&quot;</span><span class="p">:</span><span class="s2">&quot;ada&quot;</span><span class="p">},</span><span class="nt">&quot;cookbook&quot;</span><span class="p">:{</span><span class="nt">&quot;copyright&quot;</span><span class="p">:</span><span class="s2">&quot;Ada Lovelace&quot;</span><span class="p">,</span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;ada@example.com&quot;</span><span class="p">,</span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="s2">&quot;MIT&quot;</span><span class="p">},</span><span class="nt">&quot;allowed_licenses&quot;</span><span class="p">:[],</span><span class="nt">&quot;raise_license_exception&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">&quot;vagrant&quot;</span><span class="p">:{</span><span class="nt">&quot;vm&quot;</span><span class="p">:{</span><span class="nt">&quot;box&quot;</span><span class="p">:</span><span class="s2">&quot;Berkshelf-CentOS-6.3-x86_64-minimal&quot;</span><span class="p">,</span><span class="nt">&quot;box_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box&quot;</span><span class="p">,</span><span class="nt">&quot;forward_port&quot;</span><span class="p">:{},</span><span class="nt">&quot;network&quot;</span><span class="p">:{</span><span class="nt">&quot;bridged&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">&quot;hostonly&quot;</span><span class="p">:</span><span class="s2">&quot;33.33.33.10&quot;</span><span class="p">},</span><span class="nt">&quot;provision&quot;</span><span class="p">:</span><span class="s2">&quot;chef_solo&quot;</span><span class="p">}},</span><span class="nt">&quot;ssl&quot;</span><span class="p">:{</span><span class="nt">&quot;verify&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">}}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>This passive-aggressive attempt by the machines to subjugate us humans just will
 not stand and thankfully we have the tools to take back control of our JSON
-configs. Position the cursor anywhere on the single line of JSON and press &#8216;==&#8217;,
+configs. Position the cursor anywhere on the single line of JSON and press &lsquo;==&rsquo;,
 vim will pipe the buffer to <code>json_reformat</code> and replace it with the output of
 that command resulting in this:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -533,7 +532,7 @@ pretty-printing JSON, there are so many more.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[tmux &amp; autoenv tip]]></title>
+    <title type="html"><![CDATA[Tmux &amp; Autoenv Tip]]></title>
     <link href="http://blog.wjlr.org.uk/2014/02/01/tmux-and-autoenv-tip.html"/>
     <updated>2014-02-01T15:41:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2014/02/01/tmux-and-autoenv-tip</id>
@@ -543,8 +542,8 @@ named windows like this:</p>
 
 <p><img src="http://d14vbe8lasdppi.cloudfront.net/01_02_2014_15_45.jpg" alt="" /></p>
 
-<p>This is because I&#8217;ve followed the awesome instructions from
-<a href="http://www.drbunsen.org/the-text-triumvirate/">Dr Bunsen&#8217;s Text Triumvirate</a>
+<p>This is because I&rsquo;ve followed the awesome instructions from
+<a href="http://www.drbunsen.org/the-text-triumvirate/">Dr Bunsen&rsquo;s Text Triumvirate</a>
 and in order to have the tmux and system (OS X) clipboards interacting, it
 requires a hack called <code>reattach-to-user-namespace</code> which proxies the running of
 zsh in tmux.</p>
@@ -573,14 +572,14 @@ frequently visited directories.</p>
 </code></pre>
 
 <p>I.e. <code>git</code> will ignore everything in that directory, however The Silver Searcher
-doesn&#8217;t understand that and it&#8217;ll still show matching lines from files in
+doesn&rsquo;t understand that and it&rsquo;ll still show matching lines from files in
 <code>log/</code>. For <code>git</code> and <code>ag</code> (The Silver Searcher) to both ignore that directory
 and its contents, change <code>/log</code> to <code>log</code>.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Ember transitionToRoute with new model hack]]></title>
+    <title type="html"><![CDATA[Ember transitionToRoute With New Model Hack]]></title>
     <link href="http://blog.wjlr.org.uk/2013/06/06/ember-transition-to-new-model-hack.html"/>
     <updated>2013-06-06T19:53:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2013/06/06/ember-transition-to-new-model-hack</id>
@@ -592,7 +591,7 @@ Ember-data.
 <p>A common pattern with webapps in these exciting times is the
 transition-to-new-thing-you-just-created pattern. The way it works is this: you
 fill in a form to create a new thing (like, a widget or something) and then when
-you hit &#8216;save&#8217;, you are transitioned to the page for that widget. This is so you
+you hit &lsquo;save&rsquo;, you are transitioned to the page for that widget. This is so you
 can confirm that it worked and so you could make further changes on that widget.
 The assumption being, when you create a widget, it is the focus of your task.</p>
 
@@ -615,9 +614,9 @@ metaphors):</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This doesn&#8217;t work with ember-data currently - what happens is the <code>model</code> object
-that gets sent to the <code>didCreate</code> callback there won&#8217;t have an <code>id</code> from the
-server (it hasn&#8217;t been filled in for some reason).</p>
+<p>This doesn&rsquo;t work with ember-data currently - what happens is the <code>model</code> object
+that gets sent to the <code>didCreate</code> callback there won&rsquo;t have an <code>id</code> from the
+server (it hasn&rsquo;t been filled in for some reason).</p>
 
 <p>To work around this issue, you need to do something akin to this:</p>
 
@@ -645,13 +644,13 @@ server (it hasn&#8217;t been filled in for some reason).</p>
 <p>In that example we trigger the page transition off the change of value of <code>id</code>.
 This works because for a short while, the <code>id</code> will be <code>null</code> until Ember-data
 fills in the new <code>id</code> from the server. Then your callback is called and the page
-transition happens. The difference in timing is not noticeable to the user - it&#8217;s
+transition happens. The difference in timing is not noticeable to the user - it&rsquo;s
 just a race condition within Ember-data itself. Other than that - in this
 example, the observer is removed, which is good practice for observers and you
-should always remove observers you&#8217;ve added (as I understand it).</p>
+should always remove observers you&rsquo;ve added (as I understand it).</p>
 
 <p>Other alternative workarounds include wrapping the <code>transitionToRoute</code> call in a
-<code>setTimeout()</code> block - to make it pause just long enough for the model&#8217;s <code>id</code> to
+<code>setTimeout()</code> block - to make it pause just long enough for the model&rsquo;s <code>id</code> to
 be filled in.</p>
 
 <p>Most of the above came from
@@ -662,7 +661,7 @@ ember-data.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Imagemagick SVG insanity]]></title>
+    <title type="html"><![CDATA[Imagemagick SVG Insanity]]></title>
     <link href="http://blog.wjlr.org.uk/2013/04/10/imagemagick-insanity.html"/>
     <updated>2013-04-10T00:00:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2013/04/10/imagemagick-insanity</id>
@@ -700,14 +699,14 @@ ember-data.</p>
 
 <p>Words cannot describe how I feel about Imagemagick right now.</p>
 
-<p>Note to self: install this required package (stupidly called &#8220;-extra&#8221;).</p>
+<p>Note to self: install this required package (stupidly called &ldquo;-extra&rdquo;).</p>
 
 <p>Also note to self: avoid Imagemagick like the plague.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Ember-rails and handlebars_assets FIGHT!]]></title>
+    <title type="html"><![CDATA[Ember-rails and Handlebars_assets FIGHT!]]></title>
     <link href="http://blog.wjlr.org.uk/2013/02/18/ember-rails-handlebars-assets.html"/>
     <updated>2013-02-18T23:10:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2013/02/18/ember-rails-handlebars-assets</id>
@@ -725,7 +724,7 @@ ember-data.</p>
 <pre><code>Object {application: function, domains: function}
 </code></pre>
 
-<p>In the above example I have two templates defined: &#8216;application&#8217; and &#8216;domains&#8217;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
+<p>In the above example I have two templates defined: &lsquo;application&rsquo; and &lsquo;domains&rsquo;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
 
 <h2>Why is this happening?</h2>
 
@@ -744,7 +743,7 @@ ember-data.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Ludum Dare 24 - I'm taking part]]></title>
+    <title type="html"><![CDATA[Ludum Dare 24 - I'm Taking Part]]></title>
     <link href="http://blog.wjlr.org.uk/2012/08/22/ludum-dare-24-i-slash-m-taking-part.html"/>
     <updated>2012-08-22T02:15:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2012/08/22/ludum-dare-24-i-slash-m-taking-part</id>
@@ -754,56 +753,56 @@ ember-data.</p>
 
 <ul>
 <li><strong>Language</strong>: Clojure + ClojureScript (targeting Javascript)</li>
-<li><strong>Engine</strong>: My brain and HTML Canvas&#8230;mainly canvas</li>
+<li><strong>Engine</strong>: My brain and HTML Canvas&hellip;mainly canvas</li>
 <li><strong>Libraries</strong>: probably at least <a href="https://github.com/ibdknox/monet">Monet</a></li>
 <li><strong>Music</strong>: I have no idea, whatever I can work out how to use</li>
 <li><strong>Graphics</strong>: Pixen, Pixelmator, that sort of thing probably</li>
 </ul>
 
 
-<p>I&#8217;m gonna have fun but since I&#8217;m breaking rule 1 - know the tools (I don&#8217;t know any possible tools) this is going to be intense.</p>
+<p>I&rsquo;m gonna have fun but since I&rsquo;m breaking rule 1 - know the tools (I don&rsquo;t know any possible tools) this is going to be intense.</p>
 
 <p>Have fun everyone!</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[What makes a developer happy?]]></title>
+    <title type="html"><![CDATA[What Makes a Developer Happy?]]></title>
     <link href="http://blog.wjlr.org.uk/2012/07/26/what-makes-a-developer-happy.html"/>
     <updated>2012-07-26T00:00:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2012/07/26/what-makes-a-developer-happy</id>
-    <content type="html"><![CDATA[<p>Today was a pretty good day for me - programming-wise. Even though I wasn&#8217;t too well (having trouble hearing in my left ear which is disorientating and makes conversation difficult), I feel the contentment of a day well spent.</p>
+    <content type="html"><![CDATA[<p>Today was a pretty good day for me - programming-wise. Even though I wasn&rsquo;t too well (having trouble hearing in my left ear which is disorientating and makes conversation difficult), I feel the contentment of a day well spent.</p>
 
-<p>So what made it a good day? Building stuff is the bottom line for me but that is a very broad term. Today, building stuff meant working with the <a href="http://raphaeljs.com">Raphael</a> library to make a graphic for a web app (a dynamic graphic, it&#8217;s not just a logo); refactoring the backend of said web app and reading various tech news.</p>
+<p>So what made it a good day? Building stuff is the bottom line for me but that is a very broad term. Today, building stuff meant working with the <a href="http://raphaeljs.com">Raphael</a> library to make a graphic for a web app (a dynamic graphic, it&rsquo;s not just a logo); refactoring the backend of said web app and reading various tech news.</p>
 
-<p>News first. I was mainly reading about the architecture of <a href="http://www.datomic.com/overview.html">Datomic</a>, which is a really interesting take on databases. I would say it looks like the most developer friendly database implementation (in terms of the aims of the project) combined with some pretty powerful and flexible storage. I&#8217;m not sure how deploying it would work out, given it uses SQL or some other key-value-capable backend so it really adds another layer to your app&#8217;s architecture. The <a href="http://www.datomic.com/rationale.html">rationale page</a> was music to my ears though so I will be trying out the <a href="http://blog.datomic.com/2012/07/datomic-free-edition.html">free edition</a> for sure.</p>
+<p>News first. I was mainly reading about the architecture of <a href="http://www.datomic.com/overview.html">Datomic</a>, which is a really interesting take on databases. I would say it looks like the most developer friendly database implementation (in terms of the aims of the project) combined with some pretty powerful and flexible storage. I&rsquo;m not sure how deploying it would work out, given it uses SQL or some other key-value-capable backend so it really adds another layer to your app&rsquo;s architecture. The <a href="http://www.datomic.com/rationale.html">rationale page</a> was music to my ears though so I will be trying out the <a href="http://blog.datomic.com/2012/07/datomic-free-edition.html">free edition</a> for sure.</p>
 
-<p>The refactoring I worked on today was a bit of &#8220;technical debt&#8221; that had been hanging around for a while. It was as a consequence of not understanding how to split up and compose together templates (and partial templates, snippets) with <a href="https://github.com/cgrand/enlive/">enlive</a>. I had another go at reading <a href="https://github.com/cgrand/enlive/wiki/Table-and-Layout-Tutorial,-Part-1:-The-Goal">the tutorials</a> and this time it just felt easy. They could definitely do with simplifying though. The reason this was so enjoyable was that writing and refactoring <a href="http://clojure.org">Clojure</a> code is generally a very fun endeavour. I generally have a <a href="http://common-lisp.net/project/slime/">SLIME</a> session open with <a href="http://www.gnu.org/software/emacs/">emacs</a> and I just recompile the code or compile the function I&#8217;m changing, then check those functions in the REPL in emacs. In other words, development can be very fast. Also, enlive is hands-down the best templating system I&#8217;ve ever used. It&#8217;s great that it can be used both for templating and for web scraping (or in my case, integration tests checking the contents of DOM nodes).</p>
+<p>The refactoring I worked on today was a bit of &ldquo;technical debt&rdquo; that had been hanging around for a while. It was as a consequence of not understanding how to split up and compose together templates (and partial templates, snippets) with <a href="https://github.com/cgrand/enlive/">enlive</a>. I had another go at reading <a href="https://github.com/cgrand/enlive/wiki/Table-and-Layout-Tutorial,-Part-1:-The-Goal">the tutorials</a> and this time it just felt easy. They could definitely do with simplifying though. The reason this was so enjoyable was that writing and refactoring <a href="http://clojure.org">Clojure</a> code is generally a very fun endeavour. I generally have a <a href="http://common-lisp.net/project/slime/">SLIME</a> session open with <a href="http://www.gnu.org/software/emacs/">emacs</a> and I just recompile the code or compile the function I&rsquo;m changing, then check those functions in the REPL in emacs. In other words, development can be very fast. Also, enlive is hands-down the best templating system I&rsquo;ve ever used. It&rsquo;s great that it can be used both for templating and for web scraping (or in my case, integration tests checking the contents of DOM nodes).</p>
 
-<p>Working with Raphael for creating scalable graphics is also really fun. Previously I had tried out <a href="http://paperjs.org/about/">Paper.js</a> (which is an abstraction over HTML Canvas). There were a couple of problems with Paper.js. Firstly it is bizarre - the documentation is somewhat held back by only showing examples of so called PaperScript, which I couldn&#8217;t see how I could use. It&#8217;s essentially Javascript with a bunch of functions added to various prototypes by the looks of things. The issue was I am rendering one graphic per item in a (more-or-less) 100 length list and I couldn&#8217;t see a simple way to define one PaperScript thing and feed it parameters to draw all the slightly different versions of the graphic. I decided to try out Raphael and immediately found it vastly simpler for defining the sort of simple shapes I needed to draw. Raphael is a small javascript library for generating <a href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a> (or <a href="http://en.wikipedia.org/wiki/VML">VML</a> where that is supported). The biggest downside of using Raphael instead of Paper.js is that, according to <a href="http://caniuse.com">What can I use…</a> the Android browser only started supporting SVG in version… 3.0!!! That truly does deserve multiple exclamation marks of sheer disbelief. Google, the open web? Really? That means, according to the <a href="http://developer.android.com/about/dashboards/index.html">Platform versions</a> page on the Android developer site, as I write this, over 85% of Android users are on 2.x or lower and SVG won&#8217;t work in their default browsers. SVG is pretty damn old - initial release in 2001. This does not a happy developer make. Still, might have to come up with a fallback option for people using primitive devices, we will see.</p>
+<p>Working with Raphael for creating scalable graphics is also really fun. Previously I had tried out <a href="http://paperjs.org/about/">Paper.js</a> (which is an abstraction over HTML Canvas). There were a couple of problems with Paper.js. Firstly it is bizarre - the documentation is somewhat held back by only showing examples of so called PaperScript, which I couldn&rsquo;t see how I could use. It&rsquo;s essentially Javascript with a bunch of functions added to various prototypes by the looks of things. The issue was I am rendering one graphic per item in a (more-or-less) 100 length list and I couldn&rsquo;t see a simple way to define one PaperScript thing and feed it parameters to draw all the slightly different versions of the graphic. I decided to try out Raphael and immediately found it vastly simpler for defining the sort of simple shapes I needed to draw. Raphael is a small javascript library for generating <a href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a> (or <a href="http://en.wikipedia.org/wiki/VML">VML</a> where that is supported). The biggest downside of using Raphael instead of Paper.js is that, according to <a href="http://caniuse.com">What can I use…</a> the Android browser only started supporting SVG in version… 3.0!!! That truly does deserve multiple exclamation marks of sheer disbelief. Google, the open web? Really? That means, according to the <a href="http://developer.android.com/about/dashboards/index.html">Platform versions</a> page on the Android developer site, as I write this, over 85% of Android users are on 2.x or lower and SVG won&rsquo;t work in their default browsers. SVG is pretty damn old - initial release in 2001. This does not a happy developer make. Still, might have to come up with a fallback option for people using primitive devices, we will see.</p>
 
-<p>Working with 2D graphics, such as with Raphael, usually involves some trigonometry and today was no exception. I really suck at trig so this was the main stumbling block. It really was very simple stuff - <a href="http://en.wikipedia.org/wiki/Unit_circle">finding the coordinates of a point on a circle</a> - but I&#8217;ve forgotten it all from school. I pushed through all that, scribbled furiously on paper until I convinced myself I knew what I was doing and by the end of the day I had shapes arranging themselves at my command - and even <a href="http://raphaeljs.com/reference.html#Element.transform">rotating</a> them all slightly for every item in the list. Essentially I love it when things work, maybe not the first time, but before I get a headache - that&#8217;s the happiness benchmark for me.</p>
+<p>Working with 2D graphics, such as with Raphael, usually involves some trigonometry and today was no exception. I really suck at trig so this was the main stumbling block. It really was very simple stuff - <a href="http://en.wikipedia.org/wiki/Unit_circle">finding the coordinates of a point on a circle</a> - but I&rsquo;ve forgotten it all from school. I pushed through all that, scribbled furiously on paper until I convinced myself I knew what I was doing and by the end of the day I had shapes arranging themselves at my command - and even <a href="http://raphaeljs.com/reference.html#Element.transform">rotating</a> them all slightly for every item in the list. Essentially I love it when things work, maybe not the first time, but before I get a headache - that&rsquo;s the happiness benchmark for me.</p>
 
-<p>The secret underlying all this, and all that I haven&#8217;t said, is there is no secret to developer happiness. If I&#8217;m anything to go by, we thrive on autonomy, creativity and problem solving. It is very strange that so many employers are averse to providing any form of autonomy to their developers because that has to put a damper on anyone&#8217;s aspirations. At <a href="http://www.digital-science.com">Digital Science</a> we are generally encouraged to come up with ideas all the time and execute them. But one of the best aspects for me is how we&#8217;re all able to hack on the infrastructure. See something that could be better? Fix it. If I couldn&#8217;t mix working on UI stuff, web backends, databases, deployment (Chef) and <a href="http://foldme.herokuapp.com">frivolous fun</a> then this wouldn&#8217;t be nearly as worthwhile.</p>
+<p>The secret underlying all this, and all that I haven&rsquo;t said, is there is no secret to developer happiness. If I&rsquo;m anything to go by, we thrive on autonomy, creativity and problem solving. It is very strange that so many employers are averse to providing any form of autonomy to their developers because that has to put a damper on anyone&rsquo;s aspirations. At <a href="http://www.digital-science.com">Digital Science</a> we are generally encouraged to come up with ideas all the time and execute them. But one of the best aspects for me is how we&rsquo;re all able to hack on the infrastructure. See something that could be better? Fix it. If I couldn&rsquo;t mix working on UI stuff, web backends, databases, deployment (Chef) and <a href="http://foldme.herokuapp.com">frivolous fun</a> then this wouldn&rsquo;t be nearly as worthwhile.</p>
 
 <p>Happy hacking.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[What font is that?]]></title>
+    <title type="html"><![CDATA[What Font Is That?]]></title>
     <link href="http://blog.wjlr.org.uk/2012/04/06/what-font-is-that.html"/>
     <updated>2012-04-06T21:06:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2012/04/06/what-font-is-that</id>
-    <content type="html"><![CDATA[<p>I often come across web pages that use fonts that I like and wonder what they are (I&#8217;m not that good at guessing fonts). On the whole this situation happens while reading on my iPhone because that&#8217;s the only high-resolution screen I use - good fonts look amazing on the iPhone 4S.</p>
+    <content type="html"><![CDATA[<p>I often come across web pages that use fonts that I like and wonder what they are (I&rsquo;m not that good at guessing fonts). On the whole this situation happens while reading on my iPhone because that&rsquo;s the only high-resolution screen I use - good fonts look amazing on the iPhone 4S.</p>
 
-<p>This just happened to me while reading a post linked from daring fireball - <a href="http://om.co/2012/04/05/the-of-course-principle-of-design/">the &#8220;of course&#8221; principle of design</a>. I really liked the look of that font on the iPhone. (I also noted that I should reduce the margins on my blog for small screens because you have to zoom to read really). So how, on an iPhone, you do find out what font that is?</p>
+<p>This just happened to me while reading a post linked from daring fireball - <a href="http://om.co/2012/04/05/the-of-course-principle-of-design/">the &ldquo;of course&rdquo; principle of design</a>. I really liked the look of that font on the iPhone. (I also noted that I should reduce the margins on my blog for small screens because you have to zoom to read really). So how, on an iPhone, you do find out what font that is?</p>
 
-<p>What I wanted was a bookmarklet, so I searched for &#8220;what font bookmarklet&#8221; and found <a href="http://chengyinliu.com/whatfont.html">WhatFont Tool</a> which provides a powerful bookmarklet for finding out what font a page is using (and whether it is from Google webfonts or Typekit). Problem is, bookmarking JavaScript is not easy on the iPhone - you have to copy/paste the JavaScript somehow. Because WhatFont only provides a button (to drag to your bookmarks bar), I had to find another way. I decided to try the Mercury web browser, guessing it might have a way to copy the JavaScript for a link/button. Thankfully I was right and it allowed me to copy the JavaScript, then switch to Safari and create then edit a bookmark for it. It works wonderfully. Just touch the bookmark to active it, then touch any piece of text on a website to see info on what fonts it&#8217;s using. Simple.</p>
+<p>What I wanted was a bookmarklet, so I searched for &ldquo;what font bookmarklet&rdquo; and found <a href="http://chengyinliu.com/whatfont.html">WhatFont Tool</a> which provides a powerful bookmarklet for finding out what font a page is using (and whether it is from Google webfonts or Typekit). Problem is, bookmarking JavaScript is not easy on the iPhone - you have to copy/paste the JavaScript somehow. Because WhatFont only provides a button (to drag to your bookmarks bar), I had to find another way. I decided to try the Mercury web browser, guessing it might have a way to copy the JavaScript for a link/button. Thankfully I was right and it allowed me to copy the JavaScript, then switch to Safari and create then edit a bookmark for it. It works wonderfully. Just touch the bookmark to active it, then touch any piece of text on a website to see info on what fonts it&rsquo;s using. Simple.</p>
 
 <p>For your copy/paste convenience, I have provided the code for the WhatFont bookmarklet:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">d</span><span class="o">=</span><span class="nb">document</span><span class="p">,</span><span class="nx">s</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;scr&#39;</span><span class="o">+</span><span class="s1">&#39;ipt&#39;</span><span class="p">),</span><span class="nx">b</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span><span class="nx">l</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span><span class="nx">s</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://chengyinliu.com/wf.js?o=&#39;</span><span class="o">+</span><span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">href</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&amp;t=&#39;</span><span class="o">+</span><span class="p">(</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">()));</span><span class="nx">b</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">)})();</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -811,12 +810,12 @@ ember-data.</p>
 <p>Turned out that that post was using <a href="http://aldusleaf.org/0-crimson.html">Crimson Text</a>
 from Google Webfonts. Nice.</p>
 
-<p>It looks like Crimson Text is a promising free font that might have Polytonic Greek characters at some point so that&#8217;s useful to know for me.</p>
+<p>It looks like Crimson Text is a promising free font that might have Polytonic Greek characters at some point so that&rsquo;s useful to know for me.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Further Haskell exploration]]></title>
+    <title type="html"><![CDATA[Further Haskell Exploration]]></title>
     <link href="http://blog.wjlr.org.uk/2012/02/07/further-haskell-exploration.html"/>
     <updated>2012-02-07T00:00:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2012/02/07/further-haskell-exploration</id>
@@ -825,7 +824,7 @@ development. I have previously bootstrapped a basic
 <a href="http://snapframework.com/">Snap</a> setup but never got into actual
 hacking. Today I decided to give <a href="http://www.yesodweb.com/">Yesod</a> a
 go. I ran into a number of difficulties that drained away all my spare
-time this evening but in the end I feel like I&#8217;m ready to dive in
+time this evening but in the end I feel like I&rsquo;m ready to dive in
 tomorrow.</p>
 
 <p>I started off by attempting to install Yesod, with a simple <code>cabal
@@ -837,15 +836,15 @@ out-of-date, meaning a tool, called <code>alex</code> was too old for Yesod. To
 solve this rather small issue I took the rather drastic step of
 upgrading Ubuntu on the ThinkPad to
 <a href="https://wiki.ubuntu.com/PrecisePangolin">Precise Pangolin</a> because
-this includes the latest haskell-platform&#8230;and its all new and&#8230;just
+this includes the latest haskell-platform&hellip;and its all new and&hellip;just
 because! This is Ubuntu after all - trigger happy upgrades are the
 name of the game.</p>
 
 <p>Meanwhile, in Mac land. While that upgrade was running I tried to run
 the new yesod web app on a Mac. Unfortunately I ran into all the
-problems I&#8217;ve encountered before with cabal-dev on OS X.</p>
+problems I&rsquo;ve encountered before with cabal-dev on OS X.</p>
 
-<p>Firstly there&#8217;s some weirdness with cabal-dev being set to install
+<p>Firstly there&rsquo;s some weirdness with cabal-dev being set to install
 everything in the system library location. This just makes no sense for
 cabal-dev - the whole point is for it to install libraries in a
 vendored, per-project location - not interfering with system
@@ -855,10 +854,10 @@ libraries. It manifested itself as asking for a password all the time
   <a href="http://passingcuriosity.com/2011/cabal-dev-configuration-tweaks/">blog post I found</a>. Annoying.</p>
 
 <p>Another problem I had was ghc/ld spamming the terminal with loads of
-linker warnings. This really slowed down compilation. I didn&#8217;t really
-solve this (happened on my Mac Mini - didn&#8217;t happen on my work MacBook
+linker warnings. This really slowed down compilation. I didn&rsquo;t really
+solve this (happened on my Mac Mini - didn&rsquo;t happen on my work MacBook
 Air). I remember having to set options for GHC to silence that crap,
-but I forget the details&#8230;</p>
+but I forget the details&hellip;</p>
 
 <p>In order to get it all working on my Mac I:</p>
 
@@ -869,23 +868,23 @@ but I forget the details&#8230;</p>
 </ul>
 
 
-<p>Everything worked then. There&#8217;s also strange voodoo you have to run to
+<p>Everything worked then. There&rsquo;s also strange voodoo you have to run to
 unregister old packages - <code>brew info haskell-platform</code> splits out the
 necessary commands.</p>
 
-<p>After all that, things worked&#8230;mostly. Currently there seems to be
+<p>After all that, things worked&hellip;mostly. Currently there seems to be
 some car crash of dependencies caused by a new release of something
 called tls-extras. A helpful stranger in IRC (#yesod) told me to
 <code>cabal-dev install tls-extra-0.4.2.1</code> - this forces a working version
 of that library and then you can happily install yesod and
-everything&#8217;s groovy.</p>
+everything&rsquo;s groovy.</p>
 
 <p>Who said Haskell was difficult? Not me.</p>
 
-<p>So now I have a skeleton Yesod project up and running and it&#8217;s all
+<p>So now I have a skeleton Yesod project up and running and it&rsquo;s all
 looking very promising. The helper script for creating projects gave
 me some confidence - specifically asking if I wanted sqlite, postgres,
-MongoDB or nothing seemed pretty good to me - this doesn&#8217;t appear to be
+MongoDB or nothing seemed pretty good to me - this doesn&rsquo;t appear to be
 a web framework/persistence system tied to a particular way of doing
 things.</p>
 
@@ -908,21 +907,21 @@ felt I had to see what all the fuss was about.</p>
 
 <h2>Haskell is weird</h2>
 
-<p>When you first start out learning this language - or even just read some articles about it - the first thing that will strike you is that it seems completely obscure. The syntax is obscure, the concepts are obscure, but most of all - the language used to describe what things are is incredibly obscure. Every programming language community has evolved its own lingo of course and Haskell&#8217;s is awash with mathematics. If you subscribe to the planet Haskell RSS feed you will get the impression that Haskell is pretty much just an extension of Mathematics and is only used for &#8220;pure&#8221; problems and therefore completely irrelevant to real world problems. Then you will notice there&#8217;s a book called &#8220;Real World Haskell&#8221; and you&#8217;ll think it an anomaly, just some noise in the data.</p>
+<p>When you first start out learning this language - or even just read some articles about it - the first thing that will strike you is that it seems completely obscure. The syntax is obscure, the concepts are obscure, but most of all - the language used to describe what things are is incredibly obscure. Every programming language community has evolved its own lingo of course and Haskell&rsquo;s is awash with mathematics. If you subscribe to the planet Haskell RSS feed you will get the impression that Haskell is pretty much just an extension of Mathematics and is only used for &ldquo;pure&rdquo; problems and therefore completely irrelevant to real world problems. Then you will notice there&rsquo;s a book called &ldquo;Real World Haskell&rdquo; and you&rsquo;ll think it an anomaly, just some noise in the data.</p>
 
 <h2>Why learn this?</h2>
 
-<p>Apart from wanting to become a better programmer in general (which would explain why I&#8217;d want to learn functional programming in general and in more detail than I already do from Erlang and Clojure), I want to learn how Haskell can be a practical language - how it can help me create great products. I suspect that behind the terseness and high degree of greek characters is a toolkit that will be at least as empowering as Erlang/OTP has been. I want that toolkit.</p>
+<p>Apart from wanting to become a better programmer in general (which would explain why I&rsquo;d want to learn functional programming in general and in more detail than I already do from Erlang and Clojure), I want to learn how Haskell can be a practical language - how it can help me create great products. I suspect that behind the terseness and high degree of greek characters is a toolkit that will be at least as empowering as Erlang/OTP has been. I want that toolkit.</p>
 
 <h2>The elephant in the room</h2>
 
-<p>Sooner or later you will arrive at the Haskell trial stage. In order to print anything out from your programme, or accept any input or read a file etc. you will have to use monads. At first the syntax will seem very strange, just a load of terse boilerplate for doing what more pragmatic languages make super easy, but you&#8217;ll think &#8220;whatever, let&#8217;s just get on with learning this thing&#8221;. At some point the tutorial or book you&#8217;re reading will have to explain monads to you. More than likely this is the point where you stared at the screen/page in disbelief and your heart sank as you realised you would have to understand level 3000 mathematics to print something on screen. For most people, this is the last they ever deal with Haskell.</p>
+<p>Sooner or later you will arrive at the Haskell trial stage. In order to print anything out from your programme, or accept any input or read a file etc. you will have to use monads. At first the syntax will seem very strange, just a load of terse boilerplate for doing what more pragmatic languages make super easy, but you&rsquo;ll think &ldquo;whatever, let&rsquo;s just get on with learning this thing&rdquo;. At some point the tutorial or book you&rsquo;re reading will have to explain monads to you. More than likely this is the point where you stared at the screen/page in disbelief and your heart sank as you realised you would have to understand level 3000 mathematics to print something on screen. For most people, this is the last they ever deal with Haskell.</p>
 
-<p>Later on, a Haskell wizard will act all puzzled and amused that you found monads hard to understand. This will lower your self-esteem so low you consider giving up entirely and becoming a farmer instead. They will go on to tell you that you&#8217;ve been using monads the whole time in whatever programming language you like. They will explain how this is so and you will not be enlightened. It&#8217;ll sound all too convenient, just a bunch of semantic drivel.</p>
+<p>Later on, a Haskell wizard will act all puzzled and amused that you found monads hard to understand. This will lower your self-esteem so low you consider giving up entirely and becoming a farmer instead. They will go on to tell you that you&rsquo;ve been using monads the whole time in whatever programming language you like. They will explain how this is so and you will not be enlightened. It&rsquo;ll sound all too convenient, just a bunch of semantic drivel.</p>
 
-<p>The reason so many of us have such a frustrating initial experience with Haskell is that most of the books on the subject are appallingly badly written. Programming books are in general a complete shambles and very few are useful to anyone who isn&#8217;t already pretty hot at the whole thing anyway. If you were lucky enough to find a well-written helpful introduction to Haskell (there are some), then you might not be feeling this way. Also if you were born a Haskell wizard, this will sound like complete gobbledegook to you. But then you&#8217;re not really human now are you? Admit it.</p>
+<p>The reason so many of us have such a frustrating initial experience with Haskell is that most of the books on the subject are appallingly badly written. Programming books are in general a complete shambles and very few are useful to anyone who isn&rsquo;t already pretty hot at the whole thing anyway. If you were lucky enough to find a well-written helpful introduction to Haskell (there are some), then you might not be feeling this way. Also if you were born a Haskell wizard, this will sound like complete gobbledegook to you. But then you&rsquo;re not really human now are you? Admit it.</p>
 
-<p>Anyway, I will be attending the <a href="http://www.meetup.com/hoodlums/">Haskell hoodlums meetup</a> this Thursday so hopefully I&#8217;ll start understanding this thing. Don&#8217;t give up people! Good luck.</p>
+<p>Anyway, I will be attending the <a href="http://www.meetup.com/hoodlums/">Haskell hoodlums meetup</a> this Thursday so hopefully I&rsquo;ll start understanding this thing. Don&rsquo;t give up people! Good luck.</p>
 ]]></content>
   </entry>
   
@@ -935,20 +934,20 @@ felt I had to see what all the fuss was about.</p>
 
 <blockquote><p>“I just feel it, in my gut, that AV is wrong. Politics shouldn’t be some mind-bending exercise.</p></blockquote>
 
-<p>British people are pretty thick. I mean, have you seen them? I seriously doubt they understand the whole &#8220;tick the party you want in government&#8221; thing - how are they going to understand they can actually vote for their views with this system. Given that we&#8217;ve slashed education funding, it&#8217;s unlikely we&#8217;re gonna end up with a whole lot of people who can understand anything about politics, which is how we like it. Nice and stupid. Means we don&#8217;t have to say anything meaningful to get them to vote for us.</p>
+<p>British people are pretty thick. I mean, have you seen them? I seriously doubt they understand the whole &ldquo;tick the party you want in government&rdquo; thing - how are they going to understand they can actually vote for their views with this system. Given that we&rsquo;ve slashed education funding, it&rsquo;s unlikely we&rsquo;re gonna end up with a whole lot of people who can understand anything about politics, which is how we like it. Nice and stupid. Means we don&rsquo;t have to say anything meaningful to get them to vote for us.</p>
 
 <blockquote><p>“It’s about what you feel in your gut – about the values you hold dear and the beliefs you instinctively have. And I just feel it, in my gut, that AV is wrong.</p></blockquote>
 
-<p>Gut feeling as a way to decide who should be in power. So a knee-jerk reaction is what we&#8217;re looking for, we don&#8217;t want Brits having to look at the policies of the parties - we want them to vote tribally.</p>
+<p>Gut feeling as a way to decide who should be in power. So a knee-jerk reaction is what we&rsquo;re looking for, we don&rsquo;t want Brits having to look at the policies of the parties - we want them to vote tribally.</p>
 
 <blockquote><p>“There are three big problems with AV that strike at the heart of how I believe our democracy should work.
 First, I believe power should lie with the people – and AV would take some of that power away.</p></blockquote>
 
-<p>I&#8217;m not going to explain why it takes power away because obviously it doesn&#8217;t. All you need to do is vote once to get the exact same vote as you would under FPTP, so the system doesn&#8217;t take any power away from the individual. But this is some scary sounding rhetoric. Hopefully people will be scared enough not to question the assertion.</p>
+<p>I&rsquo;m not going to explain why it takes power away because obviously it doesn&rsquo;t. All you need to do is vote once to get the exact same vote as you would under FPTP, so the system doesn&rsquo;t take any power away from the individual. But this is some scary sounding rhetoric. Hopefully people will be scared enough not to question the assertion.</p>
 
 <blockquote><p>“Second, I believe there should be real accountability between the pledges politicians put in their manifestos and the action they take in government.</p></blockquote>
 
-<p>Because this is obviously the case now. Also it&#8217;s easy for me, we didn&#8217;t put any actual pledges in the Conservative manifesto, so it looks like we&#8217;ve stuck to it pretty closely.</p>
+<p>Because this is obviously the case now. Also it&rsquo;s easy for me, we didn&rsquo;t put any actual pledges in the Conservative manifesto, so it looks like we&rsquo;ve stuck to it pretty closely.</p>
 
 <blockquote><p>“AV would damage that chain of accountability. And third, I believe in the principle of one person, one vote.</p></blockquote>
 
@@ -960,30 +959,30 @@ First, I believe power should lie with the people – and AV would take some of 
 “The biggest danger right now is that Britain sleepwalks into this second-rate system, waking up on May 6th with a voting system that damages our democracy.
 “We must not let that happen. So we’ve got to get out there and fight, and get out there and win.”</p></blockquote>
 
-<p>Voting for something is like sleep-walking because all the people voting YES are all asleep. Let&#8217;s keep Britain&#8217;s electoral system thoroughly in the dark ages!</p>
+<p>Voting for something is like sleep-walking because all the people voting YES are all asleep. Let&rsquo;s keep Britain&rsquo;s electoral system thoroughly in the dark ages!</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[How to install Ubuntu Natty on the Sony Vaio VPC Y21 S1E]]></title>
+    <title type="html"><![CDATA[How to Install Ubuntu Natty on the Sony Vaio VPC Y21 S1E]]></title>
     <link href="http://blog.wjlr.org.uk/2011/05/02/install-natty-sony-vaio-vpc-y21.html"/>
     <updated>2011-05-02T00:00:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2011/05/02/install-natty-sony-vaio-vpc-y21</id>
-    <content type="html"><![CDATA[<p>This is a howto guide for installing Ubuntu Natty on the troublesome Sony Vaio VPC-Y21-S1E. I say troublesome because no distribution of Linux installs a fully working system on this laptop to the best of my knowledge, even though the hardware is all very common and not very new. Owning this laptop and running Linux is like going back in time to the early 2000s when installing Linux was a week&#8217;s work on any machine. It&#8217;s horrendous that even distros that favour ease of use by default have yet to achieve good hardware support.</p>
+    <content type="html"><![CDATA[<p>This is a howto guide for installing Ubuntu Natty on the troublesome Sony Vaio VPC-Y21-S1E. I say troublesome because no distribution of Linux installs a fully working system on this laptop to the best of my knowledge, even though the hardware is all very common and not very new. Owning this laptop and running Linux is like going back in time to the early 2000s when installing Linux was a week&rsquo;s work on any machine. It&rsquo;s horrendous that even distros that favour ease of use by default have yet to achieve good hardware support.</p>
 
 <h2>Step 1 - install Ubuntu</h2>
 
-<p>I used the alternative amd64 ISO image for this (and a USB CDROM drive). The text mode installer worked fine as usual and installed in an hour or so. Not exactly quick, but probably that&#8217;s due to very slow IO on this machine.</p>
+<p>I used the alternative amd64 ISO image for this (and a USB CDROM drive). The text mode installer worked fine as usual and installed in an hour or so. Not exactly quick, but probably that&rsquo;s due to very slow IO on this machine.</p>
 
 <p>Once Ubuntu Natty is installed and reboots into your new system, you will notice a couple of things. Firstly the graphics will be running in some kind of generic mode with the wrong resolution. The native resolution of this panel is the now relatively standard 1366x768 of this class of laptop. Out of the box though, Ubuntu will boot in 1024x768 and it looks horrendous. According to Xorg.0.log it will select the VESA driver instead of the intel one it should be using. This is why it will start in unaccelerated, not much works mode. Needless to say, Unity will not be making an appearance yet. I think this is because there is a regression in the 2.6.36 kernel - according to another user of this laptop, the previous kernel version (2.6.37rc8) should work fine.</p>
 
 <h2>Step 2 - get a working kernel</h2>
 
-<p>You&#8217;re going to need to get the network setup before you can do anything useful. Out of the box, I&#8217;m not sure if the wireless is working or not because no mouse will work. The touchpad does nothing and any mouse I plugged in didn&#8217;t work either. This is extremely poor if even a simple USB mouse won&#8217;t work.</p>
+<p>You&rsquo;re going to need to get the network setup before you can do anything useful. Out of the box, I&rsquo;m not sure if the wireless is working or not because no mouse will work. The touchpad does nothing and any mouse I plugged in didn&rsquo;t work either. This is extremely poor if even a simple USB mouse won&rsquo;t work.</p>
 
-<p>The first thing to try is to get a working kernel installed. I headed here <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v2.6.37-rc8-natty/">Index of /~kernel-ppa/mainline/v2.6.37-rc8-natty</a> to get the headers and image packages for the amd64. It&#8217;s pretty difficult to get anything onto the laptop since USB isn&#8217;t working at all under Natty. I tried using a USB flash drive to copy the kernel files over - no luck. So what I did was shorten the kernel-ppa link <a href="http://bit.ly/ieDkmQ">http://bit.ly/ieDkmQ</a>, connected the laptop to my ADSL router with an ethernet cable and downloaded those files. I had to keep telling myself it was in fact still 2011.</p>
+<p>The first thing to try is to get a working kernel installed. I headed here <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v2.6.37-rc8-natty/">Index of /~kernel-ppa/mainline/v2.6.37-rc8-natty</a> to get the headers and image packages for the amd64. It&rsquo;s pretty difficult to get anything onto the laptop since USB isn&rsquo;t working at all under Natty. I tried using a USB flash drive to copy the kernel files over - no luck. So what I did was shorten the kernel-ppa link <a href="http://bit.ly/ieDkmQ">http://bit.ly/ieDkmQ</a>, connected the laptop to my ADSL router with an ethernet cable and downloaded those files. I had to keep telling myself it was in fact still 2011.</p>
 
-<p>Once I&#8217;d installed the older kernel and rebooted, things started to work. The bootup screen was garbled however and I got what looked like a kernel panic, with a stackframe all over the place - but it wasn&#8217;t because I could switch to a random VC and back to the 7th VC and see GDM there. It&#8217;s just a complete mess. I think I&#8217;m gonna have to disable the bootspash stuff because it&#8217;s so incredibly messed up (for every other install of Linux on this laptop I&#8217;ve had to do that).</p>
+<p>Once I&rsquo;d installed the older kernel and rebooted, things started to work. The bootup screen was garbled however and I got what looked like a kernel panic, with a stackframe all over the place - but it wasn&rsquo;t because I could switch to a random VC and back to the 7th VC and see GDM there. It&rsquo;s just a complete mess. I think I&rsquo;m gonna have to disable the bootspash stuff because it&rsquo;s so incredibly messed up (for every other install of Linux on this laptop I&rsquo;ve had to do that).</p>
 
 <h2>Step 3 - Change the default kernel</h2>
 
@@ -991,11 +990,11 @@ First, I believe power should lie with the people – and AV would take some of 
 
 <ul>
 <li>Set <code>GRUB_DEFAULT=saved</code> in the file <code>/etc/default/grub</code>, so we can set the default kernel.</li>
-<li>I wanted to find out what the menuentry is for the kernel I&#8217;ve just installed, so I ran:</li>
+<li>I wanted to find out what the menuentry is for the kernel I&rsquo;ve just installed, so I ran:</li>
 </ul>
 
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>grep menuentry /boot/grub/grub.cfg
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1003,11 +1002,11 @@ First, I believe power should lie with the people – and AV would take some of 
 <p>This will print out every entry in GRUB. This is all from the <a href="https://help.ubuntu.com/community/Grub2">Grub2</a> page.</p>
 
 <ul>
-<li>Now use the appropriate menuentry to set as the default. If you installed the same one I did, then that will be &#8220;Ubuntu, with Linux 2.6.37-020637rc8-generic&#8221;:</li>
+<li>Now use the appropriate menuentry to set as the default. If you installed the same one I did, then that will be &ldquo;Ubuntu, with Linux 2.6.37-020637rc8-generic&rdquo;:</li>
 </ul>
 
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo grub-set-default <span class="s1">&#39;Ubuntu, with Linux 2.6.37-020637rc8-generic&#39;</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1017,45 +1016,45 @@ First, I believe power should lie with the people – and AV would take some of 
 </ul>
 
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-grub
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>That&#8217;s it, should be set now. This didn&#8217;t work for me though. With ever release of grub and ubuntu tools, it gets more and more difficult to do simple things. It&#8217;s cool that update-grub can detect all the OSes on your hard drive and boot them (it ignored the other Ubuntu install ironically so it&#8217;s not included in the boot menu, pretty silly bug). But please! the ability to set a default kernel or menuentry should be easy and <em>should work</em>. In the end, I set <code>GRUB_SAVEDEFAULT=true</code> in <code>/etc/default/grub</code> and chose the kernel I wanted so that in future it&#8217;ll boot that one every time. What a joke.</p>
+<p>That&rsquo;s it, should be set now. This didn&rsquo;t work for me though. With ever release of grub and ubuntu tools, it gets more and more difficult to do simple things. It&rsquo;s cool that update-grub can detect all the OSes on your hard drive and boot them (it ignored the other Ubuntu install ironically so it&rsquo;s not included in the boot menu, pretty silly bug). But please! the ability to set a default kernel or menuentry should be easy and <em>should work</em>. In the end, I set <code>GRUB_SAVEDEFAULT=true</code> in <code>/etc/default/grub</code> and chose the kernel I wanted so that in future it&rsquo;ll boot that one every time. What a joke.</p>
 
-<p>For my sanity, I turned off the bootscreen which, on this laptop is severly broken. Even though I&#8217;ve turned the boot splash off, I still have to switch to another VC and back to 7 to see the GDM login screen. Broken.</p>
+<p>For my sanity, I turned off the bootscreen which, on this laptop is severly broken. Even though I&rsquo;ve turned the boot splash off, I still have to switch to another VC and back to 7 to see the GDM login screen. Broken.</p>
 
 <h2>Step 4 - Getting wireless working</h2>
 
-<p>Now we have the mouse working, and USB mice work and graphics are as good as you&#8217;ll probably ever get on Linux (i.e. not great).</p>
+<p>Now we have the mouse working, and USB mice work and graphics are as good as you&rsquo;ll probably ever get on Linux (i.e. not great).</p>
 
-<p>Wireless is disabled though and you can&#8217;t enable it from the networking icon (Network Manager). This is an issue I&#8217;ve had with Ubuntu on this machine before and I had to dig around to find out how to force it to be enabled.</p>
+<p>Wireless is disabled though and you can&rsquo;t enable it from the networking icon (Network Manager). This is an issue I&rsquo;ve had with Ubuntu on this machine before and I had to dig around to find out how to force it to be enabled.</p>
 
-<p>Enabling the wirelss is not a simple task. It involves messing around with <code>rfkill</code> and it&#8217;s not a simple matter of running <code>rfkill unblock all</code> either - which is maddening. The wireless card is still soft-blocked after that. (Hard blocked means the hardware switch is off and soft blocked means it&#8217;s turned off in software somewhere).</p>
+<p>Enabling the wirelss is not a simple task. It involves messing around with <code>rfkill</code> and it&rsquo;s not a simple matter of running <code>rfkill unblock all</code> either - which is maddening. The wireless card is still soft-blocked after that. (Hard blocked means the hardware switch is off and soft blocked means it&rsquo;s turned off in software somewhere).</p>
 
-<p>I couldn&#8217;t find the solution by googling and browsing a million Ubuntu forum threads, but checking my <code>/etc/modprobe.d/</code> directory in the other Ubuntu install pointed the way. You need a file with the following contents:</p>
+<p>I couldn&rsquo;t find the solution by googling and browsing a million Ubuntu forum threads, but checking my <code>/etc/modprobe.d/</code> directory in the other Ubuntu install pointed the way. You need a file with the following contents:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>blacklist acer-wmi
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>I called that file <code>blacklist-acer-wmi.conf</code> and this time I remembered to copy it into my Dropbox folder so that I won&#8217;t forget about it again.</p>
+<p>I called that file <code>blacklist-acer-wmi.conf</code> and this time I remembered to copy it into my Dropbox folder so that I won&rsquo;t forget about it again.</p>
 
 <h2>Suspend</h2>
 
-<p>Suspend and resume works with Natty! Yay! It didn&#8217;t work on this laptop with Maverick. So we have <em>some</em> progress.</p>
+<p>Suspend and resume works with Natty! Yay! It didn&rsquo;t work on this laptop with Maverick. So we have <em>some</em> progress.</p>
 
 <h2>Multiple monitors</h2>
 
-<p>I tried plugging a VGA monitor in and it was detected and the correct resolution was selected. Wonderful. However, when I tried to change the layout of the monitors, it messed up completely and I ended up with random desktops being drawn all over the monitors. Unplugging and plugging the monitor in fixed that, with only some minor rendering issues (there was a black border around much of the second desktop that went away when I moved a window around). This sort of thing should have been sorted a long time ago, it&#8217;s tiresome to be messing around with such a mess.</p>
+<p>I tried plugging a VGA monitor in and it was detected and the correct resolution was selected. Wonderful. However, when I tried to change the layout of the monitors, it messed up completely and I ended up with random desktops being drawn all over the monitors. Unplugging and plugging the monitor in fixed that, with only some minor rendering issues (there was a black border around much of the second desktop that went away when I moved a window around). This sort of thing should have been sorted a long time ago, it&rsquo;s tiresome to be messing around with such a mess.</p>
 
 <h2>Other problems</h2>
 
 <ol>
-<li>When you launch the Update Manager, it still reports everything is up do date without checking first. This is really stupid, having to click on &#8220;Check&#8221; to download the latest package definitions before it realises there are updates to install. It should take the fact that you&#8217;ve deliberately openned Update Manager for the sole purpose of checking whether your software is up-to-date and not tell you out-of-date information.</li>
-<li>Keyboard navigation is still horrible in Gnome (that&#8217;s the Classic desktop thing that Ubuntu puts you in if there are problems with your drivers - very likely).</li>
+<li>When you launch the Update Manager, it still reports everything is up do date without checking first. This is really stupid, having to click on &ldquo;Check&rdquo; to download the latest package definitions before it realises there are updates to install. It should take the fact that you&rsquo;ve deliberately openned Update Manager for the sole purpose of checking whether your software is up-to-date and not tell you out-of-date information.</li>
+<li>Keyboard navigation is still horrible in Gnome (that&rsquo;s the Classic desktop thing that Ubuntu puts you in if there are problems with your drivers - very likely).</li>
 </ol>
 
 
@@ -1063,12 +1062,12 @@ First, I believe power should lie with the people – and AV would take some of 
 
 <p>Linux and Ubuntu have a very long way to go before they can start to compete with the commercial alternatives. Although Unity is a refreshing innovation on desktop interfaces, it really needs to be backed up with great hardware support and general ease of use that goes a little more than skin deep.</p>
 
-<p>I think I will be posting a review of Natty later - that will focus on Natty as a working system, rather than specific to this laptop. So far though, having used it for a couple of hours setting up my environment, it&#8217;s a great system. It needs a lot more QA to sort out the hardware and system problems though.</p>
+<p>I think I will be posting a review of Natty later - that will focus on Natty as a working system, rather than specific to this laptop. So far though, having used it for a couple of hours setting up my environment, it&rsquo;s a great system. It needs a lot more QA to sort out the hardware and system problems though.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Parsing and ebook making]]></title>
+    <title type="html"><![CDATA[Parsing and Ebook Making]]></title>
     <link href="http://blog.wjlr.org.uk/2011/04/25/parsing-and-ebook-making.html"/>
     <updated>2011-04-25T00:00:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2011/04/25/parsing-and-ebook-making</id>
@@ -1076,9 +1075,9 @@ First, I believe power should lie with the people – and AV would take some of 
 
 <h2>Tables of contents</h2>
 
-<p>The table of contents was a bit strange. The Kindle&#8217;s mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains <code>&lt;navPoint&gt;</code> elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here&#8217;s an abridged version of the NCX file I had generated:</p>
+<p>The table of contents was a bit strange. The Kindle&rsquo;s mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains <code>&lt;navPoint&gt;</code> elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here&rsquo;s an abridged version of the NCX file I had generated:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1137,9 +1136,9 @@ First, I believe power should lie with the people – and AV would take some of 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>There were obviously more chapters/books than that. The Kindle/mobi format doesn&#8217;t use this for the table of contents, so when you open a converted epub on a Kindle (or using the Kindle desktop software), the menu item to go to the table of contents is greyed out. After digging around on the web I discovered that the mobi format uses a toc file, which is basically an html file full of links. In order for that to work, you need to reference the toc file in the OPF file. Here&#8217;s an abbreviated version of the one I generated:</p>
+<p>There were obviously more chapters/books than that. The Kindle/mobi format doesn&rsquo;t use this for the table of contents, so when you open a converted epub on a Kindle (or using the Kindle desktop software), the menu item to go to the table of contents is greyed out. After digging around on the web I discovered that the mobi format uses a toc file, which is basically an html file full of links. In order for that to work, you need to reference the toc file in the OPF file. Here&rsquo;s an abbreviated version of the one I generated:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1210,9 +1209,9 @@ First, I believe power should lie with the people – and AV would take some of 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The important bit there is the <code>&lt;reference&gt;</code> element inside <code>&lt;guide&gt;</code> that is of type &#8220;toc&#8221;. After that, the actual table of contents file is pretty straightforward:</p>
+<p>The important bit there is the <code>&lt;reference&gt;</code> element inside <code>&lt;guide&gt;</code> that is of type &ldquo;toc&rdquo;. After that, the actual table of contents file is pretty straightforward:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1253,29 +1252,29 @@ First, I believe power should lie with the people – and AV would take some of 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>That&#8217;s just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.</p>
+<p>That&rsquo;s just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.</p>
 
 <h2>Encoding</h2>
 
-<p>I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don&#8217;t expect anyone to know what that is, I didn&#8217;t and it&#8217;s still just a character to me. But it looks like this:</p>
+<p>I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don&rsquo;t expect anyone to know what that is, I didn&rsquo;t and it&rsquo;s still just a character to me. But it looks like this:</p>
 
 <h1 class="greek">ΐ</h1>
 
 
 <p><aside class="post">
-<strong>Betacode</strong> is the ASCII language used by Perseus Digital library to represent Greek characters easily. It&#8217;s used in their opensource XML files (that I&#8217;ve used) and as a way to search Greek books (due to the unavailability of Ancient Greek keyboards). So <code>a)/ndra</code> becomes <code class="greek">ἄνδρα</code>.
+<strong>Betacode</strong> is the ASCII language used by Perseus Digital library to represent Greek characters easily. It&rsquo;s used in their opensource XML files (that I&rsquo;ve used) and as a way to search Greek books (due to the unavailability of Ancient Greek keyboards). So <code>a)/ndra</code> becomes <code class="greek">ἄνδρα</code>.
 </aside></p>
 
-<p>In betacode, this is written as <code>i/+</code>. Normally, the parser encodes the character <code>i</code>, then each diacritic in turn: <code>/</code>, then <code>+</code> into combining diacritics. This resulted in characters <code>0x03b9 0x0301 0x0308</code>, which would be normalized using Java&#8217;s Normalizer/normalize function as:</p>
+<p>In betacode, this is written as <code>i/+</code>. Normally, the parser encodes the character <code>i</code>, then each diacritic in turn: <code>/</code>, then <code>+</code> into combining diacritics. This resulted in characters <code>0x03b9 0x0301 0x0308</code>, which would be normalized using Java&rsquo;s Normalizer/normalize function as:</p>
 
 <h1 class="greek">ί̈</h1>
 
 
-<p>The frustrating thing is that it&#8217;s quite difficult to tell the difference on the terminal, when running tests - even when I&#8217;d bumped the font size up to crazy levels.</p>
+<p>The frustrating thing is that it&rsquo;s quite difficult to tell the difference on the terminal, when running tests - even when I&rsquo;d bumped the font size up to crazy levels.</p>
 
 <p>In order to match that symbol, I created the following rule:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">iota-dialytika-tonos</span>
@@ -1284,16 +1283,16 @@ First, I believe power should lie with the people – and AV would take some of 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then I&#8217;d redefined <code>character</code> to be:</p>
+<p>Then I&rsquo;d redefined <code>character</code> to be:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">character</span> <span class="p">(</span><span class="nf">alt</span> <span class="nv">iota-dialytika-tonos</span> <span class="nv">final-sigma</span> <span class="nv">upper-char</span> <span class="nv">lower-char</span><span class="p">))</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Which means that the rule <code>iota-dialytika-tonos</code> takes precedence over any other character (to prevent the dumb combining diacritic rules from matching it).</p>
 
-<p>And that brings me on to final sigma. Final sigma has given me quite a lot of pain, ever since I started building this parser. For those of you who don&#8217;t know Greek, like me, they have two sigma characters - one is used in the middle of a word:</p>
+<p>And that brings me on to final sigma. Final sigma has given me quite a lot of pain, ever since I started building this parser. For those of you who don&rsquo;t know Greek, like me, they have two sigma characters - one is used in the middle of a word:</p>
 
 <h1 class="greek">σ</h1>
 
@@ -1303,9 +1302,9 @@ First, I believe power should lie with the people – and AV would take some of 
 <h1 class="greek">ς</h1>
 
 
-<p>The problem with matching something at the end of a word is that fnparse&#8217;s matchers are mostly greedy. There&#8217;s no equivalent rule, as far as I can tell, to the regular expression <code>(.+)s</code>. The <code>rep+</code> rules always greedily gobble all the tokens, including the last <code>s</code>. At the moment, all I have is the following rule for final sigma:</p>
+<p>The problem with matching something at the end of a word is that fnparse&rsquo;s matchers are mostly greedy. There&rsquo;s no equivalent rule, as far as I can tell, to the regular expression <code>(.+)s</code>. The <code>rep+</code> rules always greedily gobble all the tokens, including the last <code>s</code>. At the moment, all I have is the following rule for final sigma:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">final-sigma</span> <span class="p">(</span><span class="nf">constant-semantics</span> <span class="p">(</span><span class="nf">lit-conc-seq</span> <span class="s">&quot;s &quot;</span> <span class="nv">lit</span><span class="p">)</span>
@@ -1314,9 +1313,9 @@ First, I believe power should lie with the people – and AV would take some of 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This isn&#8217;t ideal because it can&#8217;t match either the last <code>s</code> of the last word in a string (or line), or <code>s</code> followed only by a non-character (such as <code>:</code>). This is something I have to work on, but fnparse isn&#8217;t making it easy for me here.</p>
+<p>This isn&rsquo;t ideal because it can&rsquo;t match either the last <code>s</code> of the last word in a string (or line), or <code>s</code> followed only by a non-character (such as <code>:</code>). This is something I have to work on, but fnparse isn&rsquo;t making it easy for me here.</p>
 
-<p>So as a result of all that, here&#8217;s the first verse of the Odyssey by Homer:</p>
+<p>So as a result of all that, here&rsquo;s the first verse of the Odyssey by Homer:</p>
 
 <blockquote class="greek" style="font-style: normal">
 ἄνδρα μοι ἔννεπε, μοῦσα, πολύτροπον, ὃς μάλα πολλὰ<br/>
@@ -1339,7 +1338,7 @@ First, I believe power should lie with the people – and AV would take some of 
 <ul>
 <li><a href="http://github.com/joshua-choi/fnparse/">fnparse</a> which is awesome for taming parse-m monads in Clojure.</li>
 <li>Thanks to <a href="http://www.tlg.uci.edu/~opoudjis/unicode/gkdiacritics.html">Greek Diacritics</a> for information about combining diacritics.</li>
-<li><a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> Wikipedia&#8217;s writup on the EPUB standard is almost all you need.</li>
+<li><a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> Wikipedia&rsquo;s writup on the EPUB standard is almost all you need.</li>
 <li><a href="http://idpf.org/epub/20/spec/OPF_2.0.1_draft.htm">OPF</a> The OPF/NCX standard.</li>
 <li><a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0135">The Odyssey</a> From the Perseus Digital Library, the source for the XML files I have been consuming in this project.</li>
 </ul>
@@ -1348,42 +1347,42 @@ First, I believe power should lie with the people – and AV would take some of 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[NaNoWriMo begins]]></title>
+    <title type="html"><![CDATA[NaNoWriMo Begins]]></title>
     <link href="http://blog.wjlr.org.uk/2010/11/05/nanowrimo-begins.html"/>
     <updated>2010-11-05T00:00:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2010/11/05/nanowrimo-begins</id>
-    <content type="html"><![CDATA[<p>I&#8217;ve started to write my book for <a href="http://www.nanowrimo.org/eng/user/541245" title="My NaNoWriMo profile">NaNoWriMo</a>. For those who don&#8217;t know, the goal is to write a novel (or, more accurately, a first draft of a novel) in a month - November. A novel, in this competition is defined as a work of fiction totaling 50,000 words. It sounds like a lot for a month initially. Then you break that down to 1,667 words per day - which sounds manageable - I tried writing a chapter last month and got 2,033 words done in about an hour and a half.</p>
+    <content type="html"><![CDATA[<p>I&rsquo;ve started to write my book for <a href="http://www.nanowrimo.org/eng/user/541245" title="My NaNoWriMo profile">NaNoWriMo</a>. For those who don&rsquo;t know, the goal is to write a novel (or, more accurately, a first draft of a novel) in a month - November. A novel, in this competition is defined as a work of fiction totaling 50,000 words. It sounds like a lot for a month initially. Then you break that down to 1,667 words per day - which sounds manageable - I tried writing a chapter last month and got 2,033 words done in about an hour and a half.</p>
 
 <p>Day 1 of November proceeded in the same way every day had for the last couple of weeks. Suffice to say I have been rather overloaded at work and have had to put in a lot of hours - usually till about half past midnight to get things done. This is not a good recipe for becoming a best selling author. Day 1, therefore, ended with a word count of zero. Having committed myself to this challenge, I felt the failure keenly.</p>
 
-<p>Day 2 of November showed no signs of being any different. This time, however, I was determined to get writing, whatever happened. I left work as soon as I could, squeezed myself onto the overcrowded train to Clapham Junction and popped into Debenhams to pick up my repaired watches. Even though I was eager to get home and get typing, I was in Debenhams so I decided to have a wander around the mens department. Masterful procrastination I know! I must have been there for around half an hour - bought two jumpers, a white shirt and two ties. Debenhams is a dangerous place. Then I finally made my merry way homewards. The rest of the evening involved trying to write while fielding various questions and requests from colleagues on Skype. I don&#8217;t recommend this as a strategy for writing or even as a strategy for working. It&#8217;s definitely not a good combination for one&#8217;s sanity. However, I managed a measly 500 words. I was too embarrassed to update my word count on my profile though and went to sleep feeling defeated.</p>
+<p>Day 2 of November showed no signs of being any different. This time, however, I was determined to get writing, whatever happened. I left work as soon as I could, squeezed myself onto the overcrowded train to Clapham Junction and popped into Debenhams to pick up my repaired watches. Even though I was eager to get home and get typing, I was in Debenhams so I decided to have a wander around the mens department. Masterful procrastination I know! I must have been there for around half an hour - bought two jumpers, a white shirt and two ties. Debenhams is a dangerous place. Then I finally made my merry way homewards. The rest of the evening involved trying to write while fielding various questions and requests from colleagues on Skype. I don&rsquo;t recommend this as a strategy for writing or even as a strategy for working. It&rsquo;s definitely not a good combination for one&rsquo;s sanity. However, I managed a measly 500 words. I was too embarrassed to update my word count on my profile though and went to sleep feeling defeated.</p>
 
-<p>Day 3 might as well be forgotten entirely. Quite apart from the work I continued to do during the evening, I made no attempt to write anything - content to investigate various programming ideas and generally waste my time watching programmes on the iPlayer&#8230;until quite late actually - for no good reason. Novel? What novel?</p>
+<p>Day 3 might as well be forgotten entirely. Quite apart from the work I continued to do during the evening, I made no attempt to write anything - content to investigate various programming ideas and generally waste my time watching programmes on the iPlayer&hellip;until quite late actually - for no good reason. Novel? What novel?</p>
 
 <p>Today was different. Well, not so much actually. By the time work was over, I was pretty much exhausted. I elbowed, pushed and shoved my way onto the inhumane device some people laughably refer to as public transport and made my way home like a zombie with a mission. Slow but determined. I only hope I have more literally skill than your average zombie. Or failing that, raw typing speed.</p>
 
-<p>So aside from the work I inevitably had to do this evening, I&#8217;ve completed 1,788 words, bringing my total so far to 2,288. I am obviously well short of where I should be but I&#8217;m hoping I can put some serious typing hours in on the weekend. It&#8217;s not like I&#8217;ll have anything else to do. Except procrastinate of course.</p>
+<p>So aside from the work I inevitably had to do this evening, I&rsquo;ve completed 1,788 words, bringing my total so far to 2,288. I am obviously well short of where I should be but I&rsquo;m hoping I can put some serious typing hours in on the weekend. It&rsquo;s not like I&rsquo;ll have anything else to do. Except procrastinate of course.</p>
 
-<p>If anybody else out there in the ether is having problems writing their novel, or writing anything for that matter, rest assured your problems are not unusual. I&#8217;m still wavering between determination to complete the challenge to get my first novel written; and defeat, apathy that no matter how hard I try, life will always get in my way. When I was at school, if a teacher had set me homework to write a 2,000 word essay or story, I would have left it to the last minute, written less than half of what was required and handed it in late. If I don&#8217;t rise above this pattern of under-achievement now, I fear I never will. So, in summary, I will finish this novel on time. I might not enjoy it, but I will complete it.</p>
+<p>If anybody else out there in the ether is having problems writing their novel, or writing anything for that matter, rest assured your problems are not unusual. I&rsquo;m still wavering between determination to complete the challenge to get my first novel written; and defeat, apathy that no matter how hard I try, life will always get in my way. When I was at school, if a teacher had set me homework to write a 2,000 word essay or story, I would have left it to the last minute, written less than half of what was required and handed it in late. If I don&rsquo;t rise above this pattern of under-achievement now, I fear I never will. So, in summary, I will finish this novel on time. I might not enjoy it, but I will complete it.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Emacs for Android development]]></title>
+    <title type="html"><![CDATA[Emacs for Android Development]]></title>
     <link href="http://blog.wjlr.org.uk/2010/05/16/emacs-for-android-development.html"/>
     <updated>2010-05-16T00:00:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2010/05/16/emacs-for-android-development</id>
     <content type="html"><![CDATA[<p>Today I started using Emacs rather than Eclipse to work on an Android project. There are a couple of things you need to get started though.</p>
 
-<p>Firstly you will need the Android SDK (which you will have already if you&#8217;ve started with Eclipse Android development) and you need to know where it is located on your hard drive.</p>
+<p>Firstly you will need the Android SDK (which you will have already if you&rsquo;ve started with Eclipse Android development) and you need to know where it is located on your hard drive.</p>
 
 <p>There is a mode for Emacs that provides a few Android-related keybindings (for running ant tasks like install/reinstall/compile/start emulator/start ddms etc.), you can find it here: <a href="http://github.com/remvee/android-mode">android-mode</a>. Git clone that repository in your .emacs.d directory (~/.emacs.d/), which should already be in your emacs load path. (Emacs config for this later on).</p>
 
-<p>Because Java for Android uses Java 1.5 or above, it will be full of annotations such as &#8220;@Override&#8221;. The C/Java modes for emacs don&#8217;t appear to have been updated to support this syntax so indentation won&#8217;t be quite right. To fix this, you need a minor mode called <a href="http://www.emacswiki.org/cgi-bin/wiki/java-mode-indent-annotations.el">java-mode-indent-annotations.el</a> &lt;- click on the Download link on that page and save the file as ~/.emacs.d/java-mode-indent-annotations.el</p>
+<p>Because Java for Android uses Java 1.5 or above, it will be full of annotations such as &ldquo;@Override&rdquo;. The C/Java modes for emacs don&rsquo;t appear to have been updated to support this syntax so indentation won&rsquo;t be quite right. To fix this, you need a minor mode called <a href="http://www.emacswiki.org/cgi-bin/wiki/java-mode-indent-annotations.el">java-mode-indent-annotations.el</a> &lt;- click on the Download link on that page and save the file as ~/.emacs.d/java-mode-indent-annotations.el</p>
 
 <p>Now the emacs config for all the above is as follows:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1400,7 +1399,7 @@ First, I believe power should lie with the people – and AV would take some of 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Remember to change the android-mode-sdk-dir to match where you keep your Android SDK. This variable needs to be set before the android-mode is loaded. Also, if you have any other java-mode-hooks defined, you won&#8217;t want to setq that variable, but use add-hook &#8216;java-mode instead - otherwise this will overwrite your existing java-mode hooks.</p>
+<p>Remember to change the android-mode-sdk-dir to match where you keep your Android SDK. This variable needs to be set before the android-mode is loaded. Also, if you have any other java-mode-hooks defined, you won&rsquo;t want to setq that variable, but use add-hook &lsquo;java-mode instead - otherwise this will overwrite your existing java-mode hooks.</p>
 
 <p>If you try to use any of the provided keybindings, listed below:</p>
 
@@ -1444,23 +1443,23 @@ First, I believe power should lie with the people – and AV would take some of 
 </table>
 
 
-<p>They will probably fail because by default, when you start an Android project in Eclipse, it will not create a build.xml file and ant requires this for any of the above to work (you can probably start the emulator though as that doesn&#8217;t rely on a per-project build file). So in order to have an ant build file in your project directory you need to run the following command:</p>
+<p>They will probably fail because by default, when you start an Android project in Eclipse, it will not create a build.xml file and ant requires this for any of the above to work (you can probably start the emulator though as that doesn&rsquo;t rely on a per-project build file). So in order to have an ant build file in your project directory you need to run the following command:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>android update project --name &lt;project_name&gt; --target &lt;target_ID&gt; --path path/to/your/project/
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Name and target are optional, as you have most likely already defined those from Eclipse. But in order to list the targets available, run:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>android list targets
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>That&#8217;s pretty much it. Remember that you can&#8217;t run the install task each time because it&#8217;ll fail if the project is already installed - just run the reinstall task each time you want to test your changes.</p>
+<p>That&rsquo;s pretty much it. Remember that you can&rsquo;t run the install task each time because it&rsquo;ll fail if the project is already installed - just run the reinstall task each time you want to test your changes.</p>
 
-<p>Thanks to <a href="http://blog.fmaj7.me/?p=18">fmaj7&#8217;s blog</a> where I found most of the information I used to get up and running.</p>
+<p>Thanks to <a href="http://blog.fmaj7.me/?p=18">fmaj7&rsquo;s blog</a> where I found most of the information I used to get up and running.</p>
 ]]></content>
   </entry>
   

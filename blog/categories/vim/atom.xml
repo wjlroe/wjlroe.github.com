@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vim | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2014-12-28T19:05:00+00:00</updated>
+  <updated>2014-12-29T15:43:23+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -19,7 +19,7 @@
     <updated>2014-03-27T12:58:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2014/03/27/json-for-humans</id>
     <content type="html"><![CDATA[<p>JSON is a fairly easy to read format but sometimes you need to deal with an
-unreadable dump of the stuff and it'd be useful to quickly reformat or prettify
+unreadable dump of the stuff and it&rsquo;d be useful to quickly reformat or prettify
 it. There are a number of ways to do this.</p>
 
 <h2>Javascript (Chrome, Firefox etc.)</h2>
@@ -29,39 +29,33 @@ it. There are a number of ways to do this.</p>
 function, which can pretty-print JSON according to the number of spaces you
 pass as the 3rd parameter. For example:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">example</span> <span class="o">=</span> <span class="p">{</span><span class="nx">user</span><span class="o">:</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Ada Lovelace&quot;</span><span class="p">,</span> <span class="nx">email</span><span class="o">:</span> <span class="s2">&quot;ada@example.com&quot;</span><span class="p">},</span> <span class="nx">group</span><span class="o">:</span> <span class="s2">&quot;programmers&quot;</span><span class="p">}</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">example</span> <span class="o">=</span> <span class="p">{</span><span class="nx">user</span><span class="o">:</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">Ada</span> <span class="nx">Lovelace</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">email</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;&amp;#x6d;&amp;#x61;&amp;#105;&amp;#108;&amp;#x74;&amp;#x6f;&amp;#x3a;&amp;#97;&amp;#100;&amp;#x61;&amp;#64;&amp;#x65;&amp;#x78;&amp;#97;&amp;#109;&amp;#112;&amp;#x6c;&amp;#101;&amp;#x2e;&amp;#99;&amp;#111;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="err">#</span><span class="mi">97</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">100</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">97</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">64</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">101</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="nx">x78</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="nx">x61</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="nx">x6d</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">112</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">108</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">101</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="nx">x2e</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">99</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">111</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">109</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/a&gt;&amp;rdquo;}, group: &amp;ldquo;programmers&amp;rdquo;}</span>
 </span><span class='line'><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">example</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>If you try the above in a console in a web browser (or a Node.js console), you
 should see this:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>{&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;pre>&lt;code>"user": {
-</span><span class='line'>    "name": "Ada Lovelace",
-</span><span class='line'>    "email": "ada@example.com"
-</span><span class='line'>},
-</span><span class='line'>"group": "programmers"
-</span><span class='line'>&lt;/code>&lt;/pre>
-</span><span class='line'>
-</span><span class='line'>&lt;p>}</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>    &ldquo;user&rdquo;: {
+</span><span class='line'>        &ldquo;name&rdquo;: &ldquo;Ada Lovelace&rdquo;,
+</span><span class='line'>        &ldquo;email&rdquo;: &ldquo;&lt;a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#x61;&#100;&#97;&#x40;&#101;&#x78;&#x61;&#109;&#x70;&#x6c;&#101;&#46;&#99;&#111;&#x6d;">&#x61;&#x64;&#97;&#64;&#x65;&#x78;&#97;&#x6d;&#x70;&#108;&#101;&#x2e;&#99;&#x6f;&#109;&lt;/a>&rdquo;
+</span><span class='line'>    },
+</span><span class='line'>    &ldquo;group&rdquo;: &ldquo;programmers&rdquo;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure></p>
 
 <h2>json_reformat</h2>
 
-<p>That's all well and good, but relying on a javascript console is not the most
+<p>That&rsquo;s all well and good, but relying on a javascript console is not the most
 efficient way to do things, so an easier and more scritable tool is the
 json_reformat command (part of the <a href="http://lloyd.github.io/yajl/">Yajl</a>).
 To get this tool installed, do the following:</p>
@@ -76,27 +70,27 @@ To get this tool installed, do the following:</p>
 it to standard output. This makes it very useful for use in other tools, such as
 vim. Here is some vim config for using <code>json_reformat</code>:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">au</span> <span class="nb">BufRead</span><span class="p">,</span><span class="nb">BufNewFile</span> *.json <span class="k">set</span> <span class="k">filetype</span><span class="p">=</span>json
 </span><span class='line'><span class="k">au</span> <span class="nb">FileType</span> json <span class="k">setlocal</span> <span class="nb">equalprg</span><span class="p">=</span>json_reformat
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p>Now let's edit a file that was generated by <a href="http://berkshelf.com">Berkshelf</a>
+<p>Now let&rsquo;s edit a file that was generated by <a href="http://berkshelf.com">Berkshelf</a>
 and has been spat out on the filesystem in <code>~/.berkshelf/config.json</code>. Initially
 it looks like this:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span><span class="nt">&quot;chef&quot;</span><span class="p">:{</span><span class="nt">&quot;chef_server_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://api.opscode.com/organizations/acmecorp&quot;</span><span class="p">,</span><span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span><span class="s2">&quot;acmecorp-validator&quot;</span><span class="p">,</span><span class="nt">&quot;validation_key_path&quot;</span><span class="p">:</span><span class="s2">&quot;/Users/ada/Work/.chef/acmecorp-validator.pem&quot;</span><span class="p">,</span><span class="nt">&quot;client_key&quot;</span><span class="p">:</span><span class="s2">&quot;/Users/ada/Work/.chef/ada.pem&quot;</span><span class="p">,</span><span class="nt">&quot;node_name&quot;</span><span class="p">:</span><span class="s2">&quot;ada&quot;</span><span class="p">},</span><span class="nt">&quot;cookbook&quot;</span><span class="p">:{</span><span class="nt">&quot;copyright&quot;</span><span class="p">:</span><span class="s2">&quot;Ada Lovelace&quot;</span><span class="p">,</span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;ada@example.com&quot;</span><span class="p">,</span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="s2">&quot;MIT&quot;</span><span class="p">},</span><span class="nt">&quot;allowed_licenses&quot;</span><span class="p">:[],</span><span class="nt">&quot;raise_license_exception&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">&quot;vagrant&quot;</span><span class="p">:{</span><span class="nt">&quot;vm&quot;</span><span class="p">:{</span><span class="nt">&quot;box&quot;</span><span class="p">:</span><span class="s2">&quot;Berkshelf-CentOS-6.3-x86_64-minimal&quot;</span><span class="p">,</span><span class="nt">&quot;box_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box&quot;</span><span class="p">,</span><span class="nt">&quot;forward_port&quot;</span><span class="p">:{},</span><span class="nt">&quot;network&quot;</span><span class="p">:{</span><span class="nt">&quot;bridged&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">&quot;hostonly&quot;</span><span class="p">:</span><span class="s2">&quot;33.33.33.10&quot;</span><span class="p">},</span><span class="nt">&quot;provision&quot;</span><span class="p">:</span><span class="s2">&quot;chef_solo&quot;</span><span class="p">}},</span><span class="nt">&quot;ssl&quot;</span><span class="p">:{</span><span class="nt">&quot;verify&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">}}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span><span class="err">&amp;ldquo;chef&amp;rdquo;:{&amp;ldquo;chef_server_url&amp;rdquo;:&amp;ldquo;&lt;a</span> <span class="err">href=</span><span class="nt">&quot;https://api.opscode.com/organizations/acmecorp&quot;</span><span class="err">&gt;https</span><span class="p">:</span><span class="err">//api.opscode.com/organizations/acmecorp&lt;/a&gt;&amp;rdquo;</span><span class="p">,</span><span class="err">&amp;ldquo;validation_client_name&amp;rdquo;:&amp;ldquo;acmecorp-validator&amp;rdquo;,&amp;ldquo;validation_key_path&amp;rdquo;:&amp;ldquo;/Users/ada/Work/.chef/acmecorp-validator.pem&amp;rdquo;,&amp;ldquo;client_key&amp;rdquo;:&amp;ldquo;/Users/ada/Work/.chef/ada.pem&amp;rdquo;,&amp;ldquo;node_name&amp;rdquo;:&amp;ldquo;ada&amp;rdquo;</span><span class="p">}</span><span class="err">,&amp;ldquo;cookbook&amp;rdquo;:</span><span class="p">{</span><span class="err">&amp;ldquo;copyright&amp;rdquo;:&amp;ldquo;Ada</span> <span class="err">Lovelace&amp;rdquo;,&amp;ldquo;email&amp;rdquo;:&amp;ldquo;&lt;a</span> <span class="err">href=</span><span class="nt">&quot;&amp;#109;&amp;#97;&amp;#105;&amp;#x6c;&amp;#x74;&amp;#111;&amp;#58;&amp;#x61;&amp;#100;&amp;#97;&amp;#64;&amp;#101;&amp;#120;&amp;#97;&amp;#109;&amp;#x70;&amp;#108;&amp;#x65;&amp;#x2e;&amp;#99;&amp;#x6f;&amp;#109;&quot;</span><span class="err">&gt;&amp;#</span><span class="mi">97</span><span class="err">;&amp;#</span><span class="mi">100</span><span class="err">;&amp;#x</span><span class="mi">61</span><span class="err">;&amp;#</span><span class="mi">64</span><span class="err">;&amp;#</span><span class="mi">101</span><span class="err">;&amp;#</span><span class="mi">120</span><span class="err">;&amp;#x</span><span class="mi">61</span><span class="err">;&amp;#x</span><span class="mi">6</span><span class="err">d;&amp;#x</span><span class="mi">70</span><span class="err">;&amp;#x</span><span class="mi">6</span><span class="err">c;&amp;#</span><span class="mi">101</span><span class="err">;&amp;#x</span><span class="mi">2</span><span class="err">e;&amp;#</span><span class="mi">99</span><span class="err">;&amp;#x</span><span class="mi">6</span><span class="err">f;&amp;#</span><span class="mi">109</span><span class="err">;&lt;/a&gt;&amp;rdquo;</span><span class="p">,</span><span class="err">&amp;ldquo;license&amp;rdquo;:&amp;ldquo;MIT&amp;rdquo;</span><span class="p">}</span><span class="err">,&amp;ldquo;allowed_licenses&amp;rdquo;:</span><span class="p">[]</span><span class="err">,&amp;ldquo;raise_license_exception&amp;rdquo;:</span><span class="kc">false</span><span class="err">,&amp;ldquo;vagrant&amp;rdquo;:</span><span class="p">{</span><span class="err">&amp;ldquo;vm&amp;rdquo;:{&amp;ldquo;box&amp;rdquo;:&amp;ldquo;Berkshelf-CentOS-6.3-x86_64-minimal&amp;rdquo;,&amp;ldquo;box_url&amp;rdquo;:&amp;ldquo;&lt;a</span> <span class="err">href=</span><span class="nt">&quot;https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box&quot;</span><span class="err">&gt;https</span><span class="p">:</span><span class="err">//dl.dropbox.com/u/</span><span class="mi">31081437</span><span class="err">/Berkshelf-CentOS</span><span class="mf">-6.3</span><span class="err">-x</span><span class="mi">86</span><span class="err">_</span><span class="mi">64</span><span class="err">-minimal.box&lt;/a&gt;&amp;rdquo;</span><span class="p">,</span><span class="err">&amp;ldquo;forward_port&amp;rdquo;:{</span><span class="p">}</span><span class="err">,&amp;ldquo;network&amp;rdquo;:</span><span class="p">{</span><span class="err">&amp;ldquo;bridged&amp;rdquo;:false,&amp;ldquo;hostonly&amp;rdquo;:&amp;ldquo;33.33.33.10&amp;rdquo;</span><span class="p">}</span><span class="err">,&amp;ldquo;provision&amp;rdquo;:&amp;ldquo;chef_solo&amp;rdquo;}},&amp;ldquo;ssl&amp;rdquo;:</span><span class="p">{</span><span class="err">&amp;ldquo;verify&amp;rdquo;:false</span><span class="p">}</span><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>This passive-aggressive attempt by the machines to subjugate us humans just will
 not stand and thankfully we have the tools to take back control of our JSON
-configs. Position the cursor anywhere on the single line of JSON and press '==',
+configs. Position the cursor anywhere on the single line of JSON and press &lsquo;==&rsquo;,
 vim will pipe the buffer to <code>json_reformat</code> and replace it with the output of
 that command resulting in this:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -133,26 +127,24 @@ that command resulting in this:</p>
 <span class='line-number'>35</span>
 <span class='line-number'>36</span>
 <span class='line-number'>37</span>
-<span class='line-number'>38</span>
-</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span><span class="err">&lt;/p&gt;</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="err">&amp;ldquo;chef&amp;rdquo;:</span> <span class="err">{</span>
+</span><span class='line'>        <span class="err">&amp;ldquo;chef_server_url&amp;rdquo;:</span> <span class="err">&amp;ldquo;&lt;a</span> <span class="err">href=</span><span class="nt">&quot;https://api.opscode.com/organizations/acmecorp&quot;</span><span class="err">&gt;https</span><span class="p">:</span><span class="err">//api.opscode.com/organizations/acmecorp&lt;/a&gt;&amp;rdquo;</span><span class="p">,</span>
+</span><span class='line'>        <span class="err">&amp;ldquo;validation_client_name&amp;rdquo;:</span> <span class="err">&amp;ldquo;acmecorp-validator&amp;rdquo;,</span>
+</span><span class='line'>        <span class="err">&amp;ldquo;validation_key_path&amp;rdquo;:</span> <span class="err">&amp;ldquo;/Users/ada/Work/.chef/acmecorp-validator.pem&amp;rdquo;,</span>
+</span><span class='line'>        <span class="err">&amp;ldquo;client_key&amp;rdquo;:</span> <span class="err">&amp;ldquo;/Users/ada/Work/.chef/ada.pem&amp;rdquo;,</span>
+</span><span class='line'>        <span class="err">&amp;ldquo;node_name&amp;rdquo;:</span> <span class="err">&amp;ldquo;ada&amp;rdquo;</span>
+</span><span class='line'>    <span class="p">}</span><span class="err">,</span>
+</span><span class='line'>    <span class="err">&amp;ldquo;cookbook&amp;rdquo;:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="err">&amp;ldquo;copyright&amp;rdquo;:</span> <span class="err">&amp;ldquo;Ada</span> <span class="err">Lovelace&amp;rdquo;,</span>
+</span><span class='line'>        <span class="err">&amp;ldquo;email&amp;rdquo;:</span> <span class="err">&amp;ldquo;&lt;a</span> <span class="err">href=</span><span class="nt">&quot;&amp;#x6d;&amp;#97;&amp;#105;&amp;#x6c;&amp;#x74;&amp;#x6f;&amp;#x3a;&amp;#x61;&amp;#x64;&amp;#97;&amp;#x40;&amp;#x65;&amp;#120;&amp;#x61;&amp;#109;&amp;#112;&amp;#108;&amp;#101;&amp;#46;&amp;#99;&amp;#x6f;&amp;#109;&quot;</span><span class="err">&gt;&amp;#x</span><span class="mi">61</span><span class="err">;&amp;#</span><span class="mi">100</span><span class="err">;&amp;#x</span><span class="mi">61</span><span class="err">;&amp;#x</span><span class="mi">40</span><span class="err">;&amp;#</span><span class="mi">101</span><span class="err">;&amp;#x</span><span class="mi">78</span><span class="err">;&amp;#x</span><span class="mi">61</span><span class="err">;&amp;#</span><span class="mi">109</span><span class="err">;&amp;#x</span><span class="mi">70</span><span class="err">;&amp;#</span><span class="mi">108</span><span class="err">;&amp;#</span><span class="mi">101</span><span class="err">;&amp;#x</span><span class="mi">2</span><span class="err">e;&amp;#x</span><span class="mi">63</span><span class="err">;&amp;#x</span><span class="mi">6</span><span class="err">f;&amp;#</span><span class="mi">109</span><span class="err">;&lt;/a&gt;&amp;rdquo;</span><span class="p">,</span>
+</span><span class='line'>        <span class="err">&amp;ldquo;license&amp;rdquo;:</span> <span class="err">&amp;ldquo;MIT&amp;rdquo;</span>
+</span><span class='line'>    <span class="p">}</span><span class="err">,</span>
+</span><span class='line'>    <span class="err">&amp;ldquo;allowed_licenses&amp;rdquo;:</span> <span class="p">[</span><span class="err">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="err">&lt;pre&gt;&lt;code&gt;</span><span class="nt">&quot;chef&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nt">&quot;chef_server_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.opscode.com/organizations/acmecorp&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;acmecorp-validator&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;validation_key_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/Users/ada/Work/.chef/acmecorp-validator.pem&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;client_key&quot;</span><span class="p">:</span> <span class="s2">&quot;/Users/ada/Work/.chef/ada.pem&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;node_name&quot;</span><span class="p">:</span> <span class="s2">&quot;ada&quot;</span>
-</span><span class='line'><span class="p">},</span>
-</span><span class='line'><span class="nt">&quot;cookbook&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nt">&quot;copyright&quot;</span><span class="p">:</span> <span class="s2">&quot;Ada Lovelace&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;ada@example.com&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="s2">&quot;MIT&quot;</span>
-</span><span class='line'><span class="p">},</span>
-</span><span class='line'><span class="nt">&quot;allowed_licenses&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">],</span>
-</span><span class='line'><span class="nt">&quot;raise_license_exception&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-</span><span class='line'><span class="nt">&quot;vagrant&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'><span class="err">&lt;pre&gt;&lt;code&gt;</span><span class="p">]</span><span class="err">,</span>
+</span><span class='line'><span class="s2">&quot;raise_license_exception&quot;</span><span class="err">:</span> <span class="kc">false</span><span class="err">,</span>
+</span><span class='line'><span class="s2">&quot;vagrant&quot;</span><span class="err">:</span> <span class="p">{</span>
 </span><span class='line'>    <span class="nt">&quot;vm&quot;</span><span class="p">:</span> <span class="p">{</span>
 </span><span class='line'>        <span class="nt">&quot;box&quot;</span><span class="p">:</span> <span class="s2">&quot;Berkshelf-CentOS-6.3-x86_64-minimal&quot;</span><span class="p">,</span>
 </span><span class='line'>        <span class="nt">&quot;box_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box&quot;</span><span class="p">,</span>
@@ -165,14 +157,14 @@ that command resulting in this:</p>
 </span><span class='line'>        <span class="p">},</span>
 </span><span class='line'>        <span class="nt">&quot;provision&quot;</span><span class="p">:</span> <span class="s2">&quot;chef_solo&quot;</span>
 </span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">},</span>
-</span><span class='line'><span class="nt">&quot;ssl&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'><span class="p">}</span><span class="err">,</span>
+</span><span class='line'><span class="s2">&quot;ssl&quot;</span><span class="err">:</span> <span class="p">{</span>
 </span><span class='line'>    <span class="nt">&quot;verify&quot;</span><span class="p">:</span> <span class="kc">false</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'><span class="err">&lt;/code&gt;&lt;/pre&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="err">&lt;p&gt;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="err">&lt;p&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>This trick with vim and json_reformat is one of the many answers to a
 <a href="http://stackoverflow.com/a/6047998">StackOverflow question</a> about

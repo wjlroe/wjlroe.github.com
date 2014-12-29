@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ember | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/ember/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2014-12-28T19:05:00+00:00</updated>
+  <updated>2014-12-29T15:43:23+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -26,7 +26,7 @@ Ember-data.
 <p>A common pattern with webapps in these exciting times is the
 transition-to-new-thing-you-just-created pattern. The way it works is this: you
 fill in a form to create a new thing (like, a widget or something) and then when
-you hit 'save', you are transitioned to the page for that widget. This is so you
+you hit &lsquo;save&rsquo;, you are transitioned to the page for that widget. This is so you
 can confirm that it worked and so you could make further changes on that widget.
 The assumption being, when you create a widget, it is the focus of your task.</p>
 
@@ -36,22 +36,20 @@ work and hit an ember-data bug. Surprise!</p>
 <p>The bug is that when you try to do this (code speaks louder than widget
 metaphors):</p>
 
-<p><code>javascript
-var model = App.Widget.createRecord({name: "special_widget"});
+<pre><code class="javascript">var model = App.Widget.createRecord({name: "special_widget"});
 model.one('didCreate', function() {
   this.transitionToRoute('widgets.show', model);
 });
 model.get('store').commit();
-</code></p>
+</code></pre>
 
-<p>This doesn't work with ember-data currently - what happens is the <code>model</code> object
-that gets sent to the <code>didCreate</code> callback there won't have an <code>id</code> from the
-server (it hasn't been filled in for some reason).</p>
+<p>This doesn&rsquo;t work with ember-data currently - what happens is the <code>model</code> object
+that gets sent to the <code>didCreate</code> callback there won&rsquo;t have an <code>id</code> from the
+server (it hasn&rsquo;t been filled in for some reason).</p>
 
 <p>To work around this issue, you need to do something akin to this:</p>
 
-<p><code>javascript
-saveTheWidget: function() {
+<pre><code class="javascript">saveTheWidget: function() {
   var model = App.Widget.createRecord({name: "very_special_widget"});
   model.addObserver('id', this, this.showWidget);
   model.get('store').commit();
@@ -60,18 +58,18 @@ showWidget: function(model) {
   model.removeObserver('id', this, this.showWidget);
   this.transitionToRoute('widgets.show', model);
 }
-</code></p>
+</code></pre>
 
 <p>In that example we trigger the page transition off the change of value of <code>id</code>.
 This works because for a short while, the <code>id</code> will be <code>null</code> until Ember-data
 fills in the new <code>id</code> from the server. Then your callback is called and the page
-transition happens. The difference in timing is not noticeable to the user - it's
+transition happens. The difference in timing is not noticeable to the user - it&rsquo;s
 just a race condition within Ember-data itself. Other than that - in this
 example, the observer is removed, which is good practice for observers and you
-should always remove observers you've added (as I understand it).</p>
+should always remove observers you&rsquo;ve added (as I understand it).</p>
 
 <p>Other alternative workarounds include wrapping the <code>transitionToRoute</code> call in a
-<code>setTimeout()</code> block - to make it pause just long enough for the model's <code>id</code> to
+<code>setTimeout()</code> block - to make it pause just long enough for the model&rsquo;s <code>id</code> to
 be filled in.</p>
 
 <p>Most of the above came from
@@ -100,7 +98,7 @@ ember-data.</p>
 <pre><code>Object {application: function, domains: function}
 </code></pre>
 
-<p>In the above example I have two templates defined: 'application' and 'domains'. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
+<p>In the above example I have two templates defined: &lsquo;application&rsquo; and &lsquo;domains&rsquo;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
 
 <h2>Why is this happening?</h2>
 

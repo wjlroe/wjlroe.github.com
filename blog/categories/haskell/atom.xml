@@ -4,7 +4,7 @@
   <title><![CDATA[Category: haskell | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/haskell/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2014-12-28T19:05:00+00:00</updated>
+  <updated>2014-12-29T15:43:23+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -23,7 +23,7 @@ development. I have previously bootstrapped a basic
 <a href="http://snapframework.com/">Snap</a> setup but never got into actual
 hacking. Today I decided to give <a href="http://www.yesodweb.com/">Yesod</a> a
 go. I ran into a number of difficulties that drained away all my spare
-time this evening but in the end I feel like I'm ready to dive in
+time this evening but in the end I feel like I&rsquo;m ready to dive in
 tomorrow.</p>
 
 <p>I started off by attempting to install Yesod, with a simple <code>cabal
@@ -35,15 +35,15 @@ out-of-date, meaning a tool, called <code>alex</code> was too old for Yesod. To
 solve this rather small issue I took the rather drastic step of
 upgrading Ubuntu on the ThinkPad to
 <a href="https://wiki.ubuntu.com/PrecisePangolin">Precise Pangolin</a> because
-this includes the latest haskell-platform...and its all new and...just
+this includes the latest haskell-platform&hellip;and its all new and&hellip;just
 because! This is Ubuntu after all - trigger happy upgrades are the
 name of the game.</p>
 
 <p>Meanwhile, in Mac land. While that upgrade was running I tried to run
 the new yesod web app on a Mac. Unfortunately I ran into all the
-problems I've encountered before with cabal-dev on OS X.</p>
+problems I&rsquo;ve encountered before with cabal-dev on OS X.</p>
 
-<p>Firstly there's some weirdness with cabal-dev being set to install
+<p>Firstly there&rsquo;s some weirdness with cabal-dev being set to install
 everything in the system library location. This just makes no sense for
 cabal-dev - the whole point is for it to install libraries in a
 vendored, per-project location - not interfering with system
@@ -53,10 +53,10 @@ libraries. It manifested itself as asking for a password all the time
   <a href="http://passingcuriosity.com/2011/cabal-dev-configuration-tweaks/">blog post I found</a>. Annoying.</p>
 
 <p>Another problem I had was ghc/ld spamming the terminal with loads of
-linker warnings. This really slowed down compilation. I didn't really
-solve this (happened on my Mac Mini - didn't happen on my work MacBook
+linker warnings. This really slowed down compilation. I didn&rsquo;t really
+solve this (happened on my Mac Mini - didn&rsquo;t happen on my work MacBook
 Air). I remember having to set options for GHC to silence that crap,
-but I forget the details...</p>
+but I forget the details&hellip;</p>
 
 <p>In order to get it all working on my Mac I:</p>
 
@@ -67,23 +67,23 @@ but I forget the details...</p>
 </ul>
 
 
-<p>Everything worked then. There's also strange voodoo you have to run to
+<p>Everything worked then. There&rsquo;s also strange voodoo you have to run to
 unregister old packages - <code>brew info haskell-platform</code> splits out the
 necessary commands.</p>
 
-<p>After all that, things worked...mostly. Currently there seems to be
+<p>After all that, things worked&hellip;mostly. Currently there seems to be
 some car crash of dependencies caused by a new release of something
 called tls-extras. A helpful stranger in IRC (#yesod) told me to
 <code>cabal-dev install tls-extra-0.4.2.1</code> - this forces a working version
 of that library and then you can happily install yesod and
-everything's groovy.</p>
+everything&rsquo;s groovy.</p>
 
 <p>Who said Haskell was difficult? Not me.</p>
 
-<p>So now I have a skeleton Yesod project up and running and it's all
+<p>So now I have a skeleton Yesod project up and running and it&rsquo;s all
 looking very promising. The helper script for creating projects gave
 me some confidence - specifically asking if I wanted sqlite, postgres,
-MongoDB or nothing seemed pretty good to me - this doesn't appear to be
+MongoDB or nothing seemed pretty good to me - this doesn&rsquo;t appear to be
 a web framework/persistence system tied to a particular way of doing
 things.</p>
 
@@ -106,21 +106,21 @@ felt I had to see what all the fuss was about.</p>
 
 <h2>Haskell is weird</h2>
 
-<p>When you first start out learning this language - or even just read some articles about it - the first thing that will strike you is that it seems completely obscure. The syntax is obscure, the concepts are obscure, but most of all - the language used to describe what things are is incredibly obscure. Every programming language community has evolved its own lingo of course and Haskell's is awash with mathematics. If you subscribe to the planet Haskell RSS feed you will get the impression that Haskell is pretty much just an extension of Mathematics and is only used for "pure" problems and therefore completely irrelevant to real world problems. Then you will notice there's a book called "Real World Haskell" and you'll think it an anomaly, just some noise in the data.</p>
+<p>When you first start out learning this language - or even just read some articles about it - the first thing that will strike you is that it seems completely obscure. The syntax is obscure, the concepts are obscure, but most of all - the language used to describe what things are is incredibly obscure. Every programming language community has evolved its own lingo of course and Haskell&rsquo;s is awash with mathematics. If you subscribe to the planet Haskell RSS feed you will get the impression that Haskell is pretty much just an extension of Mathematics and is only used for &ldquo;pure&rdquo; problems and therefore completely irrelevant to real world problems. Then you will notice there&rsquo;s a book called &ldquo;Real World Haskell&rdquo; and you&rsquo;ll think it an anomaly, just some noise in the data.</p>
 
 <h2>Why learn this?</h2>
 
-<p>Apart from wanting to become a better programmer in general (which would explain why I'd want to learn functional programming in general and in more detail than I already do from Erlang and Clojure), I want to learn how Haskell can be a practical language - how it can help me create great products. I suspect that behind the terseness and high degree of greek characters is a toolkit that will be at least as empowering as Erlang/OTP has been. I want that toolkit.</p>
+<p>Apart from wanting to become a better programmer in general (which would explain why I&rsquo;d want to learn functional programming in general and in more detail than I already do from Erlang and Clojure), I want to learn how Haskell can be a practical language - how it can help me create great products. I suspect that behind the terseness and high degree of greek characters is a toolkit that will be at least as empowering as Erlang/OTP has been. I want that toolkit.</p>
 
 <h2>The elephant in the room</h2>
 
-<p>Sooner or later you will arrive at the Haskell trial stage. In order to print anything out from your programme, or accept any input or read a file etc. you will have to use monads. At first the syntax will seem very strange, just a load of terse boilerplate for doing what more pragmatic languages make super easy, but you'll think "whatever, let's just get on with learning this thing". At some point the tutorial or book you're reading will have to explain monads to you. More than likely this is the point where you stared at the screen/page in disbelief and your heart sank as you realised you would have to understand level 3000 mathematics to print something on screen. For most people, this is the last they ever deal with Haskell.</p>
+<p>Sooner or later you will arrive at the Haskell trial stage. In order to print anything out from your programme, or accept any input or read a file etc. you will have to use monads. At first the syntax will seem very strange, just a load of terse boilerplate for doing what more pragmatic languages make super easy, but you&rsquo;ll think &ldquo;whatever, let&rsquo;s just get on with learning this thing&rdquo;. At some point the tutorial or book you&rsquo;re reading will have to explain monads to you. More than likely this is the point where you stared at the screen/page in disbelief and your heart sank as you realised you would have to understand level 3000 mathematics to print something on screen. For most people, this is the last they ever deal with Haskell.</p>
 
-<p>Later on, a Haskell wizard will act all puzzled and amused that you found monads hard to understand. This will lower your self-esteem so low you consider giving up entirely and becoming a farmer instead. They will go on to tell you that you've been using monads the whole time in whatever programming language you like. They will explain how this is so and you will not be enlightened. It'll sound all too convenient, just a bunch of semantic drivel.</p>
+<p>Later on, a Haskell wizard will act all puzzled and amused that you found monads hard to understand. This will lower your self-esteem so low you consider giving up entirely and becoming a farmer instead. They will go on to tell you that you&rsquo;ve been using monads the whole time in whatever programming language you like. They will explain how this is so and you will not be enlightened. It&rsquo;ll sound all too convenient, just a bunch of semantic drivel.</p>
 
-<p>The reason so many of us have such a frustrating initial experience with Haskell is that most of the books on the subject are appallingly badly written. Programming books are in general a complete shambles and very few are useful to anyone who isn't already pretty hot at the whole thing anyway. If you were lucky enough to find a well-written helpful introduction to Haskell (there are some), then you might not be feeling this way. Also if you were born a Haskell wizard, this will sound like complete gobbledegook to you. But then you're not really human now are you? Admit it.</p>
+<p>The reason so many of us have such a frustrating initial experience with Haskell is that most of the books on the subject are appallingly badly written. Programming books are in general a complete shambles and very few are useful to anyone who isn&rsquo;t already pretty hot at the whole thing anyway. If you were lucky enough to find a well-written helpful introduction to Haskell (there are some), then you might not be feeling this way. Also if you were born a Haskell wizard, this will sound like complete gobbledegook to you. But then you&rsquo;re not really human now are you? Admit it.</p>
 
-<p>Anyway, I will be attending the <a href="http://www.meetup.com/hoodlums/">Haskell hoodlums meetup</a> this Thursday so hopefully I'll start understanding this thing. Don't give up people! Good luck.</p>
+<p>Anyway, I will be attending the <a href="http://www.meetup.com/hoodlums/">Haskell hoodlums meetup</a> this Thursday so hopefully I&rsquo;ll start understanding this thing. Don&rsquo;t give up people! Good luck.</p>
 ]]></content>
   </entry>
   

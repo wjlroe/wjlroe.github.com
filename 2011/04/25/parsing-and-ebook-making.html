@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Parsing and ebook making - William Roe&#146;s blog</title>
+  <title>Parsing and Ebook Making - William Roe&#146;s blog</title>
   <meta name="author" content="Will Roe">
 
   
@@ -21,10 +21,11 @@
   <link rel="canonical" href="http://blog.wjlr.org.uk/2011/04/25/parsing-and-ebook-making.html">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="William Roe&#146;s blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href='http://fonts.googleapis.com/css?family=Caudex:400,700,400italic,700italic&subset=latin,greek-ext,greek,latin-ext'
       rel='stylesheet' type='text/css'>
@@ -52,7 +53,6 @@
   <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-7810285-4']);
-    _gaq.push(['_setSiteSpeedSampleRate', 100]);
     _gaq.push(['_trackPageview']);
 
     (function() {
@@ -87,7 +87,7 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
 <article class="hentry" role="article">
   
   <header>
@@ -101,14 +101,7 @@
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2011-04-25T00:00:00+01:00" pubdate data-updated="true">Apr 25<span>th</span>, 2011</time>
+<time class='entry-date' datetime='2011-04-25'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -119,9 +112,9 @@
 
 <h2>Tables of contents</h2>
 
-<p>The table of contents was a bit strange. The Kindle&#8217;s mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains <code>&lt;navPoint&gt;</code> elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here&#8217;s an abridged version of the NCX file I had generated:</p>
+<p>The table of contents was a bit strange. The Kindle&rsquo;s mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains <code>&lt;navPoint&gt;</code> elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here&rsquo;s an abridged version of the NCX file I had generated:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -180,9 +173,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>There were obviously more chapters/books than that. The Kindle/mobi format doesn&#8217;t use this for the table of contents, so when you open a converted epub on a Kindle (or using the Kindle desktop software), the menu item to go to the table of contents is greyed out. After digging around on the web I discovered that the mobi format uses a toc file, which is basically an html file full of links. In order for that to work, you need to reference the toc file in the OPF file. Here&#8217;s an abbreviated version of the one I generated:</p>
+<p>There were obviously more chapters/books than that. The Kindle/mobi format doesn&rsquo;t use this for the table of contents, so when you open a converted epub on a Kindle (or using the Kindle desktop software), the menu item to go to the table of contents is greyed out. After digging around on the web I discovered that the mobi format uses a toc file, which is basically an html file full of links. In order for that to work, you need to reference the toc file in the OPF file. Here&rsquo;s an abbreviated version of the one I generated:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -253,9 +246,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The important bit there is the <code>&lt;reference&gt;</code> element inside <code>&lt;guide&gt;</code> that is of type &#8220;toc&#8221;. After that, the actual table of contents file is pretty straightforward:</p>
+<p>The important bit there is the <code>&lt;reference&gt;</code> element inside <code>&lt;guide&gt;</code> that is of type &ldquo;toc&rdquo;. After that, the actual table of contents file is pretty straightforward:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -296,29 +289,29 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>That&#8217;s just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.</p>
+<p>That&rsquo;s just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.</p>
 
 <h2>Encoding</h2>
 
-<p>I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don&#8217;t expect anyone to know what that is, I didn&#8217;t and it&#8217;s still just a character to me. But it looks like this:</p>
+<p>I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don&rsquo;t expect anyone to know what that is, I didn&rsquo;t and it&rsquo;s still just a character to me. But it looks like this:</p>
 
 <h1 class="greek">ΐ</h1>
 
 
 <p><aside class="post">
-<strong>Betacode</strong> is the ASCII language used by Perseus Digital library to represent Greek characters easily. It&#8217;s used in their opensource XML files (that I&#8217;ve used) and as a way to search Greek books (due to the unavailability of Ancient Greek keyboards). So <code>a)/ndra</code> becomes <code class="greek">ἄνδρα</code>.
+<strong>Betacode</strong> is the ASCII language used by Perseus Digital library to represent Greek characters easily. It&rsquo;s used in their opensource XML files (that I&rsquo;ve used) and as a way to search Greek books (due to the unavailability of Ancient Greek keyboards). So <code>a)/ndra</code> becomes <code class="greek">ἄνδρα</code>.
 </aside></p>
 
-<p>In betacode, this is written as <code>i/+</code>. Normally, the parser encodes the character <code>i</code>, then each diacritic in turn: <code>/</code>, then <code>+</code> into combining diacritics. This resulted in characters <code>0x03b9 0x0301 0x0308</code>, which would be normalized using Java&#8217;s Normalizer/normalize function as:</p>
+<p>In betacode, this is written as <code>i/+</code>. Normally, the parser encodes the character <code>i</code>, then each diacritic in turn: <code>/</code>, then <code>+</code> into combining diacritics. This resulted in characters <code>0x03b9 0x0301 0x0308</code>, which would be normalized using Java&rsquo;s Normalizer/normalize function as:</p>
 
 <h1 class="greek">ί̈</h1>
 
 
-<p>The frustrating thing is that it&#8217;s quite difficult to tell the difference on the terminal, when running tests - even when I&#8217;d bumped the font size up to crazy levels.</p>
+<p>The frustrating thing is that it&rsquo;s quite difficult to tell the difference on the terminal, when running tests - even when I&rsquo;d bumped the font size up to crazy levels.</p>
 
 <p>In order to match that symbol, I created the following rule:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">iota-dialytika-tonos</span>
@@ -327,16 +320,16 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then I&#8217;d redefined <code>character</code> to be:</p>
+<p>Then I&rsquo;d redefined <code>character</code> to be:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">character</span> <span class="p">(</span><span class="nf">alt</span> <span class="nv">iota-dialytika-tonos</span> <span class="nv">final-sigma</span> <span class="nv">upper-char</span> <span class="nv">lower-char</span><span class="p">))</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Which means that the rule <code>iota-dialytika-tonos</code> takes precedence over any other character (to prevent the dumb combining diacritic rules from matching it).</p>
 
-<p>And that brings me on to final sigma. Final sigma has given me quite a lot of pain, ever since I started building this parser. For those of you who don&#8217;t know Greek, like me, they have two sigma characters - one is used in the middle of a word:</p>
+<p>And that brings me on to final sigma. Final sigma has given me quite a lot of pain, ever since I started building this parser. For those of you who don&rsquo;t know Greek, like me, they have two sigma characters - one is used in the middle of a word:</p>
 
 <h1 class="greek">σ</h1>
 
@@ -346,9 +339,9 @@
 <h1 class="greek">ς</h1>
 
 
-<p>The problem with matching something at the end of a word is that fnparse&#8217;s matchers are mostly greedy. There&#8217;s no equivalent rule, as far as I can tell, to the regular expression <code>(.+)s</code>. The <code>rep+</code> rules always greedily gobble all the tokens, including the last <code>s</code>. At the moment, all I have is the following rule for final sigma:</p>
+<p>The problem with matching something at the end of a word is that fnparse&rsquo;s matchers are mostly greedy. There&rsquo;s no equivalent rule, as far as I can tell, to the regular expression <code>(.+)s</code>. The <code>rep+</code> rules always greedily gobble all the tokens, including the last <code>s</code>. At the moment, all I have is the following rule for final sigma:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">final-sigma</span> <span class="p">(</span><span class="nf">constant-semantics</span> <span class="p">(</span><span class="nf">lit-conc-seq</span> <span class="s">&quot;s &quot;</span> <span class="nv">lit</span><span class="p">)</span>
@@ -357,9 +350,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This isn&#8217;t ideal because it can&#8217;t match either the last <code>s</code> of the last word in a string (or line), or <code>s</code> followed only by a non-character (such as <code>:</code>). This is something I have to work on, but fnparse isn&#8217;t making it easy for me here.</p>
+<p>This isn&rsquo;t ideal because it can&rsquo;t match either the last <code>s</code> of the last word in a string (or line), or <code>s</code> followed only by a non-character (such as <code>:</code>). This is something I have to work on, but fnparse isn&rsquo;t making it easy for me here.</p>
 
-<p>So as a result of all that, here&#8217;s the first verse of the Odyssey by Homer:</p>
+<p>So as a result of all that, here&rsquo;s the first verse of the Odyssey by Homer:</p>
 
 <blockquote class="greek" style="font-style: normal">
 ἄνδρα μοι ἔννεπε, μοῦσα, πολύτροπον, ὃς μάλα πολλὰ<br/>
@@ -382,7 +375,7 @@
 <ul>
 <li><a href="http://github.com/joshua-choi/fnparse/">fnparse</a> which is awesome for taming parse-m monads in Clojure.</li>
 <li>Thanks to <a href="http://www.tlg.uci.edu/~opoudjis/unicode/gkdiacritics.html">Greek Diacritics</a> for information about combining diacritics.</li>
-<li><a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> Wikipedia&#8217;s writup on the EPUB standard is almost all you need.</li>
+<li><a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> Wikipedia&rsquo;s writup on the EPUB standard is almost all you need.</li>
 <li><a href="http://idpf.org/epub/20/spec/OPF_2.0.1_draft.htm">OPF</a> The OPF/NCX standard.</li>
 <li><a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0135">The Odyssey</a> From the Perseus Digital Library, the source for the XML files I have been consuming in this project.</li>
 </ul>
@@ -402,14 +395,7 @@
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2011-04-25T00:00:00+01:00" pubdate data-updated="true">Apr 25<span>th</span>, 2011</time>
+<time class='entry-date' datetime='2011-04-25'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>12:00 am</span></time>
       
 
 <span class="categories">
@@ -423,22 +409,21 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.wjlr.org.uk/2011/04/25/parsing-and-ebook-making.html" data-via="wjlroe" data-counturl="http://blog.wjlr.org.uk/2011/04/25/parsing-and-ebook-making.html" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.wjlr.org.uk/2011/04/25/parsing-and-ebook-making.html" data-via="wjlroe" data-counturl="http://blog.wjlr.org.uk/2011/04/25/parsing-and-ebook-making.html" >Tweet</a>
   
   
   
 </div>
 
     
-    <div class="meta pagination">
+    <p class="meta">
       
         <a class="basic-alignment left" href="/2010/11/05/nanowrimo-begins.html" title="Previous Post: NaNoWriMo begins">&laquo; NaNoWriMo begins</a>
       
-      <a class="archives" href="/blog/archives">Blog Archives</a>
       
         <a class="basic-alignment right" href="/2011/05/02/install-natty-sony-vaio-vpc-y21.html" title="Next Post: How to install Ubuntu Natty on the Sony Vaio VPC Y21 S1E">How to install Ubuntu Natty on the Sony Vaio VPC Y21 S1E &raquo;</a>
       
-    </div>
+    </p>
   </footer>
 </article>
 
@@ -467,8 +452,15 @@
 
 
 
-  <a href="https://twitter.com/share" class="twitter-share-button" data-via="wjlroe" data-dnt="true">Tweet</a>
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
 
 
 

@@ -23,10 +23,11 @@ using core.logic. &hellip;">
   <link rel="canonical" href="http://blog.wjlr.org.uk/index.html">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="William Roe&#146;s blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href='http://fonts.googleapis.com/css?family=Caudex:400,700,400italic,700italic&subset=latin,greek-ext,greek,latin-ext'
       rel='stylesheet' type='text/css'>
@@ -54,7 +55,6 @@ using core.logic. &hellip;">
   <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-7810285-4']);
-    _gaq.push(['_setSiteSpeedSampleRate', 100]);
     _gaq.push(['_trackPageview']);
 
     (function() {
@@ -106,14 +106,7 @@ using core.logic. &hellip;">
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2014-12-28T19:04:00+00:00" pubdate data-updated="true">Dec 28<span>th</span>, 2014</time>
+<time class='entry-date' datetime='2014-12-28T19:04:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:04 pm</span></time>
         
       </p>
     
@@ -123,20 +116,20 @@ using core.logic. &hellip;">
   <div class="entry-content"><p>Logic programming is an odd beast. As I lounged around over the
 holidays I tried to work out how to write a Secret Santa algorithm
 using core.logic. It seemed like the obvious choice but I quickly
-realised I&#8217;d bitten off more than I could chew.</p>
+realised I&rsquo;d bitten off more than I could chew.</p>
 
 <h2>Simple Secret Santa</h2>
 
 <p>Your common or garden Secret Santa consists of putting names in a hat
-and picking them out again, ensuring you don&#8217;t pick yourself. Suitable
+and picking them out again, ensuring you don&rsquo;t pick yourself. Suitable
 for offices and other groups of awkward strangers and acquaintances.</p>
 
-<p>We need <code>core.logic</code> imported, so here&#8217;s the namespace declaration
+<p>We need <code>core.logic</code> imported, so here&rsquo;s the namespace declaration
 (note that both <code>clojure.core</code> and <code>clojure.core.logic</code> define <code>==</code>
 for totally different purposes. I have never used <code>clojure.core/==</code> so
-I&#8217;m a bit hazy as to what it&#8217;s for - we exclude it so they don&#8217;t clash):</p>
+I&rsquo;m a bit hazy as to what it&rsquo;s for - we exclude it so they don&rsquo;t clash):</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -147,14 +140,14 @@ I&#8217;m a bit hazy as to what it&#8217;s for - we exclude it so they don&#8217
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>We&#8217;ll start by defining a relation:</p>
+<p>We&rsquo;ll start by defining a relation:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">db-rel</span> <span class="nv">santa</span> <span class="nv">p</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This is so that we can constrain values to only those names we&#8217;ve
+<p>This is so that we can constrain values to only those names we&rsquo;ve
 defined are santas (otherwise you get weird logic variables and nobody
 wants to deal with that noise).</p>
 
@@ -163,7 +156,7 @@ wants to deal with that noise).</p>
 after exchanging presents) and returns a list of lists. Each inner
 list is a pair of giver and receiver of presents.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -202,14 +195,14 @@ list is a pair of giver and receiver of presents.</p>
 
 <p>If we call it thus:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">simple-secret-santa</span> <span class="p">[</span><span class="s">&quot;Tommen&quot;</span> <span class="s">&quot;Gregor&quot;</span> <span class="s">&quot;Daenerys&quot;</span> <span class="s">&quot;Arya&quot;</span><span class="p">])</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Then we should get the following as a result:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -226,7 +219,7 @@ in this kind of tomfoolery.</p>
 
 <p>We need a helper function for pairing people up now:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -245,26 +238,26 @@ in this kind of tomfoolery.</p>
 
 <p>The mind-bending nature of that function can be rather confusing. In
 core.logic (as with <a href="http://minikanren.org">miniKanren</a> and others),
-it&#8217;s common for an &#8220;output
-value&#8221; to be one of the parameters, in this case the 3rd parameter
+it&rsquo;s common for an &ldquo;output
+value&rdquo; to be one of the parameters, in this case the 3rd parameter
 (<code>pairs</code>). This function defines a relationship between the parameters
-provided so you can call it with <code>givers</code> and <code>pairs</code> and it&#8217;ll fill
+provided so you can call it with <code>givers</code> and <code>pairs</code> and it&rsquo;ll fill
 in the blanks for the <code>receivers</code> value (effectively unzipping the
 <code>pairs</code> value), which is pretty neat.</p>
 
 <h3>Unify what?</h3>
 
-<p>It&#8217;s crucial to understand the <code>clojure.core.logic/==</code> unification
+<p>It&rsquo;s crucial to understand the <code>clojure.core.logic/==</code> unification
 function to understand how any of this works. It looks like an
 equality test from one of those other programming languages we shall
-not mention here, but it isn&#8217;t like that. Sometimes I thought of it as
-a kind of wishful-thinking-equality - a sort of &#8220;wouldn&#8217;t it be just
-lovely if these things were the same&#8221;.</p>
+not mention here, but it isn&rsquo;t like that. Sometimes I thought of it as
+a kind of wishful-thinking-equality - a sort of &ldquo;wouldn&rsquo;t it be just
+lovely if these things were the same&rdquo;.</p>
 
 <p>Taking an example from
 <a href="https://github.com/clojure/core.logic/wiki/A-Core.logic-Primer">the core.logic wiki</a>:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -281,8 +274,8 @@ lovely if these things were the same&#8221;.</p>
 (the output variable). We start using a new logic variable <code>a</code> which
 we unify with <code>q</code> using the <code>==</code> unification function. That is to say,
 all solutions must satisfy the equation <code>a = q</code>, they must have the
-same value. Core.logic tends to add &#8216;o&#8217; to the end of common function
-names so <code>(membero a [1 2 3])</code> isn&#8217;t a boolean predicate function for
+same value. Core.logic tends to add &lsquo;o&rsquo; to the end of common function
+names so <code>(membero a [1 2 3])</code> isn&rsquo;t a boolean predicate function for
 testing for list membership, it attempts to make that statement true.
 With simply that statement - <code>a</code> can be 1 or 2 or 3. The next line
 asserts that <code>q</code> is a member of the list <code>[3 4 5]</code> so its value can be
@@ -293,10 +286,10 @@ a list of all possible solutions so in fact we will get a single
 element list: <code>(3)</code> as the result from that code.</p>
 
 <p>The input of our Secret Santa function will be a list of names
-(strings), so it&#8217;d be useful to turn that list of names into a
+(strings), so it&rsquo;d be useful to turn that list of names into a
 database that we can constrain our logic functions on:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">coll-&gt;db</span>
@@ -313,9 +306,9 @@ arg1 arg2 arg3)</code></p>
 
 <h3>How does it work again?</h3>
 
-<p>Let&#8217;s concentrate on the core part of the function:</p>
+<p>Let&rsquo;s concentrate on the core part of the function:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -336,11 +329,11 @@ arg1 arg2 arg3)</code></p>
 collection is a santa and every item in the <code>receivers</code> collection is
 a santa (lines 3 and 4). This ensures that those collections contain
 only valid santa names and not logic variables or numbers or anything
-else. There&#8217;s something subtle about this - it&#8217;s not simply an
+else. There&rsquo;s something subtle about this - it&rsquo;s not simply an
 assertion. core.logic will make those statements true in every way
 they can. One possible version of that (assuming there were 4 names
 input to the function) is that <code>givers =
-["Arya" "Arya" "Arya" "Arya"]</code>. That&#8217;s nonsensical for our purposes
+["Arya" "Arya" "Arya" "Arya"]</code>. That&rsquo;s nonsensical for our purposes
 (remember we mean to zip up these collections so the first giver is
 giving to the first receiver, the 2nd giver to the 2nd receiver and so
 on). So then we ensure that the collection of givers has distinct
@@ -348,7 +341,7 @@ elements in it (line 5), saying the same about receivers on line 6. If
 you imagine core.logic has assembled all the combinations of values
 that are santas first - imagine now it throws away any where values
 repeat. One of the remaining values for <code>givers</code> will be
-[&#8220;Arya&#8221; &#8220;Gregor&#8221; &#8220;Tommen&#8221; &#8220;Daenerys&#8221;]. There will be more. How many?</p>
+[&ldquo;Arya&rdquo; &ldquo;Gregor&rdquo; &ldquo;Tommen&rdquo; &ldquo;Daenerys&rdquo;]. There will be more. How many?</p>
 
 <h3>Derangements, subfactorials, oh my!</h3>
 
@@ -362,7 +355,7 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 
 <p>Here is some clojure that calculates that:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -386,7 +379,7 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 <p>This algorithm is primarily useful for checking your results in unit
 tests for example. Another way to use it is as the parameter to
 <code>run</code> - you can ask for all the possible derangements of friends. I
-didn&#8217;t have much luck with that because I misunderstood the values
+didn&rsquo;t have much luck with that because I misunderstood the values
 that my logic code was producing, also there is no need to know
 beforehand how many combinations are possible since you only want one.</p>
 
@@ -396,19 +389,19 @@ beforehand how many combinations are possible since you only want one.</p>
 relationship between the gift giver and receiver as a binary - allowed
 or not. It would be useful to be able to first attempt to solve the
 problem under ideal conditions before falling back to less and less
-ideal solutions. For example, it&#8217;s not ideal to have people paired up
-symmetrically - it&#8217;s just a bit boring that way. It&#8217;s more optimal to
+ideal solutions. For example, it&rsquo;s not ideal to have people paired up
+symmetrically - it&rsquo;s just a bit boring that way. It&rsquo;s more optimal to
 assign Santas in a circle, which makes it slightly more difficult to
-identify who&#8217;s assigned who.</p>
+identify who&rsquo;s assigned who.</p>
 
 <p>Finding all possible solutions is extremely slow in core.logic (at
-least, the way I&#8217;ve written it) so this could do with a fair amount of
+least, the way I&rsquo;ve written it) so this could do with a fair amount of
 optimisation.</p>
 
 <p>I punted the problem of picking a solution out of possible solutions
 to the combination of <code>(map sort)</code>, <code>distinct</code> and <code>rand-nth</code>. This
-isn&#8217;t really necessary, I could have told core.logic what constitutes
-a distinct solution (it doesn&#8217;t realise that order of pairings doesn&#8217;t
+isn&rsquo;t really necessary, I could have told core.logic what constitutes
+a distinct solution (it doesn&rsquo;t realise that order of pairings doesn&rsquo;t
 matter) and then simply picked one. My brain hurt so much by that
 point that I decided to call it a day and move on to more interesting
 problems, like</p>
@@ -417,16 +410,16 @@ problems, like</p>
 
 <p>I had a great deal of difficulty writing the <code>pairupo</code> function,
 largely because all the various <code>defne</code>/<code>defnu</code>/<code>defna</code> confused me -
-I still couldn&#8217;t tell you what they do. This was partly due to me
+I still couldn&rsquo;t tell you what they do. This was partly due to me
 moving from a real problem (Secret Santa) to the implementation in
 core.logic on the basis of sketchy logic programming knowledge, so I
 missed a lot of subtlety related to <code>conde</code> which is crucial for
 understanding this stuff. The official documentaion for core.logic is
 extremely sparse also, you are very much on your own if the problem
-you want to solve isn&#8217;t Sudoku or the Typed Lambda Calculus (it
+you want to solve isn&rsquo;t Sudoku or the Typed Lambda Calculus (it
 boggles my mind that that is on the
 <a href="https://github.com/clojure/core.logic/wiki/Examples">Examples</a>
-wiki page, I&#8217;m not sure if the intention is to educate or
+wiki page, I&rsquo;m not sure if the intention is to educate or
 obfuscate there).</p>
 
 <p>I hope that a bit more blogging from mere mortals like myself might
@@ -452,51 +445,44 @@ help others grok this mind-mending area of programming.</p>
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2014-12-08T20:01:00+00:00" pubdate data-updated="true">Dec 8<span>th</span>, 2014</time>
+<time class='entry-date' datetime='2014-12-08T20:01:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:01 pm</span></time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>On the weekend of 6th December 2014, I participated in <a href="http://ludumdare.com/compo/">Ludum Dare</a> 31. The theme was &#8220;Entire Game on One Screen&#8221;. I didn&#8217;t finish my game and didn&#8217;t hand anything in. This is the 3rd(?) time I&#8217;ve started but not finished a Ludum Dare game in recent years. The first time I participated in Ludum Dare, I completed a game and handed it in for the competition (48 hours), so I&#8217;m curious as to what has been holding me back since then.</p>
+  <div class="entry-content"><p>On the weekend of 6th December 2014, I participated in <a href="http://ludumdare.com/compo/">Ludum Dare</a> 31. The theme was &ldquo;Entire Game on One Screen&rdquo;. I didn&rsquo;t finish my game and didn&rsquo;t hand anything in. This is the 3rd(?) time I&rsquo;ve started but not finished a Ludum Dare game in recent years. The first time I participated in Ludum Dare, I completed a game and handed it in for the competition (48 hours), so I&rsquo;m curious as to what has been holding me back since then.</p>
 
 <p><img src="/images/robot-scene.png" width="100%" class="pixel-art"></p>
 
 <h2>Lack of planning</h2>
 
-<p>It was only after Ludum Dare was completed and I filled in a <a href="http://trello.com">Trello</a> board with the tasks necessary to complete my game that I realised the immensity of the project. I was reading <a href="https://twitter.com/amyhoy">Amy Hoy&#8217;s</a> new book <a href="https://unicornfree.com/just-fucking-ship">Just Fucking Ship</a> and it emphasises working backwards from a goal to a set of tasks that need to be done. Hoy also advocates <a href="http://en.wikipedia.org/wiki/Mise_en_place">Mise en place</a> style of working, which I&#8217;ve never identified as a <em>thing</em> before but it&#8217;s obvious in hindsight. Ludum Dare advice usually contains something about starting on paper, getting all the high-level details worked out before diving into code and that&#8217;s absolutely right. The other massive advantage of having a todo list (e.g. in Trello) is that it&#8217;s super easy to order the list of things in terms of what needs to be done and what is optional. Does it matter that the resolution is fixed at 800x600? Nope. But I&#8217;ve totally sunk hours/days into coding around the idea I need to have a scalable interface on the web for my games (and it&#8217;s always really painful).</p>
+<p>It was only after Ludum Dare was completed and I filled in a <a href="http://trello.com">Trello</a> board with the tasks necessary to complete my game that I realised the immensity of the project. I was reading <a href="https://twitter.com/amyhoy">Amy Hoy&rsquo;s</a> new book <a href="https://unicornfree.com/just-fucking-ship">Just Fucking Ship</a> and it emphasises working backwards from a goal to a set of tasks that need to be done. Hoy also advocates <a href="http://en.wikipedia.org/wiki/Mise_en_place">Mise en place</a> style of working, which I&rsquo;ve never identified as a <em>thing</em> before but it&rsquo;s obvious in hindsight. Ludum Dare advice usually contains something about starting on paper, getting all the high-level details worked out before diving into code and that&rsquo;s absolutely right. The other massive advantage of having a todo list (e.g. in Trello) is that it&rsquo;s super easy to order the list of things in terms of what needs to be done and what is optional. Does it matter that the resolution is fixed at 800x600? Nope. But I&rsquo;ve totally sunk hours/days into coding around the idea I need to have a scalable interface on the web for my games (and it&rsquo;s always really painful).</p>
 
 <p><img src="/images/Elm_Editor_Mario.png" width="100%"></p>
 
-<p>Case in point - this Ludum Dare, I decided to use <a href="http://elm-lang.org">Elm</a>, which was entirely new to me. The conventional wisdom has it that one should never learn tools while participating in Ludum Dare, just use whatever you have at hand (i.e. programming languages/IDEs/libraries etc. that you have used extensively before). I only make games during Ludum Dare though and I&#8217;ve never reached a level of proficiency with gamedev that I feel leaves me with a default technology choice, so I used a new thing. However, this time round, using Elm, the web game ends up getting drawn using the 2D canvas and image elements positioned on top of it basically. You can&#8217;t control a lot of how Elm does any of this and there was a minor wrinkle - there&#8217;s no way to use CSS&#8217;s <a href="https://developer.mozilla.org/en/docs/Web/CSS/image-rendering">image-rendering</a> option to optimise for pixel art (crisp-edges is what you want - which is essentially nearest-neighbour scaling up/down). The result is you get blurry pixel art in your games and this sucks. It&#8217;s not at all a blocking problem for Ludum Dare games though and I feel silly for spending any more than 5 minutes on it.</p>
+<p>Case in point - this Ludum Dare, I decided to use <a href="http://elm-lang.org">Elm</a>, which was entirely new to me. The conventional wisdom has it that one should never learn tools while participating in Ludum Dare, just use whatever you have at hand (i.e. programming languages/IDEs/libraries etc. that you have used extensively before). I only make games during Ludum Dare though and I&rsquo;ve never reached a level of proficiency with gamedev that I feel leaves me with a default technology choice, so I used a new thing. However, this time round, using Elm, the web game ends up getting drawn using the 2D canvas and image elements positioned on top of it basically. You can&rsquo;t control a lot of how Elm does any of this and there was a minor wrinkle - there&rsquo;s no way to use CSS&rsquo;s <a href="https://developer.mozilla.org/en/docs/Web/CSS/image-rendering">image-rendering</a> option to optimise for pixel art (crisp-edges is what you want - which is essentially nearest-neighbour scaling up/down). The result is you get blurry pixel art in your games and this sucks. It&rsquo;s not at all a blocking problem for Ludum Dare games though and I feel silly for spending any more than 5 minutes on it.</p>
 
 <h2>Overly ambitious game design</h2>
 
-<p>I&#8217;m not a regular gamedev, this is something I do very occasionally. I&#8217;m a software engineer and therefore I completely and wildly underestimate the complexity and difficulty of programming tasks. Not to mention my total lack of ability to gauge time requirements. In the world of work, many of us software engineers avoid the near-impossible task of time estimation by using Agile-based practice and estimating complexity instead. It&#8217;s entirely based on teamwork and iteration of process and makes no sense for an individual working towards a goal on a deadline.</p>
+<p>I&rsquo;m not a regular gamedev, this is something I do very occasionally. I&rsquo;m a software engineer and therefore I completely and wildly underestimate the complexity and difficulty of programming tasks. Not to mention my total lack of ability to gauge time requirements. In the world of work, many of us software engineers avoid the near-impossible task of time estimation by using Agile-based practice and estimating complexity instead. It&rsquo;s entirely based on teamwork and iteration of process and makes no sense for an individual working towards a goal on a deadline.</p>
 
-<p>Aside: within the confines of Agile processes and teams, individuals can and do use more &#8220;traditional&#8221; time estimation and tracking tools to live up to their own expectations of themselves, so we do think &#8220;this will probably take half a day&#8221; but the discipline of working in an Agile team is never externalising that because it becomes an expectation and a commitment.</p>
+<p>Aside: within the confines of Agile processes and teams, individuals can and do use more &ldquo;traditional&rdquo; time estimation and tracking tools to live up to their own expectations of themselves, so we do think &ldquo;this will probably take half a day&rdquo; but the discipline of working in an Agile team is never externalising that because it becomes an expectation and a commitment.</p>
 
-<p>All my weaknesses as a software engineer aside, I made the fundamental error of dreaming up a cool game that was not within my reach of a 48 hour deadline. This is a completely avoidable self-imposed problem. The solution seems to be, sketch out the game in its entirety - all the objects in the game, all the components and all the behaviour. Make sure you have all the artwork at least approximated (I did this in Paper on the iPad because I could doddle on that while watching TV and it didn&#8217;t even feel like work). At this point you can identify elements that can be left out - think &#8220;what could I postpone if I was forced to launch this in an hour?&#8221; - or some other mind trick to force yourself to be ruthless with the scope of your game. One advantage of sketching everything on paper or in Paper on an iPad is that if time gets really tight and you don&#8217;t have super great pixel artwork ready - just chop up/scan in/photograph the sketches and use them as your assets. There will be people playing your game who think the hand-drawn nature of the artwork was a stylistic choice you made from the beginning and you know you ran out of time.</p>
+<p>All my weaknesses as a software engineer aside, I made the fundamental error of dreaming up a cool game that was not within my reach of a 48 hour deadline. This is a completely avoidable self-imposed problem. The solution seems to be, sketch out the game in its entirety - all the objects in the game, all the components and all the behaviour. Make sure you have all the artwork at least approximated (I did this in Paper on the iPad because I could doddle on that while watching TV and it didn&rsquo;t even feel like work). At this point you can identify elements that can be left out - think &ldquo;what could I postpone if I was forced to launch this in an hour?&rdquo; - or some other mind trick to force yourself to be ruthless with the scope of your game. One advantage of sketching everything on paper or in Paper on an iPad is that if time gets really tight and you don&rsquo;t have super great pixel artwork ready - just chop up/scan in/photograph the sketches and use them as your assets. There will be people playing your game who think the hand-drawn nature of the artwork was a stylistic choice you made from the beginning and you know you ran out of time.</p>
 
 <p><img src="/images/sketching-onescreen.png" width="100%"></p>
 
 <h2>Onwards</h2>
 
-<p>So now I have a Trello board that makes it embarrassingly clear how unrealistic my game was for a 48 hour competition - where do I go from here? I think the best answer to that is to carry on with it, attack each task in the list and then realise the game is done (that sounds obvious but it&#8217;s impossible to realise when you&#8217;re ready to ship something unless you define up-front what you actually want to ship).</p>
+<p>So now I have a Trello board that makes it embarrassingly clear how unrealistic my game was for a 48 hour competition - where do I go from here? I think the best answer to that is to carry on with it, attack each task in the list and then realise the game is done (that sounds obvious but it&rsquo;s impossible to realise when you&rsquo;re ready to ship something unless you define up-front what you actually want to ship).</p>
 
-<p>In Agile circles, we talk a bit about what it means to be Done. The &#8220;definition of done&#8221;, which can sound rather alien to somebody who&#8217;s not familiar with specifying that concretely. It&#8217;s essential to working progress otherwise you end up with tasks that linger on for days and weeks because they are quite simply never finished. Those aren&#8217;t tasks, they&#8217;re a waking nightmare. Sometimes there is no definition of done. This blog post doesn&#8217;t have a definition of done because I made an agreement with myself that I would write until I felt hungry then I would order some food. In Agile that&#8217;s usually called time-boxing and it usually isn&#8217;t hunger-based but might as well be. &#8220;Let&#8217;s time-box this for an hour&#8221; is a common phrase in Agile teams. It&#8217;s how you manage investigation tasks (otherwise they go on forever). We all need more, clearer definitions of done.</p>
+<p>In Agile circles, we talk a bit about what it means to be Done. The &ldquo;definition of done&rdquo;, which can sound rather alien to somebody who&rsquo;s not familiar with specifying that concretely. It&rsquo;s essential to working progress otherwise you end up with tasks that linger on for days and weeks because they are quite simply never finished. Those aren&rsquo;t tasks, they&rsquo;re a waking nightmare. Sometimes there is no definition of done. This blog post doesn&rsquo;t have a definition of done because I made an agreement with myself that I would write until I felt hungry then I would order some food. In Agile that&rsquo;s usually called time-boxing and it usually isn&rsquo;t hunger-based but might as well be. &ldquo;Let&rsquo;s time-box this for an hour&rdquo; is a common phrase in Agile teams. It&rsquo;s how you manage investigation tasks (otherwise they go on forever). We all need more, clearer definitions of done.</p>
 
 <p><img src="/images/hunger-box.png" width="100%"></p>
 
-<p>So Ludum Dare is over. I&#8217;m done with this blog post. I have plenty to practice and improve before next Ludum Dare and with any luck I&#8217;ll ship a game next time.</p>
+<p>So Ludum Dare is over. I&rsquo;m done with this blog post. I have plenty to practice and improve before next Ludum Dare and with any luck I&rsquo;ll ship a game next time.</p>
 </div>
   
   
@@ -518,14 +504,7 @@ help others grok this mind-mending area of programming.</p>
 
 
 
-
-
-
-
-  
-
-
-<time datetime="2014-03-27T12:58:00+00:00" pubdate data-updated="true">Mar 27<span>th</span>, 2014</time>
+<time class='entry-date' datetime='2014-03-27T12:58:00+00:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:58 pm</span></time>
         
       </p>
     
@@ -533,7 +512,7 @@ help others grok this mind-mending area of programming.</p>
 
 
   <div class="entry-content"><p>JSON is a fairly easy to read format but sometimes you need to deal with an
-unreadable dump of the stuff and it&#8217;d be useful to quickly reformat or prettify
+unreadable dump of the stuff and it&rsquo;d be useful to quickly reformat or prettify
 it. There are a number of ways to do this.</p>
 
 <h2>Javascript (Chrome, Firefox etc.)</h2>
@@ -543,7 +522,7 @@ it. There are a number of ways to do this.</p>
 function, which can pretty-print JSON according to the number of spaces you
 pass as the 3rd parameter. For example:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">example</span> <span class="o">=</span> <span class="p">{</span><span class="nx">user</span><span class="o">:</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Ada Lovelace&quot;</span><span class="p">,</span> <span class="nx">email</span><span class="o">:</span> <span class="s2">&quot;ada@example.com&quot;</span><span class="p">},</span> <span class="nx">group</span><span class="o">:</span> <span class="s2">&quot;programmers&quot;</span><span class="p">}</span>
 </span><span class='line'><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">example</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
@@ -571,7 +550,7 @@ should see this:</p>
 
 <h2>json_reformat</h2>
 
-<p>That&#8217;s all well and good, but relying on a javascript console is not the most
+<p>That&rsquo;s all well and good, but relying on a javascript console is not the most
 efficient way to do things, so an easier and more scritable tool is the
 json_reformat command (part of the <a href="http://lloyd.github.io/yajl/">Yajl</a>).
 To get this tool installed, do the following:</p>
@@ -586,29 +565,29 @@ To get this tool installed, do the following:</p>
 it to standard output. This makes it very useful for use in other tools, such as
 vim. Here is some vim config for using <code>json_reformat</code>:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">au</span> <span class="nb">BufRead</span><span class="p">,</span><span class="nb">BufNewFile</span> *.json <span class="k">set</span> <span class="k">filetype</span><span class="p">=</span>json
 </span><span class='line'><span class="k">au</span> <span class="nb">FileType</span> json <span class="k">setlocal</span> <span class="nb">equalprg</span><span class="p">=</span>json_reformat
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now let&#8217;s edit a file that was generated by <a href="http://berkshelf.com">Berkshelf</a>
+<p>Now let&rsquo;s edit a file that was generated by <a href="http://berkshelf.com">Berkshelf</a>
 and has been spat out on the filesystem in <code>~/.berkshelf/config.json</code>. Initially
 it looks like this:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span><span class="nt">&quot;chef&quot;</span><span class="p">:{</span><span class="nt">&quot;chef_server_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://api.opscode.com/organizations/acmecorp&quot;</span><span class="p">,</span><span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span><span class="s2">&quot;acmecorp-validator&quot;</span><span class="p">,</span><span class="nt">&quot;validation_key_path&quot;</span><span class="p">:</span><span class="s2">&quot;/Users/ada/Work/.chef/acmecorp-validator.pem&quot;</span><span class="p">,</span><span class="nt">&quot;client_key&quot;</span><span class="p">:</span><span class="s2">&quot;/Users/ada/Work/.chef/ada.pem&quot;</span><span class="p">,</span><span class="nt">&quot;node_name&quot;</span><span class="p">:</span><span class="s2">&quot;ada&quot;</span><span class="p">},</span><span class="nt">&quot;cookbook&quot;</span><span class="p">:{</span><span class="nt">&quot;copyright&quot;</span><span class="p">:</span><span class="s2">&quot;Ada Lovelace&quot;</span><span class="p">,</span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;ada@example.com&quot;</span><span class="p">,</span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="s2">&quot;MIT&quot;</span><span class="p">},</span><span class="nt">&quot;allowed_licenses&quot;</span><span class="p">:[],</span><span class="nt">&quot;raise_license_exception&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">&quot;vagrant&quot;</span><span class="p">:{</span><span class="nt">&quot;vm&quot;</span><span class="p">:{</span><span class="nt">&quot;box&quot;</span><span class="p">:</span><span class="s2">&quot;Berkshelf-CentOS-6.3-x86_64-minimal&quot;</span><span class="p">,</span><span class="nt">&quot;box_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box&quot;</span><span class="p">,</span><span class="nt">&quot;forward_port&quot;</span><span class="p">:{},</span><span class="nt">&quot;network&quot;</span><span class="p">:{</span><span class="nt">&quot;bridged&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">&quot;hostonly&quot;</span><span class="p">:</span><span class="s2">&quot;33.33.33.10&quot;</span><span class="p">},</span><span class="nt">&quot;provision&quot;</span><span class="p">:</span><span class="s2">&quot;chef_solo&quot;</span><span class="p">}},</span><span class="nt">&quot;ssl&quot;</span><span class="p">:{</span><span class="nt">&quot;verify&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">}}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>This passive-aggressive attempt by the machines to subjugate us humans just will
 not stand and thankfully we have the tools to take back control of our JSON
-configs. Position the cursor anywhere on the single line of JSON and press &#8216;==&#8217;,
+configs. Position the cursor anywhere on the single line of JSON and press &lsquo;==&rsquo;,
 vim will pipe the buffer to <code>json_reformat</code> and replace it with the output of
 that command resulting in this:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -693,7 +672,7 @@ pretty-printing JSON, there are so many more.</p>
   
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+      <a class="prev" href="/page2">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -721,8 +700,15 @@ pretty-printing JSON, there are so many more.</p>
 
 
 
-  <a href="https://twitter.com/share" class="twitter-share-button" data-via="wjlroe" data-dnt="true">Tweet</a>
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
 
 
 

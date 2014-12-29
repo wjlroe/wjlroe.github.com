@@ -1,116 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Secret Santa in core.logic - William Roe&#146;s blog</title>
-  <meta name="author" content="Will Roe">
-
-  
-  <meta name="description" content="Logic programming is an odd beast. As I lounged around over the
-holidays I tried to work out how to write a Secret Santa algorithm
-using core.logic. &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://blog.wjlr.org.uk/2014/12/28/secret-santa-logic.html">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="William Roe&#146;s blog" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=Caudex:400,700,400italic,700italic&subset=latin,greek-ext,greek,latin-ext'
-      rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="//use.typekit.net/ntz0pdz.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
-<!-- For iPhone 6 Plus with @3× display: -->
-<link rel="apple-touch-icon-precomposed" sizes="180x180" href="/images/apple-touch-icon-180x180-precomposed.png">
-<!-- For iPad with @2× display running iOS ≥ 7: -->
-<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/apple-touch-icon-152x152-precomposed.png">
-<!-- For iPad with @2× display running iOS ≤ 6: -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
-<!-- For iPhone with @2× display running iOS ≥ 7: -->
-<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/apple-touch-icon-120x120-precomposed.png">
-<!-- For iPhone with @2× display running iOS ≤ 6: -->
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
-<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≥ 7: -->
-<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/apple-touch-icon-76x76-precomposed.png">
-<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≤ 6: -->
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
-<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
-<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-57x57-precomposed.png"><!-- 57×57px -->
-
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-7810285-4']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-</head>
-
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">William Roe&#146;s blog</a></h1>
-  
-    <h2>A variety of geekery</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
+  <title><![CDATA[Category: core.logic | William Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/core-dot-logic/atom.xml" rel="self"/>
+  <link href="http://blog.wjlr.org.uk/"/>
+  <updated>2014-12-29T15:43:23+00:00</updated>
+  <id>http://blog.wjlr.org.uk/</id>
+  <author>
+    <name><![CDATA[Will Roe]]></name>
     
-      <h1 class="entry-title">Secret Santa in core.logic</h1>
-    
-    
-      <p class="meta">
-        
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
-
-
-
-<time class='entry-date' datetime='2014-12-28T19:04:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:04 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>Logic programming is an odd beast. As I lounged around over the
+  
+  <entry>
+    <title type="html"><![CDATA[Secret Santa in core.logic]]></title>
+    <link href="http://blog.wjlr.org.uk/2014/12/28/secret-santa-logic.html"/>
+    <updated>2014-12-28T19:04:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2014/12/28/secret-santa-logic</id>
+    <content type="html"><![CDATA[<p>Logic programming is an odd beast. As I lounged around over the
 holidays I tried to work out how to write a Secret Santa algorithm
 using core.logic. It seemed like the obvious choice but I quickly
 realised I&rsquo;d bitten off more than I could chew.</p>
@@ -126,7 +34,7 @@ for offices and other groups of awkward strangers and acquaintances.</p>
 for totally different purposes. I have never used <code>clojure.core/==</code> so
 I&rsquo;m a bit hazy as to what it&rsquo;s for - we exclude it so they don&rsquo;t clash):</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -134,15 +42,13 @@ I&rsquo;m a bit hazy as to what it&rsquo;s for - we exclude it so they don&rsquo
 </span><span class='line'>  <span class="p">(</span><span class="ss">:refer-clojure</span> <span class="ss">:exclude</span> <span class="p">[</span><span class="nv">==</span><span class="p">])</span>
 </span><span class='line'>  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.core.logic</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">]</span>
 </span><span class='line'>            <span class="p">[</span><span class="nv">clojure.core.logic.pldb</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">]))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>We&rsquo;ll start by defining a relation:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">db-rel</span> <span class="nv">santa</span> <span class="nv">p</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>This is so that we can constrain values to only those names we&rsquo;ve
 defined are santas (otherwise you get weird logic variables and nobody
@@ -153,7 +59,7 @@ wants to deal with that noise).</p>
 after exchanging presents) and returns a list of lists. Each inner
 list is a pair of giver and receiver of presents.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -187,28 +93,25 @@ list is a pair of giver and receiver of presents.</p>
 </span><span class='line'>      <span class="p">(</span><span class="nb">map </span><span class="nv">sort</span><span class="p">)</span>
 </span><span class='line'>      <span class="nv">distinct</span>
 </span><span class='line'>      <span class="nv">rand-nth</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>If we call it thus:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">simple-secret-santa</span> <span class="p">[</span><span class="s">&quot;Tommen&quot;</span> <span class="s">&quot;Gregor&quot;</span> <span class="s">&quot;Daenerys&quot;</span> <span class="s">&quot;Arya&quot;</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">simple-secret-santa</span> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Tommen&amp;rdquo; &amp;ldquo;Gregor&amp;rdquo; &amp;ldquo;Daenerys&amp;rdquo; &amp;ldquo;Arya&amp;rdquo;])</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Then we should get the following as a result:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">([</span><span class="s">&quot;Arya&quot;</span> <span class="s">&quot;Gregor&quot;</span><span class="p">]</span>
-</span><span class='line'> <span class="p">[</span><span class="s">&quot;Daenerys&quot;</span> <span class="s">&quot;Tommen&quot;</span><span class="p">]</span>
-</span><span class='line'> <span class="p">[</span><span class="s">&quot;Gregor&quot;</span> <span class="s">&quot;Daenerys&quot;</span><span class="p">]</span>
-</span><span class='line'> <span class="p">[</span><span class="s">&quot;Tommen&quot;</span> <span class="s">&quot;Arya&quot;</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">([</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Arya&amp;rdquo; &amp;ldquo;Gregor&amp;rdquo;]</span>
+</span><span class='line'> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Daenerys&amp;rdquo; &amp;ldquo;Tommen&amp;rdquo;]</span>
+</span><span class='line'> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Gregor&amp;rdquo; &amp;ldquo;Daenerys&amp;rdquo;]</span>
+</span><span class='line'> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Tommen&amp;rdquo; &amp;ldquo;Arya&amp;rdquo;])</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Please note my chronic lack of imagination evidenced by my lazily
 using characters from Game of Thrones who would likely not be involved
@@ -216,7 +119,7 @@ in this kind of tomfoolery.</p>
 
 <p>We need a helper function for pairing people up now:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -230,8 +133,7 @@ in this kind of tomfoolery.</p>
 </span><span class='line'>   <span class="p">(</span><span class="nf">!=</span> <span class="nv">g</span> <span class="nv">r</span><span class="p">)</span>
 </span><span class='line'>   <span class="p">(</span><span class="nb">== </span><span class="nv">p</span> <span class="p">[</span><span class="nv">g</span> <span class="nv">r</span><span class="p">])</span>
 </span><span class='line'>   <span class="p">(</span><span class="nf">pairupo</span> <span class="nv">gs</span> <span class="nv">rs</span> <span class="nv">ps</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>The mind-bending nature of that function can be rather confusing. In
 core.logic (as with <a href="http://minikanren.org">miniKanren</a> and others),
@@ -254,7 +156,7 @@ lovely if these things were the same&rdquo;.</p>
 <p>Taking an example from
 <a href="https://github.com/clojure/core.logic/wiki/A-Core.logic-Primer">the core.logic wiki</a>:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -264,8 +166,7 @@ lovely if these things were the same&rdquo;.</p>
 </span><span class='line'>    <span class="p">(</span><span class="nf">membero</span> <span class="nv">a</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
 </span><span class='line'>    <span class="p">(</span><span class="nf">membero</span> <span class="nv">q</span> <span class="p">[</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">])</span>
 </span><span class='line'>    <span class="p">(</span><span class="nb">== </span><span class="nv">a</span> <span class="nv">q</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>In the above we are asking core.logic for the possible values of <code>q</code>
 (the output variable). We start using a new logic variable <code>a</code> which
@@ -286,14 +187,13 @@ element list: <code>(3)</code> as the result from that code.</p>
 (strings), so it&rsquo;d be useful to turn that list of names into a
 database that we can constrain our logic functions on:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">coll-&gt;db</span>
 </span><span class='line'>  <span class="p">[</span><span class="nv">coll</span><span class="p">]</span>
 </span><span class='line'>  <span class="p">(</span><span class="nb">apply </span><span class="nv">db</span> <span class="nv">coll</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p><a href="http://crossclj.info/fun/clojure.core.logic.pldb/db.html"><code>clojure.core.logic.pldb/db</code></a> takes a variable number of parameters and
 returns a database with those facts contained. We want to call it with
@@ -305,7 +205,7 @@ arg1 arg2 arg3)</code></p>
 
 <p>Let&rsquo;s concentrate on the core part of the function:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -319,8 +219,7 @@ arg1 arg2 arg3)</code></p>
 </span><span class='line'>    <span class="p">(</span><span class="nf">distincto</span> <span class="nv">givers</span><span class="p">)</span>
 </span><span class='line'>    <span class="p">(</span><span class="nf">distincto</span> <span class="nv">receivers</span><span class="p">)</span>
 </span><span class='line'>    <span class="p">(</span><span class="nf">pairupo</span> <span class="nv">givers</span> <span class="nv">receivers</span> <span class="nv">q</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>We are asking for all the solutions where every item in the <code>givers</code>
 collection is a santa and every item in the <code>receivers</code> collection is
@@ -352,7 +251,7 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 
 <p>Here is some clojure that calculates that:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -362,7 +261,7 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">derangements</span>
-</span><span class='line'>  <span class="s">&quot;Calculate the number of derangements of n elements.&quot;</span>
+</span><span class='line'>  <span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Calculate the number of derangements of n elements.&amp;rdquo;</span>
 </span><span class='line'>  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">condp</span> <span class="nb">= </span><span class="nv">n</span>
 </span><span class='line'>    <span class="mi">0</span> <span class="mi">1</span>
@@ -370,8 +269,7 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 </span><span class='line'>    <span class="p">(</span><span class="nb">* </span><span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">)</span>
 </span><span class='line'>       <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">derangements</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">))</span>
 </span><span class='line'>          <span class="p">(</span><span class="nf">derangements</span> <span class="p">(</span><span class="nb">- </span><span class="nv">n</span> <span class="mi">2</span><span class="p">))))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>This algorithm is primarily useful for checking your results in unit
 tests for example. Another way to use it is as the parameter to
@@ -421,89 +319,7 @@ obfuscate there).</p>
 
 <p>I hope that a bit more blogging from mere mortals like myself might
 help others grok this mind-mending area of programming.</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
+]]></content>
+  </entry>
   
-
-<span class="byline author vcard">Posted by <span class="fn">Will Roe</span></span>
-
-      
-
-
-
-
-<time class='entry-date' datetime='2014-12-28T19:04:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:04 pm</span></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/clojure/'>clojure</a>, <a class='category' href='/blog/categories/core-dot-logic/'>core.logic</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.wjlr.org.uk/2014/12/28/secret-santa-logic.html" data-via="wjlroe" data-counturl="http://blog.wjlr.org.uk/2014/12/28/secret-santa-logic.html" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/2014/12/08/ludum-dare-31-postmortem.html" title="Previous Post: Ludum Dare 31 Postmortem">&laquo; Ludum Dare 31 Postmortem</a>
-      
-      
-    </p>
-  </footer>
-</article>
-
-</div>
-
-<aside class="sidebar">
-  
-    
-  
-</aside>
-
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2014 William Roe&#146;s blog &sect;
-  <span class="credit"> My life made easier by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
-</html>
+</feed>

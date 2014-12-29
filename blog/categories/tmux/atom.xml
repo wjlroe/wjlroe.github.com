@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tmux | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/tmux/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2014-12-28T19:05:00+00:00</updated>
+  <updated>2014-12-29T15:43:23+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -24,8 +24,8 @@ named windows like this:</p>
 
 <p><img src="http://d14vbe8lasdppi.cloudfront.net/01_02_2014_15_45.jpg" alt="" /></p>
 
-<p>This is because I've followed the awesome instructions from
-<a href="http://www.drbunsen.org/the-text-triumvirate/">Dr Bunsen's Text Triumvirate</a>
+<p>This is because I&rsquo;ve followed the awesome instructions from
+<a href="http://www.drbunsen.org/the-text-triumvirate/">Dr Bunsen&rsquo;s Text Triumvirate</a>
 and in order to have the tmux and system (OS X) clipboards interacting, it
 requires a hack called <code>reattach-to-user-namespace</code> which proxies the running of
 zsh in tmux.</p>

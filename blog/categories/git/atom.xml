@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2014-12-28T19:05:00+00:00</updated>
+  <updated>2014-12-29T15:43:23+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -25,7 +25,7 @@
 </code></pre>
 
 <p>I.e. <code>git</code> will ignore everything in that directory, however The Silver Searcher
-doesn't understand that and it'll still show matching lines from files in
+doesn&rsquo;t understand that and it&rsquo;ll still show matching lines from files in
 <code>log/</code>. For <code>git</code> and <code>ag</code> (The Silver Searcher) to both ignore that directory
 and its contents, change <code>/log</code> to <code>log</code>.</p>
 ]]></content>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clojure | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2014-12-28T19:05:00+00:00</updated>
+  <updated>2014-12-29T15:43:23+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -21,44 +21,36 @@
     <content type="html"><![CDATA[<p>Logic programming is an odd beast. As I lounged around over the
 holidays I tried to work out how to write a Secret Santa algorithm
 using core.logic. It seemed like the obvious choice but I quickly
-realised I'd bitten off more than I could chew.</p>
+realised I&rsquo;d bitten off more than I could chew.</p>
 
 <h2>Simple Secret Santa</h2>
 
 <p>Your common or garden Secret Santa consists of putting names in a hat
-and picking them out again, ensuring you don't pick yourself. Suitable
+and picking them out again, ensuring you don&rsquo;t pick yourself. Suitable
 for offices and other groups of awkward strangers and acquaintances.</p>
 
-<p>We need <code>core.logic</code> imported, so here's the namespace declaration
+<p>We need <code>core.logic</code> imported, so here&rsquo;s the namespace declaration
 (note that both <code>clojure.core</code> and <code>clojure.core.logic</code> define <code>==</code>
 for totally different purposes. I have never used <code>clojure.core/==</code> so
-I'm a bit hazy as to what it's for - we exclude it so they don't clash):</p>
+I&rsquo;m a bit hazy as to what it&rsquo;s for - we exclude it so they don&rsquo;t clash):</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">ns </span><span class="nv">secret-santa.core</span>
 </span><span class='line'>  <span class="p">(</span><span class="ss">:refer-clojure</span> <span class="ss">:exclude</span> <span class="p">[</span><span class="nv">==</span><span class="p">])</span>
-</span><span class='line'>  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.core.logic</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">]</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>        <span class="p">[</span><span class="nv">clojure.core.logic.pldb</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">]))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'>  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.core.logic</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">]</span>
+</span><span class='line'>            <span class="p">[</span><span class="nv">clojure.core.logic.pldb</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">]))</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p>We'll start by defining a relation:</p>
+<p>We&rsquo;ll start by defining a relation:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">db-rel</span> <span class="nv">santa</span> <span class="nv">p</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p>This is so that we can constrain values to only those names we've
+<p>This is so that we can constrain values to only those names we&rsquo;ve
 defined are santas (otherwise you get weird logic variables and nobody
 wants to deal with that noise).</p>
 
@@ -67,7 +59,7 @@ wants to deal with that noise).</p>
 after exchanging presents) and returns a list of lists. Each inner
 list is a pair of giver and receiver of presents.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -84,50 +76,42 @@ list is a pair of giver and receiver of presents.</p>
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">simple-secret-santa</span>
 </span><span class='line'>  <span class="p">[</span><span class="nv">friends</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">facts</span> <span class="p">(</span><span class="nf">coll-&gt;db</span> <span class="p">(</span><span class="nb">for </span><span class="p">[</span><span class="nv">friend</span> <span class="nv">friends</span><span class="p">]</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>                       <span class="p">[</span><span class="nv">santa</span> <span class="nv">friend</span><span class="p">]))</span>
-</span><span class='line'>    <span class="nv">num</span> <span class="p">(</span><span class="nb">count </span><span class="nv">friends</span><span class="p">)</span>
-</span><span class='line'>    <span class="nv">givers</span> <span class="p">(</span><span class="nf">repeatedly</span> <span class="nv">num</span> <span class="nv">lvar</span><span class="p">)</span>
-</span><span class='line'>    <span class="nv">receivers</span> <span class="p">(</span><span class="nf">repeatedly</span> <span class="nv">num</span> <span class="nv">lvar</span><span class="p">)]</span>
-</span><span class='line'><span class="p">(</span><span class="nf">-</span><span class="o">&amp;</span><span class="nv">gt</span><span class="c1">;&amp;gt; (with-db facts</span>
-</span><span class='line'>       <span class="p">(</span><span class="nf">run*</span> <span class="p">[</span><span class="nv">q</span><span class="p">]</span>
-</span><span class='line'>         <span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">givers</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">receivers</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">(</span><span class="nf">distincto</span> <span class="nv">givers</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">(</span><span class="nf">distincto</span> <span class="nv">receivers</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">(</span><span class="nf">pairupo</span> <span class="nv">givers</span> <span class="nv">receivers</span> <span class="nv">q</span><span class="p">)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">map </span><span class="nv">sort</span><span class="p">)</span>
-</span><span class='line'>  <span class="nv">distinct</span>
-</span><span class='line'>  <span class="nv">rand-nth</span><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">facts</span> <span class="p">(</span><span class="nf">coll-&gt;db</span> <span class="p">(</span><span class="nb">for </span><span class="p">[</span><span class="nv">friend</span> <span class="nv">friends</span><span class="p">]</span>
+</span><span class='line'>                           <span class="p">[</span><span class="nv">santa</span> <span class="nv">friend</span><span class="p">]))</span>
+</span><span class='line'>        <span class="nv">num</span> <span class="p">(</span><span class="nb">count </span><span class="nv">friends</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">givers</span> <span class="p">(</span><span class="nf">repeatedly</span> <span class="nv">num</span> <span class="nv">lvar</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">receivers</span> <span class="p">(</span><span class="nf">repeatedly</span> <span class="nv">num</span> <span class="nv">lvar</span><span class="p">)]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="p">(</span><span class="nf">with-db</span> <span class="nv">facts</span>
+</span><span class='line'>           <span class="p">(</span><span class="nf">run*</span> <span class="p">[</span><span class="nv">q</span><span class="p">]</span>
+</span><span class='line'>             <span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">givers</span><span class="p">)</span>
+</span><span class='line'>             <span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">receivers</span><span class="p">)</span>
+</span><span class='line'>             <span class="p">(</span><span class="nf">distincto</span> <span class="nv">givers</span><span class="p">)</span>
+</span><span class='line'>             <span class="p">(</span><span class="nf">distincto</span> <span class="nv">receivers</span><span class="p">)</span>
+</span><span class='line'>             <span class="p">(</span><span class="nf">pairupo</span> <span class="nv">givers</span> <span class="nv">receivers</span> <span class="nv">q</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">map </span><span class="nv">sort</span><span class="p">)</span>
+</span><span class='line'>      <span class="nv">distinct</span>
+</span><span class='line'>      <span class="nv">rand-nth</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>If we call it thus:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">simple-secret-santa</span> <span class="p">[</span><span class="s">&quot;Tommen&quot;</span> <span class="s">&quot;Gregor&quot;</span> <span class="s">&quot;Daenerys&quot;</span> <span class="s">&quot;Arya&quot;</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">simple-secret-santa</span> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Tommen&amp;rdquo; &amp;ldquo;Gregor&amp;rdquo; &amp;ldquo;Daenerys&amp;rdquo; &amp;ldquo;Arya&amp;rdquo;])</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Then we should get the following as a result:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">([</span><span class="s">&quot;Arya&quot;</span> <span class="s">&quot;Gregor&quot;</span><span class="p">]</span>
-</span><span class='line'> <span class="p">[</span><span class="s">&quot;Daenerys&quot;</span> <span class="s">&quot;Tommen&quot;</span><span class="p">]</span>
-</span><span class='line'> <span class="p">[</span><span class="s">&quot;Gregor&quot;</span> <span class="s">&quot;Daenerys&quot;</span><span class="p">]</span>
-</span><span class='line'> <span class="p">[</span><span class="s">&quot;Tommen&quot;</span> <span class="s">&quot;Arya&quot;</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">([</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Arya&amp;rdquo; &amp;ldquo;Gregor&amp;rdquo;]</span>
+</span><span class='line'> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Daenerys&amp;rdquo; &amp;ldquo;Tommen&amp;rdquo;]</span>
+</span><span class='line'> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Gregor&amp;rdquo; &amp;ldquo;Daenerys&amp;rdquo;]</span>
+</span><span class='line'> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Tommen&amp;rdquo; &amp;ldquo;Arya&amp;rdquo;])</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Please note my chronic lack of imagination evidenced by my lazily
 using characters from Game of Thrones who would likely not be involved
@@ -135,7 +119,7 @@ in this kind of tomfoolery.</p>
 
 <p>We need a helper function for pairing people up now:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -149,55 +133,47 @@ in this kind of tomfoolery.</p>
 </span><span class='line'>   <span class="p">(</span><span class="nf">!=</span> <span class="nv">g</span> <span class="nv">r</span><span class="p">)</span>
 </span><span class='line'>   <span class="p">(</span><span class="nb">== </span><span class="nv">p</span> <span class="p">[</span><span class="nv">g</span> <span class="nv">r</span><span class="p">])</span>
 </span><span class='line'>   <span class="p">(</span><span class="nf">pairupo</span> <span class="nv">gs</span> <span class="nv">rs</span> <span class="nv">ps</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>The mind-bending nature of that function can be rather confusing. In
 core.logic (as with <a href="http://minikanren.org">miniKanren</a> and others),
-it's common for an "output
-value" to be one of the parameters, in this case the 3rd parameter
+it&rsquo;s common for an &ldquo;output
+value&rdquo; to be one of the parameters, in this case the 3rd parameter
 (<code>pairs</code>). This function defines a relationship between the parameters
-provided so you can call it with <code>givers</code> and <code>pairs</code> and it'll fill
+provided so you can call it with <code>givers</code> and <code>pairs</code> and it&rsquo;ll fill
 in the blanks for the <code>receivers</code> value (effectively unzipping the
 <code>pairs</code> value), which is pretty neat.</p>
 
 <h3>Unify what?</h3>
 
-<p>It's crucial to understand the <code>clojure.core.logic/==</code> unification
+<p>It&rsquo;s crucial to understand the <code>clojure.core.logic/==</code> unification
 function to understand how any of this works. It looks like an
 equality test from one of those other programming languages we shall
-not mention here, but it isn't like that. Sometimes I thought of it as
-a kind of wishful-thinking-equality - a sort of "wouldn't it be just
-lovely if these things were the same".</p>
+not mention here, but it isn&rsquo;t like that. Sometimes I thought of it as
+a kind of wishful-thinking-equality - a sort of &ldquo;wouldn&rsquo;t it be just
+lovely if these things were the same&rdquo;.</p>
 
 <p>Taking an example from
 <a href="https://github.com/clojure/core.logic/wiki/A-Core.logic-Primer">the core.logic wiki</a>:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">run*</span> <span class="p">[</span><span class="nv">q</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">fresh</span> <span class="p">[</span><span class="nv">a</span><span class="p">]</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span><span class="p">(</span><span class="nf">membero</span> <span class="nv">a</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
-</span><span class='line'><span class="p">(</span><span class="nf">membero</span> <span class="nv">q</span> <span class="p">[</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">])</span>
-</span><span class='line'><span class="p">(</span><span class="nb">== </span><span class="nv">a</span> <span class="nv">q</span><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'>  <span class="p">(</span><span class="nf">fresh</span> <span class="p">[</span><span class="nv">a</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">membero</span> <span class="nv">a</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">membero</span> <span class="nv">q</span> <span class="p">[</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">])</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">== </span><span class="nv">a</span> <span class="nv">q</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>In the above we are asking core.logic for the possible values of <code>q</code>
 (the output variable). We start using a new logic variable <code>a</code> which
 we unify with <code>q</code> using the <code>==</code> unification function. That is to say,
 all solutions must satisfy the equation <code>a = q</code>, they must have the
-same value. Core.logic tends to add 'o' to the end of common function
-names so <code>(membero a [1 2 3])</code> isn't a boolean predicate function for
+same value. Core.logic tends to add &lsquo;o&rsquo; to the end of common function
+names so <code>(membero a [1 2 3])</code> isn&rsquo;t a boolean predicate function for
 testing for list membership, it attempts to make that statement true.
 With simply that statement - <code>a</code> can be 1 or 2 or 3. The next line
 asserts that <code>q</code> is a member of the list <code>[3 4 5]</code> so its value can be
@@ -208,16 +184,16 @@ a list of all possible solutions so in fact we will get a single
 element list: <code>(3)</code> as the result from that code.</p>
 
 <p>The input of our Secret Santa function will be a list of names
-(strings), so it'd be useful to turn that list of names into a
+(strings), so it&rsquo;d be useful to turn that list of names into a
 database that we can constrain our logic functions on:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">coll-&gt;db</span>
 </span><span class='line'>  <span class="p">[</span><span class="nv">coll</span><span class="p">]</span>
 </span><span class='line'>  <span class="p">(</span><span class="nb">apply </span><span class="nv">db</span> <span class="nv">coll</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p><a href="http://crossclj.info/fun/clojure.core.logic.pldb/db.html"><code>clojure.core.logic.pldb/db</code></a> takes a variable number of parameters and
 returns a database with those facts contained. We want to call it with
@@ -227,41 +203,33 @@ arg1 arg2 arg3)</code></p>
 
 <h3>How does it work again?</h3>
 
-<p>Let's concentrate on the core part of the function:</p>
+<p>Let&rsquo;s concentrate on the core part of the function:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">with-db</span> <span class="nv">facts</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">run*</span> <span class="p">[</span><span class="nv">q</span><span class="p">]</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span><span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">givers</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">receivers</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">distincto</span> <span class="nv">givers</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">distincto</span> <span class="nv">receivers</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">pairupo</span> <span class="nv">givers</span> <span class="nv">receivers</span> <span class="nv">q</span><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'>  <span class="p">(</span><span class="nf">run*</span> <span class="p">[</span><span class="nv">q</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">givers</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">receivers</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">distincto</span> <span class="nv">givers</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">distincto</span> <span class="nv">receivers</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">pairupo</span> <span class="nv">givers</span> <span class="nv">receivers</span> <span class="nv">q</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>We are asking for all the solutions where every item in the <code>givers</code>
 collection is a santa and every item in the <code>receivers</code> collection is
 a santa (lines 3 and 4). This ensures that those collections contain
 only valid santa names and not logic variables or numbers or anything
-else. There's something subtle about this - it's not simply an
+else. There&rsquo;s something subtle about this - it&rsquo;s not simply an
 assertion. core.logic will make those statements true in every way
 they can. One possible version of that (assuming there were 4 names
 input to the function) is that <code>givers =
-["Arya" "Arya" "Arya" "Arya"]</code>. That's nonsensical for our purposes
+["Arya" "Arya" "Arya" "Arya"]</code>. That&rsquo;s nonsensical for our purposes
 (remember we mean to zip up these collections so the first giver is
 giving to the first receiver, the 2nd giver to the 2nd receiver and so
 on). So then we ensure that the collection of givers has distinct
@@ -269,7 +237,7 @@ elements in it (line 5), saying the same about receivers on line 6. If
 you imagine core.logic has assembled all the combinations of values
 that are santas first - imagine now it throws away any where values
 repeat. One of the remaining values for <code>givers</code> will be
-["Arya" "Gregor" "Tommen" "Daenerys"]. There will be more. How many?</p>
+[&ldquo;Arya&rdquo; &ldquo;Gregor&rdquo; &ldquo;Tommen&rdquo; &ldquo;Daenerys&rdquo;]. There will be more. How many?</p>
 
 <h3>Derangements, subfactorials, oh my!</h3>
 
@@ -283,7 +251,7 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 
 <p>Here is some clojure that calculates that:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -292,29 +260,21 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">derangements</span>
-</span><span class='line'>  <span class="s">&quot;Calculate the number of derangements of n elements.&quot;</span>
+</span><span class='line'>  <span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Calculate the number of derangements of n elements.&amp;rdquo;</span>
 </span><span class='line'>  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">condp</span> <span class="nb">= </span><span class="nv">n&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;0</span> <span class="mi">1</span>
-</span><span class='line'><span class="mi">1</span> <span class="mi">0</span>
-</span><span class='line'><span class="p">(</span><span class="nb">* </span><span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>   <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">derangements</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>      <span class="p">(</span><span class="nf">derangements</span> <span class="p">(</span><span class="nb">- </span><span class="nv">n</span> <span class="mi">2</span><span class="p">))))))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'>  <span class="p">(</span><span class="nf">condp</span> <span class="nb">= </span><span class="nv">n</span>
+</span><span class='line'>    <span class="mi">0</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="mi">1</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">* </span><span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">derangements</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>          <span class="p">(</span><span class="nf">derangements</span> <span class="p">(</span><span class="nb">- </span><span class="nv">n</span> <span class="mi">2</span><span class="p">))))))</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>This algorithm is primarily useful for checking your results in unit
 tests for example. Another way to use it is as the parameter to
 <code>run</code> - you can ask for all the possible derangements of friends. I
-didn't have much luck with that because I misunderstood the values
+didn&rsquo;t have much luck with that because I misunderstood the values
 that my logic code was producing, also there is no need to know
 beforehand how many combinations are possible since you only want one.</p>
 
@@ -324,19 +284,19 @@ beforehand how many combinations are possible since you only want one.</p>
 relationship between the gift giver and receiver as a binary - allowed
 or not. It would be useful to be able to first attempt to solve the
 problem under ideal conditions before falling back to less and less
-ideal solutions. For example, it's not ideal to have people paired up
-symmetrically - it's just a bit boring that way. It's more optimal to
+ideal solutions. For example, it&rsquo;s not ideal to have people paired up
+symmetrically - it&rsquo;s just a bit boring that way. It&rsquo;s more optimal to
 assign Santas in a circle, which makes it slightly more difficult to
-identify who's assigned who.</p>
+identify who&rsquo;s assigned who.</p>
 
 <p>Finding all possible solutions is extremely slow in core.logic (at
-least, the way I've written it) so this could do with a fair amount of
+least, the way I&rsquo;ve written it) so this could do with a fair amount of
 optimisation.</p>
 
 <p>I punted the problem of picking a solution out of possible solutions
 to the combination of <code>(map sort)</code>, <code>distinct</code> and <code>rand-nth</code>. This
-isn't really necessary, I could have told core.logic what constitutes
-a distinct solution (it doesn't realise that order of pairings doesn't
+isn&rsquo;t really necessary, I could have told core.logic what constitutes
+a distinct solution (it doesn&rsquo;t realise that order of pairings doesn&rsquo;t
 matter) and then simply picked one. My brain hurt so much by that
 point that I decided to call it a day and move on to more interesting
 problems, like</p>
@@ -345,16 +305,16 @@ problems, like</p>
 
 <p>I had a great deal of difficulty writing the <code>pairupo</code> function,
 largely because all the various <code>defne</code>/<code>defnu</code>/<code>defna</code> confused me -
-I still couldn't tell you what they do. This was partly due to me
+I still couldn&rsquo;t tell you what they do. This was partly due to me
 moving from a real problem (Secret Santa) to the implementation in
 core.logic on the basis of sketchy logic programming knowledge, so I
 missed a lot of subtlety related to <code>conde</code> which is crucial for
 understanding this stuff. The official documentaion for core.logic is
 extremely sparse also, you are very much on your own if the problem
-you want to solve isn't Sudoku or the Typed Lambda Calculus (it
+you want to solve isn&rsquo;t Sudoku or the Typed Lambda Calculus (it
 boggles my mind that that is on the
 <a href="https://github.com/clojure/core.logic/wiki/Examples">Examples</a>
-wiki page, I'm not sure if the intention is to educate or
+wiki page, I&rsquo;m not sure if the intention is to educate or
 obfuscate there).</p>
 
 <p>I hope that a bit more blogging from mere mortals like myself might
@@ -373,14 +333,14 @@ help others grok this mind-mending area of programming.</p>
 
 <ul>
 <li><strong>Language</strong>: Clojure + ClojureScript (targeting Javascript)</li>
-<li><strong>Engine</strong>: My brain and HTML Canvas...mainly canvas</li>
+<li><strong>Engine</strong>: My brain and HTML Canvas&hellip;mainly canvas</li>
 <li><strong>Libraries</strong>: probably at least <a href="https://github.com/ibdknox/monet">Monet</a></li>
 <li><strong>Music</strong>: I have no idea, whatever I can work out how to use</li>
 <li><strong>Graphics</strong>: Pixen, Pixelmator, that sort of thing probably</li>
 </ul>
 
 
-<p>I'm gonna have fun but since I'm breaking rule 1 - know the tools (I don't know any possible tools) this is going to be intense.</p>
+<p>I&rsquo;m gonna have fun but since I&rsquo;m breaking rule 1 - know the tools (I don&rsquo;t know any possible tools) this is going to be intense.</p>
 
 <p>Have fun everyone!</p>
 ]]></content>
@@ -391,19 +351,19 @@ help others grok this mind-mending area of programming.</p>
     <link href="http://blog.wjlr.org.uk/2012/07/26/what-makes-a-developer-happy.html"/>
     <updated>2012-07-26T00:00:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2012/07/26/what-makes-a-developer-happy</id>
-    <content type="html"><![CDATA[<p>Today was a pretty good day for me - programming-wise. Even though I wasn't too well (having trouble hearing in my left ear which is disorientating and makes conversation difficult), I feel the contentment of a day well spent.</p>
+    <content type="html"><![CDATA[<p>Today was a pretty good day for me - programming-wise. Even though I wasn&rsquo;t too well (having trouble hearing in my left ear which is disorientating and makes conversation difficult), I feel the contentment of a day well spent.</p>
 
-<p>So what made it a good day? Building stuff is the bottom line for me but that is a very broad term. Today, building stuff meant working with the <a href="http://raphaeljs.com">Raphael</a> library to make a graphic for a web app (a dynamic graphic, it's not just a logo); refactoring the backend of said web app and reading various tech news.</p>
+<p>So what made it a good day? Building stuff is the bottom line for me but that is a very broad term. Today, building stuff meant working with the <a href="http://raphaeljs.com">Raphael</a> library to make a graphic for a web app (a dynamic graphic, it&rsquo;s not just a logo); refactoring the backend of said web app and reading various tech news.</p>
 
-<p>News first. I was mainly reading about the architecture of <a href="http://www.datomic.com/overview.html">Datomic</a>, which is a really interesting take on databases. I would say it looks like the most developer friendly database implementation (in terms of the aims of the project) combined with some pretty powerful and flexible storage. I'm not sure how deploying it would work out, given it uses SQL or some other key-value-capable backend so it really adds another layer to your app's architecture. The <a href="http://www.datomic.com/rationale.html">rationale page</a> was music to my ears though so I will be trying out the <a href="http://blog.datomic.com/2012/07/datomic-free-edition.html">free edition</a> for sure.</p>
+<p>News first. I was mainly reading about the architecture of <a href="http://www.datomic.com/overview.html">Datomic</a>, which is a really interesting take on databases. I would say it looks like the most developer friendly database implementation (in terms of the aims of the project) combined with some pretty powerful and flexible storage. I&rsquo;m not sure how deploying it would work out, given it uses SQL or some other key-value-capable backend so it really adds another layer to your app&rsquo;s architecture. The <a href="http://www.datomic.com/rationale.html">rationale page</a> was music to my ears though so I will be trying out the <a href="http://blog.datomic.com/2012/07/datomic-free-edition.html">free edition</a> for sure.</p>
 
-<p>The refactoring I worked on today was a bit of "technical debt" that had been hanging around for a while. It was as a consequence of not understanding how to split up and compose together templates (and partial templates, snippets) with <a href="https://github.com/cgrand/enlive/">enlive</a>. I had another go at reading <a href="https://github.com/cgrand/enlive/wiki/Table-and-Layout-Tutorial,-Part-1:-The-Goal">the tutorials</a> and this time it just felt easy. They could definitely do with simplifying though. The reason this was so enjoyable was that writing and refactoring <a href="http://clojure.org">Clojure</a> code is generally a very fun endeavour. I generally have a <a href="http://common-lisp.net/project/slime/">SLIME</a> session open with <a href="http://www.gnu.org/software/emacs/">emacs</a> and I just recompile the code or compile the function I'm changing, then check those functions in the REPL in emacs. In other words, development can be very fast. Also, enlive is hands-down the best templating system I've ever used. It's great that it can be used both for templating and for web scraping (or in my case, integration tests checking the contents of DOM nodes).</p>
+<p>The refactoring I worked on today was a bit of &ldquo;technical debt&rdquo; that had been hanging around for a while. It was as a consequence of not understanding how to split up and compose together templates (and partial templates, snippets) with <a href="https://github.com/cgrand/enlive/">enlive</a>. I had another go at reading <a href="https://github.com/cgrand/enlive/wiki/Table-and-Layout-Tutorial,-Part-1:-The-Goal">the tutorials</a> and this time it just felt easy. They could definitely do with simplifying though. The reason this was so enjoyable was that writing and refactoring <a href="http://clojure.org">Clojure</a> code is generally a very fun endeavour. I generally have a <a href="http://common-lisp.net/project/slime/">SLIME</a> session open with <a href="http://www.gnu.org/software/emacs/">emacs</a> and I just recompile the code or compile the function I&rsquo;m changing, then check those functions in the REPL in emacs. In other words, development can be very fast. Also, enlive is hands-down the best templating system I&rsquo;ve ever used. It&rsquo;s great that it can be used both for templating and for web scraping (or in my case, integration tests checking the contents of DOM nodes).</p>
 
-<p>Working with Raphael for creating scalable graphics is also really fun. Previously I had tried out <a href="http://paperjs.org/about/">Paper.js</a> (which is an abstraction over HTML Canvas). There were a couple of problems with Paper.js. Firstly it is bizarre - the documentation is somewhat held back by only showing examples of so called PaperScript, which I couldn't see how I could use. It's essentially Javascript with a bunch of functions added to various prototypes by the looks of things. The issue was I am rendering one graphic per item in a (more-or-less) 100 length list and I couldn't see a simple way to define one PaperScript thing and feed it parameters to draw all the slightly different versions of the graphic. I decided to try out Raphael and immediately found it vastly simpler for defining the sort of simple shapes I needed to draw. Raphael is a small javascript library for generating <a href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a> (or <a href="http://en.wikipedia.org/wiki/VML">VML</a> where that is supported). The biggest downside of using Raphael instead of Paper.js is that, according to <a href="http://caniuse.com">What can I use…</a> the Android browser only started supporting SVG in version… 3.0!!! That truly does deserve multiple exclamation marks of sheer disbelief. Google, the open web? Really? That means, according to the <a href="http://developer.android.com/about/dashboards/index.html">Platform versions</a> page on the Android developer site, as I write this, over 85% of Android users are on 2.x or lower and SVG won't work in their default browsers. SVG is pretty damn old - initial release in 2001. This does not a happy developer make. Still, might have to come up with a fallback option for people using primitive devices, we will see.</p>
+<p>Working with Raphael for creating scalable graphics is also really fun. Previously I had tried out <a href="http://paperjs.org/about/">Paper.js</a> (which is an abstraction over HTML Canvas). There were a couple of problems with Paper.js. Firstly it is bizarre - the documentation is somewhat held back by only showing examples of so called PaperScript, which I couldn&rsquo;t see how I could use. It&rsquo;s essentially Javascript with a bunch of functions added to various prototypes by the looks of things. The issue was I am rendering one graphic per item in a (more-or-less) 100 length list and I couldn&rsquo;t see a simple way to define one PaperScript thing and feed it parameters to draw all the slightly different versions of the graphic. I decided to try out Raphael and immediately found it vastly simpler for defining the sort of simple shapes I needed to draw. Raphael is a small javascript library for generating <a href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a> (or <a href="http://en.wikipedia.org/wiki/VML">VML</a> where that is supported). The biggest downside of using Raphael instead of Paper.js is that, according to <a href="http://caniuse.com">What can I use…</a> the Android browser only started supporting SVG in version… 3.0!!! That truly does deserve multiple exclamation marks of sheer disbelief. Google, the open web? Really? That means, according to the <a href="http://developer.android.com/about/dashboards/index.html">Platform versions</a> page on the Android developer site, as I write this, over 85% of Android users are on 2.x or lower and SVG won&rsquo;t work in their default browsers. SVG is pretty damn old - initial release in 2001. This does not a happy developer make. Still, might have to come up with a fallback option for people using primitive devices, we will see.</p>
 
-<p>Working with 2D graphics, such as with Raphael, usually involves some trigonometry and today was no exception. I really suck at trig so this was the main stumbling block. It really was very simple stuff - <a href="http://en.wikipedia.org/wiki/Unit_circle">finding the coordinates of a point on a circle</a> - but I've forgotten it all from school. I pushed through all that, scribbled furiously on paper until I convinced myself I knew what I was doing and by the end of the day I had shapes arranging themselves at my command - and even <a href="http://raphaeljs.com/reference.html#Element.transform">rotating</a> them all slightly for every item in the list. Essentially I love it when things work, maybe not the first time, but before I get a headache - that's the happiness benchmark for me.</p>
+<p>Working with 2D graphics, such as with Raphael, usually involves some trigonometry and today was no exception. I really suck at trig so this was the main stumbling block. It really was very simple stuff - <a href="http://en.wikipedia.org/wiki/Unit_circle">finding the coordinates of a point on a circle</a> - but I&rsquo;ve forgotten it all from school. I pushed through all that, scribbled furiously on paper until I convinced myself I knew what I was doing and by the end of the day I had shapes arranging themselves at my command - and even <a href="http://raphaeljs.com/reference.html#Element.transform">rotating</a> them all slightly for every item in the list. Essentially I love it when things work, maybe not the first time, but before I get a headache - that&rsquo;s the happiness benchmark for me.</p>
 
-<p>The secret underlying all this, and all that I haven't said, is there is no secret to developer happiness. If I'm anything to go by, we thrive on autonomy, creativity and problem solving. It is very strange that so many employers are averse to providing any form of autonomy to their developers because that has to put a damper on anyone's aspirations. At <a href="http://www.digital-science.com">Digital Science</a> we are generally encouraged to come up with ideas all the time and execute them. But one of the best aspects for me is how we're all able to hack on the infrastructure. See something that could be better? Fix it. If I couldn't mix working on UI stuff, web backends, databases, deployment (Chef) and <a href="http://foldme.herokuapp.com">frivolous fun</a> then this wouldn't be nearly as worthwhile.</p>
+<p>The secret underlying all this, and all that I haven&rsquo;t said, is there is no secret to developer happiness. If I&rsquo;m anything to go by, we thrive on autonomy, creativity and problem solving. It is very strange that so many employers are averse to providing any form of autonomy to their developers because that has to put a damper on anyone&rsquo;s aspirations. At <a href="http://www.digital-science.com">Digital Science</a> we are generally encouraged to come up with ideas all the time and execute them. But one of the best aspects for me is how we&rsquo;re all able to hack on the infrastructure. See something that could be better? Fix it. If I couldn&rsquo;t mix working on UI stuff, web backends, databases, deployment (Chef) and <a href="http://foldme.herokuapp.com">frivolous fun</a> then this wouldn&rsquo;t be nearly as worthwhile.</p>
 
 <p>Happy hacking.</p>
 ]]></content>
@@ -418,9 +378,9 @@ help others grok this mind-mending area of programming.</p>
 
 <h2>Tables of contents</h2>
 
-<p>The table of contents was a bit strange. The Kindle's mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains <code>&lt;navPoint&gt;</code> elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here's an abridged version of the NCX file I had generated:</p>
+<p>The table of contents was a bit strange. The Kindle&rsquo;s mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains <code>&lt;navPoint&gt;</code> elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here&rsquo;s an abridged version of the NCX file I had generated:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -448,63 +408,39 @@ help others grok this mind-mending area of programming.</p>
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
 <span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-</span><span class='line'><span class="ni">&amp;lt;</span>!DOCTYPE ncx PUBLIC &quot;-//NISO//DTD ncx 2005-1//EN&quot;<span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span>  &quot;http://www.daisy.org/z3986/2005/ncx-2005-1.dtd&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;ncx</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.daisy.org/z3986/2005/ncx/&quot;</span> <span class="na">version=</span><span class="s">&quot;2005-1&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;head&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>meta name=&quot;dtb:uid&quot; content=&quot;http://en.wikipedia.org/wiki/The_Odyssey&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>meta name=&quot;dtb:depth&quot; content=&quot;1&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>meta name=&quot;dtb:totalPageCount&quot; content=&quot;0&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>meta name=&quot;dtb:maxPageNumber&quot; content=&quot;0&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/head&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;docTitle&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>text<span class="ni">&amp;gt;</span>Ὀδύσσεια<span class="ni">&amp;lt;</span>/text<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/docTitle&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;navMap&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>navPoint id=&quot;toc&quot; playOrder=&quot;0&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>  <span class="ni">&amp;lt;</span>navLabel<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>text<span class="ni">&amp;gt;</span>Table of Contents<span class="ni">&amp;lt;</span>/text<span class="ni">&amp;gt;</span>
-</span><span class='line'>  <span class="ni">&amp;lt;</span>/navLabel<span class="ni">&amp;gt;</span>
-</span><span class='line'>  <span class="ni">&amp;lt;</span>content src=&quot;toc.html&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>/navPoint<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>navPoint class=&quot;chapter&quot; id=&quot;book-1&quot; playOrder=&quot;1&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>  <span class="ni">&amp;lt;</span>navLabel<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>text<span class="ni">&amp;gt;</span>Book 1<span class="ni">&amp;lt;</span>/text<span class="ni">&amp;gt;</span>
-</span><span class='line'>  <span class="ni">&amp;lt;</span>/navLabel<span class="ni">&amp;gt;</span>
-</span><span class='line'>  <span class="ni">&amp;lt;</span>content src=&quot;book-1.xhtml&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>/navPoint<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/navMap&gt;</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span> encoding=<span class="ni">&amp;ldquo;</span>UTF-8<span class="ni">&amp;rdquo;</span>?&gt;
+</span><span class='line'><span class="ni">&amp;lt;</span>!DOCTYPE ncx PUBLIC <span class="ni">&amp;ldquo;</span>-//NISO//DTD ncx 2005-1//EN<span class="ni">&amp;rdquo;</span>
+</span><span class='line'>      <span class="ni">&amp;ldquo;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://www.daisy.org/z3986/2005/ncx-2005-1.dtd&quot;</span><span class="nt">&gt;</span>http://www.daisy.org/z3986/2005/ncx-2005-1.dtd<span class="nt">&lt;/a&gt;</span><span class="ni">&amp;rdquo;</span>&gt;
+</span><span class='line'><span class="nt">&lt;ncx</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.daisy.org/z3986/2005/ncx/&quot;</span> <span class="na">version=</span><span class="s">&quot;2005-1&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:uid&quot;</span> <span class="na">content=</span><span class="s">&quot;http://en.wikipedia.org/wiki/The_Odyssey&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:depth&quot;</span> <span class="na">content=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:totalPageCount&quot;</span> <span class="na">content=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;dtb:maxPageNumber&quot;</span> <span class="na">content=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;docTitle&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;text&gt;</span>Ὀδύσσεια<span class="nt">&lt;/text&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/docTitle&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;navMap&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;navPoint</span> <span class="na">id=</span><span class="s">&quot;toc&quot;</span> <span class="na">playOrder=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;navLabel&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;text&gt;</span>Table of Contents<span class="nt">&lt;/text&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/navLabel&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;content</span> <span class="na">src=</span><span class="s">&quot;toc.html&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/navPoint&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;navPoint</span> <span class="na">class=</span><span class="s">&quot;chapter&quot;</span> <span class="na">id=</span><span class="s">&quot;book-1&quot;</span> <span class="na">playOrder=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;navLabel&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;text&gt;</span>Book 1<span class="nt">&lt;/text&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/navLabel&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;content</span> <span class="na">src=</span><span class="s">&quot;book-1.xhtml&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/navPoint&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/navMap&gt;</span>
 </span><span class='line'><span class="nt">&lt;/ncx&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p>There were obviously more chapters/books than that. The Kindle/mobi format doesn't use this for the table of contents, so when you open a converted epub on a Kindle (or using the Kindle desktop software), the menu item to go to the table of contents is greyed out. After digging around on the web I discovered that the mobi format uses a toc file, which is basically an html file full of links. In order for that to work, you need to reference the toc file in the OPF file. Here's an abbreviated version of the one I generated:</p>
+<p>There were obviously more chapters/books than that. The Kindle/mobi format doesn&rsquo;t use this for the table of contents, so when you open a converted epub on a Kindle (or using the Kindle desktop software), the menu item to go to the table of contents is greyed out. After digging around on the web I discovered that the mobi format uses a toc file, which is basically an html file full of links. In order for that to work, you need to reference the toc file in the OPF file. Here&rsquo;s an abbreviated version of the one I generated:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -538,75 +474,45 @@ help others grok this mind-mending area of programming.</p>
 <span class='line-number'>32</span>
 <span class='line-number'>33</span>
 <span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-</span><span class='line'><span class="ni">&amp;lt;</span>package xmlns=&quot;http://www.idpf.org/2007/opf&quot; version=&quot;2.0&quot;<span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span> unique-identifier=&quot;odyssey_gk&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="ni">&amp;lt;</span>metadata xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;<span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span>    xmlns:dcterms=&quot;http://purl.org/dc/terms/&quot;
-</span><span class='line'>    xmlns:opf=&quot;http://www.idpf.org/2007/opf&quot;
-</span><span class='line'>    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>dc:title<span class="ni">&amp;gt;</span>Ὀδύσσεια<span class="ni">&amp;lt;</span>/dc:title<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>dc:language xsi:type=&quot;dcterms:RFC3066&quot;<span class="ni">&amp;gt;</span>en-us<span class="ni">&amp;lt;</span>/dc:language<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>dc:identifier id=&quot;odyssey_gk&quot; opf:scheme=&quot;URL&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>           http://en.wikipedia.org/wiki/The_Odyssey
-</span><span class='line'><span class="ni">&amp;lt;</span>/dc:identifier<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>dc:creator opf:file-as=&quot;Homer&quot; opf:role=&quot;aut&quot;<span class="ni">&amp;gt;</span>Homer<span class="ni">&amp;lt;</span>/dc:creator<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>meta name=&quot;cover&quot; content=&quot;cover-image&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/metadata&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;manifest&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>item id=&quot;book-1&quot; href=&quot;book-1.xhtml&quot; media-type=&quot;application/xhtml+xml&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>item id=&quot;stylesheet&quot; href=&quot;style.css&quot; media-type=&quot;text/css&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>item id=&quot;ncx&quot; href=&quot;book.ncx&quot; media-type=&quot;application/x-dtbncx+xml&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>item id=&quot;cover&quot; href=&quot;cover.html&quot; media-type=&quot;application/xhtml+xml&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>item id=&quot;toc&quot; href=&quot;toc.html&quot; media-type=&quot;application/xhtml+xml&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>item id=&quot;cover-image&quot; href=&quot;cover.jpg&quot; media-type=&quot;image/jpeg&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/manifest&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;spine</span> <span class="na">toc=</span><span class="s">&quot;ncx&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>itemref idref=&quot;cover&quot; linear=&quot;no&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>itemref idref=&quot;toc&quot; linear=&quot;no&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>itemref idref=&quot;book-1&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/spine&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;guide&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>reference href=&quot;cover.html&quot; type=&quot;cover&quot; title=&quot;Cover&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>reference href=&quot;toc.html&quot; type=&quot;toc&quot; title=&quot;Table of Contents&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>reference href=&quot;book-1.xhtml&quot; type=&quot;text&quot; title=&quot;Text&quot;/<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/guide&gt;</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span> encoding=<span class="ni">&amp;ldquo;</span>UTF-8<span class="ni">&amp;rdquo;</span>?&gt;
+</span><span class='line'><span class="nt">&lt;package</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span> <span class="na">version=</span><span class="s">&quot;2.0&quot;</span>
+</span><span class='line'>     <span class="na">unique-identifier=</span><span class="s">&quot;odyssey_gk&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;metadata</span> <span class="na">xmlns:dc=</span><span class="s">&quot;http://purl.org/dc/elements/1.1/&quot;</span>
+</span><span class='line'>        <span class="na">xmlns:dcterms=</span><span class="s">&quot;http://purl.org/dc/terms/&quot;</span>
+</span><span class='line'>        <span class="na">xmlns:opf=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span>
+</span><span class='line'>        <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>dc:title&gt;Ὀδύσσεια<span class="ni">&amp;lt;</span>/dc:title&gt;
+</span><span class='line'>    <span class="ni">&amp;lt;</span>dc:language xsi:type=<span class="ni">&amp;ldquo;</span>dcterms:RFC3066<span class="ni">&amp;rdquo;</span>&gt;en-us<span class="ni">&amp;lt;</span>/dc:language&gt;
+</span><span class='line'>    <span class="ni">&amp;lt;</span>dc:identifier id=<span class="ni">&amp;ldquo;</span>odyssey_gk<span class="ni">&amp;rdquo;</span> opf:scheme=<span class="ni">&amp;ldquo;</span>URL<span class="ni">&amp;rdquo;</span>&gt;
+</span><span class='line'>               <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://en.wikipedia.org/wiki/The_Odyssey&quot;</span><span class="nt">&gt;</span>http://en.wikipedia.org/wiki/The_Odyssey<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/dc:identifier&gt;
+</span><span class='line'>    <span class="ni">&amp;lt;</span>dc:creator opf:file-as=<span class="ni">&amp;ldquo;</span>Homer<span class="ni">&amp;rdquo;</span> opf:role=<span class="ni">&amp;ldquo;</span>aut<span class="ni">&amp;rdquo;</span>&gt;Homer<span class="ni">&amp;lt;</span>/dc:creator&gt;
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;cover&quot;</span> <span class="na">content=</span><span class="s">&quot;cover-image&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/metadata&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;manifest&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;book-1&quot;</span> <span class="na">href=</span><span class="s">&quot;book-1.xhtml&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/xhtml+xml&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;style.css&quot;</span> <span class="na">media-type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;ncx&quot;</span> <span class="na">href=</span><span class="s">&quot;book.ncx&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/x-dtbncx+xml&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;cover&quot;</span> <span class="na">href=</span><span class="s">&quot;cover.html&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/xhtml+xml&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;toc&quot;</span> <span class="na">href=</span><span class="s">&quot;toc.html&quot;</span> <span class="na">media-type=</span><span class="s">&quot;application/xhtml+xml&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;item</span> <span class="na">id=</span><span class="s">&quot;cover-image&quot;</span> <span class="na">href=</span><span class="s">&quot;cover.jpg&quot;</span> <span class="na">media-type=</span><span class="s">&quot;image/jpeg&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/manifest&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;spine</span> <span class="na">toc=</span><span class="s">&quot;ncx&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;itemref</span> <span class="na">idref=</span><span class="s">&quot;cover&quot;</span> <span class="na">linear=</span><span class="s">&quot;no&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;itemref</span> <span class="na">idref=</span><span class="s">&quot;toc&quot;</span> <span class="na">linear=</span><span class="s">&quot;no&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;itemref</span> <span class="na">idref=</span><span class="s">&quot;book-1&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/spine&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;guide&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;reference</span> <span class="na">href=</span><span class="s">&quot;cover.html&quot;</span> <span class="na">type=</span><span class="s">&quot;cover&quot;</span> <span class="na">title=</span><span class="s">&quot;Cover&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;reference</span> <span class="na">href=</span><span class="s">&quot;toc.html&quot;</span> <span class="na">type=</span><span class="s">&quot;toc&quot;</span> <span class="na">title=</span><span class="s">&quot;Table of Contents&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;reference</span> <span class="na">href=</span><span class="s">&quot;book-1.xhtml&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">title=</span><span class="s">&quot;Text&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/guide&gt;</span>
 </span><span class='line'><span class="nt">&lt;/package&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p>The important bit there is the <code>&lt;reference&gt;</code> element inside <code>&lt;guide&gt;</code> that is of type "toc". After that, the actual table of contents file is pretty straightforward:</p>
+<p>The important bit there is the <code>&lt;reference&gt;</code> element inside <code>&lt;guide&gt;</code> that is of type &ldquo;toc&rdquo;. After that, the actual table of contents file is pretty straightforward:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -625,92 +531,66 @@ help others grok this mind-mending area of programming.</p>
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=&quot;1.0&quot;?&gt;
-</span><span class='line'><span class="ni">&amp;lt;</span>!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;<span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span>  &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;head&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>title<span class="ni">&amp;gt;</span>Table of Contents<span class="ni">&amp;lt;</span>/title<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>style type=&quot;text/css&quot;<span class="ni">&amp;gt;</span>img { max-width: 100%; height: 100% }<span class="ni">&amp;lt;</span>/style<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/head&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;body&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>div id=&quot;contents&quot;<span class="ni">&amp;gt;</span>
-</span><span class='line'>  <span class="ni">&amp;lt;</span>h2<span class="ni">&amp;gt;</span>Contents<span class="ni">&amp;lt;</span>/h2<span class="ni">&amp;gt;</span>
-</span><span class='line'>  <span class="ni">&amp;lt;</span>ul<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>li<span class="ni">&amp;gt;</span>
-</span><span class='line'>      <span class="ni">&amp;lt;</span>a href=&quot;book-1.xhtml&quot;<span class="ni">&amp;gt;</span>Book 1<span class="ni">&amp;lt;</span>/a<span class="ni">&amp;gt;</span>
-</span><span class='line'>    <span class="ni">&amp;lt;</span>/li<span class="ni">&amp;gt;</span>
-</span><span class='line'>  <span class="ni">&amp;lt;</span>/ul<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>/div<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/body&gt;</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span>?&gt;
+</span><span class='line'><span class="ni">&amp;lt;</span>!DOCTYPE html PUBLIC <span class="ni">&amp;ldquo;</span>-//W3C//DTD XHTML 1.1//EN<span class="ni">&amp;rdquo;</span>
+</span><span class='line'>      <span class="ni">&amp;ldquo;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;</span><span class="nt">&gt;</span>http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd<span class="nt">&lt;/a&gt;</span><span class="ni">&amp;rdquo;</span>&gt;
+</span><span class='line'><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;title&gt;</span>Table of Contents<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;style</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>img { max-width: 100%; height: 100% }<span class="nt">&lt;/style&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;body&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;contents&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;h2&gt;</span>Contents<span class="nt">&lt;/h2&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;book-1.xhtml&quot;</span><span class="nt">&gt;</span>Book 1<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/body&gt;</span>
 </span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p>That's just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.</p>
+<p>That&rsquo;s just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.</p>
 
 <h2>Encoding</h2>
 
-<p>I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don't expect anyone to know what that is, I didn't and it's still just a character to me. But it looks like this:</p>
+<p>I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don&rsquo;t expect anyone to know what that is, I didn&rsquo;t and it&rsquo;s still just a character to me. But it looks like this:</p>
 
 <h1 class="greek">ΐ</h1>
 
 
 <p><aside class="post">
-<strong>Betacode</strong> is the ASCII language used by Perseus Digital library to represent Greek characters easily. It's used in their opensource XML files (that I've used) and as a way to search Greek books (due to the unavailability of Ancient Greek keyboards). So <code>a)/ndra</code> becomes <code class="greek">ἄνδρα</code>.
+<strong>Betacode</strong> is the ASCII language used by Perseus Digital library to represent Greek characters easily. It&rsquo;s used in their opensource XML files (that I&rsquo;ve used) and as a way to search Greek books (due to the unavailability of Ancient Greek keyboards). So <code>a)/ndra</code> becomes <code class="greek">ἄνδρα</code>.
 </aside></p>
 
-<p>In betacode, this is written as <code>i/+</code>. Normally, the parser encodes the character <code>i</code>, then each diacritic in turn: <code>/</code>, then <code>+</code> into combining diacritics. This resulted in characters <code>0x03b9 0x0301 0x0308</code>, which would be normalized using Java's Normalizer/normalize function as:</p>
+<p>In betacode, this is written as <code>i/+</code>. Normally, the parser encodes the character <code>i</code>, then each diacritic in turn: <code>/</code>, then <code>+</code> into combining diacritics. This resulted in characters <code>0x03b9 0x0301 0x0308</code>, which would be normalized using Java&rsquo;s Normalizer/normalize function as:</p>
 
 <h1 class="greek">ί̈</h1>
 
 
-<p>The frustrating thing is that it's quite difficult to tell the difference on the terminal, when running tests - even when I'd bumped the font size up to crazy levels.</p>
+<p>The frustrating thing is that it&rsquo;s quite difficult to tell the difference on the terminal, when running tests - even when I&rsquo;d bumped the font size up to crazy levels.</p>
 
 <p>In order to match that symbol, I created the following rule:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">iota-dialytika-tonos&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span> <span class="p">(</span><span class="nf">constant-semantics</span> <span class="p">(</span><span class="nf">lit-conc-seq</span> <span class="s">&quot;i/+&quot;</span> <span class="nv">lit</span><span class="p">)</span>
-</span><span class='line'>                     <span class="p">(</span><span class="nb">char </span><span class="mi">0</span><span class="nv">x0390</span><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">iota-dialytika-tonos</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">constant-semantics</span> <span class="p">(</span><span class="nf">lit-conc-seq</span> <span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;i/+&amp;rdquo; lit)</span>
+</span><span class='line'>                         <span class="p">(</span><span class="nb">char </span><span class="mi">0</span><span class="nv">x0390</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p>Then I'd redefined <code>character</code> to be:</p>
+<p>Then I&rsquo;d redefined <code>character</code> to be:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">character</span> <span class="p">(</span><span class="nf">alt</span> <span class="nv">iota-dialytika-tonos</span> <span class="nv">final-sigma</span> <span class="nv">upper-char</span> <span class="nv">lower-char</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Which means that the rule <code>iota-dialytika-tonos</code> takes precedence over any other character (to prevent the dumb combining diacritic rules from matching it).</p>
 
-<p>And that brings me on to final sigma. Final sigma has given me quite a lot of pain, ever since I started building this parser. For those of you who don't know Greek, like me, they have two sigma characters - one is used in the middle of a word:</p>
+<p>And that brings me on to final sigma. Final sigma has given me quite a lot of pain, ever since I started building this parser. For those of you who don&rsquo;t know Greek, like me, they have two sigma characters - one is used in the middle of a word:</p>
 
 <h1 class="greek">σ</h1>
 
@@ -720,27 +600,19 @@ help others grok this mind-mending area of programming.</p>
 <h1 class="greek">ς</h1>
 
 
-<p>The problem with matching something at the end of a word is that fnparse's matchers are mostly greedy. There's no equivalent rule, as far as I can tell, to the regular expression <code>(.+)s</code>. The <code>rep+</code> rules always greedily gobble all the tokens, including the last <code>s</code>. At the moment, all I have is the following rule for final sigma:</p>
+<p>The problem with matching something at the end of a word is that fnparse&rsquo;s matchers are mostly greedy. There&rsquo;s no equivalent rule, as far as I can tell, to the regular expression <code>(.+)s</code>. The <code>rep+</code> rules always greedily gobble all the tokens, including the last <code>s</code>. At the moment, all I have is the following rule for final sigma:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">final-sigma</span> <span class="p">(</span><span class="nf">constant-semantics</span> <span class="p">(</span><span class="nf">lit-conc-seq</span> <span class="s">&quot;s &quot;</span> <span class="nv">lit</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>                                 <span class="p">(</span><span class="nb">str </span><span class="p">(</span><span class="nb">char </span><span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">beta-char-to-greek-char</span> <span class="sc">\s</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
-</span><span class='line'>                                      <span class="sc">\s</span><span class="nv">pace</span><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">final-sigma</span> <span class="p">(</span><span class="nf">constant-semantics</span> <span class="p">(</span><span class="nf">lit-conc-seq</span> <span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;s &amp;rdquo; lit)</span>
+</span><span class='line'>                                     <span class="p">(</span><span class="nb">str </span><span class="p">(</span><span class="nb">char </span><span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">beta-char-to-greek-char</span> <span class="sc">\s</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'>                                          <span class="sc">\s</span><span class="nv">pace</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
-<p>This isn't ideal because it can't match either the last <code>s</code> of the last word in a string (or line), or <code>s</code> followed only by a non-character (such as <code>:</code>). This is something I have to work on, but fnparse isn't making it easy for me here.</p>
+<p>This isn&rsquo;t ideal because it can&rsquo;t match either the last <code>s</code> of the last word in a string (or line), or <code>s</code> followed only by a non-character (such as <code>:</code>). This is something I have to work on, but fnparse isn&rsquo;t making it easy for me here.</p>
 
-<p>So as a result of all that, here's the first verse of the Odyssey by Homer:</p>
+<p>So as a result of all that, here&rsquo;s the first verse of the Odyssey by Homer:</p>
 
 <blockquote class="greek" style="font-style: normal">
 ἄνδρα μοι ἔννεπε, μοῦσα, πολύτροπον, ὃς μάλα πολλὰ<br/>
@@ -763,7 +635,7 @@ help others grok this mind-mending area of programming.</p>
 <ul>
 <li><a href="http://github.com/joshua-choi/fnparse/">fnparse</a> which is awesome for taming parse-m monads in Clojure.</li>
 <li>Thanks to <a href="http://www.tlg.uci.edu/~opoudjis/unicode/gkdiacritics.html">Greek Diacritics</a> for information about combining diacritics.</li>
-<li><a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> Wikipedia's writup on the EPUB standard is almost all you need.</li>
+<li><a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> Wikipedia&rsquo;s writup on the EPUB standard is almost all you need.</li>
 <li><a href="http://idpf.org/epub/20/spec/OPF_2.0.1_draft.htm">OPF</a> The OPF/NCX standard.</li>
 <li><a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0135">The Odyssey</a> From the Perseus Digital Library, the source for the XML files I have been consuming in this project.</li>
 </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ubuntu | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/ubuntu/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2014-12-28T19:05:00+00:00</updated>
+  <updated>2014-12-29T15:43:23+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -25,13 +25,12 @@
 
 <p>And you get this error:</p>
 
-<p><code>
-Error reading SVG:
+<pre><code>Error reading SVG:
 convert: delegate failed `"rsvg-convert" -o "%o" "%i"' @ error/delegate.c/InvokeDelegate/1058.
 convert: unable to open image `/tmp/magick-Oj094Z9n':  @ error/blob.c/OpenBlob/2587.
 convert: unable to open file `/tmp/magick-Oj094Z9n':  @ error/constitute.c/ReadImage/571.
 convert: missing an image filename `png:-' @ error/convert.c/ConvertImageCommand/3011.
-</code></p>
+</code></pre>
 
 <p>Then you need to install (on Ubuntu anyway):</p>
 
@@ -40,13 +39,12 @@ convert: missing an image filename `png:-' @ error/convert.c/ConvertImageCommand
 
 <p>I had to strace the <code>convert</code> command to find out that it was looking for a missing file. This is from the strace output:</p>
 
-<p><code>
-stat("/usr/lib/ImageMagick-6.6.9/modules-Q16/coders/svg.la", 0x7fffe6cace90) = -1 ENOENT (No such file or directory)
-</code></p>
+<pre><code>stat("/usr/lib/ImageMagick-6.6.9/modules-Q16/coders/svg.la", 0x7fffe6cace90) = -1 ENOENT (No such file or directory)
+</code></pre>
 
 <p>Words cannot describe how I feel about Imagemagick right now.</p>
 
-<p>Note to self: install this required package (stupidly called "-extra").</p>
+<p>Note to self: install this required package (stupidly called &ldquo;-extra&rdquo;).</p>
 
 <p>Also note to self: avoid Imagemagick like the plague.</p>
 ]]></content>
