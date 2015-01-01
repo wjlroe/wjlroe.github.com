@@ -23,7 +23,7 @@ cd multi-vagrant-ansible
 vagrant init
 ```
 
-This will create a `VagrantFile` in the current directory with
+This will create a `Vagrantfile` in the current directory with
 commented contents. Let's cut it back to the essentials and add in a
 URL for the base box ([Ubuntu Trusty][ubuntu-cloud] is the latest LTS
 release so that's what I'll use):
