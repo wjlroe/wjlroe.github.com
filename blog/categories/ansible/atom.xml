@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ansible | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/ansible/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-01T16:19:06+00:00</updated>
+  <updated>2015-01-01T16:22:18+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -35,7 +35,7 @@ cd multi-vagrant-ansible
 vagrant init
 </code></pre>
 
-<p>This will create a <code>VagrantFile</code> in the current directory with
+<p>This will create a <code>Vagrantfile</code> in the current directory with
 commented contents. Let&rsquo;s cut it back to the essentials and add in a
 URL for the base box (<a href="https://cloud-images.ubuntu.com/vagrant/" title="Ubuntu Cloud Vagrant images">Ubuntu Trusty</a> is the latest LTS
 release so that&rsquo;s what I&rsquo;ll use):</p>
