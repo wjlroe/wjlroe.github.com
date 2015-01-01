@@ -9,9 +9,8 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="On OS X, if I use tmux (or more usually,
-wemux for pairing) then I end up with oddly
-named windows like this: This is because I&rsquo;ve followed the &hellip;">
+  <meta name="description" content="JSON is a fairly easy to read format but sometimes you need to deal with an
+unreadable dump of the stuff and it&rsquo;d be useful to quickly reformat &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +90,186 @@ named windows like this: This is because I&rsquo;ve followed the &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/03/27/json-for-humans.html">JSON for Humans</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-03-27T12:58:00+00:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:58 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>JSON is a fairly easy to read format but sometimes you need to deal with an
+unreadable dump of the stuff and it&rsquo;d be useful to quickly reformat or prettify
+it. There are a number of ways to do this.</p>
+
+<h2>Javascript (Chrome, Firefox etc.)</h2>
+
+<p>Javascript has the
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#space_argument">JSON.stringify</a>
+function, which can pretty-print JSON according to the number of spaces you
+pass as the 3rd parameter. For example:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">example</span> <span class="o">=</span> <span class="p">{</span><span class="nx">user</span><span class="o">:</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Ada Lovelace&quot;</span><span class="p">,</span> <span class="nx">email</span><span class="o">:</span> <span class="s2">&quot;ada@example.com&quot;</span><span class="p">},</span> <span class="nx">group</span><span class="o">:</span> <span class="s2">&quot;programmers&quot;</span><span class="p">}</span>
+</span><span class='line'><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">example</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you try the above in a console in a web browser (or a Node.js console), you
+should see this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>    "user": {
+</span><span class='line'>        "name": "Ada Lovelace",
+</span><span class='line'>        "email": "ada@example.com"
+</span><span class='line'>    },
+</span><span class='line'>    "group": "programmers"
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>json_reformat</h2>
+
+<p>That&rsquo;s all well and good, but relying on a javascript console is not the most
+efficient way to do things, so an easier and more scritable tool is the
+json_reformat command (part of the <a href="http://lloyd.github.io/yajl/">Yajl</a>).
+To get this tool installed, do the following:</p>
+
+<ul>
+<li><code>brew install yajl</code> - OS X</li>
+<li><code>apt-get install yajl-tools</code> - Debian/Ubuntu Linux</li>
+</ul>
+
+
+<p>Now you can just pipe JSON text to <code>json_reformat</code> and it will pretty-print
+it to standard output. This makes it very useful for use in other tools, such as
+vim. Here is some vim config for using <code>json_reformat</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">au</span> <span class="nb">BufRead</span><span class="p">,</span><span class="nb">BufNewFile</span> *.json <span class="k">set</span> <span class="k">filetype</span><span class="p">=</span>json
+</span><span class='line'><span class="k">au</span> <span class="nb">FileType</span> json <span class="k">setlocal</span> <span class="nb">equalprg</span><span class="p">=</span>json_reformat
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let&rsquo;s edit a file that was generated by <a href="http://berkshelf.com">Berkshelf</a>
+and has been spat out on the filesystem in <code>~/.berkshelf/config.json</code>. Initially
+it looks like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span><span class="nt">&quot;chef&quot;</span><span class="p">:{</span><span class="nt">&quot;chef_server_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://api.opscode.com/organizations/acmecorp&quot;</span><span class="p">,</span><span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span><span class="s2">&quot;acmecorp-validator&quot;</span><span class="p">,</span><span class="nt">&quot;validation_key_path&quot;</span><span class="p">:</span><span class="s2">&quot;/Users/ada/Work/.chef/acmecorp-validator.pem&quot;</span><span class="p">,</span><span class="nt">&quot;client_key&quot;</span><span class="p">:</span><span class="s2">&quot;/Users/ada/Work/.chef/ada.pem&quot;</span><span class="p">,</span><span class="nt">&quot;node_name&quot;</span><span class="p">:</span><span class="s2">&quot;ada&quot;</span><span class="p">},</span><span class="nt">&quot;cookbook&quot;</span><span class="p">:{</span><span class="nt">&quot;copyright&quot;</span><span class="p">:</span><span class="s2">&quot;Ada Lovelace&quot;</span><span class="p">,</span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;ada@example.com&quot;</span><span class="p">,</span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="s2">&quot;MIT&quot;</span><span class="p">},</span><span class="nt">&quot;allowed_licenses&quot;</span><span class="p">:[],</span><span class="nt">&quot;raise_license_exception&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">&quot;vagrant&quot;</span><span class="p">:{</span><span class="nt">&quot;vm&quot;</span><span class="p">:{</span><span class="nt">&quot;box&quot;</span><span class="p">:</span><span class="s2">&quot;Berkshelf-CentOS-6.3-x86_64-minimal&quot;</span><span class="p">,</span><span class="nt">&quot;box_url&quot;</span><span class="p">:</span><span class="s2">&quot;https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box&quot;</span><span class="p">,</span><span class="nt">&quot;forward_port&quot;</span><span class="p">:{},</span><span class="nt">&quot;network&quot;</span><span class="p">:{</span><span class="nt">&quot;bridged&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">&quot;hostonly&quot;</span><span class="p">:</span><span class="s2">&quot;33.33.33.10&quot;</span><span class="p">},</span><span class="nt">&quot;provision&quot;</span><span class="p">:</span><span class="s2">&quot;chef_solo&quot;</span><span class="p">}},</span><span class="nt">&quot;ssl&quot;</span><span class="p">:{</span><span class="nt">&quot;verify&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">}}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This passive-aggressive attempt by the machines to subjugate us humans just will
+not stand and thankfully we have the tools to take back control of our JSON
+configs. Position the cursor anywhere on the single line of JSON and press &lsquo;==&rsquo;,
+vim will pipe the buffer to <code>json_reformat</code> and replace it with the output of
+that command resulting in this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;chef&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;chef_server_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.opscode.com/organizations/acmecorp&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;acmecorp-validator&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;validation_key_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/Users/ada/Work/.chef/acmecorp-validator.pem&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;client_key&quot;</span><span class="p">:</span> <span class="s2">&quot;/Users/ada/Work/.chef/ada.pem&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;node_name&quot;</span><span class="p">:</span> <span class="s2">&quot;ada&quot;</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;cookbook&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;copyright&quot;</span><span class="p">:</span> <span class="s2">&quot;Ada Lovelace&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;ada@example.com&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="s2">&quot;MIT&quot;</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;allowed_licenses&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">],</span>
+</span><span class='line'>    <span class="nt">&quot;raise_license_exception&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;vagrant&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;vm&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nt">&quot;box&quot;</span><span class="p">:</span> <span class="s2">&quot;Berkshelf-CentOS-6.3-x86_64-minimal&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;box_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nt">&quot;forward_port&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="p">},</span>
+</span><span class='line'>            <span class="nt">&quot;network&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nt">&quot;bridged&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>                <span class="nt">&quot;hostonly&quot;</span><span class="p">:</span> <span class="s2">&quot;33.33.33.10&quot;</span>
+</span><span class='line'>            <span class="p">},</span>
+</span><span class='line'>            <span class="nt">&quot;provision&quot;</span><span class="p">:</span> <span class="s2">&quot;chef_solo&quot;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;ssl&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;verify&quot;</span><span class="p">:</span> <span class="kc">false</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This trick with vim and json_reformat is one of the many answers to a
+<a href="http://stackoverflow.com/a/6047998">StackOverflow question</a> about
+pretty-printing JSON, there are so many more.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -179,108 +358,6 @@ and its contents, change <code>/log</code> to <code>log</code>.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/06/06/ember-transition-to-new-model-hack.html">Ember transitionToRoute With New Model Hack</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2013-06-06T19:53:00+01:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:53 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><aside class="update">
-<strong>Update</strong>: None of this is required with current versions of Ember and
-Ember-data.
-</aside></p>
-
-<p>A common pattern with webapps in these exciting times is the
-transition-to-new-thing-you-just-created pattern. The way it works is this: you
-fill in a form to create a new thing (like, a widget or something) and then when
-you hit &lsquo;save&rsquo;, you are transitioned to the page for that widget. This is so you
-can confirm that it worked and so you could make further changes on that widget.
-The assumption being, when you create a widget, it is the focus of your task.</p>
-
-<p>Whatever, anyway, I had to make something along those lines in an EmberJS app at
-work and hit an ember-data bug. Surprise!</p>
-
-<p>The bug is that when you try to do this (code speaks louder than widget
-metaphors):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">App</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">createRecord</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;special_widget&quot;</span><span class="p">});</span>
-</span><span class='line'><span class="nx">model</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="s1">&#39;didCreate&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">transitionToRoute</span><span class="p">(</span><span class="s1">&#39;widgets.show&#39;</span><span class="p">,</span> <span class="nx">model</span><span class="p">);</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">commit</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This doesn&rsquo;t work with ember-data currently - what happens is the <code>model</code> object
-that gets sent to the <code>didCreate</code> callback there won&rsquo;t have an <code>id</code> from the
-server (it hasn&rsquo;t been filled in for some reason).</p>
-
-<p>To work around this issue, you need to do something akin to this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">saveTheWidget</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">App</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">createRecord</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;very_special_widget&quot;</span><span class="p">});</span>
-</span><span class='line'>  <span class="nx">model</span><span class="p">.</span><span class="nx">addObserver</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">showWidget</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">commit</span><span class="p">();</span>
-</span><span class='line'><span class="p">},</span>
-</span><span class='line'><span class="nx">showWidget</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">model</span><span class="p">.</span><span class="nx">removeObserver</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">showWidget</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">transitionToRoute</span><span class="p">(</span><span class="s1">&#39;widgets.show&#39;</span><span class="p">,</span> <span class="nx">model</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In that example we trigger the page transition off the change of value of <code>id</code>.
-This works because for a short while, the <code>id</code> will be <code>null</code> until Ember-data
-fills in the new <code>id</code> from the server. Then your callback is called and the page
-transition happens. The difference in timing is not noticeable to the user - it&rsquo;s
-just a race condition within Ember-data itself. Other than that - in this
-example, the observer is removed, which is good practice for observers and you
-should always remove observers you&rsquo;ve added (as I understand it).</p>
-
-<p>Other alternative workarounds include wrapping the <code>transitionToRoute</code> call in a
-<code>setTimeout()</code> block - to make it pause just long enough for the model&rsquo;s <code>id</code> to
-be filled in.</p>
-
-<p>Most of the above came from
-<a href="http://stackoverflow.com/questions/14981500/transition-after-saving-model-of-ember-data">Stackoverflow</a>
-and the <a href="https://github.com/emberjs/data/issues/405#issuecomment-18891172">bug report and workaround</a> on
-ember-data.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page3">&larr; Older</a>
@@ -300,7 +377,7 @@ ember-data.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 William Roe&#146;s blog &sect;
+  Copyright &copy; 2015 William Roe&#146;s blog &sect;
   <span class="credit"> My life made easier by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

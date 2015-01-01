@@ -9,7 +9,9 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="So I have started to learn Haskell (again - I learned the basics at university for the Functional Programming class and loved it, I have since &hellip;">
+  <meta name="description" content="Today I decided to embark on an exploration of Haskell web
+development. I have previously bootstrapped a basic
+Snap setup but never got into actual &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -89,6 +91,110 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/07/further-haskell-exploration.html">Further Haskell Exploration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-02-07'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today I decided to embark on an exploration of Haskell web
+development. I have previously bootstrapped a basic
+<a href="http://snapframework.com/">Snap</a> setup but never got into actual
+hacking. Today I decided to give <a href="http://www.yesodweb.com/">Yesod</a> a
+go. I ran into a number of difficulties that drained away all my spare
+time this evening but in the end I feel like I&rsquo;m ready to dive in
+tomorrow.</p>
+
+<p>I started off by attempting to install Yesod, with a simple <code>cabal
+install yesod</code>. This command took about 10 minutes to finish compiling
+dependencies on my ThinkPad X61 before it died with an error. The
+problem seemed to be the version of
+<a href="http://hackage.haskell.org/platform/">haskell-platform</a> was rather
+out-of-date, meaning a tool, called <code>alex</code> was too old for Yesod. To
+solve this rather small issue I took the rather drastic step of
+upgrading Ubuntu on the ThinkPad to
+<a href="https://wiki.ubuntu.com/PrecisePangolin">Precise Pangolin</a> because
+this includes the latest haskell-platform&hellip;and its all new and&hellip;just
+because! This is Ubuntu after all - trigger happy upgrades are the
+name of the game.</p>
+
+<p>Meanwhile, in Mac land. While that upgrade was running I tried to run
+the new yesod web app on a Mac. Unfortunately I ran into all the
+problems I&rsquo;ve encountered before with cabal-dev on OS X.</p>
+
+<p>Firstly there&rsquo;s some weirdness with cabal-dev being set to install
+everything in the system library location. This just makes no sense for
+cabal-dev - the whole point is for it to install libraries in a
+vendored, per-project location - not interfering with system
+libraries. It manifested itself as asking for a password all the time
+(turn on verbose <code>-v3</code> to see it running all cabal commands with sudo
+- O_o). To fix that you edit the config file, outlined in a
+  <a href="http://passingcuriosity.com/2011/cabal-dev-configuration-tweaks/">blog post I found</a>. Annoying.</p>
+
+<p>Another problem I had was ghc/ld spamming the terminal with loads of
+linker warnings. This really slowed down compilation. I didn&rsquo;t really
+solve this (happened on my Mac Mini - didn&rsquo;t happen on my work MacBook
+Air). I remember having to set options for GHC to silence that crap,
+but I forget the details&hellip;</p>
+
+<p>In order to get it all working on my Mac I:</p>
+
+<ul>
+<li>Uninstalled haskell-platform (this is homebrew installed for me)</li>
+<li>Re-installed haskell-platform</li>
+<li>cabal installed cabal-dev, yesod</li>
+</ul>
+
+
+<p>Everything worked then. There&rsquo;s also strange voodoo you have to run to
+unregister old packages - <code>brew info haskell-platform</code> splits out the
+necessary commands.</p>
+
+<p>After all that, things worked&hellip;mostly. Currently there seems to be
+some car crash of dependencies caused by a new release of something
+called tls-extras. A helpful stranger in IRC (#yesod) told me to
+<code>cabal-dev install tls-extra-0.4.2.1</code> - this forces a working version
+of that library and then you can happily install yesod and
+everything&rsquo;s groovy.</p>
+
+<p>Who said Haskell was difficult? Not me.</p>
+
+<p>So now I have a skeleton Yesod project up and running and it&rsquo;s all
+looking very promising. The helper script for creating projects gave
+me some confidence - specifically asking if I wanted sqlite, postgres,
+MongoDB or nothing seemed pretty good to me - this doesn&rsquo;t appear to be
+a web framework/persistence system tied to a particular way of doing
+things.</p>
+
+<p>The main reason why I decided to dive into Yesod however was the high
+volume of interesting yesod-related blog traffic - this is a pretty
+crucial metric in gauging the health of a library community in my
+opinion and my RSS reader has been bombarded with posts about it so I
+felt I had to see what all the fuss was about.</p>
+
+<p>Hopefully happy Haskell hacking henceforth</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -195,129 +301,6 @@ First, I believe power should lie with the people – and AV would take some of 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/05/02/install-natty-sony-vaio-vpc-y21.html">How to Install Ubuntu Natty on the Sony Vaio VPC Y21 S1E</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2011-05-02T00:00:00+01:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2011</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This is a howto guide for installing Ubuntu Natty on the troublesome Sony Vaio VPC-Y21-S1E. I say troublesome because no distribution of Linux installs a fully working system on this laptop to the best of my knowledge, even though the hardware is all very common and not very new. Owning this laptop and running Linux is like going back in time to the early 2000s when installing Linux was a week&rsquo;s work on any machine. It&rsquo;s horrendous that even distros that favour ease of use by default have yet to achieve good hardware support.</p>
-
-<h2>Step 1 - install Ubuntu</h2>
-
-<p>I used the alternative amd64 ISO image for this (and a USB CDROM drive). The text mode installer worked fine as usual and installed in an hour or so. Not exactly quick, but probably that&rsquo;s due to very slow IO on this machine.</p>
-
-<p>Once Ubuntu Natty is installed and reboots into your new system, you will notice a couple of things. Firstly the graphics will be running in some kind of generic mode with the wrong resolution. The native resolution of this panel is the now relatively standard 1366x768 of this class of laptop. Out of the box though, Ubuntu will boot in 1024x768 and it looks horrendous. According to Xorg.0.log it will select the VESA driver instead of the intel one it should be using. This is why it will start in unaccelerated, not much works mode. Needless to say, Unity will not be making an appearance yet. I think this is because there is a regression in the 2.6.36 kernel - according to another user of this laptop, the previous kernel version (2.6.37rc8) should work fine.</p>
-
-<h2>Step 2 - get a working kernel</h2>
-
-<p>You&rsquo;re going to need to get the network setup before you can do anything useful. Out of the box, I&rsquo;m not sure if the wireless is working or not because no mouse will work. The touchpad does nothing and any mouse I plugged in didn&rsquo;t work either. This is extremely poor if even a simple USB mouse won&rsquo;t work.</p>
-
-<p>The first thing to try is to get a working kernel installed. I headed here <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v2.6.37-rc8-natty/">Index of /~kernel-ppa/mainline/v2.6.37-rc8-natty</a> to get the headers and image packages for the amd64. It&rsquo;s pretty difficult to get anything onto the laptop since USB isn&rsquo;t working at all under Natty. I tried using a USB flash drive to copy the kernel files over - no luck. So what I did was shorten the kernel-ppa link <a href="http://bit.ly/ieDkmQ">http://bit.ly/ieDkmQ</a>, connected the laptop to my ADSL router with an ethernet cable and downloaded those files. I had to keep telling myself it was in fact still 2011.</p>
-
-<p>Once I&rsquo;d installed the older kernel and rebooted, things started to work. The bootup screen was garbled however and I got what looked like a kernel panic, with a stackframe all over the place - but it wasn&rsquo;t because I could switch to a random VC and back to the 7th VC and see GDM there. It&rsquo;s just a complete mess. I think I&rsquo;m gonna have to disable the bootspash stuff because it&rsquo;s so incredibly messed up (for every other install of Linux on this laptop I&rsquo;ve had to do that).</p>
-
-<h2>Step 3 - Change the default kernel</h2>
-
-<p>We need to change the default kernel that boots to avoid booting a broken kernel every time we turn the laptop on.</p>
-
-<ul>
-<li>Set <code>GRUB_DEFAULT=saved</code> in the file <code>/etc/default/grub</code>, so we can set the default kernel.</li>
-<li>I wanted to find out what the menuentry is for the kernel I&rsquo;ve just installed, so I ran:</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>grep menuentry /boot/grub/grub.cfg
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This will print out every entry in GRUB. This is all from the <a href="https://help.ubuntu.com/community/Grub2">Grub2</a> page.</p>
-
-<ul>
-<li>Now use the appropriate menuentry to set as the default. If you installed the same one I did, then that will be &ldquo;Ubuntu, with Linux 2.6.37-020637rc8-generic&rdquo;:</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo grub-set-default <span class="s1">&#39;Ubuntu, with Linux 2.6.37-020637rc8-generic&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Save all that to grub:</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-grub
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That&rsquo;s it, should be set now. This didn&rsquo;t work for me though. With ever release of grub and ubuntu tools, it gets more and more difficult to do simple things. It&rsquo;s cool that update-grub can detect all the OSes on your hard drive and boot them (it ignored the other Ubuntu install ironically so it&rsquo;s not included in the boot menu, pretty silly bug). But please! the ability to set a default kernel or menuentry should be easy and <em>should work</em>. In the end, I set <code>GRUB_SAVEDEFAULT=true</code> in <code>/etc/default/grub</code> and chose the kernel I wanted so that in future it&rsquo;ll boot that one every time. What a joke.</p>
-
-<p>For my sanity, I turned off the bootscreen which, on this laptop is severly broken. Even though I&rsquo;ve turned the boot splash off, I still have to switch to another VC and back to 7 to see the GDM login screen. Broken.</p>
-
-<h2>Step 4 - Getting wireless working</h2>
-
-<p>Now we have the mouse working, and USB mice work and graphics are as good as you&rsquo;ll probably ever get on Linux (i.e. not great).</p>
-
-<p>Wireless is disabled though and you can&rsquo;t enable it from the networking icon (Network Manager). This is an issue I&rsquo;ve had with Ubuntu on this machine before and I had to dig around to find out how to force it to be enabled.</p>
-
-<p>Enabling the wirelss is not a simple task. It involves messing around with <code>rfkill</code> and it&rsquo;s not a simple matter of running <code>rfkill unblock all</code> either - which is maddening. The wireless card is still soft-blocked after that. (Hard blocked means the hardware switch is off and soft blocked means it&rsquo;s turned off in software somewhere).</p>
-
-<p>I couldn&rsquo;t find the solution by googling and browsing a million Ubuntu forum threads, but checking my <code>/etc/modprobe.d/</code> directory in the other Ubuntu install pointed the way. You need a file with the following contents:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>blacklist acer-wmi
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I called that file <code>blacklist-acer-wmi.conf</code> and this time I remembered to copy it into my Dropbox folder so that I won&rsquo;t forget about it again.</p>
-
-<h2>Suspend</h2>
-
-<p>Suspend and resume works with Natty! Yay! It didn&rsquo;t work on this laptop with Maverick. So we have <em>some</em> progress.</p>
-
-<h2>Multiple monitors</h2>
-
-<p>I tried plugging a VGA monitor in and it was detected and the correct resolution was selected. Wonderful. However, when I tried to change the layout of the monitors, it messed up completely and I ended up with random desktops being drawn all over the monitors. Unplugging and plugging the monitor in fixed that, with only some minor rendering issues (there was a black border around much of the second desktop that went away when I moved a window around). This sort of thing should have been sorted a long time ago, it&rsquo;s tiresome to be messing around with such a mess.</p>
-
-<h2>Other problems</h2>
-
-<ol>
-<li>When you launch the Update Manager, it still reports everything is up do date without checking first. This is really stupid, having to click on &ldquo;Check&rdquo; to download the latest package definitions before it realises there are updates to install. It should take the fact that you&rsquo;ve deliberately openned Update Manager for the sole purpose of checking whether your software is up-to-date and not tell you out-of-date information.</li>
-<li>Keyboard navigation is still horrible in Gnome (that&rsquo;s the Classic desktop thing that Ubuntu puts you in if there are problems with your drivers - very likely).</li>
-</ol>
-
-
-<h2>Summary</h2>
-
-<p>Linux and Ubuntu have a very long way to go before they can start to compete with the commercial alternatives. Although Unity is a refreshing innovation on desktop interfaces, it really needs to be backed up with great hardware support and general ease of use that goes a little more than skin deep.</p>
-
-<p>I think I will be posting a review of Natty later - that will focus on Natty as a working system, rather than specific to this laptop. So far though, having used it for a couple of hours setting up my environment, it&rsquo;s a great system. It needs a lot more QA to sort out the hardware and system problems though.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page6">&larr; Older</a>
@@ -337,7 +320,7 @@ First, I believe power should lie with the people – and AV would take some of 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 William Roe&#146;s blog &sect;
+  Copyright &copy; 2015 William Roe&#146;s blog &sect;
   <span class="credit"> My life made easier by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

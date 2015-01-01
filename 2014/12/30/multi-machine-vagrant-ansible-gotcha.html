@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Multi-Machine Vagrant Ansible Gotcha - William Roe&#146;s blog</title>
+  <meta name="author" content="Will Roe">
+
+  
+  <meta name="description" content="Vagrant is a fantastic tool for defining how virtual instances are
+to be run and provisioned. I&rsquo;ve used Vagrant with Chef-Solo and
+Ansible &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.wjlr.org.uk/2014/12/30/multi-machine-vagrant-ansible-gotcha.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="William Roe&#146;s blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Caudex:400,700,400italic,700italic&subset=latin,greek-ext,greek,latin-ext'
+      rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="//use.typekit.net/ntz0pdz.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+<!-- For iPhone 6 Plus with @3× display: -->
+<link rel="apple-touch-icon-precomposed" sizes="180x180" href="/images/apple-touch-icon-180x180-precomposed.png">
+<!-- For iPad with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/apple-touch-icon-152x152-precomposed.png">
+<!-- For iPad with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+<!-- For iPhone with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/apple-touch-icon-120x120-precomposed.png">
+<!-- For iPhone with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/apple-touch-icon-76x76-precomposed.png">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-57x57-precomposed.png"><!-- 57×57px -->
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-7810285-4']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">William Roe&#146;s blog</a></h1>
+  
+    <h2>A variety of geekery</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Multi-Machine Vagrant Ansible Gotcha</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-30T16:00:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:00 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="https://docs.vagrantup.com/" title="Vagrant">Vagrant</a> is a fantastic tool for defining how virtual instances are
+to be run and provisioned. I&rsquo;ve used Vagrant with <a href="https://docs.chef.io/chef_solo.html" title="Chef-solo">Chef-Solo</a> and
+<a href="http://docs.ansible.com/index.html">Ansible</a> provisioners and it&rsquo;s helped me understand those tools and
+iterate quickly. There are some gotchas however and in this post I
+will explore a particular flaw in the way Vagrant and Ansible
+cooperate.</p>
+
+<h2>Multi-machine setup</h2>
+
+<p>Let&rsquo;s begin by defining a Vagrant environment that we will play with
+(you will need <a href="https://www.virtualbox.org">VirtualBox</a>, Vagrant and Ansible installed):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir multi-vagrant-ansible
+</span><span class='line'><span class="nb">cd </span>multi-vagrant-ansible
+</span><span class='line'>vagrant init
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will create a <code>VagrantFile</code> in the current directory with
+commented contents. Let&rsquo;s cut it back to the essentials and add in a
+URL for the base box (<a href="https://cloud-images.ubuntu.com/vagrant/" title="Ubuntu Cloud Vagrant images">Ubuntu Trusty</a> is the latest LTS
+release so that&rsquo;s what I&rsquo;ll use):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># -*- mode: ruby -*-</span>
+</span><span class='line'><span class="c1"># vi: set ft=ruby :</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;trusty64&quot;</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_url</span> <span class="o">=</span> <span class="s2">&quot;https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box&quot;</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="s2">&quot;dhcp&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If we run Vagrant now, it&rsquo;ll clone that base box (downloading it first
+if it hasn&rsquo;t already done so) and boot it up. This is already quicker
+than downloading an ISO, creating a new VirtualBox instance, booting
+that up and going through the installation procedure.</p>
+
+<p>Let&rsquo;s define some machines and set them up to be provisioned by
+Ansible. We&rsquo;ll have two web servers and one load balancer, because
+that&rsquo;s boringly conventional:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;ariadne&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">ariadne</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">ariadne</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;ansible&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">ansible</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">ansible</span><span class="o">.</span><span class="n">playbook</span> <span class="o">=</span> <span class="s2">&quot;loadbalancer.yml&quot;</span>
+</span><span class='line'>      <span class="n">ansible</span><span class="o">.</span><span class="n">sudo</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;minos&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">minos</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">minos</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;ansible&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">ansible</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">ansible</span><span class="o">.</span><span class="n">playbook</span> <span class="o">=</span> <span class="s2">&quot;webserver.yml&quot;</span>
+</span><span class='line'>      <span class="n">ansible</span><span class="o">.</span><span class="n">sudo</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;pasiphae&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">pasiphae</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">pasiphae</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;ansible&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">ansible</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">ansible</span><span class="o">.</span><span class="n">playbook</span> <span class="o">=</span> <span class="s2">&quot;webserver.yml&quot;</span>
+</span><span class='line'>      <span class="n">ansible</span><span class="o">.</span><span class="n">sudo</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So in the above, <code>minos</code> and <code>pasiphae</code> are web servers (i.e. they
+will be running <a href="http://nginx.org">nginx</a>) and <code>ariadne</code> is the load balancer. The
+location of the ansible playbooks are relative to the Vagrantfile so
+in the same directory we will create <code>webserver.yml</code> with the
+following contents:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="nn">---</span>
+</span><span class='line'>
+</span><span class='line'><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">hosts</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">all</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">apt</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name=nginx state=present</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">service</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name=nginx state=started</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which ensures that nginx is not only installed but also running (it&rsquo;ll
+also mean that if that server is rebooted, it&rsquo;ll still run nginx).</p>
+
+<p>Now for the load balancer, <code>loadbalancer.yml</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="nn">---</span>
+</span><span class='line'>
+</span><span class='line'><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">hosts</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">all</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">apt</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name=haproxy state=present</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">service</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name=haproxy state=started</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which ensures <a href="http://www.haproxy.org">haproxy</a> is installed and running in the same way.</p>
+
+<p>These two playbooks are not aware of each other, they act
+independently and you could use <code>ansible-playbook</code> to provision any
+server you liked with them.</p>
+
+<p>If you run <code>vagrant up</code> at this point (assuming you&rsquo;ve not done that
+with this Vagrantfile before), it&rsquo;ll boot up new VirtualBox instances
+and provision them with ansible, installing the necessary software
+etc. All well and good so far.</p>
+
+<h2>Ansible facts</h2>
+
+<p>Ansible starts off by collecting facts about the nodes it&rsquo;ll run on.
+It does this so that you can use information about the node in your
+playbooks, roles and tasks.</p>
+
+<p>To see the kind of facts that ansible collects about a node, you can
+run ansible&rsquo;s <code>setup</code> module like this (for the minos instance):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ansible -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory -m setup -u vagrant --private-key<span class="o">=</span>.vagrant/machines/minos/virtualbox/private_key minos
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above command should print out a large JSON structure of all the
+facts ansible has collected about that node. Ansible facts are
+somewhat extensible so it can include information gathered using the
+<a href="https://github.com/opscode/ohai">Ohai</a> or <a href="https://github.com/puppetlabs/facter">Facter</a> tools.</p>
+
+<p>The facts relevant to our example are under the <code>ansible_eth1</code>
+key and they include an IPv4 address - which will come in handy in a
+moment.</p>
+
+<h2>Facts &amp; templates</h2>
+
+<p>Now let&rsquo;s create a <a href="http://docs.ansible.com/template_module.html">template</a> for the haproxy configuration (in
+<code>templates/haproxy.cfg.j2</code>):</p>
+
+<figure class='code'><figcaption><span>Haproxy config  (haproxy.cfg.j2)</span> <a href='/downloads/code/haproxy.cfg.j2'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='jinja'><span class='line'><span class="x">backend web-backend</span>
+</span><span class='line'><span class="x">  balance roundrobin</span>
+</span><span class='line'><span class="x">  mode http</span>
+</span><span class='line'><span class="x">  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">host</span> <span class="k">in</span> <span class="nv">groups</span><span class="o">[</span><span class="s1">&#39;webservers&#39;</span><span class="o">]</span> <span class="cp">%}</span><span class="x"></span>
+</span><span class='line'><span class="x">     server </span><span class="cp">{{</span> <span class="nv">host</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">hostvars</span><span class="o">[</span><span class="nv">host</span><span class="o">]</span><span class="nv">.ansible_eth1.ipv4.address</span> <span class="cp">}}</span><span class="x">:80 check</span>
+</span><span class='line'><span class="x">  </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&rsquo;ll also need to ensure that template gets used in the loadbalancer
+playbook:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="nn">---</span>
+</span><span class='line'>
+</span><span class='line'><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">hosts</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">all</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">apt</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name=haproxy state=present</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">service</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name=haproxy state=started</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Configure haproxy</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">template</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">src=templates/haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If we run this now, we&rsquo;ll get a cryptic error:</p>
+
+<p><code>fatal: [ariadne] =&gt; {'msg': "AnsibleUndefinedVariable: One or more undefined variables: 'dict object' has no attribute 'webservers'", 'failed': True}</code></p>
+
+<p>One possible reason for this is that we haven&rsquo;t defined any groups for
+our vagrant instances, let&rsquo;s do that now. We&rsquo;ll start by defining the
+groups at the top of the Vagrantfile, before anything else (but after
+the emacs/vi mode comments):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">groups</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="s2">&quot;webservers&quot;</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;minos&quot;</span><span class="p">,</span> <span class="s2">&quot;pasiphae&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;loadbalancers&quot;</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;ariadne&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;all_groups:children&quot;</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;webservers&quot;</span><span class="p">,</span> <span class="s2">&quot;loadbalancers&quot;</span><span class="o">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This correlates to the playbooks we&rsquo;ve assigned for each node in the
+Vagrantfile. Then we need to refer to that variable in each of our
+machine definitions, adding a line that says <code>ansible.groups =
+groups</code>, so the modified ariadne definition should now be:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;ariadne&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">ariadne</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">ariadne</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;ansible&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">ansible</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">ansible</span><span class="o">.</span><span class="n">playbook</span> <span class="o">=</span> <span class="s2">&quot;loadbalancer.yml&quot;</span>
+</span><span class='line'>      <span class="n">ansible</span><span class="o">.</span><span class="n">sudo</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>      <span class="n">ansible</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If we run <code>vagrant provision</code> now we get a different error! Ah Ha!
+Progress:</p>
+
+<p><code>fatal: [ariadne] =&gt; {'msg': "AnsibleUndefinedVariable: One or more undefined variables: 'dict object' has no attribute 'ansible_eth1'", 'failed': True}</code></p>
+
+<h2>Oh no!</h2>
+
+<p>It would be useful at this point to examine what we <em>do</em> have in that
+dictionary object. Maybe I mistyped the key? In order to do that, we
+can add a debug line above the haproxy configuration line in the
+<code>loadbalancer.yml</code> file, like this: <code>- debug: var=hostvars['minos']</code>.</p>
+
+<p>When we run <code>vagrant provision</code> now, we will get the facts about minos
+printed in JSON to the console. It&rsquo;ll look something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;hostvars[&#39;minos&#39;]&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;inventory_hostname_short&quot;</span><span class="p">:</span> <span class="s2">&quot;minos&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;inventory_hostname&quot;</span><span class="p">:</span> <span class="s2">&quot;minos&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;group_names&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>      <span class="s2">&quot;all_groups&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;webservers&quot;</span>
+</span><span class='line'>    <span class="p">],</span>
+</span><span class='line'>    <span class="nt">&quot;ansible_ssh_port&quot;</span><span class="p">:</span> <span class="mi">2200</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;ansible_ssh_host&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Clearly all those facts gathered aren&rsquo;t here. Why? The reason for this
+is that Vagrant runs provisioning separately on each virtual machine -
+so each ansible run is not aware of anything from another ansible
+run. If you look this up online, you will find apparent answers to
+this problem that reconfigure vagrant to connect to all hosts when
+doing an ansible run. Let&rsquo;s do that now.</p>
+
+<p>For each ansible block in the Vagrantfile, add the line:
+<code>ansible.limit = 'all'</code>. Let&rsquo;s try <code>vagrant provision</code> again now
+that&rsquo;s in place.</p>
+
+<p>The error that I get after making this change is that SSH is failing.
+If we add <code>ansible.verbose = 'vvvv'</code> to each ansible block in the
+Vagrantfile then with a lot of scrolling around we can deduce that
+ansible is attempting to connect to each machine in the inventory
+using the same private key as it would for the machine it&rsquo;s currently
+provisioning. In other words, while provisioning <code>ariadne</code>, it uses
+the <code>ariadne</code> private SSH key to log on to both the other servers.
+This won&rsquo;t work of course because those SSH keys are generated by
+Vagrant per machine. Not only that but the private key is on the host
+machine, not on the guests so it&rsquo;s a fools errand.</p>
+
+<p>I&rsquo;m not sure what kind of SSH key setup would allow <code>ansible.limit =
+'all'</code> to work at all, but it&rsquo;s hardly straightforward.</p>
+
+<h2>Potential workaround: Redis</h2>
+
+<p>The only way I&rsquo;ve discovered to have ansible and Vagrant work well
+together is to use <a href="http://docs.ansible.com/playbooks_variables.html#fact-caching">Fact Caching</a>. This allows ansible to cache all
+facts from a node in Redis (or memcached) so that nodes can refer to
+each other without requiring an extra ssh connection for every node.</p>
+
+<p>In order to enable fact caching, you will need Redis installed and
+running. Then create an <code>ansible.cfg</code> file in the same directory as
+your Vagrantfile, with the following contents:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='cfg'><span class='line'><span class="k">[defaults]</span>
+</span><span class='line'><span class="na">fact_caching</span> <span class="o">=</span> <span class="s">redis</span>
+</span><span class='line'><span class="na">fact_caching_timeout</span> <span class="o">=</span> <span class="s">86400</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You will need to provision <code>minos</code> and <code>pasiphae</code> first so that their
+facts are stored in Redis before provisioning <code>ariadne</code> (because it
+refers to those other nodes):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>vagrant provision minos
+</span><span class='line'>vagrant provision pasiphae
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now that those facts have been gathered, we can run <code>vagrant
+provision</code> and it should complete without trouble this time.</p>
+
+<p>Now to verify that the haproxy config has been written as we expect,
+we can run <code>vagrant ssh ariadne -- cat /etc/haproxy/haproxy.cfg</code> and
+get something akin to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>backend web-backend
+</span><span class='line'>  balance roundrobin
+</span><span class='line'>  mode http
+</span><span class='line'>    server minos 172.28.128.4:80 check
+</span><span class='line'>    server pasiphae 172.28.128.5:80 check
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It worked! So although fact caching is intended for use in large
+organisations with thousands of nodes (possibly in disparate data
+centres) to speed up deployment, it can be handy working around
+weaknesses in the vagrant+ansible combination.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Will Roe</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-12-30T16:00:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:00 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ansible/'>ansible</a>, <a class='category' href='/blog/categories/vagrant/'>vagrant</a>, <a class='category' href='/blog/categories/virtualbox/'>virtualbox</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.wjlr.org.uk/2014/12/30/multi-machine-vagrant-ansible-gotcha.html" data-via="wjlroe" data-counturl="http://blog.wjlr.org.uk/2014/12/30/multi-machine-vagrant-ansible-gotcha.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2014/12/28/secret-santa-logic.html" title="Previous Post: Secret Santa in core.logic">&laquo; Secret Santa in core.logic</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 William Roe&#146;s blog &sect;
+  <span class="credit"> My life made easier by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

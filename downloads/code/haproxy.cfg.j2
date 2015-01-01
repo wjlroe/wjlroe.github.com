@@ -1,0 +1,6 @@
+backend web-backend
+  balance roundrobin
+  mode http
+  {% for host in groups['webservers'] %}
+     server {{ host }} {{ hostvars[host].ansible_eth1.ipv4.address }}:80 check
+  {% endfor %}
