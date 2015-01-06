@@ -4,7 +4,7 @@
   <title><![CDATA[Category: core.logic | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/core-dot-logic/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-01T16:22:18+00:00</updated>
+  <updated>2015-01-06T14:51:24+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -21,18 +21,18 @@
     <content type="html"><![CDATA[<p>Logic programming is an odd beast. As I lounged around over the
 holidays I tried to work out how to write a Secret Santa algorithm
 using core.logic. It seemed like the obvious choice but I quickly
-realised I&rsquo;d bitten off more than I could chew.</p>
+realised I&#8217;d bitten off more than I could chew.</p>
 
 <h2>Simple Secret Santa</h2>
 
 <p>Your common or garden Secret Santa consists of putting names in a hat
-and picking them out again, ensuring you don&rsquo;t pick yourself. Suitable
+and picking them out again, ensuring you don&#8217;t pick yourself. Suitable
 for offices and other groups of awkward strangers and acquaintances.</p>
 
-<p>We need <code>core.logic</code> imported, so here&rsquo;s the namespace declaration
+<p>We need <code>core.logic</code> imported, so here&#8217;s the namespace declaration
 (note that both <code>clojure.core</code> and <code>clojure.core.logic</code> define <code>==</code>
 for totally different purposes. I have never used <code>clojure.core/==</code> so
-I&rsquo;m a bit hazy as to what it&rsquo;s for - we exclude it so they don&rsquo;t clash):</p>
+I&#8217;m a bit hazy as to what it&#8217;s for - we exclude it so they don&#8217;t clash):</p>
 
 <p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -44,13 +44,13 @@ I&rsquo;m a bit hazy as to what it&rsquo;s for - we exclude it so they don&rsquo
 </span><span class='line'>            <span class="p">[</span><span class="nv">clojure.core.logic.pldb</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">]))</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
-<p>We&rsquo;ll start by defining a relation:</p>
+<p>We&#8217;ll start by defining a relation:</p>
 
 <p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">db-rel</span> <span class="nv">santa</span> <span class="nv">p</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
-<p>This is so that we can constrain values to only those names we&rsquo;ve
+<p>This is so that we can constrain values to only those names we&#8217;ve
 defined are santas (otherwise you get weird logic variables and nobody
 wants to deal with that noise).</p>
 
@@ -98,7 +98,7 @@ list is a pair of giver and receiver of presents.</p>
 <p>If we call it thus:</p>
 
 <p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">simple-secret-santa</span> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Tommen&amp;rdquo; &amp;ldquo;Gregor&amp;rdquo; &amp;ldquo;Daenerys&amp;rdquo; &amp;ldquo;Arya&amp;rdquo;])</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">simple-secret-santa</span> <span class="p">[</span><span class="s">&quot;Tommen&quot;</span> <span class="s">&quot;Gregor&quot;</span> <span class="s">&quot;Daenerys&quot;</span> <span class="s">&quot;Arya&quot;</span><span class="p">])</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <p>Then we should get the following as a result:</p>
@@ -107,10 +107,10 @@ list is a pair of giver and receiver of presents.</p>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">([</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Arya&amp;rdquo; &amp;ldquo;Gregor&amp;rdquo;]</span>
-</span><span class='line'> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Daenerys&amp;rdquo; &amp;ldquo;Tommen&amp;rdquo;]</span>
-</span><span class='line'> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Gregor&amp;rdquo; &amp;ldquo;Daenerys&amp;rdquo;]</span>
-</span><span class='line'> <span class="p">[</span><span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Tommen&amp;rdquo; &amp;ldquo;Arya&amp;rdquo;])</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">([</span><span class="s">&quot;Arya&quot;</span> <span class="s">&quot;Gregor&quot;</span><span class="p">]</span>
+</span><span class='line'> <span class="p">[</span><span class="s">&quot;Daenerys&quot;</span> <span class="s">&quot;Tommen&quot;</span><span class="p">]</span>
+</span><span class='line'> <span class="p">[</span><span class="s">&quot;Gregor&quot;</span> <span class="s">&quot;Daenerys&quot;</span><span class="p">]</span>
+</span><span class='line'> <span class="p">[</span><span class="s">&quot;Tommen&quot;</span> <span class="s">&quot;Arya&quot;</span><span class="p">])</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <p>Please note my chronic lack of imagination evidenced by my lazily
@@ -137,21 +137,21 @@ in this kind of tomfoolery.</p>
 
 <p>The mind-bending nature of that function can be rather confusing. In
 core.logic (as with <a href="http://minikanren.org">miniKanren</a> and others),
-it&rsquo;s common for an &ldquo;output
-value&rdquo; to be one of the parameters, in this case the 3rd parameter
+it&#8217;s common for an &#8220;output
+value&#8221; to be one of the parameters, in this case the 3rd parameter
 (<code>pairs</code>). This function defines a relationship between the parameters
-provided so you can call it with <code>givers</code> and <code>pairs</code> and it&rsquo;ll fill
+provided so you can call it with <code>givers</code> and <code>pairs</code> and it&#8217;ll fill
 in the blanks for the <code>receivers</code> value (effectively unzipping the
 <code>pairs</code> value), which is pretty neat.</p>
 
 <h3>Unify what?</h3>
 
-<p>It&rsquo;s crucial to understand the <code>clojure.core.logic/==</code> unification
+<p>It&#8217;s crucial to understand the <code>clojure.core.logic/==</code> unification
 function to understand how any of this works. It looks like an
 equality test from one of those other programming languages we shall
-not mention here, but it isn&rsquo;t like that. Sometimes I thought of it as
-a kind of wishful-thinking-equality - a sort of &ldquo;wouldn&rsquo;t it be just
-lovely if these things were the same&rdquo;.</p>
+not mention here, but it isn&#8217;t like that. Sometimes I thought of it as
+a kind of wishful-thinking-equality - a sort of &#8220;wouldn&#8217;t it be just
+lovely if these things were the same&#8221;.</p>
 
 <p>Taking an example from
 <a href="https://github.com/clojure/core.logic/wiki/A-Core.logic-Primer">the core.logic wiki</a>:</p>
@@ -172,8 +172,8 @@ lovely if these things were the same&rdquo;.</p>
 (the output variable). We start using a new logic variable <code>a</code> which
 we unify with <code>q</code> using the <code>==</code> unification function. That is to say,
 all solutions must satisfy the equation <code>a = q</code>, they must have the
-same value. Core.logic tends to add &lsquo;o&rsquo; to the end of common function
-names so <code>(membero a [1 2 3])</code> isn&rsquo;t a boolean predicate function for
+same value. Core.logic tends to add &#8216;o&#8217; to the end of common function
+names so <code>(membero a [1 2 3])</code> isn&#8217;t a boolean predicate function for
 testing for list membership, it attempts to make that statement true.
 With simply that statement - <code>a</code> can be 1 or 2 or 3. The next line
 asserts that <code>q</code> is a member of the list <code>[3 4 5]</code> so its value can be
@@ -184,7 +184,7 @@ a list of all possible solutions so in fact we will get a single
 element list: <code>(3)</code> as the result from that code.</p>
 
 <p>The input of our Secret Santa function will be a list of names
-(strings), so it&rsquo;d be useful to turn that list of names into a
+(strings), so it&#8217;d be useful to turn that list of names into a
 database that we can constrain our logic functions on:</p>
 
 <p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -203,7 +203,7 @@ arg1 arg2 arg3)</code></p>
 
 <h3>How does it work again?</h3>
 
-<p>Let&rsquo;s concentrate on the core part of the function:</p>
+<p>Let&#8217;s concentrate on the core part of the function:</p>
 
 <p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -225,11 +225,11 @@ arg1 arg2 arg3)</code></p>
 collection is a santa and every item in the <code>receivers</code> collection is
 a santa (lines 3 and 4). This ensures that those collections contain
 only valid santa names and not logic variables or numbers or anything
-else. There&rsquo;s something subtle about this - it&rsquo;s not simply an
+else. There&#8217;s something subtle about this - it&#8217;s not simply an
 assertion. core.logic will make those statements true in every way
 they can. One possible version of that (assuming there were 4 names
 input to the function) is that <code>givers =
-["Arya" "Arya" "Arya" "Arya"]</code>. That&rsquo;s nonsensical for our purposes
+["Arya" "Arya" "Arya" "Arya"]</code>. That&#8217;s nonsensical for our purposes
 (remember we mean to zip up these collections so the first giver is
 giving to the first receiver, the 2nd giver to the 2nd receiver and so
 on). So then we ensure that the collection of givers has distinct
@@ -237,7 +237,7 @@ elements in it (line 5), saying the same about receivers on line 6. If
 you imagine core.logic has assembled all the combinations of values
 that are santas first - imagine now it throws away any where values
 repeat. One of the remaining values for <code>givers</code> will be
-[&ldquo;Arya&rdquo; &ldquo;Gregor&rdquo; &ldquo;Tommen&rdquo; &ldquo;Daenerys&rdquo;]. There will be more. How many?</p>
+[&#8220;Arya&#8221; &#8220;Gregor&#8221; &#8220;Tommen&#8221; &#8220;Daenerys&#8221;]. There will be more. How many?</p>
 
 <h3>Derangements, subfactorials, oh my!</h3>
 
@@ -261,7 +261,7 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">derangements</span>
-</span><span class='line'>  <span class="o">&amp;</span><span class="nv">ldquo</span><span class="c1">;Calculate the number of derangements of n elements.&amp;rdquo;</span>
+</span><span class='line'>  <span class="s">&quot;Calculate the number of derangements of n elements.&quot;</span>
 </span><span class='line'>  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">condp</span> <span class="nb">= </span><span class="nv">n</span>
 </span><span class='line'>    <span class="mi">0</span> <span class="mi">1</span>
@@ -274,7 +274,7 @@ derangement of names. When you have 4 names, there are 9 derangements.</p>
 <p>This algorithm is primarily useful for checking your results in unit
 tests for example. Another way to use it is as the parameter to
 <code>run</code> - you can ask for all the possible derangements of friends. I
-didn&rsquo;t have much luck with that because I misunderstood the values
+didn&#8217;t have much luck with that because I misunderstood the values
 that my logic code was producing, also there is no need to know
 beforehand how many combinations are possible since you only want one.</p>
 
@@ -284,19 +284,19 @@ beforehand how many combinations are possible since you only want one.</p>
 relationship between the gift giver and receiver as a binary - allowed
 or not. It would be useful to be able to first attempt to solve the
 problem under ideal conditions before falling back to less and less
-ideal solutions. For example, it&rsquo;s not ideal to have people paired up
-symmetrically - it&rsquo;s just a bit boring that way. It&rsquo;s more optimal to
+ideal solutions. For example, it&#8217;s not ideal to have people paired up
+symmetrically - it&#8217;s just a bit boring that way. It&#8217;s more optimal to
 assign Santas in a circle, which makes it slightly more difficult to
-identify who&rsquo;s assigned who.</p>
+identify who&#8217;s assigned who.</p>
 
 <p>Finding all possible solutions is extremely slow in core.logic (at
-least, the way I&rsquo;ve written it) so this could do with a fair amount of
+least, the way I&#8217;ve written it) so this could do with a fair amount of
 optimisation.</p>
 
 <p>I punted the problem of picking a solution out of possible solutions
 to the combination of <code>(map sort)</code>, <code>distinct</code> and <code>rand-nth</code>. This
-isn&rsquo;t really necessary, I could have told core.logic what constitutes
-a distinct solution (it doesn&rsquo;t realise that order of pairings doesn&rsquo;t
+isn&#8217;t really necessary, I could have told core.logic what constitutes
+a distinct solution (it doesn&#8217;t realise that order of pairings doesn&#8217;t
 matter) and then simply picked one. My brain hurt so much by that
 point that I decided to call it a day and move on to more interesting
 problems, like</p>
@@ -305,16 +305,16 @@ problems, like</p>
 
 <p>I had a great deal of difficulty writing the <code>pairupo</code> function,
 largely because all the various <code>defne</code>/<code>defnu</code>/<code>defna</code> confused me -
-I still couldn&rsquo;t tell you what they do. This was partly due to me
+I still couldn&#8217;t tell you what they do. This was partly due to me
 moving from a real problem (Secret Santa) to the implementation in
 core.logic on the basis of sketchy logic programming knowledge, so I
 missed a lot of subtlety related to <code>conde</code> which is crucial for
 understanding this stuff. The official documentaion for core.logic is
 extremely sparse also, you are very much on your own if the problem
-you want to solve isn&rsquo;t Sudoku or the Typed Lambda Calculus (it
+you want to solve isn&#8217;t Sudoku or the Typed Lambda Calculus (it
 boggles my mind that that is on the
 <a href="https://github.com/clojure/core.logic/wiki/Examples">Examples</a>
-wiki page, I&rsquo;m not sure if the intention is to educate or
+wiki page, I&#8217;m not sure if the intention is to educate or
 obfuscate there).</p>
 
 <p>I hope that a bit more blogging from mere mortals like myself might

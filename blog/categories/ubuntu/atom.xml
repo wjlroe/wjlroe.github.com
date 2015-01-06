@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ubuntu | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/ubuntu/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-01T16:22:18+00:00</updated>
+  <updated>2015-01-06T14:51:24+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -44,7 +44,7 @@ convert: missing an image filename `png:-' @ error/convert.c/ConvertImageCommand
 
 <p>Words cannot describe how I feel about Imagemagick right now.</p>
 
-<p>Note to self: install this required package (stupidly called &ldquo;-extra&rdquo;).</p>
+<p>Note to self: install this required package (stupidly called &#8220;-extra&#8221;).</p>
 
 <p>Also note to self: avoid Imagemagick like the plague.</p>
 ]]></content>

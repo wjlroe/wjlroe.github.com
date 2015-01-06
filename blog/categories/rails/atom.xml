@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rails | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-01T16:22:18+00:00</updated>
+  <updated>2015-01-06T14:51:24+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -32,7 +32,7 @@
 <pre><code>Object {application: function, domains: function}
 </code></pre>
 
-<p>In the above example I have two templates defined: &lsquo;application&rsquo; and &lsquo;domains&rsquo;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
+<p>In the above example I have two templates defined: &#8216;application&#8217; and &#8216;domains&#8217;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
 
 <h2>Why is this happening?</h2>
 

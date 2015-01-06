@@ -53,15 +53,18 @@ Snap setup but never got into actual &hellip;">
 
   
   <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-7810285-4']);
-    _gaq.push(['_trackPageview']);
+    if(!window.location.href.match(/localhost/) &&
+       !window.location.href.match(/\d+\.\d+\.\d+\.\d+/)) {
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7810285-4']);
+      _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    }
   </script>
 
 
@@ -115,7 +118,7 @@ development. I have previously bootstrapped a basic
 <a href="http://snapframework.com/">Snap</a> setup but never got into actual
 hacking. Today I decided to give <a href="http://www.yesodweb.com/">Yesod</a> a
 go. I ran into a number of difficulties that drained away all my spare
-time this evening but in the end I feel like I&rsquo;m ready to dive in
+time this evening but in the end I feel like I&#8217;m ready to dive in
 tomorrow.</p>
 
 <p>I started off by attempting to install Yesod, with a simple <code>cabal
@@ -127,15 +130,15 @@ out-of-date, meaning a tool, called <code>alex</code> was too old for Yesod. To
 solve this rather small issue I took the rather drastic step of
 upgrading Ubuntu on the ThinkPad to
 <a href="https://wiki.ubuntu.com/PrecisePangolin">Precise Pangolin</a> because
-this includes the latest haskell-platform&hellip;and its all new and&hellip;just
+this includes the latest haskell-platform&#8230;and its all new and&#8230;just
 because! This is Ubuntu after all - trigger happy upgrades are the
 name of the game.</p>
 
 <p>Meanwhile, in Mac land. While that upgrade was running I tried to run
 the new yesod web app on a Mac. Unfortunately I ran into all the
-problems I&rsquo;ve encountered before with cabal-dev on OS X.</p>
+problems I&#8217;ve encountered before with cabal-dev on OS X.</p>
 
-<p>Firstly there&rsquo;s some weirdness with cabal-dev being set to install
+<p>Firstly there&#8217;s some weirdness with cabal-dev being set to install
 everything in the system library location. This just makes no sense for
 cabal-dev - the whole point is for it to install libraries in a
 vendored, per-project location - not interfering with system
@@ -145,10 +148,10 @@ libraries. It manifested itself as asking for a password all the time
   <a href="http://passingcuriosity.com/2011/cabal-dev-configuration-tweaks/">blog post I found</a>. Annoying.</p>
 
 <p>Another problem I had was ghc/ld spamming the terminal with loads of
-linker warnings. This really slowed down compilation. I didn&rsquo;t really
-solve this (happened on my Mac Mini - didn&rsquo;t happen on my work MacBook
+linker warnings. This really slowed down compilation. I didn&#8217;t really
+solve this (happened on my Mac Mini - didn&#8217;t happen on my work MacBook
 Air). I remember having to set options for GHC to silence that crap,
-but I forget the details&hellip;</p>
+but I forget the details&#8230;</p>
 
 <p>In order to get it all working on my Mac I:</p>
 
@@ -159,23 +162,23 @@ but I forget the details&hellip;</p>
 </ul>
 
 
-<p>Everything worked then. There&rsquo;s also strange voodoo you have to run to
+<p>Everything worked then. There&#8217;s also strange voodoo you have to run to
 unregister old packages - <code>brew info haskell-platform</code> splits out the
 necessary commands.</p>
 
-<p>After all that, things worked&hellip;mostly. Currently there seems to be
+<p>After all that, things worked&#8230;mostly. Currently there seems to be
 some car crash of dependencies caused by a new release of something
 called tls-extras. A helpful stranger in IRC (#yesod) told me to
 <code>cabal-dev install tls-extra-0.4.2.1</code> - this forces a working version
 of that library and then you can happily install yesod and
-everything&rsquo;s groovy.</p>
+everything&#8217;s groovy.</p>
 
 <p>Who said Haskell was difficult? Not me.</p>
 
-<p>So now I have a skeleton Yesod project up and running and it&rsquo;s all
+<p>So now I have a skeleton Yesod project up and running and it&#8217;s all
 looking very promising. The helper script for creating projects gave
 me some confidence - specifically asking if I wanted sqlite, postgres,
-MongoDB or nothing seemed pretty good to me - this doesn&rsquo;t appear to be
+MongoDB or nothing seemed pretty good to me - this doesn&#8217;t appear to be
 a web framework/persistence system tied to a particular way of doing
 things.</p>
 

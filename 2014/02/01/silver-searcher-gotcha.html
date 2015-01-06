@@ -52,15 +52,18 @@
 
   
   <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-7810285-4']);
-    _gaq.push(['_trackPageview']);
+    if(!window.location.href.match(/localhost/) &&
+       !window.location.href.match(/\d+\.\d+\.\d+\.\d+/)) {
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7810285-4']);
+      _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    }
   </script>
 
 
@@ -116,7 +119,7 @@
 </code></pre>
 
 <p>I.e. <code>git</code> will ignore everything in that directory, however The Silver Searcher
-doesn&rsquo;t understand that and it&rsquo;ll still show matching lines from files in
+doesn&#8217;t understand that and it&#8217;ll still show matching lines from files in
 <code>log/</code>. For <code>git</code> and <code>ag</code> (The Silver Searcher) to both ignore that directory
 and its contents, change <code>/log</code> to <code>log</code>.</p>
 </div>

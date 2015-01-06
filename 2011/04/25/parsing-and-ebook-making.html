@@ -51,15 +51,18 @@
 
   
   <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-7810285-4']);
-    _gaq.push(['_trackPageview']);
+    if(!window.location.href.match(/localhost/) &&
+       !window.location.href.match(/\d+\.\d+\.\d+\.\d+/)) {
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7810285-4']);
+      _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    }
   </script>
 
 
@@ -112,7 +115,7 @@
 
 <h2>Tables of contents</h2>
 
-<p>The table of contents was a bit strange. The Kindle&rsquo;s mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains <code>&lt;navPoint&gt;</code> elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here&rsquo;s an abridged version of the NCX file I had generated:</p>
+<p>The table of contents was a bit strange. The Kindle&#8217;s mobi format pretty much ignores the epub standard .ncx file (which is an XML file that contains <code>&lt;navPoint&gt;</code> elements that get mapped to entries in a generated table of contents - Adobe Digital Editions uses this for example). Here&#8217;s an abridged version of the NCX file I had generated:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -173,7 +176,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>There were obviously more chapters/books than that. The Kindle/mobi format doesn&rsquo;t use this for the table of contents, so when you open a converted epub on a Kindle (or using the Kindle desktop software), the menu item to go to the table of contents is greyed out. After digging around on the web I discovered that the mobi format uses a toc file, which is basically an html file full of links. In order for that to work, you need to reference the toc file in the OPF file. Here&rsquo;s an abbreviated version of the one I generated:</p>
+<p>There were obviously more chapters/books than that. The Kindle/mobi format doesn&#8217;t use this for the table of contents, so when you open a converted epub on a Kindle (or using the Kindle desktop software), the menu item to go to the table of contents is greyed out. After digging around on the web I discovered that the mobi format uses a toc file, which is basically an html file full of links. In order for that to work, you need to reference the toc file in the OPF file. Here&#8217;s an abbreviated version of the one I generated:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -246,7 +249,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The important bit there is the <code>&lt;reference&gt;</code> element inside <code>&lt;guide&gt;</code> that is of type &ldquo;toc&rdquo;. After that, the actual table of contents file is pretty straightforward:</p>
+<p>The important bit there is the <code>&lt;reference&gt;</code> element inside <code>&lt;guide&gt;</code> that is of type &#8220;toc&#8221;. After that, the actual table of contents file is pretty straightforward:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -289,25 +292,25 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>That&rsquo;s just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.</p>
+<p>That&#8217;s just a standard content file and can be formatted, using CSS, the way you want it rendered on the e-reader.</p>
 
 <h2>Encoding</h2>
 
-<p>I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don&rsquo;t expect anyone to know what that is, I didn&rsquo;t and it&rsquo;s still just a character to me. But it looks like this:</p>
+<p>I managed to solve the problem I was having rendering the correct unicode for Iota Dialytika Tonos. I don&#8217;t expect anyone to know what that is, I didn&#8217;t and it&#8217;s still just a character to me. But it looks like this:</p>
 
 <h1 class="greek">ΐ</h1>
 
 
 <p><aside class="post">
-<strong>Betacode</strong> is the ASCII language used by Perseus Digital library to represent Greek characters easily. It&rsquo;s used in their opensource XML files (that I&rsquo;ve used) and as a way to search Greek books (due to the unavailability of Ancient Greek keyboards). So <code>a)/ndra</code> becomes <code class="greek">ἄνδρα</code>.
+<strong>Betacode</strong> is the ASCII language used by Perseus Digital library to represent Greek characters easily. It&#8217;s used in their opensource XML files (that I&#8217;ve used) and as a way to search Greek books (due to the unavailability of Ancient Greek keyboards). So <code>a)/ndra</code> becomes <code class="greek">ἄνδρα</code>.
 </aside></p>
 
-<p>In betacode, this is written as <code>i/+</code>. Normally, the parser encodes the character <code>i</code>, then each diacritic in turn: <code>/</code>, then <code>+</code> into combining diacritics. This resulted in characters <code>0x03b9 0x0301 0x0308</code>, which would be normalized using Java&rsquo;s Normalizer/normalize function as:</p>
+<p>In betacode, this is written as <code>i/+</code>. Normally, the parser encodes the character <code>i</code>, then each diacritic in turn: <code>/</code>, then <code>+</code> into combining diacritics. This resulted in characters <code>0x03b9 0x0301 0x0308</code>, which would be normalized using Java&#8217;s Normalizer/normalize function as:</p>
 
 <h1 class="greek">ί̈</h1>
 
 
-<p>The frustrating thing is that it&rsquo;s quite difficult to tell the difference on the terminal, when running tests - even when I&rsquo;d bumped the font size up to crazy levels.</p>
+<p>The frustrating thing is that it&#8217;s quite difficult to tell the difference on the terminal, when running tests - even when I&#8217;d bumped the font size up to crazy levels.</p>
 
 <p>In order to match that symbol, I created the following rule:</p>
 
@@ -320,7 +323,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then I&rsquo;d redefined <code>character</code> to be:</p>
+<p>Then I&#8217;d redefined <code>character</code> to be:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">character</span> <span class="p">(</span><span class="nf">alt</span> <span class="nv">iota-dialytika-tonos</span> <span class="nv">final-sigma</span> <span class="nv">upper-char</span> <span class="nv">lower-char</span><span class="p">))</span>
@@ -329,7 +332,7 @@
 
 <p>Which means that the rule <code>iota-dialytika-tonos</code> takes precedence over any other character (to prevent the dumb combining diacritic rules from matching it).</p>
 
-<p>And that brings me on to final sigma. Final sigma has given me quite a lot of pain, ever since I started building this parser. For those of you who don&rsquo;t know Greek, like me, they have two sigma characters - one is used in the middle of a word:</p>
+<p>And that brings me on to final sigma. Final sigma has given me quite a lot of pain, ever since I started building this parser. For those of you who don&#8217;t know Greek, like me, they have two sigma characters - one is used in the middle of a word:</p>
 
 <h1 class="greek">σ</h1>
 
@@ -339,7 +342,7 @@
 <h1 class="greek">ς</h1>
 
 
-<p>The problem with matching something at the end of a word is that fnparse&rsquo;s matchers are mostly greedy. There&rsquo;s no equivalent rule, as far as I can tell, to the regular expression <code>(.+)s</code>. The <code>rep+</code> rules always greedily gobble all the tokens, including the last <code>s</code>. At the moment, all I have is the following rule for final sigma:</p>
+<p>The problem with matching something at the end of a word is that fnparse&#8217;s matchers are mostly greedy. There&#8217;s no equivalent rule, as far as I can tell, to the regular expression <code>(.+)s</code>. The <code>rep+</code> rules always greedily gobble all the tokens, including the last <code>s</code>. At the moment, all I have is the following rule for final sigma:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -350,9 +353,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This isn&rsquo;t ideal because it can&rsquo;t match either the last <code>s</code> of the last word in a string (or line), or <code>s</code> followed only by a non-character (such as <code>:</code>). This is something I have to work on, but fnparse isn&rsquo;t making it easy for me here.</p>
+<p>This isn&#8217;t ideal because it can&#8217;t match either the last <code>s</code> of the last word in a string (or line), or <code>s</code> followed only by a non-character (such as <code>:</code>). This is something I have to work on, but fnparse isn&#8217;t making it easy for me here.</p>
 
-<p>So as a result of all that, here&rsquo;s the first verse of the Odyssey by Homer:</p>
+<p>So as a result of all that, here&#8217;s the first verse of the Odyssey by Homer:</p>
 
 <blockquote class="greek" style="font-style: normal">
 ἄνδρα μοι ἔννεπε, μοῦσα, πολύτροπον, ὃς μάλα πολλὰ<br/>
@@ -375,7 +378,7 @@
 <ul>
 <li><a href="http://github.com/joshua-choi/fnparse/">fnparse</a> which is awesome for taming parse-m monads in Clojure.</li>
 <li>Thanks to <a href="http://www.tlg.uci.edu/~opoudjis/unicode/gkdiacritics.html">Greek Diacritics</a> for information about combining diacritics.</li>
-<li><a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> Wikipedia&rsquo;s writup on the EPUB standard is almost all you need.</li>
+<li><a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> Wikipedia&#8217;s writup on the EPUB standard is almost all you need.</li>
 <li><a href="http://idpf.org/epub/20/spec/OPF_2.0.1_draft.htm">OPF</a> The OPF/NCX standard.</li>
 <li><a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0135">The Odyssey</a> From the Perseus Digital Library, the source for the XML files I have been consuming in this project.</li>
 </ul>

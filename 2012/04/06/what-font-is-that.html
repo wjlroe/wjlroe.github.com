@@ -9,7 +9,7 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="I often come across web pages that use fonts that I like and wonder what they are (I&rsquo;m not that good at guessing fonts). On the whole this &hellip;">
+  <meta name="description" content="I often come across web pages that use fonts that I like and wonder what they are (I'm not that good at guessing fonts). On the whole this situation &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -51,15 +51,18 @@
 
   
   <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-7810285-4']);
-    _gaq.push(['_trackPageview']);
+    if(!window.location.href.match(/localhost/) &&
+       !window.location.href.match(/\d+\.\d+\.\d+\.\d+/)) {
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7810285-4']);
+      _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    }
   </script>
 
 
@@ -108,11 +111,11 @@
   </header>
 
 
-<div class="entry-content"><p>I often come across web pages that use fonts that I like and wonder what they are (I&rsquo;m not that good at guessing fonts). On the whole this situation happens while reading on my iPhone because that&rsquo;s the only high-resolution screen I use - good fonts look amazing on the iPhone 4S.</p>
+<div class="entry-content"><p>I often come across web pages that use fonts that I like and wonder what they are (I&#8217;m not that good at guessing fonts). On the whole this situation happens while reading on my iPhone because that&#8217;s the only high-resolution screen I use - good fonts look amazing on the iPhone 4S.</p>
 
-<p>This just happened to me while reading a post linked from daring fireball - <a href="http://om.co/2012/04/05/the-of-course-principle-of-design/">the &ldquo;of course&rdquo; principle of design</a>. I really liked the look of that font on the iPhone. (I also noted that I should reduce the margins on my blog for small screens because you have to zoom to read really). So how, on an iPhone, you do find out what font that is?</p>
+<p>This just happened to me while reading a post linked from daring fireball - <a href="http://om.co/2012/04/05/the-of-course-principle-of-design/">the &#8220;of course&#8221; principle of design</a>. I really liked the look of that font on the iPhone. (I also noted that I should reduce the margins on my blog for small screens because you have to zoom to read really). So how, on an iPhone, you do find out what font that is?</p>
 
-<p>What I wanted was a bookmarklet, so I searched for &ldquo;what font bookmarklet&rdquo; and found <a href="http://chengyinliu.com/whatfont.html">WhatFont Tool</a> which provides a powerful bookmarklet for finding out what font a page is using (and whether it is from Google webfonts or Typekit). Problem is, bookmarking JavaScript is not easy on the iPhone - you have to copy/paste the JavaScript somehow. Because WhatFont only provides a button (to drag to your bookmarks bar), I had to find another way. I decided to try the Mercury web browser, guessing it might have a way to copy the JavaScript for a link/button. Thankfully I was right and it allowed me to copy the JavaScript, then switch to Safari and create then edit a bookmark for it. It works wonderfully. Just touch the bookmark to active it, then touch any piece of text on a website to see info on what fonts it&rsquo;s using. Simple.</p>
+<p>What I wanted was a bookmarklet, so I searched for &#8220;what font bookmarklet&#8221; and found <a href="http://chengyinliu.com/whatfont.html">WhatFont Tool</a> which provides a powerful bookmarklet for finding out what font a page is using (and whether it is from Google webfonts or Typekit). Problem is, bookmarking JavaScript is not easy on the iPhone - you have to copy/paste the JavaScript somehow. Because WhatFont only provides a button (to drag to your bookmarks bar), I had to find another way. I decided to try the Mercury web browser, guessing it might have a way to copy the JavaScript for a link/button. Thankfully I was right and it allowed me to copy the JavaScript, then switch to Safari and create then edit a bookmark for it. It works wonderfully. Just touch the bookmark to active it, then touch any piece of text on a website to see info on what fonts it&#8217;s using. Simple.</p>
 
 <p>For your copy/paste convenience, I have provided the code for the WhatFont bookmarklet:</p>
 
@@ -124,7 +127,7 @@
 <p>Turned out that that post was using <a href="http://aldusleaf.org/0-crimson.html">Crimson Text</a>
 from Google Webfonts. Nice.</p>
 
-<p>It looks like Crimson Text is a promising free font that might have Polytonic Greek characters at some point so that&rsquo;s useful to know for me.</p>
+<p>It looks like Crimson Text is a promising free font that might have Polytonic Greek characters at some point so that&#8217;s useful to know for me.</p>
 </div>
 
 

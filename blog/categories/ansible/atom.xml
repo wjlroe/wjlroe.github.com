@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ansible | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/ansible/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-01T16:22:18+00:00</updated>
+  <updated>2015-01-06T14:51:24+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -19,15 +19,15 @@
     <updated>2014-12-30T16:00:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2014/12/30/multi-machine-vagrant-ansible-gotcha</id>
     <content type="html"><![CDATA[<p><a href="https://docs.vagrantup.com/" title="Vagrant">Vagrant</a> is a fantastic tool for defining how virtual instances are
-to be run and provisioned. I&rsquo;ve used Vagrant with <a href="https://docs.chef.io/chef_solo.html" title="Chef-solo">Chef-Solo</a> and
-<a href="http://docs.ansible.com/index.html">Ansible</a> provisioners and it&rsquo;s helped me understand those tools and
+to be run and provisioned. I&#8217;ve used Vagrant with <a href="https://docs.chef.io/chef_solo.html" title="Chef-solo">Chef-Solo</a> and
+<a href="http://docs.ansible.com/index.html">Ansible</a> provisioners and it&#8217;s helped me understand those tools and
 iterate quickly. There are some gotchas however and in this post I
 will explore a particular flaw in the way Vagrant and Ansible
 cooperate.</p>
 
 <h2>Multi-machine setup</h2>
 
-<p>Let&rsquo;s begin by defining a Vagrant environment that we will play with
+<p>Let&#8217;s begin by defining a Vagrant environment that we will play with
 (you will need <a href="https://www.virtualbox.org">VirtualBox</a>, Vagrant and Ansible installed):</p>
 
 <pre><code class="bash">mkdir multi-vagrant-ansible
@@ -36,9 +36,9 @@ vagrant init
 </code></pre>
 
 <p>This will create a <code>Vagrantfile</code> in the current directory with
-commented contents. Let&rsquo;s cut it back to the essentials and add in a
+commented contents. Let&#8217;s cut it back to the essentials and add in a
 URL for the base box (<a href="https://cloud-images.ubuntu.com/vagrant/" title="Ubuntu Cloud Vagrant images">Ubuntu Trusty</a> is the latest LTS
-release so that&rsquo;s what I&rsquo;ll use):</p>
+release so that&#8217;s what I&#8217;ll use):</p>
 
 <pre><code class="ruby"># -*- mode: ruby -*-
 # vi: set ft=ruby :
@@ -50,14 +50,14 @@ Vagrant.configure(2) do |config|
 end
 </code></pre>
 
-<p>If we run Vagrant now, it&rsquo;ll clone that base box (downloading it first
-if it hasn&rsquo;t already done so) and boot it up. This is already quicker
+<p>If we run Vagrant now, it&#8217;ll clone that base box (downloading it first
+if it hasn&#8217;t already done so) and boot it up. This is already quicker
 than downloading an ISO, creating a new VirtualBox instance, booting
 that up and going through the installation procedure.</p>
 
-<p>Let&rsquo;s define some machines and set them up to be provisioned by
-Ansible. We&rsquo;ll have two web servers and one load balancer, because
-that&rsquo;s boringly conventional:</p>
+<p>Let&#8217;s define some machines and set them up to be provisioned by
+Ansible. We&#8217;ll have two web servers and one load balancer, because
+that&#8217;s boringly conventional:</p>
 
 <pre><code class="ruby">  config.vm.define "ariadne" do |ariadne|
     ariadne.vm.provision "ansible" do |ansible|
@@ -95,8 +95,8 @@ following contents:</p>
     - service: name=nginx state=started
 </code></pre>
 
-<p>Which ensures that nginx is not only installed but also running (it&rsquo;ll
-also mean that if that server is rebooted, it&rsquo;ll still run nginx).</p>
+<p>Which ensures that nginx is not only installed but also running (it&#8217;ll
+also mean that if that server is rebooted, it&#8217;ll still run nginx).</p>
 
 <p>Now for the load balancer, <code>loadbalancer.yml</code>:</p>
 
@@ -114,19 +114,19 @@ also mean that if that server is rebooted, it&rsquo;ll still run nginx).</p>
 independently and you could use <code>ansible-playbook</code> to provision any
 server you liked with them.</p>
 
-<p>If you run <code>vagrant up</code> at this point (assuming you&rsquo;ve not done that
-with this Vagrantfile before), it&rsquo;ll boot up new VirtualBox instances
+<p>If you run <code>vagrant up</code> at this point (assuming you&#8217;ve not done that
+with this Vagrantfile before), it&#8217;ll boot up new VirtualBox instances
 and provision them with ansible, installing the necessary software
 etc. All well and good so far.</p>
 
 <h2>Ansible facts</h2>
 
-<p>Ansible starts off by collecting facts about the nodes it&rsquo;ll run on.
+<p>Ansible starts off by collecting facts about the nodes it&#8217;ll run on.
 It does this so that you can use information about the node in your
 playbooks, roles and tasks.</p>
 
 <p>To see the kind of facts that ansible collects about a node, you can
-run ansible&rsquo;s <code>setup</code> module like this (for the minos instance):</p>
+run ansible&#8217;s <code>setup</code> module like this (for the minos instance):</p>
 
 <pre><code class="bash">ansible -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory -m setup -u vagrant --private-key=.vagrant/machines/minos/virtualbox/private_key minos
 </code></pre>
@@ -142,7 +142,7 @@ moment.</p>
 
 <h2>Facts &amp; templates</h2>
 
-<p>Now let&rsquo;s create a <a href="http://docs.ansible.com/template_module.html">template</a> for the haproxy configuration (in
+<p>Now let&#8217;s create a <a href="http://docs.ansible.com/template_module.html">template</a> for the haproxy configuration (in
 <code>templates/haproxy.cfg.j2</code>):</p>
 
 <p><figure class='code'><figcaption><span>Haproxy config  (haproxy.cfg.j2)</span> <a href='/downloads/code/haproxy.cfg.j2'>download</a></figcaption>
@@ -160,7 +160,7 @@ moment.</p>
 </span><span class='line'><span class="x">  </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
 </span></code></pre></td></tr></table></div></figure></p>
 
-<p>We&rsquo;ll also need to ensure that template gets used in the loadbalancer
+<p>We&#8217;ll also need to ensure that template gets used in the loadbalancer
 playbook:</p>
 
 <pre><code class="yaml">---
@@ -173,12 +173,12 @@ playbook:</p>
       template: src=templates/haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
 </code></pre>
 
-<p>If we run this now, we&rsquo;ll get a cryptic error:</p>
+<p>If we run this now, we&#8217;ll get a cryptic error:</p>
 
 <p><code>fatal: [ariadne] =&gt; {'msg': "AnsibleUndefinedVariable: One or more undefined variables: 'dict object' has no attribute 'webservers'", 'failed': True}</code></p>
 
-<p>One possible reason for this is that we haven&rsquo;t defined any groups for
-our vagrant instances, let&rsquo;s do that now. We&rsquo;ll start by defining the
+<p>One possible reason for this is that we haven&#8217;t defined any groups for
+our vagrant instances, let&#8217;s do that now. We&#8217;ll start by defining the
 groups at the top of the Vagrantfile, before anything else (but after
 the emacs/vi mode comments):</p>
 
@@ -189,7 +189,7 @@ the emacs/vi mode comments):</p>
 }
 </code></pre>
 
-<p>This correlates to the playbooks we&rsquo;ve assigned for each node in the
+<p>This correlates to the playbooks we&#8217;ve assigned for each node in the
 Vagrantfile. Then we need to refer to that variable in each of our
 machine definitions, adding a line that says <code>ansible.groups =
 groups</code>, so the modified ariadne definition should now be:</p>
@@ -216,7 +216,7 @@ can add a debug line above the haproxy configuration line in the
 <code>loadbalancer.yml</code> file, like this: <code>- debug: var=hostvars['minos']</code>.</p>
 
 <p>When we run <code>vagrant provision</code> now, we will get the facts about minos
-printed in JSON to the console. It&rsquo;ll look something like this:</p>
+printed in JSON to the console. It&#8217;ll look something like this:</p>
 
 <pre><code class="json">{
   "hostvars['minos']": {
@@ -232,34 +232,34 @@ printed in JSON to the console. It&rsquo;ll look something like this:</p>
 }
 </code></pre>
 
-<p>Clearly all those facts gathered aren&rsquo;t here. Why? The reason for this
+<p>Clearly all those facts gathered aren&#8217;t here. Why? The reason for this
 is that Vagrant runs provisioning separately on each virtual machine -
 so each ansible run is not aware of anything from another ansible
 run. If you look this up online, you will find apparent answers to
 this problem that reconfigure vagrant to connect to all hosts when
-doing an ansible run. Let&rsquo;s do that now.</p>
+doing an ansible run. Let&#8217;s do that now.</p>
 
 <p>For each ansible block in the Vagrantfile, add the line:
-<code>ansible.limit = 'all'</code>. Let&rsquo;s try <code>vagrant provision</code> again now
-that&rsquo;s in place.</p>
+<code>ansible.limit = 'all'</code>. Let&#8217;s try <code>vagrant provision</code> again now
+that&#8217;s in place.</p>
 
 <p>The error that I get after making this change is that SSH is failing.
 If we add <code>ansible.verbose = 'vvvv'</code> to each ansible block in the
 Vagrantfile then with a lot of scrolling around we can deduce that
 ansible is attempting to connect to each machine in the inventory
-using the same private key as it would for the machine it&rsquo;s currently
+using the same private key as it would for the machine it&#8217;s currently
 provisioning. In other words, while provisioning <code>ariadne</code>, it uses
 the <code>ariadne</code> private SSH key to log on to both the other servers.
-This won&rsquo;t work of course because those SSH keys are generated by
+This won&#8217;t work of course because those SSH keys are generated by
 Vagrant per machine. Not only that but the private key is on the host
-machine, not on the guests so it&rsquo;s a fools errand.</p>
+machine, not on the guests so it&#8217;s a fools errand.</p>
 
-<p>I&rsquo;m not sure what kind of SSH key setup would allow <code>ansible.limit =
-'all'</code> to work at all, but it&rsquo;s hardly straightforward.</p>
+<p>I&#8217;m not sure what kind of SSH key setup would allow <code>ansible.limit =
+'all'</code> to work at all, but it&#8217;s hardly straightforward.</p>
 
 <h2>Potential workaround: Redis</h2>
 
-<p>The only way I&rsquo;ve discovered to have ansible and Vagrant work well
+<p>The only way I&#8217;ve discovered to have ansible and Vagrant work well
 together is to use <a href="http://docs.ansible.com/playbooks_variables.html#fact-caching">Fact Caching</a>. This allows ansible to cache all
 facts from a node in Redis (or memcached) so that nodes can refer to
 each other without requiring an extra ssh connection for every node.</p>

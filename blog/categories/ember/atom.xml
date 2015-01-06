@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ember | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/ember/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-01T16:22:18+00:00</updated>
+  <updated>2015-01-06T14:51:24+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -26,7 +26,7 @@ Ember-data.
 <p>A common pattern with webapps in these exciting times is the
 transition-to-new-thing-you-just-created pattern. The way it works is this: you
 fill in a form to create a new thing (like, a widget or something) and then when
-you hit &lsquo;save&rsquo;, you are transitioned to the page for that widget. This is so you
+you hit &#8216;save&#8217;, you are transitioned to the page for that widget. This is so you
 can confirm that it worked and so you could make further changes on that widget.
 The assumption being, when you create a widget, it is the focus of your task.</p>
 
@@ -43,9 +43,9 @@ model.one('didCreate', function() {
 model.get('store').commit();
 </code></pre>
 
-<p>This doesn&rsquo;t work with ember-data currently - what happens is the <code>model</code> object
-that gets sent to the <code>didCreate</code> callback there won&rsquo;t have an <code>id</code> from the
-server (it hasn&rsquo;t been filled in for some reason).</p>
+<p>This doesn&#8217;t work with ember-data currently - what happens is the <code>model</code> object
+that gets sent to the <code>didCreate</code> callback there won&#8217;t have an <code>id</code> from the
+server (it hasn&#8217;t been filled in for some reason).</p>
 
 <p>To work around this issue, you need to do something akin to this:</p>
 
@@ -63,13 +63,13 @@ showWidget: function(model) {
 <p>In that example we trigger the page transition off the change of value of <code>id</code>.
 This works because for a short while, the <code>id</code> will be <code>null</code> until Ember-data
 fills in the new <code>id</code> from the server. Then your callback is called and the page
-transition happens. The difference in timing is not noticeable to the user - it&rsquo;s
+transition happens. The difference in timing is not noticeable to the user - it&#8217;s
 just a race condition within Ember-data itself. Other than that - in this
 example, the observer is removed, which is good practice for observers and you
-should always remove observers you&rsquo;ve added (as I understand it).</p>
+should always remove observers you&#8217;ve added (as I understand it).</p>
 
 <p>Other alternative workarounds include wrapping the <code>transitionToRoute</code> call in a
-<code>setTimeout()</code> block - to make it pause just long enough for the model&rsquo;s <code>id</code> to
+<code>setTimeout()</code> block - to make it pause just long enough for the model&#8217;s <code>id</code> to
 be filled in.</p>
 
 <p>Most of the above came from
@@ -98,7 +98,7 @@ ember-data.</p>
 <pre><code>Object {application: function, domains: function}
 </code></pre>
 
-<p>In the above example I have two templates defined: &lsquo;application&rsquo; and &lsquo;domains&rsquo;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
+<p>In the above example I have two templates defined: &#8216;application&#8217; and &#8216;domains&#8217;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
 
 <h2>Why is this happening?</h2>
 

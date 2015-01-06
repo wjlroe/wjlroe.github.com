@@ -51,15 +51,18 @@
 
   
   <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-7810285-4']);
-    _gaq.push(['_trackPageview']);
+    if(!window.location.href.match(/localhost/) &&
+       !window.location.href.match(/\d+\.\d+\.\d+\.\d+/)) {
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7810285-4']);
+      _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    }
   </script>
 
 
@@ -122,7 +125,7 @@
 <pre><code>Object {application: function, domains: function}
 </code></pre>
 
-<p>In the above example I have two templates defined: &lsquo;application&rsquo; and &lsquo;domains&rsquo;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
+<p>In the above example I have two templates defined: &#8216;application&#8217; and &#8216;domains&#8217;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
 
 <h2>Why is this happening?</h2>
 

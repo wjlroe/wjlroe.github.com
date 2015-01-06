@@ -51,15 +51,18 @@
 
   
   <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-7810285-4']);
-    _gaq.push(['_trackPageview']);
+    if(!window.location.href.match(/localhost/) &&
+       !window.location.href.match(/\d+\.\d+\.\d+\.\d+/)) {
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7810285-4']);
+      _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    }
   </script>
 
 
@@ -112,21 +115,21 @@
 
 <h2>Haskell is weird</h2>
 
-<p>When you first start out learning this language - or even just read some articles about it - the first thing that will strike you is that it seems completely obscure. The syntax is obscure, the concepts are obscure, but most of all - the language used to describe what things are is incredibly obscure. Every programming language community has evolved its own lingo of course and Haskell&rsquo;s is awash with mathematics. If you subscribe to the planet Haskell RSS feed you will get the impression that Haskell is pretty much just an extension of Mathematics and is only used for &ldquo;pure&rdquo; problems and therefore completely irrelevant to real world problems. Then you will notice there&rsquo;s a book called &ldquo;Real World Haskell&rdquo; and you&rsquo;ll think it an anomaly, just some noise in the data.</p>
+<p>When you first start out learning this language - or even just read some articles about it - the first thing that will strike you is that it seems completely obscure. The syntax is obscure, the concepts are obscure, but most of all - the language used to describe what things are is incredibly obscure. Every programming language community has evolved its own lingo of course and Haskell&#8217;s is awash with mathematics. If you subscribe to the planet Haskell RSS feed you will get the impression that Haskell is pretty much just an extension of Mathematics and is only used for &#8220;pure&#8221; problems and therefore completely irrelevant to real world problems. Then you will notice there&#8217;s a book called &#8220;Real World Haskell&#8221; and you&#8217;ll think it an anomaly, just some noise in the data.</p>
 
 <h2>Why learn this?</h2>
 
-<p>Apart from wanting to become a better programmer in general (which would explain why I&rsquo;d want to learn functional programming in general and in more detail than I already do from Erlang and Clojure), I want to learn how Haskell can be a practical language - how it can help me create great products. I suspect that behind the terseness and high degree of greek characters is a toolkit that will be at least as empowering as Erlang/OTP has been. I want that toolkit.</p>
+<p>Apart from wanting to become a better programmer in general (which would explain why I&#8217;d want to learn functional programming in general and in more detail than I already do from Erlang and Clojure), I want to learn how Haskell can be a practical language - how it can help me create great products. I suspect that behind the terseness and high degree of greek characters is a toolkit that will be at least as empowering as Erlang/OTP has been. I want that toolkit.</p>
 
 <h2>The elephant in the room</h2>
 
-<p>Sooner or later you will arrive at the Haskell trial stage. In order to print anything out from your programme, or accept any input or read a file etc. you will have to use monads. At first the syntax will seem very strange, just a load of terse boilerplate for doing what more pragmatic languages make super easy, but you&rsquo;ll think &ldquo;whatever, let&rsquo;s just get on with learning this thing&rdquo;. At some point the tutorial or book you&rsquo;re reading will have to explain monads to you. More than likely this is the point where you stared at the screen/page in disbelief and your heart sank as you realised you would have to understand level 3000 mathematics to print something on screen. For most people, this is the last they ever deal with Haskell.</p>
+<p>Sooner or later you will arrive at the Haskell trial stage. In order to print anything out from your programme, or accept any input or read a file etc. you will have to use monads. At first the syntax will seem very strange, just a load of terse boilerplate for doing what more pragmatic languages make super easy, but you&#8217;ll think &#8220;whatever, let&#8217;s just get on with learning this thing&#8221;. At some point the tutorial or book you&#8217;re reading will have to explain monads to you. More than likely this is the point where you stared at the screen/page in disbelief and your heart sank as you realised you would have to understand level 3000 mathematics to print something on screen. For most people, this is the last they ever deal with Haskell.</p>
 
-<p>Later on, a Haskell wizard will act all puzzled and amused that you found monads hard to understand. This will lower your self-esteem so low you consider giving up entirely and becoming a farmer instead. They will go on to tell you that you&rsquo;ve been using monads the whole time in whatever programming language you like. They will explain how this is so and you will not be enlightened. It&rsquo;ll sound all too convenient, just a bunch of semantic drivel.</p>
+<p>Later on, a Haskell wizard will act all puzzled and amused that you found monads hard to understand. This will lower your self-esteem so low you consider giving up entirely and becoming a farmer instead. They will go on to tell you that you&#8217;ve been using monads the whole time in whatever programming language you like. They will explain how this is so and you will not be enlightened. It&#8217;ll sound all too convenient, just a bunch of semantic drivel.</p>
 
-<p>The reason so many of us have such a frustrating initial experience with Haskell is that most of the books on the subject are appallingly badly written. Programming books are in general a complete shambles and very few are useful to anyone who isn&rsquo;t already pretty hot at the whole thing anyway. If you were lucky enough to find a well-written helpful introduction to Haskell (there are some), then you might not be feeling this way. Also if you were born a Haskell wizard, this will sound like complete gobbledegook to you. But then you&rsquo;re not really human now are you? Admit it.</p>
+<p>The reason so many of us have such a frustrating initial experience with Haskell is that most of the books on the subject are appallingly badly written. Programming books are in general a complete shambles and very few are useful to anyone who isn&#8217;t already pretty hot at the whole thing anyway. If you were lucky enough to find a well-written helpful introduction to Haskell (there are some), then you might not be feeling this way. Also if you were born a Haskell wizard, this will sound like complete gobbledegook to you. But then you&#8217;re not really human now are you? Admit it.</p>
 
-<p>Anyway, I will be attending the <a href="http://www.meetup.com/hoodlums/">Haskell hoodlums meetup</a> this Thursday so hopefully I&rsquo;ll start understanding this thing. Don&rsquo;t give up people! Good luck.</p>
+<p>Anyway, I will be attending the <a href="http://www.meetup.com/hoodlums/">Haskell hoodlums meetup</a> this Thursday so hopefully I&#8217;ll start understanding this thing. Don&#8217;t give up people! Good luck.</p>
 </div>
 
 

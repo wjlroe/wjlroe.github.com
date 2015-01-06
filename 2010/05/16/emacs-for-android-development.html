@@ -51,15 +51,18 @@
 
   
   <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-7810285-4']);
-    _gaq.push(['_trackPageview']);
+    if(!window.location.href.match(/localhost/) &&
+       !window.location.href.match(/\d+\.\d+\.\d+\.\d+/)) {
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7810285-4']);
+      _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    }
   </script>
 
 
@@ -110,11 +113,11 @@
 
 <div class="entry-content"><p>Today I started using Emacs rather than Eclipse to work on an Android project. There are a couple of things you need to get started though.</p>
 
-<p>Firstly you will need the Android SDK (which you will have already if you&rsquo;ve started with Eclipse Android development) and you need to know where it is located on your hard drive.</p>
+<p>Firstly you will need the Android SDK (which you will have already if you&#8217;ve started with Eclipse Android development) and you need to know where it is located on your hard drive.</p>
 
 <p>There is a mode for Emacs that provides a few Android-related keybindings (for running ant tasks like install/reinstall/compile/start emulator/start ddms etc.), you can find it here: <a href="http://github.com/remvee/android-mode">android-mode</a>. Git clone that repository in your .emacs.d directory (~/.emacs.d/), which should already be in your emacs load path. (Emacs config for this later on).</p>
 
-<p>Because Java for Android uses Java 1.5 or above, it will be full of annotations such as &ldquo;@Override&rdquo;. The C/Java modes for emacs don&rsquo;t appear to have been updated to support this syntax so indentation won&rsquo;t be quite right. To fix this, you need a minor mode called <a href="http://www.emacswiki.org/cgi-bin/wiki/java-mode-indent-annotations.el">java-mode-indent-annotations.el</a> &lt;- click on the Download link on that page and save the file as ~/.emacs.d/java-mode-indent-annotations.el</p>
+<p>Because Java for Android uses Java 1.5 or above, it will be full of annotations such as &#8220;@Override&#8221;. The C/Java modes for emacs don&#8217;t appear to have been updated to support this syntax so indentation won&#8217;t be quite right. To fix this, you need a minor mode called <a href="http://www.emacswiki.org/cgi-bin/wiki/java-mode-indent-annotations.el">java-mode-indent-annotations.el</a> &lt;- click on the Download link on that page and save the file as ~/.emacs.d/java-mode-indent-annotations.el</p>
 
 <p>Now the emacs config for all the above is as follows:</p>
 
@@ -135,7 +138,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Remember to change the android-mode-sdk-dir to match where you keep your Android SDK. This variable needs to be set before the android-mode is loaded. Also, if you have any other java-mode-hooks defined, you won&rsquo;t want to setq that variable, but use add-hook &lsquo;java-mode instead - otherwise this will overwrite your existing java-mode hooks.</p>
+<p>Remember to change the android-mode-sdk-dir to match where you keep your Android SDK. This variable needs to be set before the android-mode is loaded. Also, if you have any other java-mode-hooks defined, you won&#8217;t want to setq that variable, but use add-hook &#8216;java-mode instead - otherwise this will overwrite your existing java-mode hooks.</p>
 
 <p>If you try to use any of the provided keybindings, listed below:</p>
 
@@ -179,7 +182,7 @@
 </table>
 
 
-<p>They will probably fail because by default, when you start an Android project in Eclipse, it will not create a build.xml file and ant requires this for any of the above to work (you can probably start the emulator though as that doesn&rsquo;t rely on a per-project build file). So in order to have an ant build file in your project directory you need to run the following command:</p>
+<p>They will probably fail because by default, when you start an Android project in Eclipse, it will not create a build.xml file and ant requires this for any of the above to work (you can probably start the emulator though as that doesn&#8217;t rely on a per-project build file). So in order to have an ant build file in your project directory you need to run the following command:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>android update project --name &lt;project_name&gt; --target &lt;target_ID&gt; --path path/to/your/project/
@@ -193,9 +196,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>That&rsquo;s pretty much it. Remember that you can&rsquo;t run the install task each time because it&rsquo;ll fail if the project is already installed - just run the reinstall task each time you want to test your changes.</p>
+<p>That&#8217;s pretty much it. Remember that you can&#8217;t run the install task each time because it&#8217;ll fail if the project is already installed - just run the reinstall task each time you want to test your changes.</p>
 
-<p>Thanks to <a href="http://blog.fmaj7.me/?p=18">fmaj7&rsquo;s blog</a> where I found most of the information I used to get up and running.</p>
+<p>Thanks to <a href="http://blog.fmaj7.me/?p=18">fmaj7&#8217;s blog</a> where I found most of the information I used to get up and running.</p>
 </div>
 
 
