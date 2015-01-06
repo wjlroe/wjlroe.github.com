@@ -1,6 +1,7 @@
 {% if site.google_analytics_tracking_id %}
   <script type="text/javascript">
-    if(!window.location.href.match(/localhost/)){
+    if(!window.location.href.match(/localhost/) &&
+       !window.location.href.match(/\d+\.\d+\.\d+\.\d+/)) {
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', '{{ site.google_analytics_tracking_id }}']);
       _gaq.push(['_trackPageview']);
