@@ -35,9 +35,7 @@ category_dir: blog/categories
 markdown: rdiscount
 rdiscount:
   extensions:
-    - autolink
     - footnotes
-    - smart
 highlighter: pygments # default python pygments have been replaced by pygments.rb
 
 paginate: 3          # Posts per page on the blog index
