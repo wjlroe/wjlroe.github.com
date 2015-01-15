@@ -9,8 +9,10 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="According to GoodReads I read 17 books
-this year. Here are some I really liked. Kindred by Octavia Butler Kindred is classified as sci-fi, but that &hellip;">
+  <meta name="description" content="There are two main ways to build strings in Clojure: str and
+format. str essentially does string concatenation like
+this: 1
+(str &quot;This is a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +95,238 @@ this year. Here are some I really liked. Kindred by Octavia Butler Kindred is cl
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2015/01/15/string-interpolation-clojure.html">Fast String Interpolation in Clojure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-15T21:55:00+00:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:55 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There are two main ways to build strings in Clojure: <a href="https://clojuredocs.org/clojure.core/str"><code>str</code></a> and
+<a href="https://clojuredocs.org/clojure.core/format"><code>format</code></a>. <code>str</code> essentially does string concatenation like
+this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nb">str </span><span class="s">&quot;This is a sentence with &quot;</span> <span class="nb">some </span><span class="s">&quot; variables &quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I find <code>str</code> forms somewhat unreadable, especially on one line. They
+require the reader to mentally keep track of quote marks and spaces
+around variables.</p>
+
+<p>On the other hand, <code>format</code> offers a fully-featured string interpolation
+function using Java&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html">Formatter</a> class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">format</span> <span class="s">&quot;This string has another string: %s in it and a number: %.2f&quot;</span>
+</span><span class='line'>         <span class="s">&quot;hello!&quot;</span>
+</span><span class='line'>         <span class="mf">30.1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In ruby we might use string interpolation thus:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">str_interpolate</span> <span class="nb">name</span><span class="p">,</span> <span class="n">profession</span><span class="p">,</span> <span class="n">born</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;The person named </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> works as a </span><span class="si">#{</span><span class="n">profession</span><span class="si">}</span><span class="s2"> and was born in </span><span class="si">#{</span><span class="n">born</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">str_interpolate</span> <span class="s2">&quot;Ethel Smyth&quot;</span><span class="p">,</span> <span class="s2">&quot;Composer&quot;</span><span class="p">,</span> <span class="mi">1858</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The advantage of string interpolation like this is how readable the
+code can be.</p>
+
+<p>The problem with prefering <code>format</code> over <code>str</code> is the difference in
+performance. <code>format</code> is a lot more complex and if all you&#8217;re doing is
+string concatenation, then it&#8217;ll not do the job as quickly as <code>str</code>
+does (which uses a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html">StringBuilder</a> under the hood).</p>
+
+<h2>Benchmarks!</h2>
+
+<p>The following code uses the <a href="https://github.com/hugoduncan/criterium">Criterium</a> library aliased to <code>bench</code>.</p>
+
+<p>First let&#8217;s define a function using <code>str</code> and benchmark it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">str-concat-fun</span>
+</span><span class='line'>  <span class="p">[</span><span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">str </span><span class="s">&quot;The person named &quot;</span>
+</span><span class='line'>       <span class="nv">name</span>
+</span><span class='line'>       <span class="s">&quot; works as a &quot;</span>
+</span><span class='line'>       <span class="nv">profession</span>
+</span><span class='line'>       <span class="s">&quot; and was born in &quot;</span>
+</span><span class='line'>       <span class="nv">born</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">bench/bench</span> <span class="p">(</span><span class="nf">str-concat-fun</span> <span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which results in (256ns):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">Evaluation</span> <span class="nb">count </span><span class="err">:</span> <span class="mi">241104540</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="nv">of</span> <span class="mi">4018409</span> <span class="nv">calls.</span>
+</span><span class='line'>             <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">mean</span> <span class="err">:</span> <span class="mf">256.236563</span> <span class="nv">ns</span>
+</span><span class='line'>    <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">std-deviation</span> <span class="err">:</span> <span class="mf">4.617404</span> <span class="nv">ns</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">lower</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">250.226629</span> <span class="kd">ns </span><span class="p">(</span> <span class="mf">2.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">upper</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">266.339191</span> <span class="kd">ns </span><span class="p">(</span><span class="mf">97.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">Overhead</span> <span class="nv">used</span> <span class="err">:</span> <span class="mf">1.166050</span> <span class="nv">ns</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">Found</span> <span class="mi">5</span> <span class="nv">outliers</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="p">(</span><span class="mf">8.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">low-severe</span>       <span class="mi">5</span> <span class="p">(</span><span class="mf">8.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'> <span class="nv">Variance</span> <span class="nv">from</span> <span class="nv">outliers</span> <span class="err">:</span> <span class="mf">7.7764</span> <span class="nv">%</span> <span class="nv">Variance</span> <span class="nv">is</span> <span class="nv">slightly</span> <span class="nv">inflated</span> <span class="nv">by</span> <span class="nv">outliers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let&#8217;s check the <code>format</code> version:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">format-fun</span>
+</span><span class='line'>  <span class="p">[</span><span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;The person named %s works as a %s and was born in %d&quot;</span>
+</span><span class='line'>          <span class="nv">name</span>
+</span><span class='line'>          <span class="nv">profession</span>
+</span><span class='line'>          <span class="nv">born</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">bench/bench</span> <span class="p">(</span><span class="nf">format-fun</span> <span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which results in (1.7µs):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">Evaluation</span> <span class="nb">count </span><span class="err">:</span> <span class="mi">34997760</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="nv">of</span> <span class="mi">583296</span> <span class="nv">calls.</span>
+</span><span class='line'>             <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">mean</span> <span class="err">:</span> <span class="mf">1.703759</span> <span class="err">µ</span><span class="nv">s</span>
+</span><span class='line'>    <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">std-deviation</span> <span class="err">:</span> <span class="mf">36.732362</span> <span class="nv">ns</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">lower</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">1.663752</span> <span class="err">µ</span><span class="nv">s</span> <span class="p">(</span> <span class="mf">2.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">upper</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">1.779579</span> <span class="err">µ</span><span class="nv">s</span> <span class="p">(</span><span class="mf">97.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">Overhead</span> <span class="nv">used</span> <span class="err">:</span> <span class="mf">1.166050</span> <span class="nv">ns</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">Found</span> <span class="mi">2</span> <span class="nv">outliers</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="p">(</span><span class="mf">3.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">low-severe</span>       <span class="mi">2</span> <span class="p">(</span><span class="mf">3.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'> <span class="nv">Variance</span> <span class="nv">from</span> <span class="nv">outliers</span> <span class="err">:</span> <span class="mf">9.4397</span> <span class="nv">%</span> <span class="nv">Variance</span> <span class="nv">is</span> <span class="nv">slightly</span> <span class="nv">inflated</span> <span class="nv">by</span> <span class="nv">outliers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s not good, but not entirely unexpected. An order of magnitude
+slower to use <code>format</code> for string contatenation tasks like this.</p>
+
+<p>One of the advantages of Clojure is the promise of powerful,
+expressive abstractions and not having to compromise on those
+abstractions to achieve performance. In a <a href="http://cemerick.com/2009/12/04/string-interpolation-in-clojure/">blog post</a> about
+string interpolation in Clojure, Chas Emerick proposes a macro for
+simple string interpolation that would behave much like Ruby&#8217;s does.
+This has made its way into the <a href="https://github.com/clojure/core.incubator/">core.incubator</a> project and can be
+used in projects today.</p>
+
+<p>To require it, add <code>core.incubator</code> to your project&#8217;s dependencies and
+add the following to any namespace that needs it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">ns </span><span class="nv">example...</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.core.strint</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">&lt;&lt;</span><span class="p">]]))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So now we can define a function like the others using this new macro:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">interpolation-fun</span>
+</span><span class='line'>  <span class="p">[</span><span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">&lt;&lt;</span> <span class="s">&quot;The person named ~{name} works as a ~{profession} and was born in ~{born}&quot;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">bench/bench</span> <span class="p">(</span><span class="nf">interpolation-fun</span> <span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this results in (272ns):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">Evaluation</span> <span class="nb">count </span><span class="err">:</span> <span class="mi">222317940</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="nv">of</span> <span class="mi">3705299</span> <span class="nv">calls.</span>
+</span><span class='line'>             <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">mean</span> <span class="err">:</span> <span class="mf">271.580867</span> <span class="nv">ns</span>
+</span><span class='line'>    <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">std-deviation</span> <span class="err">:</span> <span class="mf">2.117763</span> <span class="nv">ns</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">lower</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">267.593081</span> <span class="kd">ns </span><span class="p">(</span> <span class="mf">2.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">upper</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">274.826087</span> <span class="kd">ns </span><span class="p">(</span><span class="mf">97.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">Overhead</span> <span class="nv">used</span> <span class="err">:</span> <span class="mf">1.166050</span> <span class="nv">ns</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Not bad! Ever so slightly slower than the <code>str</code> version but a
+performance penalty well worth paying for to get more expressive
+string interpolation I feel.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -633,345 +867,6 @@ get something akin to:</p>
 organisations with thousands of nodes (possibly in disparate data
 centres) to speed up deployment, it can be handy working around
 weaknesses in the vagrant+ansible combination.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2014/12/28/secret-santa-logic.html">Secret Santa in core.logic</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-12-28T19:04:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:04 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Logic programming is an odd beast. As I lounged around over the
-holidays I tried to work out how to write a Secret Santa algorithm
-using core.logic. It seemed like the obvious choice but I quickly
-realised I&#8217;d bitten off more than I could chew.</p>
-
-<h2>Simple Secret Santa</h2>
-
-<p>Your common or garden Secret Santa consists of putting names in a hat
-and picking them out again, ensuring you don&#8217;t pick yourself. Suitable
-for offices and other groups of awkward strangers and acquaintances.</p>
-
-<p>We need <code>core.logic</code> imported, so here&#8217;s the namespace declaration
-(note that both <code>clojure.core</code> and <code>clojure.core.logic</code> define <code>==</code>
-for totally different purposes. I have never used <code>clojure.core/==</code> so
-I&#8217;m a bit hazy as to what it&#8217;s for - we exclude it so they don&#8217;t clash):</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">ns </span><span class="nv">secret-santa.core</span>
-</span><span class='line'>  <span class="p">(</span><span class="ss">:refer-clojure</span> <span class="ss">:exclude</span> <span class="p">[</span><span class="nv">==</span><span class="p">])</span>
-</span><span class='line'>  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.core.logic</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">]</span>
-</span><span class='line'>            <span class="p">[</span><span class="nv">clojure.core.logic.pldb</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">]))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We&#8217;ll start by defining a relation:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">db-rel</span> <span class="nv">santa</span> <span class="nv">p</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is so that we can constrain values to only those names we&#8217;ve
-defined are santas (otherwise you get weird logic variables and nobody
-wants to deal with that noise).</p>
-
-<p>Now for the Secret Santa function. It takes a list of friend names
-(not actually a requirement that they are friends, they may not be
-after exchanging presents) and returns a list of lists. Each inner
-list is a pair of giver and receiver of presents.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">simple-secret-santa</span>
-</span><span class='line'>  <span class="p">[</span><span class="nv">friends</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">facts</span> <span class="p">(</span><span class="nf">coll-&gt;db</span> <span class="p">(</span><span class="nb">for </span><span class="p">[</span><span class="nv">friend</span> <span class="nv">friends</span><span class="p">]</span>
-</span><span class='line'>                           <span class="p">[</span><span class="nv">santa</span> <span class="nv">friend</span><span class="p">]))</span>
-</span><span class='line'>        <span class="nv">num</span> <span class="p">(</span><span class="nb">count </span><span class="nv">friends</span><span class="p">)</span>
-</span><span class='line'>        <span class="nv">givers</span> <span class="p">(</span><span class="nf">repeatedly</span> <span class="nv">num</span> <span class="nv">lvar</span><span class="p">)</span>
-</span><span class='line'>        <span class="nv">receivers</span> <span class="p">(</span><span class="nf">repeatedly</span> <span class="nv">num</span> <span class="nv">lvar</span><span class="p">)]</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="p">(</span><span class="nf">with-db</span> <span class="nv">facts</span>
-</span><span class='line'>           <span class="p">(</span><span class="nf">run*</span> <span class="p">[</span><span class="nv">q</span><span class="p">]</span>
-</span><span class='line'>             <span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">givers</span><span class="p">)</span>
-</span><span class='line'>             <span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">receivers</span><span class="p">)</span>
-</span><span class='line'>             <span class="p">(</span><span class="nf">distincto</span> <span class="nv">givers</span><span class="p">)</span>
-</span><span class='line'>             <span class="p">(</span><span class="nf">distincto</span> <span class="nv">receivers</span><span class="p">)</span>
-</span><span class='line'>             <span class="p">(</span><span class="nf">pairupo</span> <span class="nv">givers</span> <span class="nv">receivers</span> <span class="nv">q</span><span class="p">)))</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">map </span><span class="nv">sort</span><span class="p">)</span>
-</span><span class='line'>      <span class="nv">distinct</span>
-</span><span class='line'>      <span class="nv">rand-nth</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If we call it thus:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">simple-secret-santa</span> <span class="p">[</span><span class="s">&quot;Tommen&quot;</span> <span class="s">&quot;Gregor&quot;</span> <span class="s">&quot;Daenerys&quot;</span> <span class="s">&quot;Arya&quot;</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then we should get the following as a result:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">([</span><span class="s">&quot;Arya&quot;</span> <span class="s">&quot;Gregor&quot;</span><span class="p">]</span>
-</span><span class='line'> <span class="p">[</span><span class="s">&quot;Daenerys&quot;</span> <span class="s">&quot;Tommen&quot;</span><span class="p">]</span>
-</span><span class='line'> <span class="p">[</span><span class="s">&quot;Gregor&quot;</span> <span class="s">&quot;Daenerys&quot;</span><span class="p">]</span>
-</span><span class='line'> <span class="p">[</span><span class="s">&quot;Tommen&quot;</span> <span class="s">&quot;Arya&quot;</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Please note my chronic lack of imagination evidenced by my lazily
-using characters from Game of Thrones who would likely not be involved
-in this kind of tomfoolery.</p>
-
-<p>We need a helper function for pairing people up now:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">defne</span> <span class="nv">pairupo</span>
-</span><span class='line'>  <span class="p">[</span><span class="nv">givers</span> <span class="nv">receivers</span> <span class="nv">pairs</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">([()</span> <span class="p">()</span> <span class="p">()])</span>
-</span><span class='line'>  <span class="p">([[</span><span class="nv">g</span> <span class="k">. </span><span class="nv">gs</span><span class="p">]</span> <span class="p">[</span><span class="nv">r</span> <span class="k">. </span><span class="nv">rs</span><span class="p">]</span> <span class="p">[</span><span class="nv">p</span> <span class="k">. </span><span class="nv">ps</span><span class="p">]]</span>
-</span><span class='line'>   <span class="p">(</span><span class="nf">!=</span> <span class="nv">g</span> <span class="nv">r</span><span class="p">)</span>
-</span><span class='line'>   <span class="p">(</span><span class="nb">== </span><span class="nv">p</span> <span class="p">[</span><span class="nv">g</span> <span class="nv">r</span><span class="p">])</span>
-</span><span class='line'>   <span class="p">(</span><span class="nf">pairupo</span> <span class="nv">gs</span> <span class="nv">rs</span> <span class="nv">ps</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The mind-bending nature of that function can be rather confusing. In
-core.logic (as with <a href="http://minikanren.org">miniKanren</a> and others),
-it&#8217;s common for an &#8220;output
-value&#8221; to be one of the parameters, in this case the 3rd parameter
-(<code>pairs</code>). This function defines a relationship between the parameters
-provided so you can call it with <code>givers</code> and <code>pairs</code> and it&#8217;ll fill
-in the blanks for the <code>receivers</code> value (effectively unzipping the
-<code>pairs</code> value), which is pretty neat.</p>
-
-<h3>Unify what?</h3>
-
-<p>It&#8217;s crucial to understand the <code>clojure.core.logic/==</code> unification
-function to understand how any of this works. It looks like an
-equality test from one of those other programming languages we shall
-not mention here, but it isn&#8217;t like that. Sometimes I thought of it as
-a kind of wishful-thinking-equality - a sort of &#8220;wouldn&#8217;t it be just
-lovely if these things were the same&#8221;.</p>
-
-<p>Taking an example from
-<a href="https://github.com/clojure/core.logic/wiki/A-Core.logic-Primer">the core.logic wiki</a>:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">run*</span> <span class="p">[</span><span class="nv">q</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">fresh</span> <span class="p">[</span><span class="nv">a</span><span class="p">]</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">membero</span> <span class="nv">a</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">membero</span> <span class="nv">q</span> <span class="p">[</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">])</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">== </span><span class="nv">a</span> <span class="nv">q</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the above we are asking core.logic for the possible values of <code>q</code>
-(the output variable). We start using a new logic variable <code>a</code> which
-we unify with <code>q</code> using the <code>==</code> unification function. That is to say,
-all solutions must satisfy the equation <code>a = q</code>, they must have the
-same value. Core.logic tends to add &#8216;o&#8217; to the end of common function
-names so <code>(membero a [1 2 3])</code> isn&#8217;t a boolean predicate function for
-testing for list membership, it attempts to make that statement true.
-With simply that statement - <code>a</code> can be 1 or 2 or 3. The next line
-asserts that <code>q</code> is a member of the list <code>[3 4 5]</code> so its value can be
-3 or 4 or 5. The last line unifies <code>a</code> and <code>q</code> so they must have the
-same value. We can tell that the only cross-over between the 2 lists
-already mentioned is the value 3, so <code>q</code> can only be 3. <code>run*</code> returns
-a list of all possible solutions so in fact we will get a single
-element list: <code>(3)</code> as the result from that code.</p>
-
-<p>The input of our Secret Santa function will be a list of names
-(strings), so it&#8217;d be useful to turn that list of names into a
-database that we can constrain our logic functions on:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">coll-&gt;db</span>
-</span><span class='line'>  <span class="p">[</span><span class="nv">coll</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">apply </span><span class="nv">db</span> <span class="nv">coll</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="http://crossclj.info/fun/clojure.core.logic.pldb/db.html"><code>clojure.core.logic.pldb/db</code></a> takes a variable number of parameters and
-returns a database with those facts contained. We want to call it with
-a collection so <code>apply</code> comes in handy here. Effectively you can use
-<code>apply</code> to turn this: <code>(apply somefn [arg1 arg2 arg3])</code> into <code>(somefn
-arg1 arg2 arg3)</code></p>
-
-<h3>How does it work again?</h3>
-
-<p>Let&#8217;s concentrate on the core part of the function:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">with-db</span> <span class="nv">facts</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">run*</span> <span class="p">[</span><span class="nv">q</span><span class="p">]</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">givers</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">everyg</span> <span class="nv">santa</span> <span class="nv">receivers</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">distincto</span> <span class="nv">givers</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">distincto</span> <span class="nv">receivers</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">pairupo</span> <span class="nv">givers</span> <span class="nv">receivers</span> <span class="nv">q</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We are asking for all the solutions where every item in the <code>givers</code>
-collection is a santa and every item in the <code>receivers</code> collection is
-a santa (lines 3 and 4). This ensures that those collections contain
-only valid santa names and not logic variables or numbers or anything
-else. There&#8217;s something subtle about this - it&#8217;s not simply an
-assertion. core.logic will make those statements true in every way
-they can. One possible version of that (assuming there were 4 names
-input to the function) is that <code>givers =
-["Arya" "Arya" "Arya" "Arya"]</code>. That&#8217;s nonsensical for our purposes
-(remember we mean to zip up these collections so the first giver is
-giving to the first receiver, the 2nd giver to the 2nd receiver and so
-on). So then we ensure that the collection of givers has distinct
-elements in it (line 5), saying the same about receivers on line 6. If
-you imagine core.logic has assembled all the combinations of values
-that are santas first - imagine now it throws away any where values
-repeat. One of the remaining values for <code>givers</code> will be
-[&#8220;Arya&#8221; &#8220;Gregor&#8221; &#8220;Tommen&#8221; &#8220;Daenerys&#8221;]. There will be more. How many?</p>
-
-<h3>Derangements, subfactorials, oh my!</h3>
-
-<p>The mathematical name for the number of unique permutations of
-elements in a set (that are different from their original arrangement)
-is the number of
-<a href="https://en.wikipedia.org/wiki/Derangement">derangements</a> or the subfactorial.</p>
-
-<p>Roughly speaking, Secret Santa is a special case of finding a
-derangement of names. When you have 4 names, there are 9 derangements.</p>
-
-<p>Here is some clojure that calculates that:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">derangements</span>
-</span><span class='line'>  <span class="s">&quot;Calculate the number of derangements of n elements.&quot;</span>
-</span><span class='line'>  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">condp</span> <span class="nb">= </span><span class="nv">n</span>
-</span><span class='line'>    <span class="mi">0</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="mi">1</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">* </span><span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">derangements</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>          <span class="p">(</span><span class="nf">derangements</span> <span class="p">(</span><span class="nb">- </span><span class="nv">n</span> <span class="mi">2</span><span class="p">))))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This algorithm is primarily useful for checking your results in unit
-tests for example. Another way to use it is as the parameter to
-<code>run</code> - you can ask for all the possible derangements of friends. I
-didn&#8217;t have much luck with that because I misunderstood the values
-that my logic code was producing, also there is no need to know
-beforehand how many combinations are possible since you only want one.</p>
-
-<h2>Further improvements</h2>
-
-<p>One weakness of the solutions described above is that they model the
-relationship between the gift giver and receiver as a binary - allowed
-or not. It would be useful to be able to first attempt to solve the
-problem under ideal conditions before falling back to less and less
-ideal solutions. For example, it&#8217;s not ideal to have people paired up
-symmetrically - it&#8217;s just a bit boring that way. It&#8217;s more optimal to
-assign Santas in a circle, which makes it slightly more difficult to
-identify who&#8217;s assigned who.</p>
-
-<p>Finding all possible solutions is extremely slow in core.logic (at
-least, the way I&#8217;ve written it) so this could do with a fair amount of
-optimisation.</p>
-
-<p>I punted the problem of picking a solution out of possible solutions
-to the combination of <code>(map sort)</code>, <code>distinct</code> and <code>rand-nth</code>. This
-isn&#8217;t really necessary, I could have told core.logic what constitutes
-a distinct solution (it doesn&#8217;t realise that order of pairings doesn&#8217;t
-matter) and then simply picked one. My brain hurt so much by that
-point that I decided to call it a day and move on to more interesting
-problems, like</p>
-
-<h2>Final thoughts</h2>
-
-<p>I had a great deal of difficulty writing the <code>pairupo</code> function,
-largely because all the various <code>defne</code>/<code>defnu</code>/<code>defna</code> confused me -
-I still couldn&#8217;t tell you what they do. This was partly due to me
-moving from a real problem (Secret Santa) to the implementation in
-core.logic on the basis of sketchy logic programming knowledge, so I
-missed a lot of subtlety related to <code>conde</code> which is crucial for
-understanding this stuff. The official documentaion for core.logic is
-extremely sparse also, you are very much on your own if the problem
-you want to solve isn&#8217;t Sudoku or the Typed Lambda Calculus (it
-boggles my mind that that is on the
-<a href="https://github.com/clojure/core.logic/wiki/Examples">Examples</a>
-wiki page, I&#8217;m not sure if the intention is to educate or
-obfuscate there).</p>
-
-<p>I hope that a bit more blogging from mere mortals like myself might
-help others grok this mind-mending area of programming.</p>
 </div>
   
   

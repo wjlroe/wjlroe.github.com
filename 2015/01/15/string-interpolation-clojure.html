@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Fast String Interpolation in Clojure - William Roe&#146;s blog</title>
+  <meta name="author" content="Will Roe">
+
+  
+  <meta name="description" content="There are two main ways to build strings in Clojure: str and
+format. str essentially does string concatenation like
+this: 1
+(str &quot;This is a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="William Roe&#146;s blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Caudex:400,700,400italic,700italic&subset=latin,greek-ext,greek,latin-ext'
+      rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="//use.typekit.net/ntz0pdz.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+<!-- For iPhone 6 Plus with @3× display: -->
+<link rel="apple-touch-icon-precomposed" sizes="180x180" href="/images/apple-touch-icon-180x180-precomposed.png">
+<!-- For iPad with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/apple-touch-icon-152x152-precomposed.png">
+<!-- For iPad with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+<!-- For iPhone with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/apple-touch-icon-120x120-precomposed.png">
+<!-- For iPhone with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/apple-touch-icon-76x76-precomposed.png">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-57x57-precomposed.png"><!-- 57×57px -->
+
+  
+  <script type="text/javascript">
+    if(!window.location.href.match(/localhost/) &&
+       !window.location.href.match(/\d+\.\d+\.\d+\.\d+/)) {
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7810285-4']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    }
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">William Roe&#146;s blog</a></h1>
+  
+    <h2>A variety of geekery</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Fast String Interpolation in Clojure</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-15T21:55:00+00:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:55 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>There are two main ways to build strings in Clojure: <a href="https://clojuredocs.org/clojure.core/str"><code>str</code></a> and
+<a href="https://clojuredocs.org/clojure.core/format"><code>format</code></a>. <code>str</code> essentially does string concatenation like
+this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nb">str </span><span class="s">&quot;This is a sentence with &quot;</span> <span class="nb">some </span><span class="s">&quot; variables &quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I find <code>str</code> forms somewhat unreadable, especially on one line. They
+require the reader to mentally keep track of quote marks and spaces
+around variables.</p>
+
+<p>On the other hand, <code>format</code> offers a fully-featured string interpolation
+function using Java&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html">Formatter</a> class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">format</span> <span class="s">&quot;This string has another string: %s in it and a number: %.2f&quot;</span>
+</span><span class='line'>         <span class="s">&quot;hello!&quot;</span>
+</span><span class='line'>         <span class="mf">30.1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In ruby we might use string interpolation thus:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">str_interpolate</span> <span class="nb">name</span><span class="p">,</span> <span class="n">profession</span><span class="p">,</span> <span class="n">born</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;The person named </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> works as a </span><span class="si">#{</span><span class="n">profession</span><span class="si">}</span><span class="s2"> and was born in </span><span class="si">#{</span><span class="n">born</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">str_interpolate</span> <span class="s2">&quot;Ethel Smyth&quot;</span><span class="p">,</span> <span class="s2">&quot;Composer&quot;</span><span class="p">,</span> <span class="mi">1858</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The advantage of string interpolation like this is how readable the
+code can be.</p>
+
+<p>The problem with prefering <code>format</code> over <code>str</code> is the difference in
+performance. <code>format</code> is a lot more complex and if all you&#8217;re doing is
+string concatenation, then it&#8217;ll not do the job as quickly as <code>str</code>
+does (which uses a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html">StringBuilder</a> under the hood).</p>
+
+<h2>Benchmarks!</h2>
+
+<p>The following code uses the <a href="https://github.com/hugoduncan/criterium">Criterium</a> library aliased to <code>bench</code>.</p>
+
+<p>First let&#8217;s define a function using <code>str</code> and benchmark it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">str-concat-fun</span>
+</span><span class='line'>  <span class="p">[</span><span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">str </span><span class="s">&quot;The person named &quot;</span>
+</span><span class='line'>       <span class="nv">name</span>
+</span><span class='line'>       <span class="s">&quot; works as a &quot;</span>
+</span><span class='line'>       <span class="nv">profession</span>
+</span><span class='line'>       <span class="s">&quot; and was born in &quot;</span>
+</span><span class='line'>       <span class="nv">born</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">bench/bench</span> <span class="p">(</span><span class="nf">str-concat-fun</span> <span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which results in (256ns):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">Evaluation</span> <span class="nb">count </span><span class="err">:</span> <span class="mi">241104540</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="nv">of</span> <span class="mi">4018409</span> <span class="nv">calls.</span>
+</span><span class='line'>             <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">mean</span> <span class="err">:</span> <span class="mf">256.236563</span> <span class="nv">ns</span>
+</span><span class='line'>    <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">std-deviation</span> <span class="err">:</span> <span class="mf">4.617404</span> <span class="nv">ns</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">lower</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">250.226629</span> <span class="kd">ns </span><span class="p">(</span> <span class="mf">2.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">upper</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">266.339191</span> <span class="kd">ns </span><span class="p">(</span><span class="mf">97.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">Overhead</span> <span class="nv">used</span> <span class="err">:</span> <span class="mf">1.166050</span> <span class="nv">ns</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">Found</span> <span class="mi">5</span> <span class="nv">outliers</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="p">(</span><span class="mf">8.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">low-severe</span>       <span class="mi">5</span> <span class="p">(</span><span class="mf">8.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'> <span class="nv">Variance</span> <span class="nv">from</span> <span class="nv">outliers</span> <span class="err">:</span> <span class="mf">7.7764</span> <span class="nv">%</span> <span class="nv">Variance</span> <span class="nv">is</span> <span class="nv">slightly</span> <span class="nv">inflated</span> <span class="nv">by</span> <span class="nv">outliers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let&#8217;s check the <code>format</code> version:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">format-fun</span>
+</span><span class='line'>  <span class="p">[</span><span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;The person named %s works as a %s and was born in %d&quot;</span>
+</span><span class='line'>          <span class="nv">name</span>
+</span><span class='line'>          <span class="nv">profession</span>
+</span><span class='line'>          <span class="nv">born</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">bench/bench</span> <span class="p">(</span><span class="nf">format-fun</span> <span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which results in (1.7µs):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">Evaluation</span> <span class="nb">count </span><span class="err">:</span> <span class="mi">34997760</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="nv">of</span> <span class="mi">583296</span> <span class="nv">calls.</span>
+</span><span class='line'>             <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">mean</span> <span class="err">:</span> <span class="mf">1.703759</span> <span class="err">µ</span><span class="nv">s</span>
+</span><span class='line'>    <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">std-deviation</span> <span class="err">:</span> <span class="mf">36.732362</span> <span class="nv">ns</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">lower</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">1.663752</span> <span class="err">µ</span><span class="nv">s</span> <span class="p">(</span> <span class="mf">2.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">upper</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">1.779579</span> <span class="err">µ</span><span class="nv">s</span> <span class="p">(</span><span class="mf">97.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">Overhead</span> <span class="nv">used</span> <span class="err">:</span> <span class="mf">1.166050</span> <span class="nv">ns</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">Found</span> <span class="mi">2</span> <span class="nv">outliers</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="p">(</span><span class="mf">3.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">low-severe</span>       <span class="mi">2</span> <span class="p">(</span><span class="mf">3.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'> <span class="nv">Variance</span> <span class="nv">from</span> <span class="nv">outliers</span> <span class="err">:</span> <span class="mf">9.4397</span> <span class="nv">%</span> <span class="nv">Variance</span> <span class="nv">is</span> <span class="nv">slightly</span> <span class="nv">inflated</span> <span class="nv">by</span> <span class="nv">outliers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s not good, but not entirely unexpected. An order of magnitude
+slower to use <code>format</code> for string contatenation tasks like this.</p>
+
+<p>One of the advantages of Clojure is the promise of powerful,
+expressive abstractions and not having to compromise on those
+abstractions to achieve performance. In a <a href="http://cemerick.com/2009/12/04/string-interpolation-in-clojure/">blog post</a> about
+string interpolation in Clojure, Chas Emerick proposes a macro for
+simple string interpolation that would behave much like Ruby&#8217;s does.
+This has made its way into the <a href="https://github.com/clojure/core.incubator/">core.incubator</a> project and can be
+used in projects today.</p>
+
+<p>To require it, add <code>core.incubator</code> to your project&#8217;s dependencies and
+add the following to any namespace that needs it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">ns </span><span class="nv">example...</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.core.strint</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">&lt;&lt;</span><span class="p">]]))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So now we can define a function like the others using this new macro:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">interpolation-fun</span>
+</span><span class='line'>  <span class="p">[</span><span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">&lt;&lt;</span> <span class="s">&quot;The person named ~{name} works as a ~{profession} and was born in ~{born}&quot;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">bench/bench</span> <span class="p">(</span><span class="nf">interpolation-fun</span> <span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this results in (272ns):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">Evaluation</span> <span class="nb">count </span><span class="err">:</span> <span class="mi">222317940</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="nv">of</span> <span class="mi">3705299</span> <span class="nv">calls.</span>
+</span><span class='line'>             <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">mean</span> <span class="err">:</span> <span class="mf">271.580867</span> <span class="nv">ns</span>
+</span><span class='line'>    <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">std-deviation</span> <span class="err">:</span> <span class="mf">2.117763</span> <span class="nv">ns</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">lower</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">267.593081</span> <span class="kd">ns </span><span class="p">(</span> <span class="mf">2.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">upper</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">274.826087</span> <span class="kd">ns </span><span class="p">(</span><span class="mf">97.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">Overhead</span> <span class="nv">used</span> <span class="err">:</span> <span class="mf">1.166050</span> <span class="nv">ns</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Not bad! Ever so slightly slower than the <code>str</code> version but a
+performance penalty well worth paying for to get more expressive
+string interpolation I feel.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Will Roe</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-15T21:55:00+00:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:55 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/clojure/'>clojure</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure.html" data-via="wjlroe" data-counturl="http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2015/01/06/2014-in-books.html" title="Previous Post: 2014 in books">&laquo; 2014 in books</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 Will Roe
+  <br>
+  <span class="credit">Generated using <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

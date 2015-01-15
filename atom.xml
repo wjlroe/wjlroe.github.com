@@ -4,7 +4,7 @@
   <title><![CDATA[William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-06T14:51:24+00:00</updated>
+  <updated>2015-01-15T22:33:15+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -12,6 +12,218 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fast String Interpolation in Clojure]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure.html"/>
+    <updated>2015-01-15T21:55:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure</id>
+    <content type="html"><![CDATA[<p>There are two main ways to build strings in Clojure: <a href="https://clojuredocs.org/clojure.core/str"><code>str</code></a> and
+<a href="https://clojuredocs.org/clojure.core/format"><code>format</code></a>. <code>str</code> essentially does string concatenation like
+this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nb">str </span><span class="s">&quot;This is a sentence with &quot;</span> <span class="nb">some </span><span class="s">&quot; variables &quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I find <code>str</code> forms somewhat unreadable, especially on one line. They
+require the reader to mentally keep track of quote marks and spaces
+around variables.</p>
+
+<p>On the other hand, <code>format</code> offers a fully-featured string interpolation
+function using Java&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html">Formatter</a> class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">format</span> <span class="s">&quot;This string has another string: %s in it and a number: %.2f&quot;</span>
+</span><span class='line'>         <span class="s">&quot;hello!&quot;</span>
+</span><span class='line'>         <span class="mf">30.1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In ruby we might use string interpolation thus:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">str_interpolate</span> <span class="nb">name</span><span class="p">,</span> <span class="n">profession</span><span class="p">,</span> <span class="n">born</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;The person named </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> works as a </span><span class="si">#{</span><span class="n">profession</span><span class="si">}</span><span class="s2"> and was born in </span><span class="si">#{</span><span class="n">born</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">str_interpolate</span> <span class="s2">&quot;Ethel Smyth&quot;</span><span class="p">,</span> <span class="s2">&quot;Composer&quot;</span><span class="p">,</span> <span class="mi">1858</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The advantage of string interpolation like this is how readable the
+code can be.</p>
+
+<p>The problem with prefering <code>format</code> over <code>str</code> is the difference in
+performance. <code>format</code> is a lot more complex and if all you&#8217;re doing is
+string concatenation, then it&#8217;ll not do the job as quickly as <code>str</code>
+does (which uses a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html">StringBuilder</a> under the hood).</p>
+
+<h2>Benchmarks!</h2>
+
+<p>The following code uses the <a href="https://github.com/hugoduncan/criterium">Criterium</a> library aliased to <code>bench</code>.</p>
+
+<p>First let&#8217;s define a function using <code>str</code> and benchmark it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">str-concat-fun</span>
+</span><span class='line'>  <span class="p">[</span><span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">str </span><span class="s">&quot;The person named &quot;</span>
+</span><span class='line'>       <span class="nv">name</span>
+</span><span class='line'>       <span class="s">&quot; works as a &quot;</span>
+</span><span class='line'>       <span class="nv">profession</span>
+</span><span class='line'>       <span class="s">&quot; and was born in &quot;</span>
+</span><span class='line'>       <span class="nv">born</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">bench/bench</span> <span class="p">(</span><span class="nf">str-concat-fun</span> <span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which results in (256ns):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">Evaluation</span> <span class="nb">count </span><span class="err">:</span> <span class="mi">241104540</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="nv">of</span> <span class="mi">4018409</span> <span class="nv">calls.</span>
+</span><span class='line'>             <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">mean</span> <span class="err">:</span> <span class="mf">256.236563</span> <span class="nv">ns</span>
+</span><span class='line'>    <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">std-deviation</span> <span class="err">:</span> <span class="mf">4.617404</span> <span class="nv">ns</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">lower</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">250.226629</span> <span class="kd">ns </span><span class="p">(</span> <span class="mf">2.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">upper</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">266.339191</span> <span class="kd">ns </span><span class="p">(</span><span class="mf">97.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">Overhead</span> <span class="nv">used</span> <span class="err">:</span> <span class="mf">1.166050</span> <span class="nv">ns</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">Found</span> <span class="mi">5</span> <span class="nv">outliers</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="p">(</span><span class="mf">8.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">low-severe</span>       <span class="mi">5</span> <span class="p">(</span><span class="mf">8.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'> <span class="nv">Variance</span> <span class="nv">from</span> <span class="nv">outliers</span> <span class="err">:</span> <span class="mf">7.7764</span> <span class="nv">%</span> <span class="nv">Variance</span> <span class="nv">is</span> <span class="nv">slightly</span> <span class="nv">inflated</span> <span class="nv">by</span> <span class="nv">outliers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let&#8217;s check the <code>format</code> version:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">format-fun</span>
+</span><span class='line'>  <span class="p">[</span><span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;The person named %s works as a %s and was born in %d&quot;</span>
+</span><span class='line'>          <span class="nv">name</span>
+</span><span class='line'>          <span class="nv">profession</span>
+</span><span class='line'>          <span class="nv">born</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">bench/bench</span> <span class="p">(</span><span class="nf">format-fun</span> <span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which results in (1.7µs):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">Evaluation</span> <span class="nb">count </span><span class="err">:</span> <span class="mi">34997760</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="nv">of</span> <span class="mi">583296</span> <span class="nv">calls.</span>
+</span><span class='line'>             <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">mean</span> <span class="err">:</span> <span class="mf">1.703759</span> <span class="err">µ</span><span class="nv">s</span>
+</span><span class='line'>    <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">std-deviation</span> <span class="err">:</span> <span class="mf">36.732362</span> <span class="nv">ns</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">lower</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">1.663752</span> <span class="err">µ</span><span class="nv">s</span> <span class="p">(</span> <span class="mf">2.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">upper</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">1.779579</span> <span class="err">µ</span><span class="nv">s</span> <span class="p">(</span><span class="mf">97.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">Overhead</span> <span class="nv">used</span> <span class="err">:</span> <span class="mf">1.166050</span> <span class="nv">ns</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">Found</span> <span class="mi">2</span> <span class="nv">outliers</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="p">(</span><span class="mf">3.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">low-severe</span>       <span class="mi">2</span> <span class="p">(</span><span class="mf">3.3333</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'> <span class="nv">Variance</span> <span class="nv">from</span> <span class="nv">outliers</span> <span class="err">:</span> <span class="mf">9.4397</span> <span class="nv">%</span> <span class="nv">Variance</span> <span class="nv">is</span> <span class="nv">slightly</span> <span class="nv">inflated</span> <span class="nv">by</span> <span class="nv">outliers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s not good, but not entirely unexpected. An order of magnitude
+slower to use <code>format</code> for string contatenation tasks like this.</p>
+
+<p>One of the advantages of Clojure is the promise of powerful,
+expressive abstractions and not having to compromise on those
+abstractions to achieve performance. In a <a href="http://cemerick.com/2009/12/04/string-interpolation-in-clojure/">blog post</a> about
+string interpolation in Clojure, Chas Emerick proposes a macro for
+simple string interpolation that would behave much like Ruby&#8217;s does.
+This has made its way into the <a href="https://github.com/clojure/core.incubator/">core.incubator</a> project and can be
+used in projects today.</p>
+
+<p>To require it, add <code>core.incubator</code> to your project&#8217;s dependencies and
+add the following to any namespace that needs it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">ns </span><span class="nv">example...</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.core.strint</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">&lt;&lt;</span><span class="p">]]))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So now we can define a function like the others using this new macro:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">interpolation-fun</span>
+</span><span class='line'>  <span class="p">[</span><span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">&lt;&lt;</span> <span class="s">&quot;The person named ~{name} works as a ~{profession} and was born in ~{born}&quot;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">bench/bench</span> <span class="p">(</span><span class="nf">interpolation-fun</span> <span class="nb">name </span><span class="nv">profession</span> <span class="nv">born</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this results in (272ns):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">Evaluation</span> <span class="nb">count </span><span class="err">:</span> <span class="mi">222317940</span> <span class="nv">in</span> <span class="mi">60</span> <span class="nv">samples</span> <span class="nv">of</span> <span class="mi">3705299</span> <span class="nv">calls.</span>
+</span><span class='line'>             <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">mean</span> <span class="err">:</span> <span class="mf">271.580867</span> <span class="nv">ns</span>
+</span><span class='line'>    <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">std-deviation</span> <span class="err">:</span> <span class="mf">2.117763</span> <span class="nv">ns</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">lower</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">267.593081</span> <span class="kd">ns </span><span class="p">(</span> <span class="mf">2.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>   <span class="nv">Execution</span> <span class="nb">time </span><span class="nv">upper</span> <span class="nv">quantile</span> <span class="err">:</span> <span class="mf">274.826087</span> <span class="kd">ns </span><span class="p">(</span><span class="mf">97.5</span><span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">Overhead</span> <span class="nv">used</span> <span class="err">:</span> <span class="mf">1.166050</span> <span class="nv">ns</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Not bad! Ever so slightly slower than the <code>str</code> version but a
+performance penalty well worth paying for to get more expressive
+string interpolation I feel.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[2014 in Books]]></title>
@@ -1870,102 +2082,6 @@ First, I believe power should lie with the people – and AV would take some of 
 <p>So aside from the work I inevitably had to do this evening, I&#8217;ve completed 1,788 words, bringing my total so far to 2,288. I am obviously well short of where I should be but I&#8217;m hoping I can put some serious typing hours in on the weekend. It&#8217;s not like I&#8217;ll have anything else to do. Except procrastinate of course.</p>
 
 <p>If anybody else out there in the ether is having problems writing their novel, or writing anything for that matter, rest assured your problems are not unusual. I&#8217;m still wavering between determination to complete the challenge to get my first novel written; and defeat, apathy that no matter how hard I try, life will always get in my way. When I was at school, if a teacher had set me homework to write a 2,000 word essay or story, I would have left it to the last minute, written less than half of what was required and handed it in late. If I don&#8217;t rise above this pattern of under-achievement now, I fear I never will. So, in summary, I will finish this novel on time. I might not enjoy it, but I will complete it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Emacs for Android Development]]></title>
-    <link href="http://blog.wjlr.org.uk/2010/05/16/emacs-for-android-development.html"/>
-    <updated>2010-05-16T00:00:00+01:00</updated>
-    <id>http://blog.wjlr.org.uk/2010/05/16/emacs-for-android-development</id>
-    <content type="html"><![CDATA[<p>Today I started using Emacs rather than Eclipse to work on an Android project. There are a couple of things you need to get started though.</p>
-
-<p>Firstly you will need the Android SDK (which you will have already if you&#8217;ve started with Eclipse Android development) and you need to know where it is located on your hard drive.</p>
-
-<p>There is a mode for Emacs that provides a few Android-related keybindings (for running ant tasks like install/reinstall/compile/start emulator/start ddms etc.), you can find it here: <a href="http://github.com/remvee/android-mode">android-mode</a>. Git clone that repository in your .emacs.d directory (~/.emacs.d/), which should already be in your emacs load path. (Emacs config for this later on).</p>
-
-<p>Because Java for Android uses Java 1.5 or above, it will be full of annotations such as &#8220;@Override&#8221;. The C/Java modes for emacs don&#8217;t appear to have been updated to support this syntax so indentation won&#8217;t be quite right. To fix this, you need a minor mode called <a href="http://www.emacswiki.org/cgi-bin/wiki/java-mode-indent-annotations.el">java-mode-indent-annotations.el</a> &lt;- click on the Download link on that page and save the file as ~/.emacs.d/java-mode-indent-annotations.el</p>
-
-<p>Now the emacs config for all the above is as follows:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">android-mode-sdk-dir</span> <span class="s">&quot;~/android-sdk-mac_86/&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;android-mode</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;java-mode-indent-annotations</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">java-mode-hook</span>
-</span><span class='line'>    <span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="k">lambda</span><span class="p">()</span>
-</span><span class='line'>       <span class="p">(</span><span class="nv">java-mode-indent-annotations-setup</span><span class="p">))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Remember to change the android-mode-sdk-dir to match where you keep your Android SDK. This variable needs to be set before the android-mode is loaded. Also, if you have any other java-mode-hooks defined, you won&#8217;t want to setq that variable, but use add-hook &#8216;java-mode instead - otherwise this will overwrite your existing java-mode hooks.</p>
-
-<p>If you try to use any of the provided keybindings, listed below:</p>
-
-<table>
-<thead>
-<tr>
-<th>Key binding </th>
-<th> Function</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>C-c C-c c   </td>
-<td> android-ant-compile</td>
-</tr>
-<tr>
-<td>C-c C-c d   </td>
-<td> android-start-ddms</td>
-</tr>
-<tr>
-<td>C-c C-c e   </td>
-<td> android-start-emulator</td>
-</tr>
-<tr>
-<td>C-c C-c i   </td>
-<td> android-ant-install</td>
-</tr>
-<tr>
-<td>C-c C-c l   </td>
-<td> android-logcat</td>
-</tr>
-<tr>
-<td>C-c C-c r   </td>
-<td> android-ant-reinstall</td>
-</tr>
-<tr>
-<td>C-c C-c u   </td>
-<td> android-ant-uninstall</td>
-</tr>
-</tbody>
-</table>
-
-
-<p>They will probably fail because by default, when you start an Android project in Eclipse, it will not create a build.xml file and ant requires this for any of the above to work (you can probably start the emulator though as that doesn&#8217;t rely on a per-project build file). So in order to have an ant build file in your project directory you need to run the following command:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>android update project --name &lt;project_name&gt; --target &lt;target_ID&gt; --path path/to/your/project/
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Name and target are optional, as you have most likely already defined those from Eclipse. But in order to list the targets available, run:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>android list targets
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That&#8217;s pretty much it. Remember that you can&#8217;t run the install task each time because it&#8217;ll fail if the project is already installed - just run the reinstall task each time you want to test your changes.</p>
-
-<p>Thanks to <a href="http://blog.fmaj7.me/?p=18">fmaj7&#8217;s blog</a> where I found most of the information I used to get up and running.</p>
 ]]></content>
   </entry>
   

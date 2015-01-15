@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clojure | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-06T14:51:24+00:00</updated>
+  <updated>2015-01-15T22:33:15+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -12,6 +12,148 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fast string interpolation in Clojure]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure.html"/>
+    <updated>2015-01-15T21:55:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure</id>
+    <content type="html"><![CDATA[<p>There are two main ways to build strings in Clojure: <a href="https://clojuredocs.org/clojure.core/str"><code>str</code></a> and
+<a href="https://clojuredocs.org/clojure.core/format"><code>format</code></a>. <code>str</code> essentially does string concatenation like
+this:</p>
+
+<pre><code class="clojure">(str "This is a sentence with " some " variables ")
+</code></pre>
+
+<p>I find <code>str</code> forms somewhat unreadable, especially on one line. They
+require the reader to mentally keep track of quote marks and spaces
+around variables.</p>
+
+<p>On the other hand, <code>format</code> offers a fully-featured string interpolation
+function using Java&#8217;s <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html">Formatter</a> class:</p>
+
+<pre><code class="clojure">(format "This string has another string: %s in it and a number: %.2f"
+         "hello!"
+         30.1)
+</code></pre>
+
+<p>In ruby we might use string interpolation thus:</p>
+
+<pre><code class="ruby">def str_interpolate name, profession, born
+  puts "The person named #{name} works as a #{profession} and was born in #{born}"
+end
+
+str_interpolate "Ethel Smyth", "Composer", 1858
+</code></pre>
+
+<p>The advantage of string interpolation like this is how readable the
+code can be.</p>
+
+<p>The problem with prefering <code>format</code> over <code>str</code> is the difference in
+performance. <code>format</code> is a lot more complex and if all you&#8217;re doing is
+string concatenation, then it&#8217;ll not do the job as quickly as <code>str</code>
+does (which uses a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html">StringBuilder</a> under the hood).</p>
+
+<h2>Benchmarks!</h2>
+
+<p>The following code uses the <a href="https://github.com/hugoduncan/criterium">Criterium</a> library aliased to <code>bench</code>.</p>
+
+<p>First let&#8217;s define a function using <code>str</code> and benchmark it:</p>
+
+<pre><code class="clojure">(defn str-concat-fun
+  [name profession born]
+  (str "The person named "
+       name
+       " works as a "
+       profession
+       " and was born in "
+       born))
+
+(bench/bench (str-concat-fun name profession born))
+</code></pre>
+
+<p>Which results in (256ns):</p>
+
+<pre><code>Evaluation count : 241104540 in 60 samples of 4018409 calls.
+             Execution time mean : 256.236563 ns
+    Execution time std-deviation : 4.617404 ns
+   Execution time lower quantile : 250.226629 ns ( 2.5%)
+   Execution time upper quantile : 266.339191 ns (97.5%)
+                   Overhead used : 1.166050 ns
+
+Found 5 outliers in 60 samples (8.3333 %)
+        low-severe       5 (8.3333 %)
+ Variance from outliers : 7.7764 % Variance is slightly inflated by outliers
+</code></pre>
+
+<p>Now let&#8217;s check the <code>format</code> version:</p>
+
+<pre><code class="clojure">(defn format-fun
+  [name profession born]
+  (format "The person named %s works as a %s and was born in %d"
+          name
+          profession
+          born))
+
+(bench/bench (format-fun name profession born))
+</code></pre>
+
+<p>Which results in (1.7µs):</p>
+
+<pre><code>Evaluation count : 34997760 in 60 samples of 583296 calls.
+             Execution time mean : 1.703759 µs
+    Execution time std-deviation : 36.732362 ns
+   Execution time lower quantile : 1.663752 µs ( 2.5%)
+   Execution time upper quantile : 1.779579 µs (97.5%)
+                   Overhead used : 1.166050 ns
+
+Found 2 outliers in 60 samples (3.3333 %)
+        low-severe       2 (3.3333 %)
+ Variance from outliers : 9.4397 % Variance is slightly inflated by outliers
+</code></pre>
+
+<p>That&#8217;s not good, but not entirely unexpected. An order of magnitude
+slower to use <code>format</code> for string contatenation tasks like this.</p>
+
+<p>One of the advantages of Clojure is the promise of powerful,
+expressive abstractions and not having to compromise on those
+abstractions to achieve performance. In a <a href="http://cemerick.com/2009/12/04/string-interpolation-in-clojure/">blog post</a> about
+string interpolation in Clojure, Chas Emerick proposes a macro for
+simple string interpolation that would behave much like Ruby&#8217;s does.
+This has made its way into the <a href="https://github.com/clojure/core.incubator/">core.incubator</a> project and can be
+used in projects today.</p>
+
+<p>To require it, add <code>core.incubator</code> to your project&#8217;s dependencies and
+add the following to any namespace that needs it:</p>
+
+<pre><code class="clojure">(ns example...)
+  (:require [clojure.core.strint :refer [&lt;&lt;]]))
+</code></pre>
+
+<p>So now we can define a function like the others using this new macro:</p>
+
+<pre><code class="clojure">(defn interpolation-fun
+  [name profession born]
+  (&lt;&lt; "The person named ~{name} works as a ~{profession} and was born in ~{born}"))
+
+(bench/bench (interpolation-fun name profession born))
+</code></pre>
+
+<p>And this results in (272ns):</p>
+
+<pre><code>Evaluation count : 222317940 in 60 samples of 3705299 calls.
+             Execution time mean : 271.580867 ns
+    Execution time std-deviation : 2.117763 ns
+   Execution time lower quantile : 267.593081 ns ( 2.5%)
+   Execution time upper quantile : 274.826087 ns (97.5%)
+                   Overhead used : 1.166050 ns
+</code></pre>
+
+<p>Not bad! Ever so slightly slower than the <code>str</code> version but a
+performance penalty well worth paying for to get more expressive
+string interpolation I feel.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Secret Santa in core.logic]]></title>
