@@ -197,9 +197,21 @@ pre, .highlight, .gist-highlight {
 }
 
 img.extrawide {
-  width: 625px;
-  min-width: 625px;
-  margin-left: -55px;
+  margin-left: -18px;
+  width: 320px;
+  min-width: 320px;
+  @media only screen and (min-width: 568px) {
+    width: 568px;
+    min-width: 568px;
+    margin-left: -25px;
+  }
+
+  @media only screen and (min-width: 625px) {
+    width: 625px;
+    min-width: 625px;
+    margin-left: -55px;
+
+  }
 }
 
 img.pixel-art {
