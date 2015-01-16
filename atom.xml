@@ -4,7 +4,7 @@
   <title><![CDATA[William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-15T22:33:15+00:00</updated>
+  <updated>2015-01-16T06:14:33+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -1057,13 +1057,13 @@ help others grok this mind-mending area of programming.</p>
     <id>http://blog.wjlr.org.uk/2014/12/08/ludum-dare-31-postmortem</id>
     <content type="html"><![CDATA[<p>On the weekend of 6th December 2014, I participated in <a href="http://ludumdare.com/compo/">Ludum Dare</a> 31. The theme was &#8220;Entire Game on One Screen&#8221;. I didn&#8217;t finish my game and didn&#8217;t hand anything in. This is the 3rd(?) time I&#8217;ve started but not finished a Ludum Dare game in recent years. The first time I participated in Ludum Dare, I completed a game and handed it in for the competition (48 hours), so I&#8217;m curious as to what has been holding me back since then.</p>
 
-<p><img src="http://blog.wjlr.org.uk/images/robot-scene.png" width="100%" class="pixel-art"></p>
+<p><img src="http://blog.wjlr.org.uk/images/robot-scene.png" class="extrawide pixel-art"></p>
 
 <h2>Lack of planning</h2>
 
 <p>It was only after Ludum Dare was completed and I filled in a <a href="http://trello.com">Trello</a> board with the tasks necessary to complete my game that I realised the immensity of the project. I was reading <a href="https://twitter.com/amyhoy">Amy Hoy&#8217;s</a> new book <a href="https://unicornfree.com/just-fucking-ship">Just Fucking Ship</a> and it emphasises working backwards from a goal to a set of tasks that need to be done. Hoy also advocates <a href="http://en.wikipedia.org/wiki/Mise_en_place">Mise en place</a> style of working, which I&#8217;ve never identified as a <em>thing</em> before but it&#8217;s obvious in hindsight. Ludum Dare advice usually contains something about starting on paper, getting all the high-level details worked out before diving into code and that&#8217;s absolutely right. The other massive advantage of having a todo list (e.g. in Trello) is that it&#8217;s super easy to order the list of things in terms of what needs to be done and what is optional. Does it matter that the resolution is fixed at 800x600? Nope. But I&#8217;ve totally sunk hours/days into coding around the idea I need to have a scalable interface on the web for my games (and it&#8217;s always really painful).</p>
 
-<p><img src="http://blog.wjlr.org.uk/images/Elm_Editor_Mario.png" width="100%"></p>
+<p><img src="http://blog.wjlr.org.uk/images/Elm_Editor_Mario.png" class="extrawide"></p>
 
 <p>Case in point - this Ludum Dare, I decided to use <a href="http://elm-lang.org">Elm</a>, which was entirely new to me. The conventional wisdom has it that one should never learn tools while participating in Ludum Dare, just use whatever you have at hand (i.e. programming languages/IDEs/libraries etc. that you have used extensively before). I only make games during Ludum Dare though and I&#8217;ve never reached a level of proficiency with gamedev that I feel leaves me with a default technology choice, so I used a new thing. However, this time round, using Elm, the web game ends up getting drawn using the 2D canvas and image elements positioned on top of it basically. You can&#8217;t control a lot of how Elm does any of this and there was a minor wrinkle - there&#8217;s no way to use CSS&#8217;s <a href="https://developer.mozilla.org/en/docs/Web/CSS/image-rendering">image-rendering</a> option to optimise for pixel art (crisp-edges is what you want - which is essentially nearest-neighbour scaling up/down). The result is you get blurry pixel art in your games and this sucks. It&#8217;s not at all a blocking problem for Ludum Dare games though and I feel silly for spending any more than 5 minutes on it.</p>
 
@@ -1075,7 +1075,7 @@ help others grok this mind-mending area of programming.</p>
 
 <p>All my weaknesses as a software engineer aside, I made the fundamental error of dreaming up a cool game that was not within my reach of a 48 hour deadline. This is a completely avoidable self-imposed problem. The solution seems to be, sketch out the game in its entirety - all the objects in the game, all the components and all the behaviour. Make sure you have all the artwork at least approximated (I did this in Paper on the iPad because I could doddle on that while watching TV and it didn&#8217;t even feel like work). At this point you can identify elements that can be left out - think &#8220;what could I postpone if I was forced to launch this in an hour?&#8221; - or some other mind trick to force yourself to be ruthless with the scope of your game. One advantage of sketching everything on paper or in Paper on an iPad is that if time gets really tight and you don&#8217;t have super great pixel artwork ready - just chop up/scan in/photograph the sketches and use them as your assets. There will be people playing your game who think the hand-drawn nature of the artwork was a stylistic choice you made from the beginning and you know you ran out of time.</p>
 
-<p><img src="http://blog.wjlr.org.uk/images/sketching-onescreen.png" width="100%"></p>
+<p><img src="http://blog.wjlr.org.uk/images/sketching-onescreen.png" class="extrawide"></p>
 
 <h2>Onwards</h2>
 
@@ -1083,7 +1083,7 @@ help others grok this mind-mending area of programming.</p>
 
 <p>In Agile circles, we talk a bit about what it means to be Done. The &#8220;definition of done&#8221;, which can sound rather alien to somebody who&#8217;s not familiar with specifying that concretely. It&#8217;s essential to working progress otherwise you end up with tasks that linger on for days and weeks because they are quite simply never finished. Those aren&#8217;t tasks, they&#8217;re a waking nightmare. Sometimes there is no definition of done. This blog post doesn&#8217;t have a definition of done because I made an agreement with myself that I would write until I felt hungry then I would order some food. In Agile that&#8217;s usually called time-boxing and it usually isn&#8217;t hunger-based but might as well be. &#8220;Let&#8217;s time-box this for an hour&#8221; is a common phrase in Agile teams. It&#8217;s how you manage investigation tasks (otherwise they go on forever). We all need more, clearer definitions of done.</p>
 
-<p><img src="http://blog.wjlr.org.uk/images/hunger-box.png" width="100%"></p>
+<p><img src="http://blog.wjlr.org.uk/images/hunger-box.png" class="extrawide"></p>
 
 <p>So Ludum Dare is over. I&#8217;m done with this blog post. I have plenty to practice and improve before next Ludum Dare and with any luck I&#8217;ll ship a game next time.</p>
 ]]></content>
