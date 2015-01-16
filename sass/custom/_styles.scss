@@ -90,7 +90,15 @@ body {
             }
         }
     }
-    #content { margin-right: 0px; }
+    #content {
+      margin-right: 0px;
+      border-right: 0px;
+      background-image: none;
+    }
+
+    #main {
+      background-image: none;
+    }
 
     > header h1 {
         font-size: 1.7em;
@@ -186,6 +194,12 @@ h2, h3,h4,h5 { font-weight: normal; }
 
 pre, .highlight, .gist-highlight {
     &::-webkit-scrollbar {  height: .3em; background: $solar-scroll-bg; }
+}
+
+img.extrawide {
+  width: 625px;
+  min-width: 625px;
+  margin-left: -55px;
 }
 
 img.pixel-art {
