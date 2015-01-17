@@ -9,7 +9,8 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this: cat test.svg | convert svg: png:- &gt; &hellip;">
+  <meta name="description" content="Update: None of this is required with current versions of Ember and
+Ember-data. A common pattern with webapps in these exciting times is the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,6 +93,108 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/06/06/ember-transition-to-new-model-hack.html">Ember transitionToRoute With New Model Hack</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-06-06T19:53:00+01:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:53 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><aside class="update">
+<strong>Update</strong>: None of this is required with current versions of Ember and
+Ember-data.
+</aside></p>
+
+<p>A common pattern with webapps in these exciting times is the
+transition-to-new-thing-you-just-created pattern. The way it works is this: you
+fill in a form to create a new thing (like, a widget or something) and then when
+you hit &#8216;save&#8217;, you are transitioned to the page for that widget. This is so you
+can confirm that it worked and so you could make further changes on that widget.
+The assumption being, when you create a widget, it is the focus of your task.</p>
+
+<p>Whatever, anyway, I had to make something along those lines in an EmberJS app at
+work and hit an ember-data bug. Surprise!</p>
+
+<p>The bug is that when you try to do this (code speaks louder than widget
+metaphors):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">App</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">createRecord</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;special_widget&quot;</span><span class="p">});</span>
+</span><span class='line'><span class="nx">model</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="s1">&#39;didCreate&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">transitionToRoute</span><span class="p">(</span><span class="s1">&#39;widgets.show&#39;</span><span class="p">,</span> <span class="nx">model</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">commit</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This doesn&#8217;t work with ember-data currently - what happens is the <code>model</code> object
+that gets sent to the <code>didCreate</code> callback there won&#8217;t have an <code>id</code> from the
+server (it hasn&#8217;t been filled in for some reason).</p>
+
+<p>To work around this issue, you need to do something akin to this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">saveTheWidget</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">App</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">createRecord</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;very_special_widget&quot;</span><span class="p">});</span>
+</span><span class='line'>  <span class="nx">model</span><span class="p">.</span><span class="nx">addObserver</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">showWidget</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">commit</span><span class="p">();</span>
+</span><span class='line'><span class="p">},</span>
+</span><span class='line'><span class="nx">showWidget</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">model</span><span class="p">.</span><span class="nx">removeObserver</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">showWidget</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">transitionToRoute</span><span class="p">(</span><span class="s1">&#39;widgets.show&#39;</span><span class="p">,</span> <span class="nx">model</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In that example we trigger the page transition off the change of value of <code>id</code>.
+This works because for a short while, the <code>id</code> will be <code>null</code> until Ember-data
+fills in the new <code>id</code> from the server. Then your callback is called and the page
+transition happens. The difference in timing is not noticeable to the user - it&#8217;s
+just a race condition within Ember-data itself. Other than that - in this
+example, the observer is removed, which is good practice for observers and you
+should always remove observers you&#8217;ve added (as I understand it).</p>
+
+<p>Other alternative workarounds include wrapping the <code>transitionToRoute</code> call in a
+<code>setTimeout()</code> block - to make it pause just long enough for the model&#8217;s <code>id</code> to
+be filled in.</p>
+
+<p>Most of the above came from
+<a href="http://stackoverflow.com/questions/14981500/transition-after-saving-model-of-ember-data">Stackoverflow</a>
+and the <a href="https://github.com/emberjs/data/issues/405#issuecomment-18891172">bug report and workaround</a> on
+ember-data.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -208,50 +311,6 @@
 <p>There’s probably a way round this, but I’m using handlebars_assets to compile handlebars templates for some javascript (that ends up not being at all related to EmberJS - it’s embedded in other pages). I need those templates to be available in the <code>HandlebarsTemplates</code> object so I can run them in the javascript. I include <code>handlebars.runtime</code> in the javascript to run them. ember-rails includes that (I just looked) so I can probably ditch handlebars_assets. That’ll be the next thing to try.</p>
 
 <p>This might not make a lot of sense, but if you’ve hit this problem (i.e. nothing renders in your EmberJS app but your templates are all compiled and you get no errors in the browser console) then this is one possible gotcha.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/08/22/ludum-dare-24-i-slash-m-taking-part.html">Ludum Dare 24 - I&#8217;m Taking Part</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-08-22T02:15:00+01:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2012</span></span> <span class='time'>2:15 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I shall be making an attempt to build a game in 48 hours for <a href="http://www.ludumdare.com/compo/">Ludum Dare 24</a>, for the first time.</p>
-
-<p>My tools will be:</p>
-
-<ul>
-<li><strong>Language</strong>: Clojure + ClojureScript (targeting Javascript)</li>
-<li><strong>Engine</strong>: My brain and HTML Canvas&#8230;mainly canvas</li>
-<li><strong>Libraries</strong>: probably at least <a href="https://github.com/ibdknox/monet">Monet</a></li>
-<li><strong>Music</strong>: I have no idea, whatever I can work out how to use</li>
-<li><strong>Graphics</strong>: Pixen, Pixelmator, that sort of thing probably</li>
-</ul>
-
-
-<p>I&#8217;m gonna have fun but since I&#8217;m breaking rule 1 - know the tools (I don&#8217;t know any possible tools) this is going to be intense.</p>
-
-<p>Have fun everyone!</p>
 </div>
   
   

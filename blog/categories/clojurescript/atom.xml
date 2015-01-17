@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: clojurescript | William Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/clojurescript/atom.xml" rel="self"/>
+  <link href="http://blog.wjlr.org.uk/"/>
+  <updated>2015-01-17T03:28:35+00:00</updated>
+  <id>http://blog.wjlr.org.uk/</id>
+  <author>
+    <name><![CDATA[Will Roe]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Fast string interpolation in ClojureScript]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/01/17/fast-string-interpolation-cljs.html"/>
+    <updated>2015-01-17T03:30:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/01/17/fast-string-interpolation-cljs</id>
+    <content type="html"><![CDATA[<p>In my
+<a href="/2015/01/15/string-interpolation-clojure.html">previous post on string interpolation in Clojure</a>,
+I benchmarked <code>&lt;&lt;</code> from <code>core.incubator</code> and it proved both useful and
+performant. But can this useful macro be used from ClojureScript? Yes.</p>
+
+<p>Add <code>core.incubator</code> to your dependencies in <code>project.clj</code> of your
+ClojureScript project:</p>
+
+<pre><code class="clojure">(defproject some-project "1.0.0-SNAPSHOT"
+  :dependencies [...
+                 [org.clojure/core.incubator "0.1.3"]
+                 ...]
+</code></pre>
+
+<p>Now you can require the <code>strint</code> macros in your ClojureScript source
+(e.g. in <code>src/cljs/app/core.cljs</code>):</p>
+
+<pre><code class="clojure">(ns app.core
+  (:require-macros [clojure.core.strint :as strint]))
+</code></pre>
+
+<p>Now you can use the fast string interpolator thus:</p>
+
+<pre><code class="clojure">(enable-console-print!)
+
+(let [name "Ethel Smyth"
+      profession "Composer"
+      born 1858]
+  (println
+   (strint/&lt;&lt; "The person named ~{name} works as a ~{profession}
+and was born in ~{born}")))
+</code></pre>
+
+<p>That&#8217;s it!</p>
+]]></content>
+  </entry>
+  
+</feed>

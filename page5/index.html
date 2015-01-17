@@ -9,7 +9,7 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="Today was a pretty good day for me - programming-wise. Even though I wasn't too well (having trouble hearing in my left ear which is disorientating &hellip;">
+  <meta name="description" content="I shall be making an attempt to build a game in 48 hours for Ludum Dare 24, for the first time. My tools will be: Language: Clojure + ClojureScript ( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -98,6 +98,50 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/2012/08/22/ludum-dare-24-i-slash-m-taking-part.html">Ludum Dare 24 - I&#8217;m Taking Part</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-08-22T02:15:00+01:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2012</span></span> <span class='time'>2:15 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I shall be making an attempt to build a game in 48 hours for <a href="http://www.ludumdare.com/compo/">Ludum Dare 24</a>, for the first time.</p>
+
+<p>My tools will be:</p>
+
+<ul>
+<li><strong>Language</strong>: Clojure + ClojureScript (targeting Javascript)</li>
+<li><strong>Engine</strong>: My brain and HTML Canvas&#8230;mainly canvas</li>
+<li><strong>Libraries</strong>: probably at least <a href="https://github.com/ibdknox/monet">Monet</a></li>
+<li><strong>Music</strong>: I have no idea, whatever I can work out how to use</li>
+<li><strong>Graphics</strong>: Pixen, Pixelmator, that sort of thing probably</li>
+</ul>
+
+
+<p>I&#8217;m gonna have fun but since I&#8217;m breaking rule 1 - know the tools (I don&#8217;t know any possible tools) this is going to be intense.</p>
+
+<p>Have fun everyone!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/2012/07/26/what-makes-a-developer-happy.html">What Makes a Developer Happy?</a></h1>
     
     
@@ -174,110 +218,6 @@
 from Google Webfonts. Nice.</p>
 
 <p>It looks like Crimson Text is a promising free font that might have Polytonic Greek characters at some point so that&#8217;s useful to know for me.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/07/further-haskell-exploration.html">Further Haskell Exploration</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-02-07'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today I decided to embark on an exploration of Haskell web
-development. I have previously bootstrapped a basic
-<a href="http://snapframework.com/">Snap</a> setup but never got into actual
-hacking. Today I decided to give <a href="http://www.yesodweb.com/">Yesod</a> a
-go. I ran into a number of difficulties that drained away all my spare
-time this evening but in the end I feel like I&#8217;m ready to dive in
-tomorrow.</p>
-
-<p>I started off by attempting to install Yesod, with a simple <code>cabal
-install yesod</code>. This command took about 10 minutes to finish compiling
-dependencies on my ThinkPad X61 before it died with an error. The
-problem seemed to be the version of
-<a href="http://hackage.haskell.org/platform/">haskell-platform</a> was rather
-out-of-date, meaning a tool, called <code>alex</code> was too old for Yesod. To
-solve this rather small issue I took the rather drastic step of
-upgrading Ubuntu on the ThinkPad to
-<a href="https://wiki.ubuntu.com/PrecisePangolin">Precise Pangolin</a> because
-this includes the latest haskell-platform&#8230;and its all new and&#8230;just
-because! This is Ubuntu after all - trigger happy upgrades are the
-name of the game.</p>
-
-<p>Meanwhile, in Mac land. While that upgrade was running I tried to run
-the new yesod web app on a Mac. Unfortunately I ran into all the
-problems I&#8217;ve encountered before with cabal-dev on OS X.</p>
-
-<p>Firstly there&#8217;s some weirdness with cabal-dev being set to install
-everything in the system library location. This just makes no sense for
-cabal-dev - the whole point is for it to install libraries in a
-vendored, per-project location - not interfering with system
-libraries. It manifested itself as asking for a password all the time
-(turn on verbose <code>-v3</code> to see it running all cabal commands with sudo
-- O_o). To fix that you edit the config file, outlined in a
-  <a href="http://passingcuriosity.com/2011/cabal-dev-configuration-tweaks/">blog post I found</a>. Annoying.</p>
-
-<p>Another problem I had was ghc/ld spamming the terminal with loads of
-linker warnings. This really slowed down compilation. I didn&#8217;t really
-solve this (happened on my Mac Mini - didn&#8217;t happen on my work MacBook
-Air). I remember having to set options for GHC to silence that crap,
-but I forget the details&#8230;</p>
-
-<p>In order to get it all working on my Mac I:</p>
-
-<ul>
-<li>Uninstalled haskell-platform (this is homebrew installed for me)</li>
-<li>Re-installed haskell-platform</li>
-<li>cabal installed cabal-dev, yesod</li>
-</ul>
-
-
-<p>Everything worked then. There&#8217;s also strange voodoo you have to run to
-unregister old packages - <code>brew info haskell-platform</code> splits out the
-necessary commands.</p>
-
-<p>After all that, things worked&#8230;mostly. Currently there seems to be
-some car crash of dependencies caused by a new release of something
-called tls-extras. A helpful stranger in IRC (#yesod) told me to
-<code>cabal-dev install tls-extra-0.4.2.1</code> - this forces a working version
-of that library and then you can happily install yesod and
-everything&#8217;s groovy.</p>
-
-<p>Who said Haskell was difficult? Not me.</p>
-
-<p>So now I have a skeleton Yesod project up and running and it&#8217;s all
-looking very promising. The helper script for creating projects gave
-me some confidence - specifically asking if I wanted sqlite, postgres,
-MongoDB or nothing seemed pretty good to me - this doesn&#8217;t appear to be
-a web framework/persistence system tied to a particular way of doing
-things.</p>
-
-<p>The main reason why I decided to dive into Yesod however was the high
-volume of interesting yesod-related blog traffic - this is a pretty
-crucial metric in gauging the health of a library community in my
-opinion and my RSS reader has been bombarded with posts about it so I
-felt I had to see what all the fuss was about.</p>
-
-<p>Hopefully happy Haskell hacking henceforth</p>
 </div>
   
   
