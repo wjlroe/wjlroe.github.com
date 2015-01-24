@@ -9,10 +9,7 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="In my
-previous post on string interpolation in Clojure,
-I benchmarked &lt;&lt; from core.incubator and it proved both useful and
-performant. But can &hellip;">
+  <meta name="description" content="If you get an error like this Symbol's function definition is void: apropos-macrop When editing CSS files with Emacs on Debian (testing or unstable &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -95,6 +92,50 @@ performant. But can &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2015/01/24/css-mode-emacs-debian.html">Css-mode Broken on Debian With Emacs 24</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-24T09:00:00+00:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you get an error like this</p>
+
+<pre><code>Symbol's function definition is void: apropos-macrop
+</code></pre>
+
+<p>When editing CSS files with Emacs on Debian (testing or unstable at
+the time of writing), then this is because the package <code>css-mode</code>
+includes code that no longer works with Emacs version 24 and has been
+abandoned (emacs contains its own css-mode).</p>
+
+<p>The solution is simply to uninstall <code>css-mode</code>:</p>
+
+<pre><code>sudo apt-get remove css-mode
+</code></pre>
+
+<p>That&#8217;s it.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -400,143 +441,6 @@ add the following to any namespace that needs it:</p>
 <p>Not bad! Ever so slightly slower than the <code>str</code> version but a
 performance penalty well worth paying for to get more expressive
 string interpolation I feel.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2015/01/06/2014-in-books.html">2014 in Books</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-06T14:45:00+00:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:45 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>According to <a href="https://www.goodreads.com/">GoodReads</a> I read 17 books
-this year. Here are some I really liked.</p>
-
-<p><img src="https://d.gr-assets.com/books/1394357588l/19932464.jpg" class="book-cover"></p>
-
-<h2>
-  <a href="https://www.goodreads.com/book/show/19932464-kindred">Kindred by Octavia Butler</a>
-</h2>
-
-
-<p>Kindred is classified as sci-fi, but that doesn’t do it justice
-really. It’s more of a sci-fi conceit (time-shifting) to allow Butler
-to immerse the reader in the world of 1815 on a plantation with
-slaves. The protagonist is black and the abrupt time shift lands her
-in palpable danger. The relationships between characters was always
-nuanced and interesting and the tension was high throughout - tension
-from real danger. I especially appreciated the subtle way Butler
-weaved in historical names and events into the narrative. I will
-definitely be reading more of Octavia Butler’s books.</p>
-
-<p><img src="https://d.gr-assets.com/books/1383652605l/18754367.jpg" class="book-cover"></p>
-
-<h2>
-  <a href="https://www.goodreads.com/book/show/18754367-nothing-o-clock">Nothing O&#8217;Clock by Neil Gaiman</a>
-</h2>
-
-
-<p>Part of a series of short stories, one for each Doctor, released on
-the 50th anniversary of Doctor Who. This was an undemanding
-entertaining read and I intend to read more of them.</p>
-
-<p><img src="https://d.gr-assets.com/books/1328327063l/13127093.jpg" class="book-cover"></p>
-
-<h2>
-  <a href="https://www.goodreads.com/book/show/13127093-flat-earth-news">Flat-Earth News by Nick Davies</a>
-</h2>
-
-
-<p>We all know the media are dreadful, but just how dreadful and why?
-This book attempts to shine some light on the shady world of British
-media (although for the most part the same problems exist elsewhere).
-It is somewhat unscrupulous in aiming its critical eye at broadsheet
-and tabloid alike and generally castigates broadsheets for pumping out
-unchecked nonsense because we expect them to be a cut above the
-tabloids (spoiler: they’re not). Shocking, sickening, depressing
-- exactly what you’d expect from a book about newspapers.</p>
-
-<p><img src="https://d.gr-assets.com/books/1407785478l/22903174.jpg" class="book-cover"></p>
-
-<h2>
-  <a href="https://www.goodreads.com/book/show/22903174-clipping-through">Clipping Through by Leigh Alexander</a>
-</h2>
-
-
-<p>This book by my favourite games journalist - Leigh Alexander - takes
-you into the surreal world of games journalism itself. Part stream of
-consciousness and part short biography this is a world most of us have
-no idea about. It kept me entertained on a few train commutes.
-<a href="https://gumroad.com/l/aisCU">You can and should buy it here</a></p>
-
-<p><img src="https://d.gr-assets.com/books/1401632138l/22387085.jpg" class="book-cover"></p>
-
-<h2>
-  <a href="https://www.goodreads.com/book/show/22387085-a-natural-history-of-dragons-a-memoir-of-lady-trent">A Natural History of Dragons by Marie Brennan</a>
-</h2>
-
-
-<p>The first part of a series of books about the main character - Lady
-Trent. A cross between Pride and Prejudice and Reign of Fire, sort of.
-Thoroughly entertaining and I shall be reading the rest of the series.</p>
-
-<p><img src="https://d.gr-assets.com/books/1328302275l/10081041.jpg" class="book-cover"></p>
-
-<h2>
-  <a href="https://www.goodreads.com/book/show/10081041-the-long-ships">The Long ships by Frans Bengtsson</a>
-</h2>
-
-
-<p>This Swedish classic about Vikings in the 10th century in Denmark was
-a surprisingly good read. The humour was super dry and for some
-considerable time it passed me by. My main criticism of it is that
-it’s rather overly long and the novelty of the sarcasm wore out well
-before the end for me.</p>
-
-<p><img src="https://d.gr-assets.com/books/1351039314l/11272152.jpg" class="book-cover"></p>
-
-<h2>
-  <a href="https://www.goodreads.com/book/show/11272152-jane-eyre">Jane Eyre by Charlotte Brontë</a>
-</h2>
-
-
-<p>Quite simply a must read. I particularly enjoyed cross-referencing
-with King Lear and the various other literary works Brontë weaves in.</p>
-
-<p><img src="https://d.gr-assets.com/books/1348918036l/2639853.jpg" class="book-cover"></p>
-
-<h2>
-  <a href="https://www.goodreads.com/book/show/2639853-to-boulez-and-beyond">To Boulez and Beyond by Joan Peyser</a>
-</h2>
-
-
-<p>The first half of this book is a biography of composers from Debussy
-to Boulez, roughly speaking. Lots of time is spent covering
-Schoenberg, Berg and Webern as you might expect. The second half of
-the book is a biography of Boulez himself. I found the combination
-fascinating since it put the musical trends and works of Boulez in
-perspective wonderfully. This book lead me to seek out and appreciate
-a number of compositions which makes it my favourite of the books I
-read in 2014.</p>
 </div>
   
   

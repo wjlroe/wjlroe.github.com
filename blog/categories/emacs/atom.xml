@@ -4,7 +4,7 @@
   <title><![CDATA[Category: emacs | William Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/emacs/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-17T03:28:35+00:00</updated>
+  <updated>2015-01-24T00:11:31+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[css-mode broken on Debian with Emacs 24]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/01/24/css-mode-emacs-debian.html"/>
+    <updated>2015-01-24T09:00:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/01/24/css-mode-emacs-debian</id>
+    <content type="html"><![CDATA[<p>If you get an error like this</p>
+
+<pre><code>Symbol's function definition is void: apropos-macrop
+</code></pre>
+
+<p>When editing CSS files with Emacs on Debian (testing or unstable at
+the time of writing), then this is because the package <code>css-mode</code>
+includes code that no longer works with Emacs version 24 and has been
+abandoned (emacs contains its own css-mode).</p>
+
+<p>The solution is simply to uninstall <code>css-mode</code>:</p>
+
+<pre><code>sudo apt-get remove css-mode
+</code></pre>
+
+<p>That&#8217;s it.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Emacs for Android development]]></title>
