@@ -221,3 +221,21 @@ img.pixel-art {
     image-rendering: crisp-edges;
     -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }
+
+figure.code {
+  margin-left: -18px;
+  width: 320px;
+  min-width: 320px;
+  @media only screen and (min-width: 568px) {
+    width: 568px;
+    min-width: 568px;
+    margin-left: -25px;
+  }
+
+  @media only screen and (min-width: 625px) {
+    width: 735px;
+    min-width: 735px;
+    margin-left: -110px;
+
+  }
+}
