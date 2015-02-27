@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: tmux | Will Roe&#146;s blog]]></title>
-  <link href="http://blog.wjlr.org.uk/blog/categories/tmux/atom.xml" rel="self"/>
+  <title><![CDATA[Category: cli | Will Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/cli/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
   <updated>2015-02-27T20:58:57+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
@@ -65,35 +65,6 @@ was I kept writing <code>[fg=color183,bg=color213]</code> sort of thing and tmux
 is unusual in using the French/British spelling of colour, which is
 unusual in programming. At least it&#8217;s otherwise straightforward,
 unlike <a href="https://wiki.archlinux.org/index.php/Color_Bash_Prompt#List_of_colors_for_prompt_and_Bash">bash color codes</a> which look like somebody fell on the keyboard.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[tmux &amp; autoenv tip]]></title>
-    <link href="http://blog.wjlr.org.uk/2014/02/01/tmux-and-autoenv-tip.html"/>
-    <updated>2014-02-01T15:41:00+00:00</updated>
-    <id>http://blog.wjlr.org.uk/2014/02/01/tmux-and-autoenv-tip</id>
-    <content type="html"><![CDATA[<p>On OS X, if I use <a href="http://tmux.sourceforge.net/">tmux</a> (or more usually,
-<a href="https://github.com/zolrath/wemux">wemux</a> for pairing) then I end up with oddly
-named windows like this:</p>
-
-<p><img src="http://d14vbe8lasdppi.cloudfront.net/01_02_2014_15_45.jpg" alt="" /></p>
-
-<p>This is because I&#8217;ve followed the awesome instructions from
-<a href="http://www.drbunsen.org/the-text-triumvirate/">Dr Bunsen&#8217;s Text Triumvirate</a>
-and in order to have the tmux and system (OS X) clipboards interacting, it
-requires a hack called <code>reattach-to-user-namespace</code> which proxies the running of
-zsh in tmux.</p>
-
-<p>One quick way to get around this and save time renaming my tmux windows, was to
-use <a href="https://github.com/kennethreitz/autoenv">autoenv</a> and add a file named
-<code>.env</code> to projects with content similar to:</p>
-
-<pre><code>tmux rename-window "project-name"
-</code></pre>
-
-<p>This is piling hacks on top of hacks, but at least it saves a bit of time for
-frequently visited directories.</p>
 ]]></content>
   </entry>
   

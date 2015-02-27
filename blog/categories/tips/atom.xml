@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: tips | William Roe&#146;s blog]]></title>
+  <title><![CDATA[Category: tips | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/tips/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-01-24T00:11:31+00:00</updated>
+  <updated>2015-02-27T20:58:57+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -12,6 +12,61 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Custom colours for tmux]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/02/27/custom-colours-for-tmux.html"/>
+    <updated>2015-02-27T17:31:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/02/27/custom-colours-for-tmux</id>
+    <content type="html"><![CDATA[<p>I have been using a rather dull <a href="http://ethanschoonover.com/solarized">Solarized</a> (by
+<a href="http://observer.com/2015/02/meet-the-man-behind-solarized-the-most-important-color-scheme-in-computer-history/">Ethan Schoonover</a>) tmux theme for a while now, it looks like this:</p>
+
+<p><img src="http://blog.wjlr.org.uk/images/tmux-solarized.png" class="extrawide"></p>
+
+<p>I tried to tweak the colours to vaguely match the magenta powerline theme of an
+Emacs theme called <a href="https://github.com/kuanyui/moe-theme.el">moe-theme</a> (Emacs doesn&#8217;t work well with the
+powerline-patched fonts, so the unicode arrows look funny):</p>
+
+<p><img src="http://blog.wjlr.org.uk/images/emacs-moe-theme.png" class="extrawide"></p>
+
+<p>I have acheived something close and it looks like this (you need
+powerline-patched fonts for the unicode characters to work):</p>
+
+<p><img src="http://blog.wjlr.org.uk/images/tmux-magenta.png" class="extrawide"></p>
+
+<p>Here is the final config for the status colours and content (I decided
+to ditch the segment that shows my username, since it&#8217;s always the
+same and I know who I am). This goes in your <code>~/.tmux.conf</code>:</p>
+
+<pre><code>set -g status-fg black
+set -g status-bg colour231
+set -g status-left '#[fg=colour234,bg=colour162,bold] ❐ #S #[fg=colour162,bg=colour231,nobold]⮀'
+set -g window-status-format "#[fg=black,bg=colour231] #I #[fg=black,bg=colour231]#W "
+set -g window-status-current-format "#[fg=colour231,bg=colour141]⮀#[fg=colour231,bg=colour141,bold] #I ⮁ #W #[fg=colour141,bg=colour231,nobold]⮀"
+set -g status-right '#[fg=colour162,bg=colour231]⮂##[fg=colour231,bg=colour162] %H:%M %d-%b-%y'
+</code></pre>
+
+<p>Emacs themes and tmux have different colour palettes. Here&#8217;s how
+moe-theme specifies some powerline colours for the modeline:</p>
+
+<pre><code class="elisp">(set-face-attribute 'powerline-active1 nil :background "#ffafff" :foreground "#ff1f8b")
+</code></pre>
+
+<p>Which is easy enough - they are simply hex colour codes, the same as
+can be used in CSS. However tmux uses 24-bit <a href="http://pln.jonas.me/xterm-colors">xterm colour codes</a>
+(for a generous total of 256 colours). In order to map between them
+and find the closest colour I found a handy <a href="https://gist.github.com/MicahElliott/719710">python script</a> which
+you can call with a hex code (e.g. <code>python colortrans.py ff4ea3</code>) and
+it&#8217;ll print the nearest xterm colour code. If you call the script with
+no arguments it&#8217;ll print a mapping table of xterm colour codes to hex
+codes, so you can tweak the value you&#8217;re using. Or you can simply use
+this <a href="http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html">colour chart</a>. One thing that stalled my progress for a while
+was I kept writing <code>[fg=color183,bg=color213]</code> sort of thing and tmux
+is unusual in using the French/British spelling of colour, which is
+unusual in programming. At least it&#8217;s otherwise straightforward,
+unlike <a href="https://wiki.archlinux.org/index.php/Color_Bash_Prompt#List_of_colors_for_prompt_and_Bash">bash color codes</a> which look like somebody fell on the keyboard.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[tmux &amp; autoenv tip]]></title>
