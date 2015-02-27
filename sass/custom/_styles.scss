@@ -239,3 +239,15 @@ figure.code {
 
   }
 }
+
+h2.subtitle {
+    float: left;
+    a {
+        color: #949494;
+        font-size: 0.7em;
+    }
+}
+
+body > header {
+    padding-left: 10px;
+}
