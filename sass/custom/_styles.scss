@@ -266,3 +266,13 @@ body > header {
       width: 100%;
     }
 }
+
+#mc_embed_signup {
+    border: 5px solid lighten($title-color, 40);
+    clear: left;
+    background: #fff;
+    font-family: $sans;
+    input.button {
+        background-color: $solar-magenta;
+    }
+}
