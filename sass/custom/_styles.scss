@@ -249,5 +249,20 @@ h2.subtitle {
 }
 
 body > header {
-    padding-left: 10px;
+    padding-left: 18px;
+    @media only screen and (min-width: 480px) {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+    @media only screen and (min-width: 768px) {
+      padding-left: 35px;
+      padding-right: 35px;
+    }
+    @media only screen and (min-width: 992px) {
+      padding-left: 55px;
+      padding-right: 55px;
+    }
+    h1 {
+      width: 100%;
+    }
 }
