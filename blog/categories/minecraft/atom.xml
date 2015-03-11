@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: minecraft | Will Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/minecraft/atom.xml" rel="self"/>
+  <link href="http://blog.wjlr.org.uk/"/>
+  <updated>2015-03-11T02:22:45+00:00</updated>
+  <id>http://blog.wjlr.org.uk/</id>
+  <author>
+    <name><![CDATA[Will Roe]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Building Minecraft plugins with tup]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/03/10/building-minecraft-plugins-with-tup.html"/>
+    <updated>2015-03-10T23:10:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/03/10/building-minecraft-plugins-with-tup</id>
+    <content type="html"><![CDATA[<p>I&#8217;m having fun reading <a href="https://pragprog.com/book/ahmine2/learn-to-program-with-minecraft-plugins">Learn to Program with Minecraft Plugins</a> at
+the moment and I decided to try out a new Make-like tool called
+<a href="http://gittup.org/tup">tup</a> for building the plugins.</p>
+
+<p>Each example plugin from the source code of this book has a build
+script that looks like this:</p>
+
+<pre><code class="bash">#!/bin/sh
+# Set the variable MCSERVER to ~/Desktop/server
+# unless it's already set
+: ${MCSERVER:="$HOME/Desktop/server"}
+MODS="$MCSERVER"/CanaryMod.jar
+
+# Make the build directories if they aren't there.
+# Throw away any error if they are.
+mkdir bin 2&gt;/dev/null
+mkdir dist 2&gt;/dev/null
+
+# Remove any previous build products
+rm -f bin/*/*.class
+rm -f dist/*.jar
+
+# Get the name of this plugin
+# from the directory it's in
+HERE=`pwd`
+NAME=`basename "$HERE"`
+
+# 1. Compile
+echo "Compiling with javac..."
+javac -Xlint:deprecation src/*/*.java -d bin -classpath "$MODS" -sourcepath src -g:lines,vars,source || exit 2
+
+# 2. Build the jar
+echo "Creating jar file..."
+jar -cf dist/"$NAME.jar" *.inf -C bin . || exit 3
+
+# 3. Copy to server
+echo "Deploying jar to $MCSERVER/plugins..."
+test ! -d "$MCSERVER/plugins" &amp;&amp; mkdir "$MCSERVER/plugins"
+cp dist/$NAME.jar "$MCSERVER"/plugins || exit 4
+
+echo "Completed Successfully."
+</code></pre>
+
+<p>The above is a perfectly good build script especially as the intended
+audience of the book doesn&#8217;t need to learn about build tools like Make
+or Maven or Ant.</p>
+
+<p><a href="http://gittup.org/tup">tup</a> is an interesting build tool for a number of reasons.
+Particularly the fairly straightforward configuration and file monitoring
+rebuilds (only on Linux). The other intriguing feature of tup is you
+can run <code>tup upd</code> anywhere in your source code and it&#8217;ll build
+everything that needs building, which is pretty convenient for large
+source trees with multiple build targets/libraries - just like the
+example plugins for this book!</p>
+
+<p>So here&#8217;s my first attempt at a <code>Tupfile</code>:</p>
+
+<pre><code>MCSERVER   = /Users/will/Downloads/canary-server
+MODS       = $(MCSERVER)/CanaryMod.jar
+JAVAC_OPTS = -Xlint:deprecation
+DEBUGGING  = -g:lines,vars,source
+
+: foreach src/helloworld/*.java |&gt; javac $(JAVAC_OPTS) %f -d bin -classpath "$(MODS)" -sourcepath src $(DEBUGGING) |&gt; bin/helloworld/%g.class
+: *.inf bin/helloworld/*.class |&gt; jar -cf %o *.inf -C bin . &amp;&amp; cp %o $(MCSERVER)/plugins/ |&gt; dist/%d.jar
+</code></pre>
+
+<p>I have a few reflections about this:</p>
+
+<ul>
+<li>I don&#8217;t know how environment variables work with tup. Just like
+Make, it has its own variables but it doesn&#8217;t appear to let any
+shell variables in (that&#8217;s why my full home directory is hard-coded
+at the top of the file).</li>
+<li>Each line in the Tupfile consists of <code>inputs |&gt; commands |&gt; outputs</code>
+which is very functional-like and intuitive to me. There doesn&#8217;t
+appear to be an easy way to have outputs that are outside your
+source tree because I had errors when I tried to copy the JAR into
+my server/plugins directory as a separate step, so I collapsed it
+into the previous JAR-building step.</li>
+<li><code>%g</code> refers to a glob in the input files, but alas only the first
+glob, so I couldn&#8217;t write a general rule for building any package
+regardless (like: <code>foreach src/*/*.java |&gt; javac %f -d bin |&gt;
+bin/%g.class</code>). The other options for output flags include <code>%b</code>
+which is the input base filename (e.g. <code>HelloWorld.java</code>) and <code>%B</code>
+which is the same without the extension (e.g. <code>HelloWorld</code>). I
+couldn&#8217;t work out how to translate the <code>src/a/b.java</code> into
+<code>bin/a/b.class</code> for any <code>a</code> and <code>b</code>. In Make you can do something
+like <code>$(source_files:%.java=bin/%.class)</code> or similar and I can&#8217;t
+find an analogue in tup so far.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

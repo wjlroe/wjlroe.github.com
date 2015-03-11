@@ -9,7 +9,7 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="I have just finished a 6 hour hacking session on parse_perseus. The aims were to fix most of the encoding problems, split the content up into books &hellip;">
+  <meta name="description" content="This is a howto guide for installing Ubuntu Natty on the troublesome Sony Vaio VPC-Y21-S1E. I say troublesome because no distribution of Linux &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -96,6 +96,129 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/02/install-natty-sony-vaio-vpc-y21.html">How to Install Ubuntu Natty on the Sony Vaio VPC Y21 S1E</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-05-02T00:00:00+01:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2011</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is a howto guide for installing Ubuntu Natty on the troublesome Sony Vaio VPC-Y21-S1E. I say troublesome because no distribution of Linux installs a fully working system on this laptop to the best of my knowledge, even though the hardware is all very common and not very new. Owning this laptop and running Linux is like going back in time to the early 2000s when installing Linux was a week&#8217;s work on any machine. It&#8217;s horrendous that even distros that favour ease of use by default have yet to achieve good hardware support.</p>
+
+<h2>Step 1 - install Ubuntu</h2>
+
+<p>I used the alternative amd64 ISO image for this (and a USB CDROM drive). The text mode installer worked fine as usual and installed in an hour or so. Not exactly quick, but probably that&#8217;s due to very slow IO on this machine.</p>
+
+<p>Once Ubuntu Natty is installed and reboots into your new system, you will notice a couple of things. Firstly the graphics will be running in some kind of generic mode with the wrong resolution. The native resolution of this panel is the now relatively standard 1366x768 of this class of laptop. Out of the box though, Ubuntu will boot in 1024x768 and it looks horrendous. According to Xorg.0.log it will select the VESA driver instead of the intel one it should be using. This is why it will start in unaccelerated, not much works mode. Needless to say, Unity will not be making an appearance yet. I think this is because there is a regression in the 2.6.36 kernel - according to another user of this laptop, the previous kernel version (2.6.37rc8) should work fine.</p>
+
+<h2>Step 2 - get a working kernel</h2>
+
+<p>You&#8217;re going to need to get the network setup before you can do anything useful. Out of the box, I&#8217;m not sure if the wireless is working or not because no mouse will work. The touchpad does nothing and any mouse I plugged in didn&#8217;t work either. This is extremely poor if even a simple USB mouse won&#8217;t work.</p>
+
+<p>The first thing to try is to get a working kernel installed. I headed here <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v2.6.37-rc8-natty/">Index of /~kernel-ppa/mainline/v2.6.37-rc8-natty</a> to get the headers and image packages for the amd64. It&#8217;s pretty difficult to get anything onto the laptop since USB isn&#8217;t working at all under Natty. I tried using a USB flash drive to copy the kernel files over - no luck. So what I did was shorten the kernel-ppa link <a href="http://bit.ly/ieDkmQ">http://bit.ly/ieDkmQ</a>, connected the laptop to my ADSL router with an ethernet cable and downloaded those files. I had to keep telling myself it was in fact still 2011.</p>
+
+<p>Once I&#8217;d installed the older kernel and rebooted, things started to work. The bootup screen was garbled however and I got what looked like a kernel panic, with a stackframe all over the place - but it wasn&#8217;t because I could switch to a random VC and back to the 7th VC and see GDM there. It&#8217;s just a complete mess. I think I&#8217;m gonna have to disable the bootspash stuff because it&#8217;s so incredibly messed up (for every other install of Linux on this laptop I&#8217;ve had to do that).</p>
+
+<h2>Step 3 - Change the default kernel</h2>
+
+<p>We need to change the default kernel that boots to avoid booting a broken kernel every time we turn the laptop on.</p>
+
+<ul>
+<li>Set <code>GRUB_DEFAULT=saved</code> in the file <code>/etc/default/grub</code>, so we can set the default kernel.</li>
+<li>I wanted to find out what the menuentry is for the kernel I&#8217;ve just installed, so I ran:</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>grep menuentry /boot/grub/grub.cfg
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will print out every entry in GRUB. This is all from the <a href="https://help.ubuntu.com/community/Grub2">Grub2</a> page.</p>
+
+<ul>
+<li>Now use the appropriate menuentry to set as the default. If you installed the same one I did, then that will be &#8220;Ubuntu, with Linux 2.6.37-020637rc8-generic&#8221;:</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo grub-set-default <span class="s1">&#39;Ubuntu, with Linux 2.6.37-020637rc8-generic&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Save all that to grub:</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-grub
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it, should be set now. This didn&#8217;t work for me though. With ever release of grub and ubuntu tools, it gets more and more difficult to do simple things. It&#8217;s cool that update-grub can detect all the OSes on your hard drive and boot them (it ignored the other Ubuntu install ironically so it&#8217;s not included in the boot menu, pretty silly bug). But please! the ability to set a default kernel or menuentry should be easy and <em>should work</em>. In the end, I set <code>GRUB_SAVEDEFAULT=true</code> in <code>/etc/default/grub</code> and chose the kernel I wanted so that in future it&#8217;ll boot that one every time. What a joke.</p>
+
+<p>For my sanity, I turned off the bootscreen which, on this laptop is severly broken. Even though I&#8217;ve turned the boot splash off, I still have to switch to another VC and back to 7 to see the GDM login screen. Broken.</p>
+
+<h2>Step 4 - Getting wireless working</h2>
+
+<p>Now we have the mouse working, and USB mice work and graphics are as good as you&#8217;ll probably ever get on Linux (i.e. not great).</p>
+
+<p>Wireless is disabled though and you can&#8217;t enable it from the networking icon (Network Manager). This is an issue I&#8217;ve had with Ubuntu on this machine before and I had to dig around to find out how to force it to be enabled.</p>
+
+<p>Enabling the wirelss is not a simple task. It involves messing around with <code>rfkill</code> and it&#8217;s not a simple matter of running <code>rfkill unblock all</code> either - which is maddening. The wireless card is still soft-blocked after that. (Hard blocked means the hardware switch is off and soft blocked means it&#8217;s turned off in software somewhere).</p>
+
+<p>I couldn&#8217;t find the solution by googling and browsing a million Ubuntu forum threads, but checking my <code>/etc/modprobe.d/</code> directory in the other Ubuntu install pointed the way. You need a file with the following contents:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>blacklist acer-wmi
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I called that file <code>blacklist-acer-wmi.conf</code> and this time I remembered to copy it into my Dropbox folder so that I won&#8217;t forget about it again.</p>
+
+<h2>Suspend</h2>
+
+<p>Suspend and resume works with Natty! Yay! It didn&#8217;t work on this laptop with Maverick. So we have <em>some</em> progress.</p>
+
+<h2>Multiple monitors</h2>
+
+<p>I tried plugging a VGA monitor in and it was detected and the correct resolution was selected. Wonderful. However, when I tried to change the layout of the monitors, it messed up completely and I ended up with random desktops being drawn all over the monitors. Unplugging and plugging the monitor in fixed that, with only some minor rendering issues (there was a black border around much of the second desktop that went away when I moved a window around). This sort of thing should have been sorted a long time ago, it&#8217;s tiresome to be messing around with such a mess.</p>
+
+<h2>Other problems</h2>
+
+<ol>
+<li>When you launch the Update Manager, it still reports everything is up do date without checking first. This is really stupid, having to click on &#8220;Check&#8221; to download the latest package definitions before it realises there are updates to install. It should take the fact that you&#8217;ve deliberately openned Update Manager for the sole purpose of checking whether your software is up-to-date and not tell you out-of-date information.</li>
+<li>Keyboard navigation is still horrible in Gnome (that&#8217;s the Classic desktop thing that Ubuntu puts you in if there are problems with your drivers - very likely).</li>
+</ol>
+
+
+<h2>Summary</h2>
+
+<p>Linux and Ubuntu have a very long way to go before they can start to compete with the commercial alternatives. Although Unity is a refreshing innovation on desktop interfaces, it really needs to be backed up with great hardware support and general ease of use that goes a little more than skin deep.</p>
+
+<p>I think I will be posting a review of Natty later - that will focus on Natty as a working system, rather than specific to this laptop. So far though, having used it for a couple of hours setting up my environment, it&#8217;s a great system. It needs a lot more QA to sort out the hardware and system problems though.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -438,123 +561,9 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/05/16/emacs-for-android-development.html">Emacs for Android Development</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2010-05-16'><span class='date'><span class='date-month'>May</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today I started using Emacs rather than Eclipse to work on an Android project. There are a couple of things you need to get started though.</p>
-
-<p>Firstly you will need the Android SDK (which you will have already if you&#8217;ve started with Eclipse Android development) and you need to know where it is located on your hard drive.</p>
-
-<p>There is a mode for Emacs that provides a few Android-related keybindings (for running ant tasks like install/reinstall/compile/start emulator/start ddms etc.), you can find it here: <a href="http://github.com/remvee/android-mode">android-mode</a>. Git clone that repository in your .emacs.d directory (~/.emacs.d/), which should already be in your emacs load path. (Emacs config for this later on).</p>
-
-<p>Because Java for Android uses Java 1.5 or above, it will be full of annotations such as &#8220;@Override&#8221;. The C/Java modes for emacs don&#8217;t appear to have been updated to support this syntax so indentation won&#8217;t be quite right. To fix this, you need a minor mode called <a href="http://www.emacswiki.org/cgi-bin/wiki/java-mode-indent-annotations.el">java-mode-indent-annotations.el</a> &lt;- click on the Download link on that page and save the file as ~/.emacs.d/java-mode-indent-annotations.el</p>
-
-<p>Now the emacs config for all the above is as follows:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">android-mode-sdk-dir</span> <span class="s">&quot;~/android-sdk-mac_86/&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;android-mode</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;java-mode-indent-annotations</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">java-mode-hook</span>
-</span><span class='line'>    <span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="k">lambda</span><span class="p">()</span>
-</span><span class='line'>       <span class="p">(</span><span class="nv">java-mode-indent-annotations-setup</span><span class="p">))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Remember to change the android-mode-sdk-dir to match where you keep your Android SDK. This variable needs to be set before the android-mode is loaded. Also, if you have any other java-mode-hooks defined, you won&#8217;t want to setq that variable, but use add-hook &#8216;java-mode instead - otherwise this will overwrite your existing java-mode hooks.</p>
-
-<p>If you try to use any of the provided keybindings, listed below:</p>
-
-<table>
-<thead>
-<tr>
-<th>Key binding </th>
-<th> Function</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>C-c C-c c   </td>
-<td> android-ant-compile</td>
-</tr>
-<tr>
-<td>C-c C-c d   </td>
-<td> android-start-ddms</td>
-</tr>
-<tr>
-<td>C-c C-c e   </td>
-<td> android-start-emulator</td>
-</tr>
-<tr>
-<td>C-c C-c i   </td>
-<td> android-ant-install</td>
-</tr>
-<tr>
-<td>C-c C-c l   </td>
-<td> android-logcat</td>
-</tr>
-<tr>
-<td>C-c C-c r   </td>
-<td> android-ant-reinstall</td>
-</tr>
-<tr>
-<td>C-c C-c u   </td>
-<td> android-ant-uninstall</td>
-</tr>
-</tbody>
-</table>
-
-
-<p>They will probably fail because by default, when you start an Android project in Eclipse, it will not create a build.xml file and ant requires this for any of the above to work (you can probably start the emulator though as that doesn&#8217;t rely on a per-project build file). So in order to have an ant build file in your project directory you need to run the following command:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>android update project --name &lt;project_name&gt; --target &lt;target_ID&gt; --path path/to/your/project/
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Name and target are optional, as you have most likely already defined those from Eclipse. But in order to list the targets available, run:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>android list targets
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That&#8217;s pretty much it. Remember that you can&#8217;t run the install task each time because it&#8217;ll fail if the project is already installed - just run the reinstall task each time you want to test your changes.</p>
-
-<p>Thanks to <a href="http://blog.fmaj7.me/?p=18">fmaj7&#8217;s blog</a> where I found most of the information I used to get up and running.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/page9">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     

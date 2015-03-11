@@ -4,7 +4,7 @@
   <title><![CDATA[Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-02-27T20:58:57+00:00</updated>
+  <updated>2015-03-11T02:22:45+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -12,6 +12,148 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Building Minecraft Plugins With Tup]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/03/10/building-minecraft-plugins-with-tup.html"/>
+    <updated>2015-03-10T23:10:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/03/10/building-minecraft-plugins-with-tup</id>
+    <content type="html"><![CDATA[<p>I&#8217;m having fun reading <a href="https://pragprog.com/book/ahmine2/learn-to-program-with-minecraft-plugins">Learn to Program with Minecraft Plugins</a> at
+the moment and I decided to try out a new Make-like tool called
+<a href="http://gittup.org/tup">tup</a> for building the plugins.</p>
+
+<p>Each example plugin from the source code of this book has a build
+script that looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="c"># Set the variable MCSERVER to ~/Desktop/server</span>
+</span><span class='line'><span class="c"># unless it&#39;s already set</span>
+</span><span class='line'>: <span class="k">${</span><span class="nv">MCSERVER</span><span class="p">:=</span><span class="s2">&quot;$HOME/Desktop/server&quot;</span><span class="k">}</span>
+</span><span class='line'><span class="nv">MODS</span><span class="o">=</span><span class="s2">&quot;$MCSERVER&quot;</span>/CanaryMod.jar
+</span><span class='line'>
+</span><span class='line'><span class="c"># Make the build directories if they aren&#39;t there.</span>
+</span><span class='line'><span class="c"># Throw away any error if they are.</span>
+</span><span class='line'>mkdir bin 2&gt;/dev/null
+</span><span class='line'>mkdir dist 2&gt;/dev/null
+</span><span class='line'>
+</span><span class='line'><span class="c"># Remove any previous build products</span>
+</span><span class='line'>rm -f bin/*/*.class
+</span><span class='line'>rm -f dist/*.jar
+</span><span class='line'>
+</span><span class='line'><span class="c"># Get the name of this plugin</span>
+</span><span class='line'><span class="c"># from the directory it&#39;s in</span>
+</span><span class='line'><span class="nv">HERE</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
+</span><span class='line'><span class="nv">NAME</span><span class="o">=</span><span class="sb">`</span>basename <span class="s2">&quot;$HERE&quot;</span><span class="sb">`</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 1. Compile</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Compiling with javac...&quot;</span>
+</span><span class='line'>javac -Xlint:deprecation src/*/*.java -d bin -classpath <span class="s2">&quot;$MODS&quot;</span> -sourcepath src -g:lines,vars,source <span class="o">||</span> <span class="nb">exit </span>2
+</span><span class='line'>
+</span><span class='line'><span class="c"># 2. Build the jar</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Creating jar file...&quot;</span>
+</span><span class='line'>jar -cf dist/<span class="s2">&quot;$NAME.jar&quot;</span> *.inf -C bin . <span class="o">||</span> <span class="nb">exit </span>3
+</span><span class='line'>
+</span><span class='line'><span class="c"># 3. Copy to server</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Deploying jar to $MCSERVER/plugins...&quot;</span>
+</span><span class='line'><span class="nb">test</span> ! -d <span class="s2">&quot;$MCSERVER/plugins&quot;</span> <span class="o">&amp;&amp;</span> mkdir <span class="s2">&quot;$MCSERVER/plugins&quot;</span>
+</span><span class='line'>cp dist/<span class="nv">$NAME</span>.jar <span class="s2">&quot;$MCSERVER&quot;</span>/plugins <span class="o">||</span> <span class="nb">exit </span>4
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Completed Successfully.&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above is a perfectly good build script especially as the intended
+audience of the book doesn&#8217;t need to learn about build tools like Make
+or Maven or Ant.</p>
+
+<p><a href="http://gittup.org/tup">tup</a> is an interesting build tool for a number of reasons.
+Particularly the fairly straightforward configuration and file monitoring
+rebuilds (only on Linux). The other intriguing feature of tup is you
+can run <code>tup upd</code> anywhere in your source code and it&#8217;ll build
+everything that needs building, which is pretty convenient for large
+source trees with multiple build targets/libraries - just like the
+example plugins for this book!</p>
+
+<p>So here&#8217;s my first attempt at a <code>Tupfile</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">MCSERVER</span>   <span class="o">=</span> /Users/will/Downloads/canary-server
+</span><span class='line'><span class="nv">MODS</span>       <span class="o">=</span> <span class="k">$(</span>MCSERVER<span class="k">)</span>/CanaryMod.jar
+</span><span class='line'><span class="nv">JAVAC_OPTS</span> <span class="o">=</span> -Xlint:deprecation
+</span><span class='line'><span class="nv">DEBUGGING</span>  <span class="o">=</span> -g:lines,vars,source
+</span><span class='line'>
+</span><span class='line'>: foreach src/helloworld/*.java <span class="p">|</span>&gt; javac <span class="k">$(</span>JAVAC_OPTS<span class="k">)</span> %f -d bin -classpath <span class="s2">&quot;$(MODS)&quot;</span> -sourcepath src <span class="k">$(</span>DEBUGGING<span class="k">)</span> <span class="p">|</span>&gt; bin/helloworld/%g.class
+</span><span class='line'>: *.inf bin/helloworld/*.class <span class="p">|</span>&gt; jar -cf %o *.inf -C bin . <span class="o">&amp;&amp;</span> cp %o <span class="k">$(</span>MCSERVER<span class="k">)</span>/plugins/ <span class="p">|</span>&gt; dist/%d.jar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I have a few reflections about this:</p>
+
+<ul>
+<li>I don&#8217;t know how environment variables work with tup. Just like
+Make, it has its own variables but it doesn&#8217;t appear to let any
+shell variables in (that&#8217;s why my full home directory is hard-coded
+at the top of the file).</li>
+<li>Each line in the Tupfile consists of <code>inputs |&gt; commands |&gt; outputs</code>
+which is very functional-like and intuitive to me. There doesn&#8217;t
+appear to be an easy way to have outputs that are outside your
+source tree because I had errors when I tried to copy the JAR into
+my server/plugins directory as a separate step, so I collapsed it
+into the previous JAR-building step.</li>
+<li><code>%g</code> refers to a glob in the input files, but alas only the first
+glob, so I couldn&#8217;t write a general rule for building any package
+regardless (like: <code>foreach src/*/*.java |&gt; javac %f -d bin |&gt;
+bin/%g.class</code>). The other options for output flags include <code>%b</code>
+which is the input base filename (e.g. <code>HelloWorld.java</code>) and <code>%B</code>
+which is the same without the extension (e.g. <code>HelloWorld</code>). I
+couldn&#8217;t work out how to translate the <code>src/a/b.java</code> into
+<code>bin/a/b.class</code> for any <code>a</code> and <code>b</code>. In Make you can do something
+like <code>$(source_files:%.java=bin/%.class)</code> or similar and I can&#8217;t
+find an analogue in tup so far.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Custom Colours for Tmux]]></title>
@@ -1786,44 +1928,6 @@ felt I had to see what all the fuss was about.</p>
 <p>The reason so many of us have such a frustrating initial experience with Haskell is that most of the books on the subject are appallingly badly written. Programming books are in general a complete shambles and very few are useful to anyone who isn&#8217;t already pretty hot at the whole thing anyway. If you were lucky enough to find a well-written helpful introduction to Haskell (there are some), then you might not be feeling this way. Also if you were born a Haskell wizard, this will sound like complete gobbledegook to you. But then you&#8217;re not really human now are you? Admit it.</p>
 
 <p>Anyway, I will be attending the <a href="http://www.meetup.com/hoodlums/">Haskell hoodlums meetup</a> this Thursday so hopefully I&#8217;ll start understanding this thing. Don&#8217;t give up people! Good luck.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[David Cameron on AV]]></title>
-    <link href="http://blog.wjlr.org.uk/2011/05/05/david-cameron-on-av.html"/>
-    <updated>2011-05-05T00:00:00+01:00</updated>
-    <id>http://blog.wjlr.org.uk/2011/05/05/david-cameron-on-av</id>
-    <content type="html"><![CDATA[<p><strong>David Cameron:</strong></p>
-
-<blockquote><p>“I just feel it, in my gut, that AV is wrong. Politics shouldn’t be some mind-bending exercise.</p></blockquote>
-
-<p>British people are pretty thick. I mean, have you seen them? I seriously doubt they understand the whole &#8220;tick the party you want in government&#8221; thing - how are they going to understand they can actually vote for their views with this system. Given that we&#8217;ve slashed education funding, it&#8217;s unlikely we&#8217;re gonna end up with a whole lot of people who can understand anything about politics, which is how we like it. Nice and stupid. Means we don&#8217;t have to say anything meaningful to get them to vote for us.</p>
-
-<blockquote><p>“It’s about what you feel in your gut – about the values you hold dear and the beliefs you instinctively have. And I just feel it, in my gut, that AV is wrong.</p></blockquote>
-
-<p>Gut feeling as a way to decide who should be in power. So a knee-jerk reaction is what we&#8217;re looking for, we don&#8217;t want Brits having to look at the policies of the parties - we want them to vote tribally.</p>
-
-<blockquote><p>“There are three big problems with AV that strike at the heart of how I believe our democracy should work.
-First, I believe power should lie with the people – and AV would take some of that power away.</p></blockquote>
-
-<p>I&#8217;m not going to explain why it takes power away because obviously it doesn&#8217;t. All you need to do is vote once to get the exact same vote as you would under FPTP, so the system doesn&#8217;t take any power away from the individual. But this is some scary sounding rhetoric. Hopefully people will be scared enough not to question the assertion.</p>
-
-<blockquote><p>“Second, I believe there should be real accountability between the pledges politicians put in their manifestos and the action they take in government.</p></blockquote>
-
-<p>Because this is obviously the case now. Also it&#8217;s easy for me, we didn&#8217;t put any actual pledges in the Conservative manifesto, so it looks like we&#8217;ve stuck to it pretty closely.</p>
-
-<blockquote><p>“AV would damage that chain of accountability. And third, I believe in the principle of one person, one vote.</p></blockquote>
-
-<p>I have no actual reason for saying no to AV except it would make us work harder to retain those safe seats.</p>
-
-<blockquote><p>“If you want a system that makes your politicians accountable.
-“If you want a system that enshrines the principle of one person, one vote.
-“You must vote on May 5th, and you must vote No to AV.
-“The biggest danger right now is that Britain sleepwalks into this second-rate system, waking up on May 6th with a voting system that damages our democracy.
-“We must not let that happen. So we’ve got to get out there and fight, and get out there and win.”</p></blockquote>
-
-<p>Voting for something is like sleep-walking because all the people voting YES are all asleep. Let&#8217;s keep Britain&#8217;s electoral system thoroughly in the dark ages!</p>
 ]]></content>
   </entry>
   
