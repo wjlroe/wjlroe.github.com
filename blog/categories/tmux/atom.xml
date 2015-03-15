@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tmux | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/tmux/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-11T02:22:45+00:00</updated>
+  <updated>2015-03-15T16:39:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -19,7 +19,7 @@
     <updated>2015-02-27T17:31:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2015/02/27/custom-colours-for-tmux</id>
     <content type="html"><![CDATA[<p>I have been using a rather dull <a href="http://ethanschoonover.com/solarized">Solarized</a> (by
-<a href="http://observer.com/2015/02/meet-the-man-behind-solarized-the-most-important-color-scheme-in-computer-history/">Ethan Schoonover</a>) tmux theme for a while now, it looks like this:</p>
+<a href="http://observer.com/2015/02/meet-the-man-behind-solarized-the-most-important-color-scheme-in-computer-history/">Ethan Schoonover</a>) tmux theme for a while now<!--more-->, it looks like this:</p>
 
 <p><img src="http://blog.wjlr.org.uk/images/tmux-solarized.png" class="extrawide"></p>
 
@@ -73,7 +73,10 @@ unlike <a href="https://wiki.archlinux.org/index.php/Color_Bash_Prompt#List_of_c
     <link href="http://blog.wjlr.org.uk/2014/02/01/tmux-and-autoenv-tip.html"/>
     <updated>2014-02-01T15:41:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2014/02/01/tmux-and-autoenv-tip</id>
-    <content type="html"><![CDATA[<p>On OS X, if I use <a href="http://tmux.sourceforge.net/">tmux</a> (or more usually,
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p>On OS X, if I use <a href="http://tmux.sourceforge.net/">tmux</a> (or more usually,
 <a href="https://github.com/zolrath/wemux">wemux</a> for pairing) then I end up with oddly
 named windows like this:</p>
 

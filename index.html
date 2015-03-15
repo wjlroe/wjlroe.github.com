@@ -124,138 +124,12 @@ tup for building &hellip;">
 the moment and I decided to try out a new Make-like tool called
 <a href="http://gittup.org/tup">tup</a> for building the plugins.</p>
 
-<p>Each example plugin from the source code of this book has a build
-script that looks like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
-</span><span class='line'><span class="c"># Set the variable MCSERVER to ~/Desktop/server</span>
-</span><span class='line'><span class="c"># unless it&#39;s already set</span>
-</span><span class='line'>: <span class="k">${</span><span class="nv">MCSERVER</span><span class="p">:=</span><span class="s2">&quot;$HOME/Desktop/server&quot;</span><span class="k">}</span>
-</span><span class='line'><span class="nv">MODS</span><span class="o">=</span><span class="s2">&quot;$MCSERVER&quot;</span>/CanaryMod.jar
-</span><span class='line'>
-</span><span class='line'><span class="c"># Make the build directories if they aren&#39;t there.</span>
-</span><span class='line'><span class="c"># Throw away any error if they are.</span>
-</span><span class='line'>mkdir bin 2&gt;/dev/null
-</span><span class='line'>mkdir dist 2&gt;/dev/null
-</span><span class='line'>
-</span><span class='line'><span class="c"># Remove any previous build products</span>
-</span><span class='line'>rm -f bin/*/*.class
-</span><span class='line'>rm -f dist/*.jar
-</span><span class='line'>
-</span><span class='line'><span class="c"># Get the name of this plugin</span>
-</span><span class='line'><span class="c"># from the directory it&#39;s in</span>
-</span><span class='line'><span class="nv">HERE</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
-</span><span class='line'><span class="nv">NAME</span><span class="o">=</span><span class="sb">`</span>basename <span class="s2">&quot;$HERE&quot;</span><span class="sb">`</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># 1. Compile</span>
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Compiling with javac...&quot;</span>
-</span><span class='line'>javac -Xlint:deprecation src/*/*.java -d bin -classpath <span class="s2">&quot;$MODS&quot;</span> -sourcepath src -g:lines,vars,source <span class="o">||</span> <span class="nb">exit </span>2
-</span><span class='line'>
-</span><span class='line'><span class="c"># 2. Build the jar</span>
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Creating jar file...&quot;</span>
-</span><span class='line'>jar -cf dist/<span class="s2">&quot;$NAME.jar&quot;</span> *.inf -C bin . <span class="o">||</span> <span class="nb">exit </span>3
-</span><span class='line'>
-</span><span class='line'><span class="c"># 3. Copy to server</span>
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Deploying jar to $MCSERVER/plugins...&quot;</span>
-</span><span class='line'><span class="nb">test</span> ! -d <span class="s2">&quot;$MCSERVER/plugins&quot;</span> <span class="o">&amp;&amp;</span> mkdir <span class="s2">&quot;$MCSERVER/plugins&quot;</span>
-</span><span class='line'>cp dist/<span class="nv">$NAME</span>.jar <span class="s2">&quot;$MCSERVER&quot;</span>/plugins <span class="o">||</span> <span class="nb">exit </span>4
-</span><span class='line'>
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Completed Successfully.&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The above is a perfectly good build script especially as the intended
-audience of the book doesn&#8217;t need to learn about build tools like Make
-or Maven or Ant.</p>
-
-<p><a href="http://gittup.org/tup">tup</a> is an interesting build tool for a number of reasons.
-Particularly the fairly straightforward configuration and file monitoring
-rebuilds (only on Linux). The other intriguing feature of tup is you
-can run <code>tup upd</code> anywhere in your source code and it&#8217;ll build
-everything that needs building, which is pretty convenient for large
-source trees with multiple build targets/libraries - just like the
-example plugins for this book!</p>
-
-<p>So here&#8217;s my first attempt at a <code>Tupfile</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">MCSERVER</span>   <span class="o">=</span> /Users/will/Downloads/canary-server
-</span><span class='line'><span class="nv">MODS</span>       <span class="o">=</span> <span class="k">$(</span>MCSERVER<span class="k">)</span>/CanaryMod.jar
-</span><span class='line'><span class="nv">JAVAC_OPTS</span> <span class="o">=</span> -Xlint:deprecation
-</span><span class='line'><span class="nv">DEBUGGING</span>  <span class="o">=</span> -g:lines,vars,source
-</span><span class='line'>
-</span><span class='line'>: foreach src/helloworld/*.java <span class="p">|</span>&gt; javac <span class="k">$(</span>JAVAC_OPTS<span class="k">)</span> %f -d bin -classpath <span class="s2">&quot;$(MODS)&quot;</span> -sourcepath src <span class="k">$(</span>DEBUGGING<span class="k">)</span> <span class="p">|</span>&gt; bin/helloworld/%g.class
-</span><span class='line'>: *.inf bin/helloworld/*.class <span class="p">|</span>&gt; jar -cf %o *.inf -C bin . <span class="o">&amp;&amp;</span> cp %o <span class="k">$(</span>MCSERVER<span class="k">)</span>/plugins/ <span class="p">|</span>&gt; dist/%d.jar
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I have a few reflections about this:</p>
-
-<ul>
-<li>I don&#8217;t know how environment variables work with tup. Just like
-Make, it has its own variables but it doesn&#8217;t appear to let any
-shell variables in (that&#8217;s why my full home directory is hard-coded
-at the top of the file).</li>
-<li>Each line in the Tupfile consists of <code>inputs |&gt; commands |&gt; outputs</code>
-which is very functional-like and intuitive to me. There doesn&#8217;t
-appear to be an easy way to have outputs that are outside your
-source tree because I had errors when I tried to copy the JAR into
-my server/plugins directory as a separate step, so I collapsed it
-into the previous JAR-building step.</li>
-<li><code>%g</code> refers to a glob in the input files, but alas only the first
-glob, so I couldn&#8217;t write a general rule for building any package
-regardless (like: <code>foreach src/*/*.java |&gt; javac %f -d bin |&gt;
-bin/%g.class</code>). The other options for output flags include <code>%b</code>
-which is the input base filename (e.g. <code>HelloWorld.java</code>) and <code>%B</code>
-which is the same without the extension (e.g. <code>HelloWorld</code>). I
-couldn&#8217;t work out how to translate the <code>src/a/b.java</code> into
-<code>bin/a/b.class</code> for any <code>a</code> and <code>b</code>. In Make you can do something
-like <code>$(source_files:%.java=bin/%.class)</code> or similar and I can&#8217;t
-find an analogue in tup so far.</li>
-</ul>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2015/03/10/building-minecraft-plugins-with-tup.html">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -283,62 +157,12 @@ find an analogue in tup so far.</li>
 
 
   <div class="entry-content"><p>I have been using a rather dull <a href="http://ethanschoonover.com/solarized">Solarized</a> (by
-<a href="http://observer.com/2015/02/meet-the-man-behind-solarized-the-most-important-color-scheme-in-computer-history/">Ethan Schoonover</a>) tmux theme for a while now, it looks like this:</p>
-
-<p><img src="/images/tmux-solarized.png" class="extrawide"></p>
-
-<p>I tried to tweak the colours to vaguely match the magenta powerline theme of an
-Emacs theme called <a href="https://github.com/kuanyui/moe-theme.el">moe-theme</a> (Emacs doesn&#8217;t work well with the
-powerline-patched fonts, so the unicode arrows look funny):</p>
-
-<p><img src="/images/emacs-moe-theme.png" class="extrawide"></p>
-
-<p>I have acheived something close and it looks like this (you need
-powerline-patched fonts for the unicode characters to work):</p>
-
-<p><img src="/images/tmux-magenta.png" class="extrawide"></p>
-
-<p>Here is the final config for the status colours and content (I decided
-to ditch the segment that shows my username, since it&#8217;s always the
-same and I know who I am). This goes in your <code>~/.tmux.conf</code>:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>set -g status-fg black
-</span><span class='line'>set -g status-bg colour231
-</span><span class='line'>set -g status-left '#[fg=colour234,bg=colour162,bold] ❐ #S #[fg=colour162,bg=colour231,nobold]⮀'
-</span><span class='line'>set -g window-status-format "#[fg=black,bg=colour231] #I #[fg=black,bg=colour231]#W "
-</span><span class='line'>set -g window-status-current-format "#[fg=colour231,bg=colour141]⮀#[fg=colour231,bg=colour141,bold] #I ⮁ #W #[fg=colour141,bg=colour231,nobold]⮀"
-</span><span class='line'>set -g status-right '#[fg=colour162,bg=colour231]⮂##[fg=colour231,bg=colour162] %H:%M %d-%b-%y'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Emacs themes and tmux have different colour palettes. Here&#8217;s how
-moe-theme specifies some powerline colours for the modeline:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='elisp'><span class='line'><span class="p">(</span><span class="nv">set-face-attribute</span> <span class="ss">&#39;powerline-active1</span> <span class="no">nil</span> <span class="ss">:background</span> <span class="s">&quot;#ffafff&quot;</span> <span class="ss">:foreground</span> <span class="s">&quot;#ff1f8b&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Which is easy enough - they are simply hex colour codes, the same as
-can be used in CSS. However tmux uses 24-bit <a href="http://pln.jonas.me/xterm-colors">xterm colour codes</a>
-(for a generous total of 256 colours). In order to map between them
-and find the closest colour I found a handy <a href="https://gist.github.com/MicahElliott/719710">python script</a> which
-you can call with a hex code (e.g. <code>python colortrans.py ff4ea3</code>) and
-it&#8217;ll print the nearest xterm colour code. If you call the script with
-no arguments it&#8217;ll print a mapping table of xterm colour codes to hex
-codes, so you can tweak the value you&#8217;re using. Or you can simply use
-this <a href="http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html">colour chart</a>. One thing that stalled my progress for a while
-was I kept writing <code>[fg=color183,bg=color213]</code> sort of thing and tmux
-is unusual in using the French/British spelling of colour, which is
-unusual in programming. At least it&#8217;s otherwise straightforward,
-unlike <a href="https://wiki.archlinux.org/index.php/Color_Bash_Prompt#List_of_colors_for_prompt_and_Bash">bash color codes</a> which look like somebody fell on the keyboard.</p>
-</div>
+<a href="http://observer.com/2015/02/meet-the-man-behind-solarized-the-most-important-color-scheme-in-computer-history/">Ethan Schoonover</a>) tmux theme for a while now</div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2015/02/27/custom-colours-for-tmux.html">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -365,24 +189,12 @@ unlike <a href="https://wiki.archlinux.org/index.php/Color_Bash_Prompt#List_of_c
   </header>
 
 
-  <div class="entry-content"><p>If you get an error like this</p>
-
-<pre><code>Symbol's function definition is void: apropos-macrop
-</code></pre>
-
-<p>When editing CSS files with Emacs on Debian (testing or unstable at
-the time of writing), then this is because the package <code>css-mode</code>
-includes code that no longer works with Emacs version 24 and has been
-abandoned (emacs contains its own css-mode).</p>
-
-<p>The solution is simply to uninstall <code>css-mode</code>:</p>
-
-<pre><code>sudo apt-get remove css-mode
-</code></pre>
-
-<p>That&#8217;s it.</p>
-</div>
+  <div class="entry-content"></div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2015/01/24/css-mode-emacs-debian.html">Read on &rarr;</a>
+    </footer>
   
 
 

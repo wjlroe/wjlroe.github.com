@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-11T02:22:45+00:00</updated>
+  <updated>2015-03-15T16:39:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -18,7 +18,10 @@
     <link href="http://blog.wjlr.org.uk/2015/01/24/css-mode-emacs-debian.html"/>
     <updated>2015-01-24T09:00:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2015/01/24/css-mode-emacs-debian</id>
-    <content type="html"><![CDATA[<p>If you get an error like this</p>
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p>If you get an error like this</p>
 
 <pre><code>Symbol's function definition is void: apropos-macrop
 </code></pre>
@@ -42,7 +45,10 @@ abandoned (emacs contains its own css-mode).</p>
     <link href="http://blog.wjlr.org.uk/2013/04/10/imagemagick-insanity.html"/>
     <updated>2013-04-10T00:00:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2013/04/10/imagemagick-insanity</id>
-    <content type="html"><![CDATA[<p>If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this:</p>
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p>If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this:</p>
 
 <pre><code>cat test.svg | convert svg: png:- &gt; test.png
 </code></pre>

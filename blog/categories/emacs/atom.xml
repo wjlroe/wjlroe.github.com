@@ -4,7 +4,7 @@
   <title><![CDATA[Category: emacs | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/emacs/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-11T02:22:45+00:00</updated>
+  <updated>2015-03-15T16:39:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -18,7 +18,10 @@
     <link href="http://blog.wjlr.org.uk/2015/01/24/css-mode-emacs-debian.html"/>
     <updated>2015-01-24T09:00:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2015/01/24/css-mode-emacs-debian</id>
-    <content type="html"><![CDATA[<p>If you get an error like this</p>
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p>If you get an error like this</p>
 
 <pre><code>Symbol's function definition is void: apropos-macrop
 </code></pre>

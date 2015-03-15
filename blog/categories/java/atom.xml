@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-11T02:22:45+00:00</updated>
+  <updated>2015-03-15T16:39:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -21,6 +21,9 @@
     <content type="html"><![CDATA[<p>I&#8217;m having fun reading <a href="https://pragprog.com/book/ahmine2/learn-to-program-with-minecraft-plugins">Learn to Program with Minecraft Plugins</a> at
 the moment and I decided to try out a new Make-like tool called
 <a href="http://gittup.org/tup">tup</a> for building the plugins.</p>
+
+<!--more-->
+
 
 <p>Each example plugin from the source code of this book has a build
 script that looks like this:</p>

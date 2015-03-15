@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clojurescript | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/clojurescript/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-11T02:22:45+00:00</updated>
+  <updated>2015-03-15T16:39:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -22,6 +22,9 @@
 <a href="/2015/01/15/string-interpolation-clojure.html">previous post on string interpolation in Clojure</a>,
 I benchmarked <code>&lt;&lt;</code> from <code>core.incubator</code> and it proved both useful and
 performant. But can this useful macro be used from ClojureScript? Yes.</p>
+
+<!--more-->
+
 
 <p>Add <code>core.incubator</code> to your dependencies in <code>project.clj</code> of your
 ClojureScript project:</p>

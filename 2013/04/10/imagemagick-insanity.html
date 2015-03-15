@@ -9,7 +9,7 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this: cat test.svg | convert svg: png:- &gt; &hellip;">
+  <meta name="description" content="If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this: cat test.svg | convert svg: png:- &gt &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -115,7 +115,10 @@
   </header>
 
 
-<div class="entry-content"><p>If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this:</p>
+<div class="entry-content"><!--more-->
+
+
+<p>If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this:</p>
 
 <pre><code>cat test.svg | convert svg: png:- &gt; test.png
 </code></pre>
@@ -144,8 +147,6 @@
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>stat("/usr/lib/ImageMagick-6.6.9/modules-Q16/coders/svg.la", 0x7fffe6cace90) = -1 ENOENT (No such file or directory)</span></code></pre></td></tr></table></div></figure>
 
-
-<p></p>
 
 <p>Words cannot describe how I feel about Imagemagick right now.</p>
 

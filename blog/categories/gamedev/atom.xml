@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gamedev | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/gamedev/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-11T02:22:45+00:00</updated>
+  <updated>2015-03-15T16:39:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -19,6 +19,9 @@
     <updated>2014-12-08T20:01:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2014/12/08/ludum-dare-31-postmortem</id>
     <content type="html"><![CDATA[<p>On the weekend of 6th December 2014, I participated in <a href="http://ludumdare.com/compo/">Ludum Dare</a> 31. The theme was &#8220;Entire Game on One Screen&#8221;. I didn&#8217;t finish my game and didn&#8217;t hand anything in. This is the 3rd(?) time I&#8217;ve started but not finished a Ludum Dare game in recent years. The first time I participated in Ludum Dare, I completed a game and handed it in for the competition (48 hours), so I&#8217;m curious as to what has been holding me back since then.</p>
+
+<!--more-->
+
 
 <p><img src="http://blog.wjlr.org.uk/images/robot-scene.png" class="extrawide pixel-art"></p>
 

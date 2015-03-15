@@ -4,7 +4,7 @@
   <title><![CDATA[Category: virtualbox | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/virtualbox/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-11T02:22:45+00:00</updated>
+  <updated>2015-03-15T16:39:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -24,6 +24,9 @@ to be run and provisioned. I&#8217;ve used Vagrant with <a href="https://docs.ch
 iterate quickly. There are some gotchas however and in this post I
 will explore a particular flaw in the way Vagrant and Ansible
 cooperate.</p>
+
+<!--more-->
+
 
 <h2>Multi-machine setup</h2>
 

@@ -9,8 +9,9 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="Update: None of this is required with current versions of Ember and
-Ember-data. A common pattern with webapps in these exciting times is the &hellip;">
+  <meta name="description" content="
+Update: None of this is required with current versions of Ember and
+Ember-data. ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -124,77 +125,12 @@ Ember-data. A common pattern with webapps in these exciting times is the &hellip
 Ember-data.
 </aside></p>
 
-<p>A common pattern with webapps in these exciting times is the
-transition-to-new-thing-you-just-created pattern. The way it works is this: you
-fill in a form to create a new thing (like, a widget or something) and then when
-you hit &#8216;save&#8217;, you are transitioned to the page for that widget. This is so you
-can confirm that it worked and so you could make further changes on that widget.
-The assumption being, when you create a widget, it is the focus of your task.</p>
-
-<p>Whatever, anyway, I had to make something along those lines in an EmberJS app at
-work and hit an ember-data bug. Surprise!</p>
-
-<p>The bug is that when you try to do this (code speaks louder than widget
-metaphors):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">App</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">createRecord</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;special_widget&quot;</span><span class="p">});</span>
-</span><span class='line'><span class="nx">model</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="s1">&#39;didCreate&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">transitionToRoute</span><span class="p">(</span><span class="s1">&#39;widgets.show&#39;</span><span class="p">,</span> <span class="nx">model</span><span class="p">);</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">commit</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This doesn&#8217;t work with ember-data currently - what happens is the <code>model</code> object
-that gets sent to the <code>didCreate</code> callback there won&#8217;t have an <code>id</code> from the
-server (it hasn&#8217;t been filled in for some reason).</p>
-
-<p>To work around this issue, you need to do something akin to this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">saveTheWidget</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">App</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">createRecord</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;very_special_widget&quot;</span><span class="p">});</span>
-</span><span class='line'>  <span class="nx">model</span><span class="p">.</span><span class="nx">addObserver</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">showWidget</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">commit</span><span class="p">();</span>
-</span><span class='line'><span class="p">},</span>
-</span><span class='line'><span class="nx">showWidget</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">model</span><span class="p">.</span><span class="nx">removeObserver</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">showWidget</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">transitionToRoute</span><span class="p">(</span><span class="s1">&#39;widgets.show&#39;</span><span class="p">,</span> <span class="nx">model</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In that example we trigger the page transition off the change of value of <code>id</code>.
-This works because for a short while, the <code>id</code> will be <code>null</code> until Ember-data
-fills in the new <code>id</code> from the server. Then your callback is called and the page
-transition happens. The difference in timing is not noticeable to the user - it&#8217;s
-just a race condition within Ember-data itself. Other than that - in this
-example, the observer is removed, which is good practice for observers and you
-should always remove observers you&#8217;ve added (as I understand it).</p>
-
-<p>Other alternative workarounds include wrapping the <code>transitionToRoute</code> call in a
-<code>setTimeout()</code> block - to make it pause just long enough for the model&#8217;s <code>id</code> to
-be filled in.</p>
-
-<p>Most of the above came from
-<a href="http://stackoverflow.com/questions/14981500/transition-after-saving-model-of-ember-data">Stackoverflow</a>
-and the <a href="https://github.com/emberjs/data/issues/405#issuecomment-18891172">bug report and workaround</a> on
-ember-data.</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2013/06/06/ember-transition-to-new-model-hack.html">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -221,45 +157,12 @@ ember-data.</p>
   </header>
 
 
-  <div class="entry-content"><p>If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this:</p>
-
-<pre><code>cat test.svg | convert svg: png:- &gt; test.png
-</code></pre>
-
-<p>And you get this error:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Error reading SVG:
-</span><span class='line'>convert: delegate failed `"rsvg-convert" -o "%o" "%i"' @ error/delegate.c/InvokeDelegate/1058.
-</span><span class='line'>convert: unable to open image `/tmp/magick-Oj094Z9n':  @ error/blob.c/OpenBlob/2587.
-</span><span class='line'>convert: unable to open file `/tmp/magick-Oj094Z9n':  @ error/constitute.c/ReadImage/571.
-</span><span class='line'>convert: missing an image filename `png:-' @ error/convert.c/ConvertImageCommand/3011.</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then you need to install (on Ubuntu anyway):</p>
-
-<pre><code>apt-get install libmagickcore4-extra
-</code></pre>
-
-<p>I had to strace the <code>convert</code> command to find out that it was looking for a missing file. This is from the strace output:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stat("/usr/lib/ImageMagick-6.6.9/modules-Q16/coders/svg.la", 0x7fffe6cace90) = -1 ENOENT (No such file or directory)</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>Words cannot describe how I feel about Imagemagick right now.</p>
-
-<p>Note to self: install this required package (stupidly called &#8220;-extra&#8221;).</p>
-
-<p>Also note to self: avoid Imagemagick like the plague.</p>
-</div>
+  <div class="entry-content"></div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2013/04/10/imagemagick-insanity.html">Read on &rarr;</a>
+    </footer>
   
 
 

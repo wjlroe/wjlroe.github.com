@@ -4,7 +4,7 @@
   <title><![CDATA[Category: json | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/json/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-11T02:22:45+00:00</updated>
+  <updated>2015-03-15T16:39:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -21,6 +21,9 @@
     <content type="html"><![CDATA[<p>JSON is a fairly easy to read format but sometimes you need to deal with an
 unreadable dump of the stuff and it&#8217;d be useful to quickly reformat or prettify
 it. There are a number of ways to do this.</p>
+
+<!--more-->
+
 
 <h2>Javascript (Chrome, Firefox etc.)</h2>
 

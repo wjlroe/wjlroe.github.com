@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clojure | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-11T02:22:45+00:00</updated>
+  <updated>2015-03-15T16:39:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -22,6 +22,9 @@
 <a href="/2015/01/15/string-interpolation-clojure.html">previous post on string interpolation in Clojure</a>,
 I benchmarked <code>&lt;&lt;</code> from <code>core.incubator</code> and it proved both useful and
 performant. But can this useful macro be used from ClojureScript? Yes.</p>
+
+<!--more-->
+
 
 <p>Add <code>core.incubator</code> to your dependencies in <code>project.clj</code> of your
 ClojureScript project:</p>
@@ -60,7 +63,10 @@ and was born in ~{born}")))
     <link href="http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure.html"/>
     <updated>2015-01-15T21:55:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure</id>
-    <content type="html"><![CDATA[<p>There are two main ways to build strings in Clojure: <a href="https://clojuredocs.org/clojure.core/str"><code>str</code></a> and
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p>There are two main ways to build strings in Clojure: <a href="https://clojuredocs.org/clojure.core/str"><code>str</code></a> and
 <a href="https://clojuredocs.org/clojure.core/format"><code>format</code></a>. <code>str</code> essentially does string concatenation like
 this:</p>
 
@@ -206,6 +212,9 @@ string interpolation I feel.</p>
 holidays I tried to work out how to write a Secret Santa algorithm
 using core.logic. It seemed like the obvious choice but I quickly
 realised I&#8217;d bitten off more than I could chew.</p>
+
+<!--more-->
+
 
 <h2>Simple Secret Santa</h2>
 

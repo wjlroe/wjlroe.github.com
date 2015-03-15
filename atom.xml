@@ -4,7 +4,7 @@
   <title><![CDATA[Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-11T02:22:45+00:00</updated>
+  <updated>2015-03-15T16:39:14+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -21,6 +21,9 @@
     <content type="html"><![CDATA[<p>I&#8217;m having fun reading <a href="https://pragprog.com/book/ahmine2/learn-to-program-with-minecraft-plugins">Learn to Program with Minecraft Plugins</a> at
 the moment and I decided to try out a new Make-like tool called
 <a href="http://gittup.org/tup">tup</a> for building the plugins.</p>
+
+<!--more-->
+
 
 <p>Each example plugin from the source code of this book has a build
 script that looks like this:</p>
@@ -161,7 +164,7 @@ find an analogue in tup so far.</li>
     <updated>2015-02-27T17:31:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2015/02/27/custom-colours-for-tmux</id>
     <content type="html"><![CDATA[<p>I have been using a rather dull <a href="http://ethanschoonover.com/solarized">Solarized</a> (by
-<a href="http://observer.com/2015/02/meet-the-man-behind-solarized-the-most-important-color-scheme-in-computer-history/">Ethan Schoonover</a>) tmux theme for a while now, it looks like this:</p>
+<a href="http://observer.com/2015/02/meet-the-man-behind-solarized-the-most-important-color-scheme-in-computer-history/">Ethan Schoonover</a>) tmux theme for a while now<!--more-->, it looks like this:</p>
 
 <p><img src="http://blog.wjlr.org.uk/images/tmux-solarized.png" class="extrawide"></p>
 
@@ -223,7 +226,10 @@ unlike <a href="https://wiki.archlinux.org/index.php/Color_Bash_Prompt#List_of_c
     <link href="http://blog.wjlr.org.uk/2015/01/24/css-mode-emacs-debian.html"/>
     <updated>2015-01-24T09:00:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2015/01/24/css-mode-emacs-debian</id>
-    <content type="html"><![CDATA[<p>If you get an error like this</p>
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p>If you get an error like this</p>
 
 <pre><code>Symbol's function definition is void: apropos-macrop
 </code></pre>
@@ -251,6 +257,9 @@ abandoned (emacs contains its own css-mode).</p>
 <a href="http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure.html">previous post on string interpolation in Clojure</a>,
 I benchmarked <code>&lt;&lt;</code> from <code>core.incubator</code> and it proved both useful and
 performant. But can this useful macro be used from ClojureScript? Yes.</p>
+
+<!--more-->
+
 
 <p>Add <code>core.incubator</code> to your dependencies in <code>project.clj</code> of your
 ClojureScript project:</p>
@@ -306,7 +315,10 @@ ClojureScript project:</p>
     <link href="http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure.html"/>
     <updated>2015-01-15T21:55:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure</id>
-    <content type="html"><![CDATA[<p>There are two main ways to build strings in Clojure: <a href="https://clojuredocs.org/clojure.core/str"><code>str</code></a> and
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p>There are two main ways to build strings in Clojure: <a href="https://clojuredocs.org/clojure.core/str"><code>str</code></a> and
 <a href="https://clojuredocs.org/clojure.core/format"><code>format</code></a>. <code>str</code> essentially does string concatenation like
 this:</p>
 
@@ -521,6 +533,9 @@ string interpolation I feel.</p>
     <content type="html"><![CDATA[<p>According to <a href="https://www.goodreads.com/">GoodReads</a> I read 17 books
 this year. Here are some I really liked.</p>
 
+<!--more-->
+
+
 <p><img src="https://d.gr-assets.com/books/1394357588l/19932464.jpg" class="book-cover"></p>
 
 <h2>
@@ -641,6 +656,9 @@ to be run and provisioned. I&#8217;ve used Vagrant with <a href="https://docs.ch
 iterate quickly. There are some gotchas however and in this post I
 will explore a particular flaw in the way Vagrant and Ansible
 cooperate.</p>
+
+<!--more-->
+
 
 <h2>Multi-machine setup</h2>
 
@@ -1029,6 +1047,9 @@ holidays I tried to work out how to write a Secret Santa algorithm
 using core.logic. It seemed like the obvious choice but I quickly
 realised I&#8217;d bitten off more than I could chew.</p>
 
+<!--more-->
+
+
 <h2>Simple Secret Santa</h2>
 
 <p>Your common or garden Secret Santa consists of putting names in a hat
@@ -1345,6 +1366,9 @@ help others grok this mind-mending area of programming.</p>
     <id>http://blog.wjlr.org.uk/2014/12/08/ludum-dare-31-postmortem</id>
     <content type="html"><![CDATA[<p>On the weekend of 6th December 2014, I participated in <a href="http://ludumdare.com/compo/">Ludum Dare</a> 31. The theme was &#8220;Entire Game on One Screen&#8221;. I didn&#8217;t finish my game and didn&#8217;t hand anything in. This is the 3rd(?) time I&#8217;ve started but not finished a Ludum Dare game in recent years. The first time I participated in Ludum Dare, I completed a game and handed it in for the competition (48 hours), so I&#8217;m curious as to what has been holding me back since then.</p>
 
+<!--more-->
+
+
 <p><img src="http://blog.wjlr.org.uk/images/robot-scene.png" class="extrawide pixel-art"></p>
 
 <h2>Lack of planning</h2>
@@ -1385,6 +1409,9 @@ help others grok this mind-mending area of programming.</p>
     <content type="html"><![CDATA[<p>JSON is a fairly easy to read format but sometimes you need to deal with an
 unreadable dump of the stuff and it&#8217;d be useful to quickly reformat or prettify
 it. There are a number of ways to do this.</p>
+
+<!--more-->
+
 
 <h2>Javascript (Chrome, Firefox etc.)</h2>
 
@@ -1542,7 +1569,10 @@ pretty-printing JSON, there are so many more.</p>
     <link href="http://blog.wjlr.org.uk/2014/02/01/tmux-and-autoenv-tip.html"/>
     <updated>2014-02-01T15:41:00+00:00</updated>
     <id>http://blog.wjlr.org.uk/2014/02/01/tmux-and-autoenv-tip</id>
-    <content type="html"><![CDATA[<p>On OS X, if I use <a href="http://tmux.sourceforge.net/">tmux</a> (or more usually,
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p>On OS X, if I use <a href="http://tmux.sourceforge.net/">tmux</a> (or more usually,
 <a href="https://github.com/zolrath/wemux">wemux</a> for pairing) then I end up with oddly
 named windows like this:</p>
 
@@ -1593,6 +1623,9 @@ and its contents, change <code>/log</code> to <code>log</code>.</p>
 <strong>Update</strong>: None of this is required with current versions of Ember and
 Ember-data.
 </aside></p>
+
+<!--more-->
+
 
 <p>A common pattern with webapps in these exciting times is the
 transition-to-new-thing-you-just-created pattern. The way it works is this: you
@@ -1671,7 +1704,10 @@ ember-data.</p>
     <link href="http://blog.wjlr.org.uk/2013/04/10/imagemagick-insanity.html"/>
     <updated>2013-04-10T00:00:00+01:00</updated>
     <id>http://blog.wjlr.org.uk/2013/04/10/imagemagick-insanity</id>
-    <content type="html"><![CDATA[<p>If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this:</p>
+    <content type="html"><![CDATA[<!--more-->
+
+
+<p>If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this:</p>
 
 <pre><code>cat test.svg | convert svg: png:- &gt; test.png
 </code></pre>
@@ -1700,8 +1736,6 @@ ember-data.</p>
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>stat("/usr/lib/ImageMagick-6.6.9/modules-Q16/coders/svg.la", 0x7fffe6cace90) = -1 ENOENT (No such file or directory)</span></code></pre></td></tr></table></div></figure>
 
-
-<p></p>
 
 <p>Words cannot describe how I feel about Imagemagick right now.</p>
 
