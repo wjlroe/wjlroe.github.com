@@ -10,6 +10,7 @@ Logic programming is an odd beast. As I lounged around over the
 holidays I tried to work out how to write a Secret Santa algorithm
 using core.logic. It seemed like the obvious choice but I quickly
 realised I'd bitten off more than I could chew.
+<!--more-->
 
 ## Simple Secret Santa
 

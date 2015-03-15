@@ -6,6 +6,7 @@ comments: true
 categories: [tips, tmux]
 ---
 
+<!--more-->
 On OS X, if I use [tmux](http://tmux.sourceforge.net/) (or more usually,
 [wemux](https://github.com/zolrath/wemux) for pairing) then I end up with oddly
 named windows like this:

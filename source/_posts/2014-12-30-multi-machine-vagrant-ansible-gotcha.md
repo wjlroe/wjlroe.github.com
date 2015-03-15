@@ -11,6 +11,7 @@ to be run and provisioned. I've used Vagrant with [Chef-Solo][] and
 iterate quickly. There are some gotchas however and in this post I
 will explore a particular flaw in the way Vagrant and Ansible
 cooperate.
+<!--more-->
 
 ## Multi-machine setup
 

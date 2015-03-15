@@ -6,6 +6,7 @@ comments: true
 categories: [clojure]
 ---
 
+<!--more-->
 There are two main ways to build strings in Clojure: [`str`][str] and
 [`format`][format]. `str` essentially does string concatenation like
 this:

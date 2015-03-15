@@ -7,6 +7,7 @@ categories: [ludum-dare, gamedev, elm]
 ---
 
 On the weekend of 6th December 2014, I participated in [Ludum Dare](http://ludumdare.com/compo/) 31. The theme was "Entire Game on One Screen". I didn't finish my game and didn't hand anything in. This is the 3rd(?) time I've started but not finished a Ludum Dare game in recent years. The first time I participated in Ludum Dare, I completed a game and handed it in for the competition (48 hours), so I'm curious as to what has been holding me back since then.
+<!--more-->
 
 <img src="/images/robot-scene.png" class="extrawide pixel-art">
 

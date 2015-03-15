@@ -5,6 +5,7 @@ date: 2013-04-10
 categories: [linux, ubuntu]
 ---
 
+<!--more-->
 If you are trying to read SVGs and convert them (through STDIN/STDOUT, from a script for example), like this:
 
     cat test.svg | convert svg: png:- > test.png
@@ -27,10 +28,10 @@ I had to strace the `convert` command to find out that it was looking for a miss
 
 ```
 stat("/usr/lib/ImageMagick-6.6.9/modules-Q16/coders/svg.la", 0x7fffe6cace90) = -1 ENOENT (No such file or directory)
-``` 
+```
 
-Words cannot describe how I feel about Imagemagick right now. 
+Words cannot describe how I feel about Imagemagick right now.
 
-Note to self: install this required package (stupidly called "-extra"). 
+Note to self: install this required package (stupidly called "-extra").
 
 Also note to self: avoid Imagemagick like the plague.

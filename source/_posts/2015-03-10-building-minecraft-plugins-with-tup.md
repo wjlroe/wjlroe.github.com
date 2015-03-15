@@ -11,6 +11,8 @@ I'm having fun reading [Learn to Program with Minecraft Plugins][] at
 the moment and I decided to try out a new Make-like tool called
 [tup][] for building the plugins.
 
+<!--more-->
+
 Each example plugin from the source code of this book has a build
 script that looks like this:
 

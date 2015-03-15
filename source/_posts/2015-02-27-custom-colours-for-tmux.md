@@ -7,7 +7,7 @@ categories: [tmux, cli, tips]
 ---
 
 I have been using a rather dull [Solarized][] (by
-[Ethan Schoonover][]) tmux theme for a while now, it looks like this:
+[Ethan Schoonover][]) tmux theme for a while now<!--more-->, it looks like this:
 
 <img src="/images/tmux-solarized.png" class="extrawide">
 

@@ -9,6 +9,7 @@ categories: [vim, json]
 JSON is a fairly easy to read format but sometimes you need to deal with an
 unreadable dump of the stuff and it'd be useful to quickly reformat or prettify
 it. There are a number of ways to do this.
+<!--more-->
 
 ## Javascript (Chrome, Firefox etc.)
 

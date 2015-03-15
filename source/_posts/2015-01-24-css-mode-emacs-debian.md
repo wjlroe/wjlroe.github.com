@@ -6,6 +6,7 @@ comments: true
 categories: [debian, linux, emacs]
 ---
 
+<!--more-->
 If you get an error like this
 
     Symbol's function definition is void: apropos-macrop

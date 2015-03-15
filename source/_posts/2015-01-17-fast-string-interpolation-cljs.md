@@ -11,6 +11,7 @@ In my
 I benchmarked `<<` from `core.incubator` and it proved both useful and
 performant. But can this useful macro be used from ClojureScript? Yes.
 
+<!--more-->
 Add `core.incubator` to your dependencies in `project.clj` of your
 ClojureScript project:
 

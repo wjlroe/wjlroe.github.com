@@ -9,6 +9,7 @@ categories: [ember, javascript]
 **Update**: None of this is required with current versions of Ember and
 Ember-data.
 </aside>
+<!--more-->
 
 A common pattern with webapps in these exciting times is the
 transition-to-new-thing-you-just-created pattern. The way it works is this: you
@@ -33,7 +34,7 @@ model.get('store').commit();
 
 This doesn't work with ember-data currently - what happens is the `model` object
 that gets sent to the `didCreate` callback there won't have an `id` from the
-server (it hasn't been filled in for some reason). 
+server (it hasn't been filled in for some reason).
 
 To work around this issue, you need to do something akin to this:
 
@@ -55,11 +56,11 @@ fills in the new `id` from the server. Then your callback is called and the page
 transition happens. The difference in timing is not noticeable to the user - it's
 just a race condition within Ember-data itself. Other than that - in this
 example, the observer is removed, which is good practice for observers and you
-should always remove observers you've added (as I understand it). 
+should always remove observers you've added (as I understand it).
 
 Other alternative workarounds include wrapping the `transitionToRoute` call in a
 `setTimeout()` block - to make it pause just long enough for the model's `id` to
-be filled in. 
+be filled in.
 
 Most of the above came from
 [Stackoverflow](http://stackoverflow.com/questions/14981500/transition-after-saving-model-of-ember-data)
