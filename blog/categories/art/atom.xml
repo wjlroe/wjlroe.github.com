@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: art | Will Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/art/atom.xml" rel="self"/>
+  <link href="http://blog.wjlr.org.uk/"/>
+  <updated>2015-03-24T04:03:59+00:00</updated>
+  <id>http://blog.wjlr.org.uk/</id>
+  <author>
+    <name><![CDATA[Will Roe]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Serialist Micro Piano Trio No. 1]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/03/23/serial-micro-piano-trio-no-1.html"/>
+    <updated>2015-03-23T20:00:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/03/23/serial-micro-piano-trio-no-1</id>
+    <content type="html"><![CDATA[<p>My first &#8220;released&#8221; (algorithmically generated) composition is a micro
+piano trio in a <a href="http://en.wikipedia.org/wiki/Serialism">serialist</a> style.</p>
+
+<!--more-->
+
+
+<p>It all started when I borrowed the book <a href="https://www.goodreads.com/book/show/3150827-simple-composition">Simple Composition</a> by
+<a href="http://en.wikipedia.org/wiki/Charles_Wuorinen">Charles Wuorinen</a> from the Sussex University library (I was
+studying Computer Science &amp; Artificial Intelligence at the time, some
+years ago).</p>
+
+<p><figure class="img fillwidth"><img src="http://blog.wjlr.org.uk/images/University_of_Sussex_Library.jpg" alt="Sussex Uni Library" title="Sussex Uni Library"><figcaption>Sussex University Library &#8211; Photo Public Domain, Wikipedia, Filtered</figcaption></figure></p>
+
+<p>This book explains the basics of composing in the
+<a href="http://en.wikipedia.org/wiki/Twelve-tone_technique">twelve tone technique</a> created by <a href="http://en.wikipedia.org/wiki/Arnold_Schoenberg">Arnold Schoenberg</a>. Some days
+ago I started playing around with the concepts from that book in
+<a href="http://overtone.github.io/">Overtone</a>. It was a lot of fun.</p>
+
+<p><div class='embed tweet'><blockquote class="twitter-tweet"><p>I might be playing with <a href="https://twitter.com/overtone">@overtone</a> possibly <a href="https://twitter.com/hashtag/clojure?src=hash">#clojure</a> <a href="http://t.co/8KRPc2qmpr">pic.twitter.com/8KRPc2qmpr</a></p>&mdash; Will Roe (@wjlroe) <a href="https://twitter.com/wjlroe/status/575775558082150402">March 11, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></div></p>
+
+<p>If you&#8217;re not familiar with twelve-tone composition or serialism in
+music, you could do a lot worse than to watch this awesome video by
+<a href="http://vihart.com">ViHart</a>:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4niz8TfY794" frameborder="0" allowfullscreen></iframe>
+
+
+<h2>The code</h2>
+
+<p>I used a library called <a href="https://github.com/ctford/leipzig">Leipzig</a> written by <a href="http://literateprogrammer.blogspot.co.uk/">Chris Ford</a> to build
+up the composition from an initial tone row (a set of 12 integers),
+via several functional transformations of the tone row and into 3
+instrumental parts: piano, violin and cello.</p>
+
+<p>Since this piece uses a randomly-generated tone row and
+randomly-generated sequence of both note duration and playing style
+(vibrato, non-vibrato or pizzicato),
+it&#8217;s not actually reproducible from the code. The code is useful
+mainly for encoding the basic form of the piece and the parameters
+of the work (such as instruments, length of the piece, which elements
+are random and which aren&#8217;t etc.).</p>
+
+<p>In future I will work out some way to capture the notes being
+generated. The simplest way to do this would be to save all the
+structures produced by the <code>piano-trio</code> function into an <a href="https://github.com/edn-format/edn">EDN</a> file,
+which could be trivially played back at a later date. Transformation
+of that data into traditional musical notation wouldn&#8217;t be too tricky
+either.</p>
+
+<p>The structure of this piece consists of 3 instrumental parts played in
+parallel. The main function is
+<a href="https://github.com/wjlroe/serial/blob/micro-piano-trio-1/src/serial/twelve_tone.clj#L200-L213"><code>piano-trio</code></a>
+and is inline below:</p>
+
+<pre><code class="clojure">(defn piano-trio
+  [bpm tone-row]
+  (in-tempo
+   bpm
+   (with
+    (-&gt;&gt; (total-serial tone-row)
+         (play-on :cello)
+         (serial-style :cello))
+    (-&gt;&gt; (total-serial tone-row)
+         (play-on :violin)
+         (serial-style :violin))
+    (-&gt;&gt; (total-serial tone-row)
+         (play-on :piano)
+         (serial-style :piano)))))
+</code></pre>
+
+<p>The most interesting aspect as it relates to musical transformation is
+the definition of retrograde, inversion and retrograde-inversion:</p>
+
+<pre><code class="clojure">(defn retrograde
+  [row]
+  (reverse row))
+
+(defn inversion
+  [row]
+  (map - row))
+
+(def retrograde-inversion
+  (comp retrograde inversion))
+</code></pre>
+
+<p>It was for this reason - the applicability of pure functions and
+functional composition - that I felt <a href="http://overtone.github.io/">overtone</a> and Clojure were such a
+good fit for writing <a href="http://en.wikipedia.org/wiki/Serialism">serialist</a> music. It&#8217;s even more applicable to
+12-tone composition than tonal (diatonic) music since the rules are so
+much more mechanistic.</p>
+
+<h2>The recording</h2>
+
+<p><iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/197309694&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe></p>
+
+
+<p>I had a lot of fun exploring serialism through Overtone and the
+Leipzig library. I was inspired to release this little track and to
+spend more time on code like this when I watched a great talk called
+<a href="https://www.youtube.com/watch?v=kovJHzQNsg0">Make Art, Not Apps</a> by <a href="https://twitter.com/ThisIsJohnBrown">@ThisIsJohnBrown</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>
