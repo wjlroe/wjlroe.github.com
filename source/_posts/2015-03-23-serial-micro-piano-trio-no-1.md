@@ -19,10 +19,11 @@ years ago).
 
 <figure class="img fillwidth"><img src="/images/University_of_Sussex_Library.jpg" alt="Sussex Uni Library" title="Sussex Uni Library"><figcaption>Sussex University Library -- Photo Public Domain, Wikipedia, Filtered</figcaption></figure>
 
-This book explains the basics of composing in the
-[twelve tone technique][] created by [Arnold Schoenberg][]. Some days
-ago I started playing around with the concepts from that book in
-[Overtone][]. It was a lot of fun.
+More recently I tracked down a copy so that I could have a go at
+writing twelve-tone music. This book explains the basics of composing
+in the [twelve tone technique][] created by [Arnold Schoenberg][].
+Some days ago I started playing around with the concepts from that
+book in [Overtone][]. It was a lot of fun.
 
 {% tweet https://twitter.com/wjlroe/status/575775558082150402 %}
 
