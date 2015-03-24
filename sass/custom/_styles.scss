@@ -1,6 +1,9 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
 
+$my_max_width: 625px;
+$screen_widths: 320px 480px 568px 625px 768px 992px 1024px 1280px 1440px;
+
 .greek {
     font-family: $greek-font-family;
 }
@@ -26,6 +29,14 @@ table th {
 
 html {
     background: $page-bg;
+}
+
+@mixin central-column($width: $my_max_width, $padding: 20px) {
+    max-width: $width;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: $padding;
+    padding-right: $padding;
 }
 
 @mixin article-header {
@@ -54,23 +65,36 @@ html {
     }
 
     #content .blog-index article header {
+        padding-top: 0;
+        padding-left: 20px;
+    }
+
+    #content .blog-index article header .header-with-left-border {
         @include article-header;
+        padding-top: 2em;
+        height: inherit;
     }
 
     #content article header {
+        padding-top: 0;
+    }
+
+    #content article header .header-with-left-border {
         @include article-header;
         padding-bottom: 0;
+        padding-top: 2em;
+        height: inherit;
     }
 }
 
 @media only screen and (min-width: 750px) {
     p { text-align: left; }
 
-    #content .blog-index article header {
+    #content .blog-index article header .header-with-left-border {
         @include big-article-header;
     }
 
-    #content article header {
+    #content article header .header-with-left-border {
         @include big-article-header;
     }
 }
@@ -78,6 +102,8 @@ html {
 body {
     @extend .sans;
     font-family: $sans;
+    width: 100%;
+    max-width: 100%;
     @media only screen and (min-width: 750px) {
         aside.sidebar{ @include collapse-sidebar; }
         #content aside.sidebar.thirds section {
@@ -104,6 +130,27 @@ body {
         font-size: 1.7em;
         margin-left: -0.1em;
     }
+}
+
+article + article {
+    .blog-index & {
+        background: none;
+    }
+}
+
+#content .blog-index .pagination {
+    background: none;
+}
+
+.entry-content > p, article > header, article > footer, body > header,
+body > footer, .blog-index > .pagination, #blog-archives, .mailchimp_form,
+.entry-content > iframe, .entry-content .tweet, .youtube5placeholder,
+article .flash-video {
+    @include central-column;
+}
+
+.entry-content .tweet {
+    margin-bottom: 2em;
 }
 
 body > nav {
@@ -168,9 +215,8 @@ h2, h3,h4,h5 { font-weight: normal; }
 .toggle-sidebar { display: none; }
 
 .entry-content h2,h3,h4,h5 {
-    margin-left: -15px;
-    border-left: 5px solid lighten($title-color, 40);
-    padding-left: 10px;
+    @include central-column;
+
     padding-top: 0;
     background: white;
 
@@ -179,17 +225,12 @@ h2, h3,h4,h5 { font-weight: normal; }
     }
 }
 
+
+
 .entry-content .book-cover {
     margin-left: 10px;
     height: 100px;
     float: right;
-}
-
-@media only screen and (min-width: 750px) {
-    .entry-content h2,h3,h4,h5 {
-        margin-left: -25px;
-        padding-left: 20px;
-    }
 }
 
 pre, .highlight, .gist-highlight {
@@ -197,21 +238,35 @@ pre, .highlight, .gist-highlight {
 }
 
 img.extrawide {
-  margin-left: -18px;
-  width: 320px;
-  min-width: 320px;
-  @media only screen and (min-width: 568px) {
-    width: 568px;
-    min-width: 568px;
-    margin-left: -25px;
-  }
+    margin-left: -20px;
+    width: 320px;
+    min-width: 320px;
+    @each $screen_width in $screen_widths {
+        @media only screen and (min-width: $screen_width) {
+            width: $screen_width;
+            min-width: $screen_width;
+            @if $screen_width > $my_max_width {
+                $mleft: ($my_max_width - $screen_width)/2;
+                margin-left: round($mleft);
+            } @else {
+                margin-left: -20px;
+            }
+        }
+    }
+}
 
-  @media only screen and (min-width: 625px) {
-    width: 625px;
-    min-width: 625px;
-    margin-left: -55px;
+.fillwidth {
+    width: 100%;
+    max-width: 100%;
+    > img {
+        width: 100%;
+    }
+}
 
-  }
+figure.img > figcaption {
+    text-align: right;
+    padding-right: 2em;
+    margin-bottom: 20px;
 }
 
 img.pixel-art {
@@ -223,21 +278,14 @@ img.pixel-art {
 }
 
 figure.code {
-  margin-left: -18px;
-  width: 320px;
-  min-width: 320px;
-  @media only screen and (min-width: 568px) {
-    width: 568px;
-    min-width: 568px;
-    margin-left: -25px;
-  }
+    @each $screen_width in $screen_widths {
+        @media only screen and (min-width: $screen_width) {
+            @include central-column($screen_width);
+        }
+    }
 
-  @media only screen and (min-width: 625px) {
-    width: 735px;
-    min-width: 735px;
-    margin-left: -110px;
-
-  }
+    padding-right: 0px !important;
+    padding-left: 0px !important;
 }
 
 h2.subtitle {
@@ -273,7 +321,15 @@ body > header {
     background: #fff;
     font-family: $sans;
     padding-right: 10px;
+    padding-left: 10px;
     input.button {
         background-color: $solar-magenta;
+    }
+}
+
+.entry-content > code {
+    @media only screen and (min-width: 320px) {
+        min-width: 100%;
+        width: 100%;
     }
 }
