@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://blog.wjlr.org.uk/2015/03/24/im-not-good-enough.html</loc>
+    <lastmod>2015-03-24T00:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://blog.wjlr.org.uk/2015/03/23/serial-micro-piano-trio-no-1.html</loc>
     <lastmod>2015-03-23T20:00:00+00:00</lastmod>
     <priority>0.8</priority>
@@ -132,13 +137,13 @@
   </url>
   <url>
     <loc>http://blog.wjlr.org.uk/blog/archives/</loc>
-    <lastmod>2015-03-24T04:03:59+00:00</lastmod>
+    <lastmod>2015-03-24T04:40:44+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://blog.wjlr.org.uk/</loc>
-    <lastmod>2015-03-24T04:03:59+00:00</lastmod>
+    <lastmod>2015-03-24T04:40:44+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>

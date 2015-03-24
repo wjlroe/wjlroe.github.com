@@ -4,7 +4,7 @@
   <title><![CDATA[Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-24T04:03:59+00:00</updated>
+  <updated>2015-03-24T04:40:44+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -12,6 +12,71 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[I'm Not Good Enough]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/03/24/im-not-good-enough.html"/>
+    <updated>2015-03-24T00:00:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/03/24/im-not-good-enough</id>
+    <content type="html"><![CDATA[<p>It&#8217;s very easy to get discouraged. It&#8217;s very common to feel that
+you&#8217;re just not that good at what you do (and just as common to feel
+you&#8217;re
+<a href="http://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect">great at it when you&#8217;re not</a>).
+These days, if you&#8217;re trying to develop a skill, a wealth of
+information is available to you. Looking for online tutorials? Just
+search YouTube - there are a
+<a href="http://www.youtube.com/results?search_query=how+to+tie+a+tie&amp;oq=how+to+tie+&amp;gs_l=youtube-reduced.3.0.0l4.1463720.1465261.0.1468051.11.8.0.1.1.1.224.1247.1j5j2.8.0...0.0...1ac.mmjK6IUFyHs">LOT of them</a>.
+Want to teach others something? That is
+<a href="http://www.udemy.com/">covered</a>.</p>
+
+<p>The experts that inspire you have never been nearer. You can watch
+their videos, read their blog and even get updates into the minutinae
+of their daily lives on Twitter. This is mostly awesome. It humanises
+your heros for one thing, which is very healthy - they make mistakes,
+they get bored, they say silly things - that&#8217;s if they &#8216;get&#8217; social
+media.</p>
+
+<p>But there is a dark side. Now it is even easier to see experts doing
+what they do best. Often, this can impress upon you just how great
+they are and just how terrible you are. If you are watching the
+finished product of years of experience, hard work and (perhaps) just
+a little talent then it is very difficult to bear that in mind when
+looking at your own achievements.</p>
+
+<p>That is all quite abstract so let&#8217;s get to some examples that apply to
+me. Perhaps they might apply to you (if you&#8217;re interested in
+programming games, taking good photographs, writing music or playing
+music) - but the unifying theme is simply creativity. If you want to
+paint something amazing, I bet you could be plagued with the same
+feelings of inadiquacy and the crushing sense of the daunting task
+before you.</p>
+
+<p>Here&#8217;s an extract from an upcoming documentary about <a href="http://mojang.com">Mojang</a>, showing Notch talking about programming games:</p>
+
+<iframe width="560" height="315" src="http://www.youtube-nocookie.com/embed/BES9EKK4Aw4?rel=0" frameborder="0" allowfullscreen></iframe>
+
+
+<p>Here&#8217;s a tutorial by Gavin Hoey about taking panoramic photographs:</p>
+
+<iframe width="560" height="315" src="http://www.youtube-nocookie.com/embed/LFCryc5ql48?rel=0" frameborder="0" allowfullscreen></iframe>
+
+
+<p>Here&#8217;s a performance of the finale from <a href="http://en.wikipedia.org/wiki/Robert_Schumann">Schumann&#8217;s</a> <a href="http://en.wikipedia.org/wiki/Faschingsschwank_aus_Wien">Faschingsschwank aus Wien</a>:</p>
+
+<iframe width="560" height="315" src="http://www.youtube-nocookie.com/embed/pzRKthQScrU?rel=0" frameborder="0" allowfullscreen></iframe>
+
+
+<p>I love those pieces so very very much. I love it so much, let&#8217;s have the first movement because&#8230; it&#8217;s just the best:</p>
+
+<iframe width="560" height="315" src="http://www.youtube-nocookie.com/embed/HAP2OktfBzI?rel=0" frameborder="0" allowfullscreen></iframe>
+
+
+<p>Here&#8217;s the beginning of a beautiful tutorial for night sky timelapse photography:</p>
+
+<iframe src="http://player.vimeo.com/video/45814119" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Serialist Micro Piano Trio No. 1]]></title>
@@ -1988,90 +2053,6 @@ ember-data.</p>
 from Google Webfonts. Nice.</p>
 
 <p>It looks like Crimson Text is a promising free font that might have Polytonic Greek characters at some point so that&#8217;s useful to know for me.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Further Haskell Exploration]]></title>
-    <link href="http://blog.wjlr.org.uk/2012/02/07/further-haskell-exploration.html"/>
-    <updated>2012-02-07T00:00:00+00:00</updated>
-    <id>http://blog.wjlr.org.uk/2012/02/07/further-haskell-exploration</id>
-    <content type="html"><![CDATA[<p>Today I decided to embark on an exploration of Haskell web
-development. I have previously bootstrapped a basic
-<a href="http://snapframework.com/">Snap</a> setup but never got into actual
-hacking. Today I decided to give <a href="http://www.yesodweb.com/">Yesod</a> a
-go. I ran into a number of difficulties that drained away all my spare
-time this evening but in the end I feel like I&#8217;m ready to dive in
-tomorrow.</p>
-
-<p>I started off by attempting to install Yesod, with a simple <code>cabal
-install yesod</code>. This command took about 10 minutes to finish compiling
-dependencies on my ThinkPad X61 before it died with an error. The
-problem seemed to be the version of
-<a href="http://hackage.haskell.org/platform/">haskell-platform</a> was rather
-out-of-date, meaning a tool, called <code>alex</code> was too old for Yesod. To
-solve this rather small issue I took the rather drastic step of
-upgrading Ubuntu on the ThinkPad to
-<a href="https://wiki.ubuntu.com/PrecisePangolin">Precise Pangolin</a> because
-this includes the latest haskell-platform&#8230;and its all new and&#8230;just
-because! This is Ubuntu after all - trigger happy upgrades are the
-name of the game.</p>
-
-<p>Meanwhile, in Mac land. While that upgrade was running I tried to run
-the new yesod web app on a Mac. Unfortunately I ran into all the
-problems I&#8217;ve encountered before with cabal-dev on OS X.</p>
-
-<p>Firstly there&#8217;s some weirdness with cabal-dev being set to install
-everything in the system library location. This just makes no sense for
-cabal-dev - the whole point is for it to install libraries in a
-vendored, per-project location - not interfering with system
-libraries. It manifested itself as asking for a password all the time
-(turn on verbose <code>-v3</code> to see it running all cabal commands with sudo
-- O_o). To fix that you edit the config file, outlined in a
-  <a href="http://passingcuriosity.com/2011/cabal-dev-configuration-tweaks/">blog post I found</a>. Annoying.</p>
-
-<p>Another problem I had was ghc/ld spamming the terminal with loads of
-linker warnings. This really slowed down compilation. I didn&#8217;t really
-solve this (happened on my Mac Mini - didn&#8217;t happen on my work MacBook
-Air). I remember having to set options for GHC to silence that crap,
-but I forget the details&#8230;</p>
-
-<p>In order to get it all working on my Mac I:</p>
-
-<ul>
-<li>Uninstalled haskell-platform (this is homebrew installed for me)</li>
-<li>Re-installed haskell-platform</li>
-<li>cabal installed cabal-dev, yesod</li>
-</ul>
-
-
-<p>Everything worked then. There&#8217;s also strange voodoo you have to run to
-unregister old packages - <code>brew info haskell-platform</code> splits out the
-necessary commands.</p>
-
-<p>After all that, things worked&#8230;mostly. Currently there seems to be
-some car crash of dependencies caused by a new release of something
-called tls-extras. A helpful stranger in IRC (#yesod) told me to
-<code>cabal-dev install tls-extra-0.4.2.1</code> - this forces a working version
-of that library and then you can happily install yesod and
-everything&#8217;s groovy.</p>
-
-<p>Who said Haskell was difficult? Not me.</p>
-
-<p>So now I have a skeleton Yesod project up and running and it&#8217;s all
-looking very promising. The helper script for creating projects gave
-me some confidence - specifically asking if I wanted sqlite, postgres,
-MongoDB or nothing seemed pretty good to me - this doesn&#8217;t appear to be
-a web framework/persistence system tied to a particular way of doing
-things.</p>
-
-<p>The main reason why I decided to dive into Yesod however was the high
-volume of interesting yesod-related blog traffic - this is a pretty
-crucial metric in gauging the health of a library community in my
-opinion and my RSS reader has been bombarded with posts about it so I
-felt I had to see what all the fuss was about.</p>
-
-<p>Hopefully happy Haskell hacking henceforth</p>
 ]]></content>
   </entry>
   
