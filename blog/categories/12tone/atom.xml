@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 12tone | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/12tone/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-24T07:03:35+00:00</updated>
+  <updated>2015-03-24T09:44:29+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -31,10 +31,11 @@ years ago).</p>
 
 <p><figure class="img fillwidth"><img src="http://blog.wjlr.org.uk/images/University_of_Sussex_Library.jpg" alt="Sussex Uni Library" title="Sussex Uni Library"><figcaption>Sussex University Library &#8211; Photo Public Domain, Wikipedia, Filtered</figcaption></figure></p>
 
-<p>This book explains the basics of composing in the
-<a href="http://en.wikipedia.org/wiki/Twelve-tone_technique">twelve tone technique</a> created by <a href="http://en.wikipedia.org/wiki/Arnold_Schoenberg">Arnold Schoenberg</a>. Some days
-ago I started playing around with the concepts from that book in
-<a href="http://overtone.github.io/">Overtone</a>. It was a lot of fun.</p>
+<p>More recently I tracked down a copy so that I could have a go at
+writing twelve-tone music. This book explains the basics of composing
+in the <a href="http://en.wikipedia.org/wiki/Twelve-tone_technique">twelve tone technique</a> created by <a href="http://en.wikipedia.org/wiki/Arnold_Schoenberg">Arnold Schoenberg</a>.
+Some days ago I started playing around with the concepts from that
+book in <a href="http://overtone.github.io/">Overtone</a>. It was a lot of fun.</p>
 
 <p><div class='embed tweet'><blockquote class="twitter-tweet"><p>I might be playing with <a href="https://twitter.com/overtone">@overtone</a> possibly <a href="https://twitter.com/hashtag/clojure?src=hash">#clojure</a> <a href="http://t.co/8KRPc2qmpr">pic.twitter.com/8KRPc2qmpr</a></p>&mdash; Will Roe (@wjlroe) <a href="https://twitter.com/wjlroe/status/575775558082150402">March 11, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></div></p>
