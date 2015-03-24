@@ -4,7 +4,7 @@
   <title><![CDATA[Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-24T04:41:52+00:00</updated>
+  <updated>2015-03-24T07:03:35+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Free as in Learning]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/03/24/free-as-in-learning.html"/>
+    <updated>2015-03-24T09:00:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/03/24/free-as-in-learning</id>
+    <content type="html"><![CDATA[<p>If you want to release your music for everybody to hear then it&#8217;s a good idea to
+licence it with a creative commons licence. That way your music or drawings can
+be remixed and used in surprising ways.</p>
+
+<!--more-->
+
+
+<p>But the emphasis on the finished product doesn&#8217;t interest me as much. I&#8217;d rather
+open source the process by which art is made rather than the result.</p>
+
+<p>The new wave of digitally assembled music opens the way to truly open source
+music - when music can have source code, can have a version history - we can all
+learn from how it gets made.</p>
+
+<p>Put your music in the public domain if you like, but don&#8217;t forget to release the
+things you learned along the way.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Serialist Micro Piano Trio No. 1]]></title>
@@ -1988,90 +2012,6 @@ ember-data.</p>
 from Google Webfonts. Nice.</p>
 
 <p>It looks like Crimson Text is a promising free font that might have Polytonic Greek characters at some point so that&#8217;s useful to know for me.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Further Haskell Exploration]]></title>
-    <link href="http://blog.wjlr.org.uk/2012/02/07/further-haskell-exploration.html"/>
-    <updated>2012-02-07T00:00:00+00:00</updated>
-    <id>http://blog.wjlr.org.uk/2012/02/07/further-haskell-exploration</id>
-    <content type="html"><![CDATA[<p>Today I decided to embark on an exploration of Haskell web
-development. I have previously bootstrapped a basic
-<a href="http://snapframework.com/">Snap</a> setup but never got into actual
-hacking. Today I decided to give <a href="http://www.yesodweb.com/">Yesod</a> a
-go. I ran into a number of difficulties that drained away all my spare
-time this evening but in the end I feel like I&#8217;m ready to dive in
-tomorrow.</p>
-
-<p>I started off by attempting to install Yesod, with a simple <code>cabal
-install yesod</code>. This command took about 10 minutes to finish compiling
-dependencies on my ThinkPad X61 before it died with an error. The
-problem seemed to be the version of
-<a href="http://hackage.haskell.org/platform/">haskell-platform</a> was rather
-out-of-date, meaning a tool, called <code>alex</code> was too old for Yesod. To
-solve this rather small issue I took the rather drastic step of
-upgrading Ubuntu on the ThinkPad to
-<a href="https://wiki.ubuntu.com/PrecisePangolin">Precise Pangolin</a> because
-this includes the latest haskell-platform&#8230;and its all new and&#8230;just
-because! This is Ubuntu after all - trigger happy upgrades are the
-name of the game.</p>
-
-<p>Meanwhile, in Mac land. While that upgrade was running I tried to run
-the new yesod web app on a Mac. Unfortunately I ran into all the
-problems I&#8217;ve encountered before with cabal-dev on OS X.</p>
-
-<p>Firstly there&#8217;s some weirdness with cabal-dev being set to install
-everything in the system library location. This just makes no sense for
-cabal-dev - the whole point is for it to install libraries in a
-vendored, per-project location - not interfering with system
-libraries. It manifested itself as asking for a password all the time
-(turn on verbose <code>-v3</code> to see it running all cabal commands with sudo
-- O_o). To fix that you edit the config file, outlined in a
-  <a href="http://passingcuriosity.com/2011/cabal-dev-configuration-tweaks/">blog post I found</a>. Annoying.</p>
-
-<p>Another problem I had was ghc/ld spamming the terminal with loads of
-linker warnings. This really slowed down compilation. I didn&#8217;t really
-solve this (happened on my Mac Mini - didn&#8217;t happen on my work MacBook
-Air). I remember having to set options for GHC to silence that crap,
-but I forget the details&#8230;</p>
-
-<p>In order to get it all working on my Mac I:</p>
-
-<ul>
-<li>Uninstalled haskell-platform (this is homebrew installed for me)</li>
-<li>Re-installed haskell-platform</li>
-<li>cabal installed cabal-dev, yesod</li>
-</ul>
-
-
-<p>Everything worked then. There&#8217;s also strange voodoo you have to run to
-unregister old packages - <code>brew info haskell-platform</code> splits out the
-necessary commands.</p>
-
-<p>After all that, things worked&#8230;mostly. Currently there seems to be
-some car crash of dependencies caused by a new release of something
-called tls-extras. A helpful stranger in IRC (#yesod) told me to
-<code>cabal-dev install tls-extra-0.4.2.1</code> - this forces a working version
-of that library and then you can happily install yesod and
-everything&#8217;s groovy.</p>
-
-<p>Who said Haskell was difficult? Not me.</p>
-
-<p>So now I have a skeleton Yesod project up and running and it&#8217;s all
-looking very promising. The helper script for creating projects gave
-me some confidence - specifically asking if I wanted sqlite, postgres,
-MongoDB or nothing seemed pretty good to me - this doesn&#8217;t appear to be
-a web framework/persistence system tied to a particular way of doing
-things.</p>
-
-<p>The main reason why I decided to dive into Yesod however was the high
-volume of interesting yesod-related blog traffic - this is a pretty
-crucial metric in gauging the health of a library community in my
-opinion and my RSS reader has been bombarded with posts about it so I
-felt I had to see what all the fuss was about.</p>
-
-<p>Hopefully happy Haskell hacking henceforth</p>
 ]]></content>
   </entry>
   

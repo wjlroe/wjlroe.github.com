@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: public-domain | Will Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/public-domain/atom.xml" rel="self"/>
+  <link href="http://blog.wjlr.org.uk/"/>
+  <updated>2015-03-24T07:03:35+00:00</updated>
+  <id>http://blog.wjlr.org.uk/</id>
+  <author>
+    <name><![CDATA[Will Roe]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Free as in learning]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/03/24/free-as-in-learning.html"/>
+    <updated>2015-03-24T09:00:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/03/24/free-as-in-learning</id>
+    <content type="html"><![CDATA[<p>If you want to release your music for everybody to hear then it&#8217;s a good idea to
+licence it with a creative commons licence. That way your music or drawings can
+be remixed and used in surprising ways.</p>
+
+<!--more-->
+
+
+<p>But the emphasis on the finished product doesn&#8217;t interest me as much. I&#8217;d rather
+open source the process by which art is made rather than the result.</p>
+
+<p>The new wave of digitally assembled music opens the way to truly open source
+music - when music can have source code, can have a version history - we can all
+learn from how it gets made.</p>
+
+<p>Put your music in the public domain if you like, but don&#8217;t forget to release the
+things you learned along the way.</p>
+]]></content>
+  </entry>
+  
+</feed>
