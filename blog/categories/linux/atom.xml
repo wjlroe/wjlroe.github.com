@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-24T09:44:29+00:00</updated>
+  <updated>2015-03-25T22:36:06+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry Pi 2 speed]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/03/25/raspberry-pi-2-speed.html"/>
+    <updated>2015-03-25T22:18:00+00:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/03/25/raspberry-pi-2-speed</id>
+    <content type="html"><![CDATA[<p>I just benchmarked my new <a href="http://www.raspberrypi.org/products/raspberry-pi-2-model-b/">Raspberry Pi 2 Model B</a> against my old
+<a href="http://www.raspberrypi.org/products/model-b/">Raspberry Pi 1 Model B</a> using the
+<a href="https://github.com/clojure/clojurescript/wiki/Quick-Start">ClojureScript Quick Start Guide</a> (specifically timing the build
+step):</p>
+
+<!--more-->
+
+
+<pre><code>time java -cp cljs.jar:src clojure.main build.clj
+</code></pre>
+
+<p>On the <a href="http://www.raspberrypi.org/products/model-b/">Raspberry Pi 1 Model B</a> this takes 61.59 seconds, whereas on
+the new <a href="http://www.raspberrypi.org/products/raspberry-pi-2-model-b/">Raspberry Pi 2 Model B</a> this takes 18.42 seconds!</p>
+
+<p>For comparison, on my MacBook Air (11-inch, Mid 2013, 1.4 GHz Intel
+Core i5, 8GB RAM), while lots of software was running, so not a
+complete fair test (the Pis were booted up into the console, not even
+running X) this takes 5.75 seconds.</p>
+
+<p>Considering the difference in specifications of these machines, the
+Raspberry Pi 2 is remarkably fast. I could even load up and play with
+<a href="http://sonic-pi.net/">Sonic Pi</a> pretty quickly (on the original Model B that took long
+enough to make a cup of tea).</p>
+
+<p>Looks like I&#8217;m going to be drinking less tea in the future.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[css-mode broken on Debian with Emacs 24]]></title>
