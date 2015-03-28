@@ -265,8 +265,9 @@ img.extrawide {
 
 figure.img > figcaption {
     text-align: right;
-    padding-right: 2em;
-    margin-bottom: 20px;
+    padding-right: 1em;
+    margin-bottom: 4em;
+    color: lighten($text-color, 20);
 }
 
 img.pixel-art {
