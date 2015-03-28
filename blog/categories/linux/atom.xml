@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-25T22:36:06+00:00</updated>
+  <updated>2015-03-28T01:40:46+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -31,6 +31,10 @@ step):</p>
 
 <p>On the <a href="http://www.raspberrypi.org/products/model-b/">Raspberry Pi 1 Model B</a> this takes 61.59 seconds, whereas on
 the new <a href="http://www.raspberrypi.org/products/raspberry-pi-2-model-b/">Raspberry Pi 2 Model B</a> this takes 18.42 seconds!</p>
+
+<p><figure class="img fillwidth"><img src="http://blog.wjlr.org.uk/images/raspberrypi2.jpg"
+alt="Raspberry Pi 2" title="Raspberry Pi 2"><figcaption>My Raspberry Pi
+2 in a very fetching <a href="http://shop.pimoroni.com/products/pibow-coupe">PiBow Coupé case</a></figcaption></figure></p>
 
 <p>For comparison, on my MacBook Air (11-inch, Mid 2013, 1.4 GHz Intel
 Core i5, 8GB RAM), while lots of software was running, so not a
