@@ -2,6 +2,8 @@
 // Add styles here to make changes without digging in too much
 
 $my_max_width: 625px;
+$desktop_widths: 625px 768px 992px 1024px 1280px 1440px;
+$phone_widths: 320px 480px 568px;
 $screen_widths: 320px 480px 568px 625px 768px 992px 1024px 1280px 1440px;
 
 .greek {
@@ -279,9 +281,15 @@ img.pixel-art {
 }
 
 figure.code {
-    @each $screen_width in $screen_widths {
+    @each $screen_width in $phone_widths {
         @media only screen and (min-width: $screen_width) {
             @include central-column($screen_width);
+        }
+    }
+
+    @each $screen_width in $desktop_widths {
+        @media only screen and (min-width: $screen_width) {
+            @include central-column(round($screen_width * 0.81));
         }
     }
 
