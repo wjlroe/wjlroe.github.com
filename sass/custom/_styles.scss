@@ -280,7 +280,7 @@ img.pixel-art {
     -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }
 
-figure.code {
+figure.code, pre {
     @each $screen_width in $phone_widths {
         @media only screen and (min-width: $screen_width) {
             @include central-column($screen_width);
@@ -292,7 +292,9 @@ figure.code {
             @include central-column(round($screen_width * 0.81));
         }
     }
+}
 
+figure.code  {
     padding-right: 0px !important;
     padding-left: 0px !important;
 }
