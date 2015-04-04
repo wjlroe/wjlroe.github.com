@@ -147,7 +147,7 @@ article + article {
 .entry-content > p, article > header, article > footer, body > header,
 body > footer, .blog-index > .pagination, #blog-archives, .mailchimp_form,
 .entry-content > iframe, .entry-content .tweet, .youtube5placeholder,
-article .flash-video {
+article .flash-video, .entry-content ul {
     @include central-column;
 }
 
