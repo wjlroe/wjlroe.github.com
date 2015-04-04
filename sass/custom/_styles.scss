@@ -333,8 +333,24 @@ body > header {
     font-family: $sans;
     padding-right: 10px;
     padding-left: 10px;
+    > form {
+        padding-right: 3% !important;
+    }
     input.button {
         background-color: $solar-magenta;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 0.5em;
+    }
+    ul {
+        list-style: none;
+    }
+    ul > li {
+        margin-top: 0.5em;
+        font-size: 1.4em;
+        text-align: center;
+        color: lighten($title-color, 40);
     }
 }
 
