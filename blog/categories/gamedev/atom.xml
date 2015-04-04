@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gamedev | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/gamedev/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-29T12:17:08+01:00</updated>
+  <updated>2015-04-04T04:32:08+01:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -12,6 +12,279 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The Module Pattern in Javascript]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/04/04/js-module-pattern.html"/>
+    <updated>2015-04-04T09:00:00+01:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/04/04/js-module-pattern</id>
+    <content type="html"><![CDATA[<p>Javascript has a liberal array of techniques for constructing objects.
+Although object oriented style programming can be simulated in
+Javascript (which is prototypical in nature), it can get a little
+unwieldy.</p>
+
+<!--more-->
+
+
+<h2>Pseudoclassical OO</h2>
+
+<p>The following code is in the style referred to as pseudoclassical by
+Douglas Crockford in <a href="http://shop.oreilly.com/product/9780596517748.do">Javascript: The Good Parts</a>:</p>
+
+<pre><code class="javascript">var Person = function(name, empathy) {
+    this.name = name;
+    this.empathy = empathy || 0;
+};
+
+Person.prototype.get_name = function() {
+    return this.name;
+};
+
+Person.prototype.get_empathy = function() {
+    return this.empathy;
+};
+
+Person.prototype.change_empathy = function(amount) {
+    this.empathy = this.empathy + amount;
+    return this.empathy;
+};
+
+Person.prototype.status = function() {
+    return this.get_name() + " has " + this.get_empathy() + " empathy";
+};
+
+var Player = function(name, empathy) {
+    this.name = name;
+    this.empathy = empathy || 0;
+};
+
+Player.prototype = new Person();
+
+var Mob = function(name, empathy) {
+    this.name = name;
+    this.empathy = empathy || 0;
+};
+
+Mob.prototype = new Person();
+
+var player = new Player("Ada", 100);
+console.log(player.status()); // 'Ada has 100 empathy'
+
+var mob = new Mob("Bob", -10);
+console.log(mob.status()); // 'Bob has -10 empathy'
+mob.change_empathy(2);
+console.log(mob.status()); // 'Bob has -8 empathy'
+</code></pre>
+
+<p>There are a few things to note here:</p>
+
+<ul>
+<li>There are no private fields or methods, it&#8217;s not feasible to add them</li>
+<li>There is duplication in constructors that lie in an inheritance chain
+(i.e. where an object&#8217;s prototype is set to another object)</li>
+<li>It&#8217;s horribly verbose (a matter of personal taste however)</li>
+<li>Due to the lack of private fields, you can&#8217;t have a method called
+<code>name()</code> that returns a field called <code>name</code> - one will overwrite the
+other in this style</li>
+</ul>
+
+
+<h2>The limits of inheritance</h2>
+
+<p>Even ignoring these issues (and there are other ways to create objects
+that work around this limitation), object oriented inheritance is not
+the most flexible way to design software. For many domains of
+problems, composition or augmentation trumps inheritance. Let&#8217;s
+examine a motivating example. In the following class diagram we have
+some domain objects for a game. Players and Mobs are Person(s),
+Person(s) and Rucksacks are Objects. All is well with this view of the
+world, no code is duplicated between objects and it all works as
+intended.</p>
+
+<p><img class="extrawide"
+src="http://blog.wjlr.org.uk/images/components-before-container-extraction.png" title="Class
+object diagram"></p>
+
+<p>Of course we have some tests for these objects:</p>
+
+<pre><code class="javascript">var JS = require("jstest"),
+    components = require("../lib/components");
+
+JS.Test.describe("components", function() {
+    this.before(function() {
+        this.rucksack = components.rucksack({name: "Bag of Holding"});
+        this.another_rucksack = components.rucksack({name: "Bigger bag"});
+        this.spell = components.spell({name: "Potion of empathy"});
+    });
+
+    this.describe("container", function() {
+        this.it("can contain other containers", function() {
+            this.rucksack.add(this.spell);
+            this.another_rucksack.add(this.rucksack);
+            this.assertEqual(1, this.another_rucksack.quantity());
+            this.assertEqual("Bag of Holding",
+                             this.another_rucksack.items()[0].name());
+        });
+        this.it("can contain other objects", function() {
+            this.rucksack.add(this.spell);
+            this.assertEqual(1, this.rucksack.quantity());
+            this.assertEqual("Potion of empathy",
+                             this.rucksack.items()[0].name());
+        });
+    });
+});
+</code></pre>
+
+<p>Now say we want to extend our player objects to have an inventory (or
+<code>container</code>). We could approach this in a number of ways but
+inheritance is not one of them. We already have <code>rucksack</code> and
+<code>person</code> inheriting from <code>object</code> so we can&#8217;t just create <code>container</code>
+as a superclass of those. We need a way to extend both those objects
+and extract the <code>container</code>-related behaviour and state so we don&#8217;t
+have code duplication. In Ruby, we might create <code>container</code> as a
+<code>Module</code> and <code>include</code> it in our classes. The method pattern in JS
+allows us to do something quite similar, but first: a failing test:</p>
+
+<pre><code class="javascript">this.describe("player", function() {
+    this.it("has an inventory", function() {
+        this.assertEqual(0, this.player.quantity());
+        this.player.add(this.spell);
+        this.assertEqual(1, this.player.quantity());
+        this.assertEqual("Potion of empathy", this.player.items()[0].name());
+    });
+});
+</code></pre>
+
+<h2>The Module Pattern</h2>
+
+<p>Now we can go ahead and examine how to construct the relationship
+between objects that we need. This diagram approximates the idea:</p>
+
+<p><img class="extrawide"
+src="http://blog.wjlr.org.uk/images/components-after-container-extraction.png" title="Class
+object diagram with container component"></p>
+
+<p>After we&#8217;ve created the <code>container</code> object and wired it up to <code>person</code>
+and <code>rucksack</code>, the implementation code looks like this:</p>
+
+<pre><code class="javascript">var object = function(spec) {
+    var that = {};
+
+    that.name = function() {
+        return spec.name;
+    };
+
+    return that;
+};
+
+var container = function(that) {
+    var inventory = [];
+
+    that.add = function(item) {
+        inventory.push(item);
+    };
+
+    that.quantity = function() {
+        return inventory.length;
+    };
+
+    that.items = function() {
+        return inventory;
+    };
+
+    return that;
+};
+
+module.exports.rucksack = function(spec) {
+    var that = container(object(spec));
+    return that;
+};
+
+var person = function(spec) {
+    var that = container(object(spec)),
+        empathy = spec.empathy || 0;
+
+    that.change_empathy = function(amount) {
+        empathy = empathy + amount;
+    };
+    that.empathy = function() {
+        return empathy;
+    };
+
+    return that;
+};
+
+module.exports.mob = function(spec) {
+    var that = person(spec);
+    return that;
+};
+
+module.exports.player = function(spec) {
+    var that = person(spec);
+    return that;
+};
+
+module.exports.spell = function(spec) {
+    var that = object(spec);
+
+    that.affect = function(obj) {
+        if (that.inRange(obj)) {
+            obj.change_empathy(1);
+        }
+    };
+
+    return that;
+};
+</code></pre>
+
+<p>What&#8217;s going on? Well, we are using <code>container</code> to augment the object
+that is passed to it, so when we write:</p>
+
+<pre><code class="javascript">module.exports.rucksack = function(spec) {
+    var that = container(object(spec));
+    return that;
+};
+</code></pre>
+
+<p>The public interface of the <code>rucksack</code> object is passed to <code>container</code>
+for augmentation - it&#8217;s important to note that none of the private
+fields or functions inside <code>object</code> or <code>person</code> (such as the <code>empathy</code>
+field) can be affected by the <code>container</code> augmentation. Any object
+that calls <code>container</code> on its returned object (the <code>that</code> variable by
+convention here), will have the necessary methods added to it. It&#8217;s
+also worth pointing out that <code>container</code> has local state (the
+<code>inventory</code> array). This local state is not visible outside the
+<code>container</code> function, it&#8217;s private. We get encapsulation, public
+interfaces, arbitrary and flexible extension (we can chain those
+function calls to add whatever functionality we like) for free!</p>
+
+<p>Although the diagram above implies a strict inheritance hierarchy,
+that is not necessarily the case. The difference between <code>object</code> and
+<code>container</code> is subtle, with <code>object</code> hiding the <code>spec</code> object and
+returning a new object (just as <code>person</code> and <code>rucksack</code> do), whereas
+<code>container</code> just adds methods to an object.</p>
+
+<p>One last thing! It might be apparent, but it&#8217;s worth calling out the
+other advantage this gives us: dynamic runtime extensions. If you want
+the <code>spell</code> object to be able to contain items, you could do so at any
+stage, running:</p>
+
+<pre><code class="javascript">var my_spell = spell({name: "Confusing potion"});
+// my_spell doesn't have an inventory
+container(my_spell);
+console.log(my_spell.quantity()); // '0'
+</code></pre>
+
+<p>This code modifies the <code>my_spell</code> variable, but no other variables
+that use the <code>spell</code> constructor function. This could be useful in
+games where items can interact, giving each other different
+functionality (e.g. imagine a potion that allows bookcases to float or
+drinking a flying potion adds the <code>flying</code> component to a player). In
+those cases, there&#8217;s no need for complex if/else/switch-style
+programming, just augment the object with the desired module
+and that&#8217;s it!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ludum Dare 31 Postmortem]]></title>

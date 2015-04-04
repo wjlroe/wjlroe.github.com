@@ -9,9 +9,8 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="
-Update: None of this is required with current versions of Ember and
-Ember-data. ">
+  <meta name="description" content="There is a gotcha with the silver searcher and how it treats
+.gitignore files. The following pattern will work as expected with git: /log I.e. git &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -105,6 +104,46 @@ Ember-data. ">
 <header>
   <div class="header-with-left-border">
     
+      <h1 class="entry-title"><a href="/2014/02/01/silver-searcher-gotcha.html">A Silver Searcher Gotcha</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-02-01T15:34:00+00:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>3:34 pm</span></time>
+        
+      </p>
+      
+      </div>
+  </header>
+
+
+  <div class="entry-content"><p>There is a gotcha with <a href="https://github.com/ggreer/the_silver_searcher">the silver searcher</a> and how it treats
+<code>.gitignore</code> files. The following pattern will work as expected with <code>git</code>:</p>
+
+<pre><code>/log
+</code></pre>
+
+<p>I.e. <code>git</code> will ignore everything in that directory, however The Silver Searcher
+doesn&#8217;t understand that and it&#8217;ll still show matching lines from files in
+<code>log/</code>. For <code>git</code> and <code>ag</code> (The Silver Searcher) to both ignore that directory
+and its contents, change <code>/log</code> to <code>log</code>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+<header>
+  <div class="header-with-left-border">
+    
       <h1 class="entry-title"><a href="/2013/06/06/ember-transition-to-new-model-hack.html">Ember transitionToRoute With New Model Hack</a></h1>
     
     
@@ -167,65 +206,6 @@ Ember-data.
     <footer>
       <a rel="full-article" href="/2013/04/10/imagemagick-insanity.html">Read on &rarr;</a>
     </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-<header>
-  <div class="header-with-left-border">
-    
-      <h1 class="entry-title"><a href="/2013/02/18/ember-rails-handlebars-assets.html">Ember-rails and Handlebars_assets FIGHT!</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2013-02-18T23:10:00+00:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>11:10 pm</span></time>
-        
-      </p>
-      
-      </div>
-  </header>
-
-
-  <div class="entry-content"><p>Just a quick note for Google and future-me. If you want to mix both <a href="https://github.com/emberjs/ember-rails">ember-rails</a> and <a href="https://github.com/leshill/handlebars_assets">handlebars_assets</a> in the same Rails project, you will encounter maddening issues with your Ember/Handlebars templates. Specifically, they will compile fine (probably) but Ember will not be able to see them.</p>
-
-<h2>How to check whether Ember can ‘see’ your templates</h2>
-
-<p>In your browsers console, type:</p>
-
-<pre><code>Ember.TEMPLATES
-</code></pre>
-
-<p>You should see something like:</p>
-
-<pre><code>Object {application: function, domains: function}
-</code></pre>
-
-<p>In the above example I have two templates defined: &#8216;application&#8217; and &#8216;domains&#8217;. If something is stopping ember-rails from putting your templates in that object, it will simply be a blank object.</p>
-
-<h2>Why is this happening?</h2>
-
-<p>This happened to me because both handlebars_assets and ember-rails were registering with the asset pipeline to process <code>.handlebars</code> files (and <code>.hbs</code> files). They fight and, at least in my case, handlebars_assets won.</p>
-
-<h2>The fix</h2>
-
-<p>The only way to get this to work reliably right now is to use a file extension for your Ember handlebars templates that isn’t recognised by handlebars_assets. I used <code>.hjs</code>. It’s not exactly a fix, but things are all working right now so that’s groovy.</p>
-
-<h2>Why are you using both?</h2>
-
-<p>There’s probably a way round this, but I’m using handlebars_assets to compile handlebars templates for some javascript (that ends up not being at all related to EmberJS - it’s embedded in other pages). I need those templates to be available in the <code>HandlebarsTemplates</code> object so I can run them in the javascript. I include <code>handlebars.runtime</code> in the javascript to run them. ember-rails includes that (I just looked) so I can probably ditch handlebars_assets. That’ll be the next thing to try.</p>
-
-<p>This might not make a lot of sense, but if you’ve hit this problem (i.e. nothing renders in your EmberJS app but your templates are all compiled and you get no errors in the browser console) then this is one possible gotcha.</p>
-</div>
-  
   
 
 

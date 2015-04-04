@@ -4,7 +4,7 @@
   <title><![CDATA[Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-03-29T12:17:08+01:00</updated>
+  <updated>2015-04-04T04:32:08+01:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -12,6 +12,438 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The Module Pattern in Javascript]]></title>
+    <link href="http://blog.wjlr.org.uk/2015/04/04/js-module-pattern.html"/>
+    <updated>2015-04-04T09:00:00+01:00</updated>
+    <id>http://blog.wjlr.org.uk/2015/04/04/js-module-pattern</id>
+    <content type="html"><![CDATA[<p>Javascript has a liberal array of techniques for constructing objects.
+Although object oriented style programming can be simulated in
+Javascript (which is prototypical in nature), it can get a little
+unwieldy.</p>
+
+<!--more-->
+
+
+<h2>Pseudoclassical OO</h2>
+
+<p>The following code is in the style referred to as pseudoclassical by
+Douglas Crockford in <a href="http://shop.oreilly.com/product/9780596517748.do">Javascript: The Good Parts</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">empathy</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">empathy</span> <span class="o">=</span> <span class="nx">empathy</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">get_name</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">get_empathy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">empathy</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">change_empathy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">amount</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">empathy</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">empathy</span> <span class="o">+</span> <span class="nx">amount</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">empathy</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot; has &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">get_empathy</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot; empathy&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">Player</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">empathy</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">empathy</span> <span class="o">=</span> <span class="nx">empathy</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Player</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">Mob</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">empathy</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">empathy</span> <span class="o">=</span> <span class="nx">empathy</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Mob</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">player</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Player</span><span class="p">(</span><span class="s2">&quot;Ada&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">status</span><span class="p">());</span> <span class="c1">// &#39;Ada has 100 empathy&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">mob</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mob</span><span class="p">(</span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">);</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mob</span><span class="p">.</span><span class="nx">status</span><span class="p">());</span> <span class="c1">// &#39;Bob has -10 empathy&#39;</span>
+</span><span class='line'><span class="nx">mob</span><span class="p">.</span><span class="nx">change_empathy</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mob</span><span class="p">.</span><span class="nx">status</span><span class="p">());</span> <span class="c1">// &#39;Bob has -8 empathy&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are a few things to note here:</p>
+
+<ul>
+<li>There are no private fields or methods, it&#8217;s not feasible to add them</li>
+<li>There is duplication in constructors that lie in an inheritance chain
+(i.e. where an object&#8217;s prototype is set to another object)</li>
+<li>It&#8217;s horribly verbose (a matter of personal taste however)</li>
+<li>Due to the lack of private fields, you can&#8217;t have a method called
+<code>name()</code> that returns a field called <code>name</code> - one will overwrite the
+other in this style</li>
+</ul>
+
+
+<h2>The limits of inheritance</h2>
+
+<p>Even ignoring these issues (and there are other ways to create objects
+that work around this limitation), object oriented inheritance is not
+the most flexible way to design software. For many domains of
+problems, composition or augmentation trumps inheritance. Let&#8217;s
+examine a motivating example. In the following class diagram we have
+some domain objects for a game. Players and Mobs are Person(s),
+Person(s) and Rucksacks are Objects. All is well with this view of the
+world, no code is duplicated between objects and it all works as
+intended.</p>
+
+<p><img class="extrawide"
+src="http://blog.wjlr.org.uk/images/components-before-container-extraction.png" title="Class
+object diagram"></p>
+
+<p>Of course we have some tests for these objects:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">JS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;jstest&quot;</span><span class="p">),</span>
+</span><span class='line'>    <span class="nx">components</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;../lib/components&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">JS</span><span class="p">.</span><span class="nx">Test</span><span class="p">.</span><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;components&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">before</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">rucksack</span> <span class="o">=</span> <span class="nx">components</span><span class="p">.</span><span class="nx">rucksack</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Bag of Holding&quot;</span><span class="p">});</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">another_rucksack</span> <span class="o">=</span> <span class="nx">components</span><span class="p">.</span><span class="nx">rucksack</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Bigger bag&quot;</span><span class="p">});</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">spell</span> <span class="o">=</span> <span class="nx">components</span><span class="p">.</span><span class="nx">spell</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Potion of empathy&quot;</span><span class="p">});</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;container&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">it</span><span class="p">(</span><span class="s2">&quot;can contain other containers&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">rucksack</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">spell</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">another_rucksack</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">rucksack</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">another_rucksack</span><span class="p">.</span><span class="nx">quantity</span><span class="p">());</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">assertEqual</span><span class="p">(</span><span class="s2">&quot;Bag of Holding&quot;</span><span class="p">,</span>
+</span><span class='line'>                             <span class="k">this</span><span class="p">.</span><span class="nx">another_rucksack</span><span class="p">.</span><span class="nx">items</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">());</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">it</span><span class="p">(</span><span class="s2">&quot;can contain other objects&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">rucksack</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">spell</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">rucksack</span><span class="p">.</span><span class="nx">quantity</span><span class="p">());</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">assertEqual</span><span class="p">(</span><span class="s2">&quot;Potion of empathy&quot;</span><span class="p">,</span>
+</span><span class='line'>                             <span class="k">this</span><span class="p">.</span><span class="nx">rucksack</span><span class="p">.</span><span class="nx">items</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">());</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now say we want to extend our player objects to have an inventory (or
+<code>container</code>). We could approach this in a number of ways but
+inheritance is not one of them. We already have <code>rucksack</code> and
+<code>person</code> inheriting from <code>object</code> so we can&#8217;t just create <code>container</code>
+as a superclass of those. We need a way to extend both those objects
+and extract the <code>container</code>-related behaviour and state so we don&#8217;t
+have code duplication. In Ruby, we might create <code>container</code> as a
+<code>Module</code> and <code>include</code> it in our classes. The method pattern in JS
+allows us to do something quite similar, but first: a failing test:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">this</span><span class="p">.</span><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;player&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">it</span><span class="p">(</span><span class="s2">&quot;has an inventory&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">assertEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">quantity</span><span class="p">());</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">spell</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">quantity</span><span class="p">());</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">assertEqual</span><span class="p">(</span><span class="s2">&quot;Potion of empathy&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">items</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">());</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The Module Pattern</h2>
+
+<p>Now we can go ahead and examine how to construct the relationship
+between objects that we need. This diagram approximates the idea:</p>
+
+<p><img class="extrawide"
+src="http://blog.wjlr.org.uk/images/components-after-container-extraction.png" title="Class
+object diagram with container component"></p>
+
+<p>After we&#8217;ve created the <code>container</code> object and wired it up to <code>person</code>
+and <code>rucksack</code>, the implementation code looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">object</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">spec</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">that</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">container</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">that</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">inventory</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">that</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">inventory</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">that</span><span class="p">.</span><span class="nx">quantity</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">inventory</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">that</span><span class="p">.</span><span class="nx">items</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">inventory</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">rucksack</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">spec</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="nx">container</span><span class="p">(</span><span class="nx">object</span><span class="p">(</span><span class="nx">spec</span><span class="p">));</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">spec</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="nx">container</span><span class="p">(</span><span class="nx">object</span><span class="p">(</span><span class="nx">spec</span><span class="p">)),</span>
+</span><span class='line'>        <span class="nx">empathy</span> <span class="o">=</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">empathy</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">that</span><span class="p">.</span><span class="nx">change_empathy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">amount</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">empathy</span> <span class="o">=</span> <span class="nx">empathy</span> <span class="o">+</span> <span class="nx">amount</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>    <span class="nx">that</span><span class="p">.</span><span class="nx">empathy</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">empathy</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">mob</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">spec</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="nx">person</span><span class="p">(</span><span class="nx">spec</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">player</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">spec</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="nx">person</span><span class="p">(</span><span class="nx">spec</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">spell</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">spec</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="nx">object</span><span class="p">(</span><span class="nx">spec</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">that</span><span class="p">.</span><span class="nx">affect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">inRange</span><span class="p">(</span><span class="nx">obj</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">obj</span><span class="p">.</span><span class="nx">change_empathy</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What&#8217;s going on? Well, we are using <code>container</code> to augment the object
+that is passed to it, so when we write:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">rucksack</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">spec</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="nx">container</span><span class="p">(</span><span class="nx">object</span><span class="p">(</span><span class="nx">spec</span><span class="p">));</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The public interface of the <code>rucksack</code> object is passed to <code>container</code>
+for augmentation - it&#8217;s important to note that none of the private
+fields or functions inside <code>object</code> or <code>person</code> (such as the <code>empathy</code>
+field) can be affected by the <code>container</code> augmentation. Any object
+that calls <code>container</code> on its returned object (the <code>that</code> variable by
+convention here), will have the necessary methods added to it. It&#8217;s
+also worth pointing out that <code>container</code> has local state (the
+<code>inventory</code> array). This local state is not visible outside the
+<code>container</code> function, it&#8217;s private. We get encapsulation, public
+interfaces, arbitrary and flexible extension (we can chain those
+function calls to add whatever functionality we like) for free!</p>
+
+<p>Although the diagram above implies a strict inheritance hierarchy,
+that is not necessarily the case. The difference between <code>object</code> and
+<code>container</code> is subtle, with <code>object</code> hiding the <code>spec</code> object and
+returning a new object (just as <code>person</code> and <code>rucksack</code> do), whereas
+<code>container</code> just adds methods to an object.</p>
+
+<p>One last thing! It might be apparent, but it&#8217;s worth calling out the
+other advantage this gives us: dynamic runtime extensions. If you want
+the <code>spell</code> object to be able to contain items, you could do so at any
+stage, running:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">my_spell</span> <span class="o">=</span> <span class="nx">spell</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Confusing potion&quot;</span><span class="p">});</span>
+</span><span class='line'><span class="c1">// my_spell doesn&#39;t have an inventory</span>
+</span><span class='line'><span class="nx">container</span><span class="p">(</span><span class="nx">my_spell</span><span class="p">);</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">my_spell</span><span class="p">.</span><span class="nx">quantity</span><span class="p">());</span> <span class="c1">// &#39;0&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This code modifies the <code>my_spell</code> variable, but no other variables
+that use the <code>spell</code> constructor function. This could be useful in
+games where items can interact, giving each other different
+functionality (e.g. imagine a potion that allows bookcases to float or
+drinking a flying potion adds the <code>flying</code> component to a player). In
+those cases, there&#8217;s no need for complex if/else/switch-style
+programming, just augment the object with the desired module
+and that&#8217;s it!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Raspberry Pi 2 Speed]]></title>
@@ -2003,29 +2435,6 @@ ember-data.</p>
 <p>I&#8217;m gonna have fun but since I&#8217;m breaking rule 1 - know the tools (I don&#8217;t know any possible tools) this is going to be intense.</p>
 
 <p>Have fun everyone!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[What Makes a Developer Happy?]]></title>
-    <link href="http://blog.wjlr.org.uk/2012/07/26/what-makes-a-developer-happy.html"/>
-    <updated>2012-07-26T00:00:00+01:00</updated>
-    <id>http://blog.wjlr.org.uk/2012/07/26/what-makes-a-developer-happy</id>
-    <content type="html"><![CDATA[<p>Today was a pretty good day for me - programming-wise. Even though I wasn&#8217;t too well (having trouble hearing in my left ear which is disorientating and makes conversation difficult), I feel the contentment of a day well spent.</p>
-
-<p>So what made it a good day? Building stuff is the bottom line for me but that is a very broad term. Today, building stuff meant working with the <a href="http://raphaeljs.com">Raphael</a> library to make a graphic for a web app (a dynamic graphic, it&#8217;s not just a logo); refactoring the backend of said web app and reading various tech news.</p>
-
-<p>News first. I was mainly reading about the architecture of <a href="http://www.datomic.com/overview.html">Datomic</a>, which is a really interesting take on databases. I would say it looks like the most developer friendly database implementation (in terms of the aims of the project) combined with some pretty powerful and flexible storage. I&#8217;m not sure how deploying it would work out, given it uses SQL or some other key-value-capable backend so it really adds another layer to your app&#8217;s architecture. The <a href="http://www.datomic.com/rationale.html">rationale page</a> was music to my ears though so I will be trying out the <a href="http://blog.datomic.com/2012/07/datomic-free-edition.html">free edition</a> for sure.</p>
-
-<p>The refactoring I worked on today was a bit of &#8220;technical debt&#8221; that had been hanging around for a while. It was as a consequence of not understanding how to split up and compose together templates (and partial templates, snippets) with <a href="https://github.com/cgrand/enlive/">enlive</a>. I had another go at reading <a href="https://github.com/cgrand/enlive/wiki/Table-and-Layout-Tutorial,-Part-1:-The-Goal">the tutorials</a> and this time it just felt easy. They could definitely do with simplifying though. The reason this was so enjoyable was that writing and refactoring <a href="http://clojure.org">Clojure</a> code is generally a very fun endeavour. I generally have a <a href="http://common-lisp.net/project/slime/">SLIME</a> session open with <a href="http://www.gnu.org/software/emacs/">emacs</a> and I just recompile the code or compile the function I&#8217;m changing, then check those functions in the REPL in emacs. In other words, development can be very fast. Also, enlive is hands-down the best templating system I&#8217;ve ever used. It&#8217;s great that it can be used both for templating and for web scraping (or in my case, integration tests checking the contents of DOM nodes).</p>
-
-<p>Working with Raphael for creating scalable graphics is also really fun. Previously I had tried out <a href="http://paperjs.org/about/">Paper.js</a> (which is an abstraction over HTML Canvas). There were a couple of problems with Paper.js. Firstly it is bizarre - the documentation is somewhat held back by only showing examples of so called PaperScript, which I couldn&#8217;t see how I could use. It&#8217;s essentially Javascript with a bunch of functions added to various prototypes by the looks of things. The issue was I am rendering one graphic per item in a (more-or-less) 100 length list and I couldn&#8217;t see a simple way to define one PaperScript thing and feed it parameters to draw all the slightly different versions of the graphic. I decided to try out Raphael and immediately found it vastly simpler for defining the sort of simple shapes I needed to draw. Raphael is a small javascript library for generating <a href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a> (or <a href="http://en.wikipedia.org/wiki/VML">VML</a> where that is supported). The biggest downside of using Raphael instead of Paper.js is that, according to <a href="http://caniuse.com">What can I use…</a> the Android browser only started supporting SVG in version… 3.0!!! That truly does deserve multiple exclamation marks of sheer disbelief. Google, the open web? Really? That means, according to the <a href="http://developer.android.com/about/dashboards/index.html">Platform versions</a> page on the Android developer site, as I write this, over 85% of Android users are on 2.x or lower and SVG won&#8217;t work in their default browsers. SVG is pretty damn old - initial release in 2001. This does not a happy developer make. Still, might have to come up with a fallback option for people using primitive devices, we will see.</p>
-
-<p>Working with 2D graphics, such as with Raphael, usually involves some trigonometry and today was no exception. I really suck at trig so this was the main stumbling block. It really was very simple stuff - <a href="http://en.wikipedia.org/wiki/Unit_circle">finding the coordinates of a point on a circle</a> - but I&#8217;ve forgotten it all from school. I pushed through all that, scribbled furiously on paper until I convinced myself I knew what I was doing and by the end of the day I had shapes arranging themselves at my command - and even <a href="http://raphaeljs.com/reference.html#Element.transform">rotating</a> them all slightly for every item in the list. Essentially I love it when things work, maybe not the first time, but before I get a headache - that&#8217;s the happiness benchmark for me.</p>
-
-<p>The secret underlying all this, and all that I haven&#8217;t said, is there is no secret to developer happiness. If I&#8217;m anything to go by, we thrive on autonomy, creativity and problem solving. It is very strange that so many employers are averse to providing any form of autonomy to their developers because that has to put a damper on anyone&#8217;s aspirations. At <a href="http://www.digital-science.com">Digital Science</a> we are generally encouraged to come up with ideas all the time and execute them. But one of the best aspects for me is how we&#8217;re all able to hack on the infrastructure. See something that could be better? Fix it. If I couldn&#8217;t mix working on UI stuff, web backends, databases, deployment (Chef) and <a href="http://foldme.herokuapp.com">frivolous fun</a> then this wouldn&#8217;t be nearly as worthwhile.</p>
-
-<p>Happy hacking.</p>
 ]]></content>
   </entry>
   
