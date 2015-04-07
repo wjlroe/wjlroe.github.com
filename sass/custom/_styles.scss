@@ -147,12 +147,13 @@ article + article {
 .entry-content > p, article > header, article > footer, body > header,
 body > footer, .blog-index > .pagination, #blog-archives, .mailchimp_form,
 .entry-content > iframe, .entry-content .tweet, .youtube5placeholder,
-article .flash-video, .entry-content ul, .entry-content h1,
-.entry-content blockquote {
+article .flash-video, .entry-content ul, .entry-content > h1,
+.entry-content > blockquote, .entry-content > table, .entry-content > ol,
+.entry-content > aside {
     @include central-column;
 }
 
-.entry-content .tweet {
+.entry-content .tweet, .entry-content > table {
     margin-bottom: 2em;
 }
 
