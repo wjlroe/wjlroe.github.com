@@ -54,12 +54,17 @@ var Mob = function(name, empathy) {
 };
 
 Mob.prototype = new Person();
+```
 
+And we can use the 'classes' like so:
+
+```javascript
 var player = new Player("Ada", 100);
 console.log(player.status()); // 'Ada has 100 empathy'
 
 var mob = new Mob("Bob", -10);
 console.log(mob.status()); // 'Bob has -10 empathy'
+
 mob.change_empathy(2);
 console.log(mob.status()); // 'Bob has -8 empathy'
 ```
@@ -90,7 +95,7 @@ intended.
 src="/images/components-before-container-extraction.png" title="Class
 object diagram">
 
-Of course we have some tests for these objects:
+Here are some unit tests of these objects to illustrate their functionality:
 
 ```javascript
 var JS = require("jstest"),
@@ -128,8 +133,10 @@ inheritance is not one of them. We already have `rucksack` and
 as a superclass of those. We need a way to extend both those objects
 and extract the `container`-related behaviour and state so we don't
 have code duplication. In Ruby, we might create `container` as a
-`Module` and `include` it in our classes. The method pattern in JS
-allows us to do something quite similar, but first: a failing test:
+`Module` and `include` it in our classes.
+
+The method pattern in JS allows us to do something quite similar, but
+first, let's write a failing test:
 
 ```javascript
 this.describe("player", function() {
@@ -145,14 +152,16 @@ this.describe("player", function() {
 ## The Module Pattern
 
 Now we can go ahead and examine how to construct the relationship
-between objects that we need. This diagram approximates the idea:
+between objects that we need. This diagram approximates the idea (I'm
+not exactly clear what options to pass GraphViz to make the
+`container` obviously indicate it is included as a module):
 
 <img class="extrawide"
 src="/images/components-after-container-extraction.png" title="Class
 object diagram with container component">
 
-After we've created the `container` object and wired it up to `person`
-and `rucksack`, the implementation code looks like this:
+The basic 'shape' of an object using 'functional composition' looks
+like the following:
 
 ```javascript
 var object = function(spec) {
@@ -164,7 +173,17 @@ var object = function(spec) {
 
     return that;
 };
+```
 
+The `spec` argument is the object to be augmented (sometimes that's as
+simple as being the parent object). The `that` object which gets
+returned constitutes the public interface that this object returns.
+Because `spec` is passed in and `that` is returned, this `object`
+constructor is a base class.
+
+The `container` constructor function looks like this:
+
+```javascript
 var container = function(that) {
     var inventory = [];
 
@@ -182,12 +201,21 @@ var container = function(that) {
 
     return that;
 };
+```
 
-module.exports.rucksack = function(spec) {
-    var that = container(object(spec));
-    return that;
-};
+Unlike the previous example, `container` exists to decorate the
+provided object with more functionality. If you needed to provide
+defaults for this object specifically, you can pass a `spec` argument
+in also but it wasn't necessary here. Crucially, the `inventory`
+variable is [lexically scoped][lexical] to the `container` constructor, meaning
+no code gets access to it except that inside the `container`
+constructor. This is in contrast to `Modules` in Ruby where
+everything, fields and all, gets included into a `Class` and becomes
+part of that class.
 
+The `person` object is a little different:
+
+```javascript
 var person = function(spec) {
     var that = container(object(spec)),
         empathy = spec.empathy || 0;
@@ -199,6 +227,21 @@ var person = function(spec) {
         return empathy;
     };
 
+    return that;
+};
+```
+
+We're back to using a `spec` argument here so that we can instantiate
+a `person` with some default amount of empathy. The `that =
+container(object(spec))` stands in for traditional object inheritance.
+
+After we've created the `container` object and wired it up to `person`
+and `rucksack`, the code for concrete objects in our toy example looks
+like this:
+
+```javascript
+module.exports.rucksack = function(spec) {
+    var that = container(object(spec));
     return that;
 };
 
@@ -224,28 +267,6 @@ module.exports.spell = function(spec) {
     return that;
 };
 ```
-
-What's going on? Well, we are using `container` to augment the object
-that is passed to it, so when we write:
-
-```javascript
-module.exports.rucksack = function(spec) {
-    var that = container(object(spec));
-    return that;
-};
-```
-
-The public interface of the `rucksack` object is passed to `container`
-for augmentation - it's important to note that none of the private
-fields or functions inside `object` or `person` (such as the `empathy`
-field) can be affected by the `container` augmentation. Any object
-that calls `container` on its returned object (the `that` variable by
-convention here), will have the necessary methods added to it. It's
-also worth pointing out that `container` has local state (the
-`inventory` array). This local state is not visible outside the
-`container` function, it's private. We get encapsulation, public
-interfaces, arbitrary and flexible extension (we can chain those
-function calls to add whatever functionality we like) for free!
 
 Although the diagram above implies a strict inheritance hierarchy,
 that is not necessarily the case. The difference between `object` and
@@ -275,3 +296,4 @@ programming, just augment the object with the desired module
 and that's it!
 
 [goodpart]: http://shop.oreilly.com/product/9780596517748.do
+[lexical]: https://en.wikipedia.org/wiki/Scope_(computer_science)#Lexical_scope_vs._dynamic_scope
