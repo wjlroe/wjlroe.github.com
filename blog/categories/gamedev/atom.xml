@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gamedev | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/gamedev/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-04-07T13:18:11+01:00</updated>
+  <updated>2015-05-25T16:12:40+01:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -66,12 +66,16 @@ var Mob = function(name, empathy) {
 };
 
 Mob.prototype = new Person();
+</code></pre>
 
-var player = new Player("Ada", 100);
+<p>And we can use the &#8216;classes&#8217; like so:</p>
+
+<pre><code class="javascript">var player = new Player("Ada", 100);
 console.log(player.status()); // 'Ada has 100 empathy'
 
 var mob = new Mob("Bob", -10);
 console.log(mob.status()); // 'Bob has -10 empathy'
+
 mob.change_empathy(2);
 console.log(mob.status()); // 'Bob has -8 empathy'
 </code></pre>
@@ -105,7 +109,7 @@ intended.</p>
 src="http://blog.wjlr.org.uk/images/components-before-container-extraction.png" title="Class
 object diagram"></p>
 
-<p>Of course we have some tests for these objects:</p>
+<p>Here are some unit tests of these objects to illustrate their functionality:</p>
 
 <pre><code class="javascript">var JS = require("jstest"),
     components = require("../lib/components");
@@ -142,8 +146,10 @@ inheritance is not one of them. We already have <code>rucksack</code> and
 as a superclass of those. We need a way to extend both those objects
 and extract the <code>container</code>-related behaviour and state so we don&#8217;t
 have code duplication. In Ruby, we might create <code>container</code> as a
-<code>Module</code> and <code>include</code> it in our classes. The method pattern in JS
-allows us to do something quite similar, but first: a failing test:</p>
+<code>Module</code> and <code>include</code> it in our classes.</p>
+
+<p>The method pattern in JS allows us to do something quite similar, but
+first, let&#8217;s write a failing test:</p>
 
 <pre><code class="javascript">this.describe("player", function() {
     this.it("has an inventory", function() {
@@ -158,14 +164,16 @@ allows us to do something quite similar, but first: a failing test:</p>
 <h2>The Module Pattern</h2>
 
 <p>Now we can go ahead and examine how to construct the relationship
-between objects that we need. This diagram approximates the idea:</p>
+between objects that we need. This diagram approximates the idea (I&#8217;m
+not exactly clear what options to pass GraphViz to make the
+<code>container</code> obviously indicate it is included as a module):</p>
 
 <p><img class="extrawide"
 src="http://blog.wjlr.org.uk/images/components-after-container-extraction.png" title="Class
 object diagram with container component"></p>
 
-<p>After we&#8217;ve created the <code>container</code> object and wired it up to <code>person</code>
-and <code>rucksack</code>, the implementation code looks like this:</p>
+<p>The basic &#8216;shape&#8217; of an object using &#8216;functional composition&#8217; looks
+like the following:</p>
 
 <pre><code class="javascript">var object = function(spec) {
     var that = {};
@@ -176,8 +184,17 @@ and <code>rucksack</code>, the implementation code looks like this:</p>
 
     return that;
 };
+</code></pre>
 
-var container = function(that) {
+<p>The <code>spec</code> argument is the object to be augmented (sometimes that&#8217;s as
+simple as being the parent object). The <code>that</code> object which gets
+returned constitutes the public interface that this object returns.
+Because <code>spec</code> is passed in and <code>that</code> is returned, this <code>object</code>
+constructor is a base class.</p>
+
+<p>The <code>container</code> constructor function looks like this:</p>
+
+<pre><code class="javascript">var container = function(that) {
     var inventory = [];
 
     that.add = function(item) {
@@ -194,13 +211,21 @@ var container = function(that) {
 
     return that;
 };
+</code></pre>
 
-module.exports.rucksack = function(spec) {
-    var that = container(object(spec));
-    return that;
-};
+<p>Unlike the previous example, <code>container</code> exists to decorate the
+provided object with more functionality. If you needed to provide
+defaults for this object specifically, you can pass a <code>spec</code> argument
+in also but it wasn&#8217;t necessary here. Crucially, the <code>inventory</code>
+variable is <a href="https://en.wikipedia.org/wiki/Scope_(computer_science)#Lexical_scope_vs._dynamic_scope">lexically scoped</a> to the <code>container</code> constructor, meaning
+no code gets access to it except that inside the <code>container</code>
+constructor. This is in contrast to <code>Modules</code> in Ruby where
+everything, fields and all, gets included into a <code>Class</code> and becomes
+part of that class.</p>
 
-var person = function(spec) {
+<p>The <code>person</code> object is a little different:</p>
+
+<pre><code class="javascript">var person = function(spec) {
     var that = container(object(spec)),
         empathy = spec.empathy || 0;
 
@@ -211,6 +236,20 @@ var person = function(spec) {
         return empathy;
     };
 
+    return that;
+};
+</code></pre>
+
+<p>We&#8217;re back to using a <code>spec</code> argument here so that we can instantiate
+a <code>person</code> with some default amount of empathy. The <code>that =
+container(object(spec))</code> stands in for traditional object inheritance.</p>
+
+<p>After we&#8217;ve created the <code>container</code> object and wired it up to <code>person</code>
+and <code>rucksack</code>, the code for concrete objects in our toy example looks
+like this:</p>
+
+<pre><code class="javascript">module.exports.rucksack = function(spec) {
+    var that = container(object(spec));
     return that;
 };
 
@@ -236,27 +275,6 @@ module.exports.spell = function(spec) {
     return that;
 };
 </code></pre>
-
-<p>What&#8217;s going on? Well, we are using <code>container</code> to augment the object
-that is passed to it, so when we write:</p>
-
-<pre><code class="javascript">module.exports.rucksack = function(spec) {
-    var that = container(object(spec));
-    return that;
-};
-</code></pre>
-
-<p>The public interface of the <code>rucksack</code> object is passed to <code>container</code>
-for augmentation - it&#8217;s important to note that none of the private
-fields or functions inside <code>object</code> or <code>person</code> (such as the <code>empathy</code>
-field) can be affected by the <code>container</code> augmentation. Any object
-that calls <code>container</code> on its returned object (the <code>that</code> variable by
-convention here), will have the necessary methods added to it. It&#8217;s
-also worth pointing out that <code>container</code> has local state (the
-<code>inventory</code> array). This local state is not visible outside the
-<code>container</code> function, it&#8217;s private. We get encapsulation, public
-interfaces, arbitrary and flexible extension (we can chain those
-function calls to add whatever functionality we like) for free!</p>
 
 <p>Although the diagram above implies a strict inheritance hierarchy,
 that is not necessarily the case. The difference between <code>object</code> and
