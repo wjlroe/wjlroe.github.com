@@ -14,9 +14,7 @@ What I wanted was a bookmarklet, so I searched for "what font bookmarklet" and f
 
 For your copy/paste convenience, I have provided the code for the WhatFont bookmarklet:
 
-{% codeblock lang:javascript %}
-javascript:(function(){var%20d=document,s=d.createElement('scr'+'ipt'),b=d.body,l=d.location;s.setAttribute('src','http://chengyinliu.com/wf.js?o='+encodeURIComponent(l.href)+'&t='+(new%20Date().getTime()));b.appendChild(s)})();
-{% endcodeblock %}
+<a class="button" href="javascript:(function(){var%20d=document,s=d.createElement('scr'+'ipt'),b=d.body,l=d.location;s.setAttribute('src','http://chengyinliu.com/wf.js?o='+encodeURIComponent(l.href)+'&t='+(new%20Date().getTime()));b.appendChild(s)})();">WhatFont</a>
 
 Turned out that that post was using [Crimson Text](http://aldusleaf.org/0-crimson.html)
 from Google Webfonts. Nice.

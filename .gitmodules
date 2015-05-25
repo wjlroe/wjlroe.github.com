@@ -1,0 +1,3 @@
+[submodule "vendor/sassy-buttons"]
+	path = vendor/sassy-buttons
+	url = https://github.com/jhardy/Sassy-Buttons.git
