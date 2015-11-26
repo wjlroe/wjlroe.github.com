@@ -61,5 +61,5 @@ unlike [bash color codes][] which look like somebody fell on the keyboard.
 [Ethan Schoonover]: http://observer.com/2015/02/meet-the-man-behind-solarized-the-most-important-color-scheme-in-computer-history/
 [python script]: https://gist.github.com/MicahElliott/719710
 [colour chart]: http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
-[xterm colour codes]: http://pln.jonas.me/xterm-colors
+[xterm colour codes]: http://jonasjacek.github.io/colors/
 [bash color codes]: https://wiki.archlinux.org/index.php/Color_Bash_Prompt#List_of_colors_for_prompt_and_Bash
