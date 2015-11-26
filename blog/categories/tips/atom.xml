@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tips | Will Roe&#146;s blog]]></title>
   <link href="http://blog.wjlr.org.uk/blog/categories/tips/atom.xml" rel="self"/>
   <link href="http://blog.wjlr.org.uk/"/>
-  <updated>2015-05-25T16:12:40+01:00</updated>
+  <updated>2015-11-26T17:38:10+00:00</updated>
   <id>http://blog.wjlr.org.uk/</id>
   <author>
     <name><![CDATA[Will Roe]]></name>
@@ -53,7 +53,7 @@ moe-theme specifies some powerline colours for the modeline:</p>
 </code></pre>
 
 <p>Which is easy enough - they are simply hex colour codes, the same as
-can be used in CSS. However tmux uses 24-bit <a href="http://pln.jonas.me/xterm-colors">xterm colour codes</a>
+can be used in CSS. However tmux uses 24-bit <a href="http://jonasjacek.github.io/colors/">xterm colour codes</a>
 (for a generous total of 256 colours). In order to map between them
 and find the closest colour I found a handy <a href="https://gist.github.com/MicahElliott/719710">python script</a> which
 you can call with a hex code (e.g. <code>python colortrans.py ff4ea3</code>) and
