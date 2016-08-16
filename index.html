@@ -9,9 +9,7 @@
   <meta name="author" content="Will Roe">
 
   
-  <meta name="description" content="Javascript has a liberal array of techniques for constructing objects.
-Although object oriented style programming can be simulated in
-Javascript ( &hellip;">
+  <meta name="description" content="GitLab has a very useful integrated CI environment that you can use with pretty much any project. For a simple Rust project, we could use a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -105,6 +103,139 @@ Javascript ( &hellip;">
 <header>
   <div class="header-with-left-border">
     
+      <h1 class="entry-title"><a href="/2016/08/16/fast-rust-gitlab-ci.html">Fast Rust Builds on GitLab CI</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-08-16T22:10:00+01:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:10 pm</span></time>
+        
+      </p>
+      
+      </div>
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://gitlab.com/">GitLab</a> has a very useful integrated CI environment that you can use with pretty much any project.</p>
+
+<p>For a simple Rust project, we could use a configuration that looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="s">&quot;scorpil/rust:stable&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="l-Scalar-Plain">test:cargo</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">rustc --version &amp;&amp; cargo --version</span>      <span class="c1"># Print version info for debugging</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">time cargo test --verbose --jobs 1 --release</span> <span class="c1"># Don&#39;t paralize to make errors more readable</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you build a project with this, it will work (and it&#8217;ll use a Docker image for buzzword compliance), but it&#8217;ll be quite slow, several minutes at least. Most of that time is spent downloading your dependencies and compiling them - on every single build, even if they are unchanged. If you run <code>cargo test</code> locally, even if it needs to compile your code, it should take roughly 10 seconds (probably less).</p>
+
+<p>In order to get fast test runs with Rust, some configuration is necessary. Let&#8217;s walk through changes to the <code>.gitlab-ci.yml</code> file that&#8217;ll speed things up.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">test:cargo</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">...</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">cache</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">paths</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">target/</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">cargo/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is necessary to ensure that artifacts such as dependencies are retained between builds. Without this, upon every build, you will see lines like this in the build log:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">Downloading cookie v0.2.5</span>
+</span><span class='line'><span class="nn">...</span>
+</span><span class='line'><span class="l-Scalar-Plain">Compiling cookie v0.2.5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To ensure that dependencies are cached correctly, we need to set the <code>$CARGO_HOME</code> to be inside the build directory (I&#8217;m not sure why, but if you try to cache it as is, it doesn&#8217;t work):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">variables</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">CARGO_HOME</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">$CI_PROJECT_DIR/cargo</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>$CI_PROJECT_DIR</code> is defined by GitLab to be the directory that it unpacks your project in and runs your build.</p>
+
+<p>With this all in place, when you next build your project (after one build to fill the cache with your dependencies), you should see this instead:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">Fresh cookie v0.2.5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>See that? Everybody likes fresh cookies. Cargo doesn&#8217;t need to compile this library because the built library was in the cache. This reduced my small project&#8217;s build time from ~4 minutes to ~1.2 minutes.</p>
+
+<p>The final <code>.gitlab-ci.yml</code> file looks like this now:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="s">&quot;scorpil/rust:stable&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="l-Scalar-Plain">variables</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">CARGO_HOME</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">$CI_PROJECT_DIR/cargo</span>
+</span><span class='line'>
+</span><span class='line'><span class="l-Scalar-Plain">test:cargo</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">du -hs target</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">du -hs cargo</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">rustc --version &amp;&amp; cargo --version</span>      <span class="c1"># Print version info for debugging</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">time cargo test --verbose --jobs 1 --release</span> <span class="c1"># Don&#39;t paralize to make errors more readable</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">cache</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">paths</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">target/</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">cargo/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+<header>
+  <div class="header-with-left-border">
+    
       <h1 class="entry-title"><a href="/2015/04/04/js-module-pattern.html">The Module Pattern in Javascript</a></h1>
     
     
@@ -177,44 +308,6 @@ step):</p>
 
     </article>
   
-  
-    <article>
-      
-<header>
-  <div class="header-with-left-border">
-    
-      <h1 class="entry-title"><a href="/2015/03/24/free-as-in-learning.html">Free as in Learning</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-03-24T09:00:00+00:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:00 am</span></time>
-        
-      </p>
-      
-      </div>
-  </header>
-
-
-  <div class="entry-content"><p>If you want to release your music for everybody to hear then it&#8217;s a good idea to
-licence it with a creative commons licence. That way your music or drawings can
-be remixed and used in surprising ways.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2015/03/24/free-as-in-learning.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page2">&larr; Older</a>
@@ -232,7 +325,7 @@ be remixed and used in surprising ways.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 Will Roe
+  Copyright &copy; 2016 Will Roe
   <br>
   <span class="credit">Generated using <a href="http://octopress.org">Octopress</a></span>
 </p>

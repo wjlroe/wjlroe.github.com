@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ci | Will Roe&#146;s blog]]></title>
+  <link href="http://blog.wjlr.org.uk/blog/categories/ci/atom.xml" rel="self"/>
+  <link href="http://blog.wjlr.org.uk/"/>
+  <updated>2016-08-16T23:02:28+01:00</updated>
+  <id>http://blog.wjlr.org.uk/</id>
+  <author>
+    <name><![CDATA[Will Roe]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Fast Rust builds on GitLab CI]]></title>
+    <link href="http://blog.wjlr.org.uk/2016/08/16/fast-rust-gitlab-ci.html"/>
+    <updated>2016-08-16T22:10:00+01:00</updated>
+    <id>http://blog.wjlr.org.uk/2016/08/16/fast-rust-gitlab-ci</id>
+    <content type="html"><![CDATA[<p><a href="https://gitlab.com/">GitLab</a> has a very useful integrated CI environment that you can use with pretty much any project.</p>
+
+<p>For a simple Rust project, we could use a configuration that looks like this:</p>
+
+<pre><code class="yaml">image: "scorpil/rust:stable"
+
+test:cargo:
+  script:
+  - rustc --version &amp;&amp; cargo --version      # Print version info for debugging
+  - time cargo test --verbose --jobs 1 --release # Don't paralize to make errors more readable
+</code></pre>
+
+<p>If you build a project with this, it will work (and it&#8217;ll use a Docker image for buzzword compliance), but it&#8217;ll be quite slow, several minutes at least. Most of that time is spent downloading your dependencies and compiling them - on every single build, even if they are unchanged. If you run <code>cargo test</code> locally, even if it needs to compile your code, it should take roughly 10 seconds (probably less).</p>
+
+<p>In order to get fast test runs with Rust, some configuration is necessary. Let&#8217;s walk through changes to the <code>.gitlab-ci.yml</code> file that&#8217;ll speed things up.</p>
+
+<pre><code class="yaml">test:cargo:
+  ...
+  cache:
+    paths:
+      - target/
+      - cargo/
+</code></pre>
+
+<p>This is necessary to ensure that artifacts such as dependencies are retained between builds. Without this, upon every build, you will see lines like this in the build log:</p>
+
+<pre><code>Downloading cookie v0.2.5
+...
+Compiling cookie v0.2.5
+</code></pre>
+
+<p>To ensure that dependencies are cached correctly, we need to set the <code>$CARGO_HOME</code> to be inside the build directory (I&#8217;m not sure why, but if you try to cache it as is, it doesn&#8217;t work):</p>
+
+<pre><code class="yaml">variables:
+  CARGO_HOME: $CI_PROJECT_DIR/cargo
+</code></pre>
+
+<p><code>$CI_PROJECT_DIR</code> is defined by GitLab to be the directory that it unpacks your project in and runs your build.</p>
+
+<p>With this all in place, when you next build your project (after one build to fill the cache with your dependencies), you should see this instead:</p>
+
+<pre><code>Fresh cookie v0.2.5
+</code></pre>
+
+<p>See that? Everybody likes fresh cookies. Cargo doesn&#8217;t need to compile this library because the built library was in the cache. This reduced my small project&#8217;s build time from ~4 minutes to ~1.2 minutes.</p>
+
+<p>The final <code>.gitlab-ci.yml</code> file looks like this now:</p>
+
+<pre><code class="yaml">image: "scorpil/rust:stable"
+
+variables:
+  CARGO_HOME: $CI_PROJECT_DIR/cargo
+
+test:cargo:
+  script:
+  - du -hs target
+  - du -hs cargo
+  - rustc --version &amp;&amp; cargo --version      # Print version info for debugging
+  - time cargo test --verbose --jobs 1 --release # Don't paralize to make errors more readable
+  cache:
+    paths:
+      - target/
+      - cargo/
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

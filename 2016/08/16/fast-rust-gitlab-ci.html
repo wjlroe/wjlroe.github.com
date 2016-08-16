@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Fast Rust Builds on GitLab CI - Will Roe&#146;s blog</title>
+  <meta name="author" content="Will Roe">
+
+  
+  <meta name="description" content="GitLab has a very useful integrated CI environment that you can use with pretty much any project. For a simple Rust project, we could use a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.wjlr.org.uk/2016/08/16/fast-rust-gitlab-ci.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Will Roe&#146;s blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Caudex:400,700,400italic,700italic&subset=latin,greek-ext,greek,latin-ext'
+      rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="//use.typekit.net/ntz0pdz.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+<!-- For iPhone 6 Plus with @3× display: -->
+<link rel="apple-touch-icon-precomposed" sizes="180x180" href="/images/apple-touch-icon-180x180-precomposed.png">
+<!-- For iPad with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/apple-touch-icon-152x152-precomposed.png">
+<!-- For iPad with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+<!-- For iPhone with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/apple-touch-icon-120x120-precomposed.png">
+<!-- For iPhone with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/apple-touch-icon-76x76-precomposed.png">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-57x57-precomposed.png"><!-- 57×57px -->
+
+  
+  <script type="text/javascript">
+    if(!window.location.href.match(/localhost/) &&
+       !window.location.href.match(/\d+\.\d+\.\d+\.\d+/)) {
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7810285-4']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    }
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Will Roe&#146;s blog</a></h1>
+  
+  <h2 class="subtitle">
+    A variety of geekery
+    &raquo;
+    <a href="/blog/archives" title="Archives">Archives</a>
+  </h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+<header>
+  <div class="header-with-left-border">
+    
+      <h1 class="entry-title">Fast Rust Builds on GitLab CI</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-08-16T22:10:00+01:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:10 pm</span></time>
+        
+      </p>
+      
+      </div>
+  </header>
+
+
+<div class="entry-content"><p><a href="https://gitlab.com/">GitLab</a> has a very useful integrated CI environment that you can use with pretty much any project.</p>
+
+<p>For a simple Rust project, we could use a configuration that looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="s">&quot;scorpil/rust:stable&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="l-Scalar-Plain">test:cargo</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">rustc --version &amp;&amp; cargo --version</span>      <span class="c1"># Print version info for debugging</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">time cargo test --verbose --jobs 1 --release</span> <span class="c1"># Don&#39;t paralize to make errors more readable</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you build a project with this, it will work (and it&#8217;ll use a Docker image for buzzword compliance), but it&#8217;ll be quite slow, several minutes at least. Most of that time is spent downloading your dependencies and compiling them - on every single build, even if they are unchanged. If you run <code>cargo test</code> locally, even if it needs to compile your code, it should take roughly 10 seconds (probably less).</p>
+
+<p>In order to get fast test runs with Rust, some configuration is necessary. Let&#8217;s walk through changes to the <code>.gitlab-ci.yml</code> file that&#8217;ll speed things up.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">test:cargo</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">...</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">cache</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">paths</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">target/</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">cargo/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is necessary to ensure that artifacts such as dependencies are retained between builds. Without this, upon every build, you will see lines like this in the build log:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">Downloading cookie v0.2.5</span>
+</span><span class='line'><span class="nn">...</span>
+</span><span class='line'><span class="l-Scalar-Plain">Compiling cookie v0.2.5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To ensure that dependencies are cached correctly, we need to set the <code>$CARGO_HOME</code> to be inside the build directory (I&#8217;m not sure why, but if you try to cache it as is, it doesn&#8217;t work):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">variables</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">CARGO_HOME</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">$CI_PROJECT_DIR/cargo</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>$CI_PROJECT_DIR</code> is defined by GitLab to be the directory that it unpacks your project in and runs your build.</p>
+
+<p>With this all in place, when you next build your project (after one build to fill the cache with your dependencies), you should see this instead:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">Fresh cookie v0.2.5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>See that? Everybody likes fresh cookies. Cargo doesn&#8217;t need to compile this library because the built library was in the cache. This reduced my small project&#8217;s build time from ~4 minutes to ~1.2 minutes.</p>
+
+<p>The final <code>.gitlab-ci.yml</code> file looks like this now:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="s">&quot;scorpil/rust:stable&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="l-Scalar-Plain">variables</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">CARGO_HOME</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">$CI_PROJECT_DIR/cargo</span>
+</span><span class='line'>
+</span><span class='line'><span class="l-Scalar-Plain">test:cargo</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">du -hs target</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">du -hs cargo</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">rustc --version &amp;&amp; cargo --version</span>      <span class="c1"># Print version info for debugging</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">time cargo test --verbose --jobs 1 --release</span> <span class="c1"># Don&#39;t paralize to make errors more readable</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">cache</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">paths</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">target/</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">cargo/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Will Roe</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-08-16T22:10:00+01:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:10 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ci/'>ci</a>, <a class='category' href='/blog/categories/rust/'>rust</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.wjlr.org.uk/2016/08/16/fast-rust-gitlab-ci.html" data-via="wjlroe" data-counturl="http://blog.wjlr.org.uk/2016/08/16/fast-rust-gitlab-ci.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2015/04/04/js-module-pattern.html" title="Previous Post: The Module Pattern in Javascript">&laquo; The Module Pattern in Javascript</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 Will Roe
+  <br>
+  <span class="credit">Generated using <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
