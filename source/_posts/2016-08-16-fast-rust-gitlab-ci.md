@@ -7,6 +7,8 @@ layout: post
 
 [GitLab](https://gitlab.com/) has a very useful integrated CI environment that you can use with pretty much any project. 
 
+<!--more-->
+
 For a simple Rust project, we could use a configuration that looks like this:
 
 ```yaml
