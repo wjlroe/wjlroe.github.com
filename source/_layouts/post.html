@@ -6,7 +6,9 @@ single: true
 <div>
 <article class="hentry" role="article">
   {% include article.html %}
-  {% include custom/js_gamedev_signup.html %}
+  {% if page.js_gamedev_signup %}
+    {% include custom/js_gamedev_signup.html %}
+  {% endif %}
   <footer>
     <p class="meta">
       {% include post/author.html %}
