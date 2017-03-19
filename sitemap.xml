@@ -1,165 +1,267 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://blog.wjlr.org.uk/2016/08/16/fast-rust-gitlab-ci.html</loc>
-    <lastmod>2016-08-16T22:10:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2015/04/04/js-module-pattern.html</loc>
-    <lastmod>2015-04-04T09:00:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2015/03/25/raspberry-pi-2-speed.html</loc>
-    <lastmod>2015-03-25T22:18:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2015/03/24/free-as-in-learning.html</loc>
-    <lastmod>2015-03-24T09:00:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2015/03/23/serial-micro-piano-trio-no-1.html</loc>
-    <lastmod>2015-03-23T20:00:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2015/03/10/building-minecraft-plugins-with-tup.html</loc>
-    <lastmod>2015-03-10T23:10:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2015/02/27/custom-colours-for-tmux.html</loc>
-    <lastmod>2015-02-27T17:31:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2015/01/24/css-mode-emacs-debian.html</loc>
-    <lastmod>2015-01-24T09:00:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2015/01/17/fast-string-interpolation-cljs.html</loc>
-    <lastmod>2015-01-17T03:30:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure.html</loc>
-    <lastmod>2015-01-15T21:55:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2015/01/06/2014-in-books.html</loc>
-    <lastmod>2015-01-06T14:45:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2014/12/30/multi-machine-vagrant-ansible-gotcha.html</loc>
-    <lastmod>2014-12-30T16:00:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2014/12/28/secret-santa-logic.html</loc>
-    <lastmod>2014-12-28T19:04:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2014/12/08/ludum-dare-31-postmortem.html</loc>
-    <lastmod>2014-12-08T20:01:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2014/03/27/json-for-humans.html</loc>
-    <lastmod>2014-03-27T12:58:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2014/02/01/tmux-and-autoenv-tip.html</loc>
-    <lastmod>2014-02-01T15:41:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2014/02/01/silver-searcher-gotcha.html</loc>
-    <lastmod>2014-02-01T15:34:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2013/06/06/ember-transition-to-new-model-hack.html</loc>
-    <lastmod>2013-06-06T19:53:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2013/04/10/imagemagick-insanity.html</loc>
-    <lastmod>2013-04-10T00:00:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2013/02/18/ember-rails-handlebars-assets.html</loc>
-    <lastmod>2013-02-18T23:10:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2012/08/22/ludum-dare-24-i-slash-m-taking-part.html</loc>
-    <lastmod>2012-08-22T02:15:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2012/07/26/what-makes-a-developer-happy.html</loc>
-    <lastmod>2012-07-26T00:00:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2012/04/06/what-font-is-that.html</loc>
-    <lastmod>2012-04-06T21:06:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2012/02/07/further-haskell-exploration.html</loc>
-    <lastmod>2012-02-07T00:00:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2011/07/12/learning-haskell.html</loc>
-    <lastmod>2011-07-12T00:00:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2011/05/05/david-cameron-on-av.html</loc>
-    <lastmod>2011-05-05T00:00:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2011/05/02/install-natty-sony-vaio-vpc-y21.html</loc>
-    <lastmod>2011-05-02T00:00:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2011/04/25/parsing-and-ebook-making.html</loc>
-    <lastmod>2011-04-25T00:00:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2010/11/05/nanowrimo-begins.html</loc>
-    <lastmod>2010-11-05T00:00:00+00:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/2010/05/16/emacs-for-android-development.html</loc>
-    <lastmod>2010-05-16T00:00:00+01:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/blog/archives/</loc>
-    <lastmod>2016-08-16T23:04:34+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://blog.wjlr.org.uk/</loc>
-    <lastmod>2016-08-16T23:04:34+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+<url>
+<loc>http://blog.wjlr.org.uk/2016/08/16/fast-rust-gitlab-ci.html</loc>
+<lastmod>2016-08-16T22:10:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2015/04/04/js-module-pattern.html</loc>
+<lastmod>2015-04-04T09:00:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2015/03/25/raspberry-pi-2-speed.html</loc>
+<lastmod>2015-03-25T22:18:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2015/03/24/free-as-in-learning.html</loc>
+<lastmod>2015-03-24T09:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2015/03/23/serial-micro-piano-trio-no-1.html</loc>
+<lastmod>2015-03-23T20:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2015/03/10/building-minecraft-plugins-with-tup.html</loc>
+<lastmod>2015-03-10T23:10:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2015/02/27/custom-colours-for-tmux.html</loc>
+<lastmod>2015-02-27T17:31:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2015/01/24/css-mode-emacs-debian.html</loc>
+<lastmod>2015-01-24T09:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2015/01/17/fast-string-interpolation-cljs.html</loc>
+<lastmod>2015-01-17T03:30:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2015/01/15/string-interpolation-clojure.html</loc>
+<lastmod>2015-01-15T21:55:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2015/01/06/2014-in-books.html</loc>
+<lastmod>2015-01-06T14:45:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2014/12/30/multi-machine-vagrant-ansible-gotcha.html</loc>
+<lastmod>2014-12-30T16:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2014/12/28/secret-santa-logic.html</loc>
+<lastmod>2014-12-28T19:04:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2014/12/08/ludum-dare-31-postmortem.html</loc>
+<lastmod>2014-12-08T20:01:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2014/03/27/json-for-humans.html</loc>
+<lastmod>2014-03-27T12:58:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2014/02/01/tmux-and-autoenv-tip.html</loc>
+<lastmod>2014-02-01T15:41:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2014/02/01/silver-searcher-gotcha.html</loc>
+<lastmod>2014-02-01T15:34:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2013/06/06/ember-transition-to-new-model-hack.html</loc>
+<lastmod>2013-06-06T19:53:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2013/04/10/imagemagick-insanity.html</loc>
+<lastmod>2013-04-10T00:00:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2013/02/18/ember-rails-handlebars-assets.html</loc>
+<lastmod>2013-02-18T23:10:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2012/08/22/ludum-dare-24-i-slash-m-taking-part.html</loc>
+<lastmod>2012-08-22T02:15:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2012/07/26/what-makes-a-developer-happy.html</loc>
+<lastmod>2012-07-26T00:00:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2012/04/06/what-font-is-that.html</loc>
+<lastmod>2012-04-06T21:06:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2012/02/07/further-haskell-exploration.html</loc>
+<lastmod>2012-02-07T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2011/07/12/learning-haskell.html</loc>
+<lastmod>2011-07-12T00:00:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2011/05/05/david-cameron-on-av.html</loc>
+<lastmod>2011-05-05T00:00:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2011/05/02/install-natty-sony-vaio-vpc-y21.html</loc>
+<lastmod>2011-05-02T00:00:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2011/04/25/parsing-and-ebook-making.html</loc>
+<lastmod>2011-04-25T00:00:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2010/11/05/nanowrimo-begins.html</loc>
+<lastmod>2010-11-05T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/2010/05/16/emacs-for-android-development.html</loc>
+<lastmod>2010-05-16T00:00:00+01:00</lastmod>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/archives/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/emacs/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/android/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/writing/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/ebooks/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/clojure/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/politics/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/haskell/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/fonts/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/happiness/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/javascript/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/svg/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/raphael/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/datomic/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/databases/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/ludum-dare/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/gamedev/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/rails/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/ember/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/linux/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/ubuntu/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/shell/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/git/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/tips/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/tmux/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/vim/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/json/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/elm/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/core-dot-logic/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/vagrant/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/virtualbox/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/ansible/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/books/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/clojurescript/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/debian/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/cli/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/minecraft/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/java/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/overtone/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/music/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/serialism/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/12tone/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/art/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/public-domain/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/raspberry-pi/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/rust/</loc>
+</url>
+<url>
+<loc>http://blog.wjlr.org.uk/blog/categories/ci/</loc>
+</url>
 </urlset>
